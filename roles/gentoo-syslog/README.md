@@ -1,10 +1,8 @@
 # Ansible Role: gentoo-syslog
 
-## Desctiption
+## Description
 
 Install and configure syslog-ng and logrotate on Gentoo host. Configure log rotation of syslog-ng logs.
-
-### Logrotate
 
 ## Requirements
 
@@ -100,7 +98,7 @@ Tests are automated with
 - [Molecule](http://molecule.readthedocs.org/en/latest/)
 - [testinfra](https://testinfra.readthedocs.io/en/latest/index.html)
 
-Since I don't host my own container registry at this moment you have to build container with Gentoo locally. See more at this [README](../../dockerfiles/README.md)
+Since I don't host my own container registry at this moment you have to build container with Gentoo locally. See more at this [README](../../dockerfiles/)
 
 To install tox run:
 ```sh

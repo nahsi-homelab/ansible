@@ -1,0 +1,172 @@
+# default logrotate settings for syslog-ng logs
+# if 'logrotate' is undefined in syslog_destinations
+# man logrotate
+logrotate_syslog_settings:
+  - rotate 2
+  - weekly
+  - missingok
+  - notifempty
+  - maxsize 100M
+  - dateext
+
+syslog_config_version: 3.26
+
+# https://www.syslog-ng.com/technical-documents/doc/syslog-ng-open-source-edition/3.26/administration-guide/60#TOPIC-1431133
+syslog_options: {}
+syslog_options_default:
+  threaded: "yes"
+  chain_hostnames: "no"
+  use_dns: "no"
+  dns_cache: "no"
+  flush_lines: "0"
+  stats_freq: "43200"
+  mark_freq: "3600"
+
+# based on
+# https://wiki.gentoo.org/wiki/Security_Handbook/Logging
+
+syslog_sources: {}
+syslog_sources_default:
+  # identifier:
+  #   - driver: foo_driver
+  #     params: foo_params
+  #   - driver: bar_driver
+  #     params: bar_params
+  # ----
+  # destination identifier {
+  #     foo_driver(foo_params);
+  #     bar_driver(bar_params);
+  # };
+  src:
+    - driver: unix-stream
+      params: '"/dev/log" max-connections(256)'
+    - driver: internal
+      params: ''
+  kernel:
+    - driver: file
+      params: '"/proc/kmsg"'
+
+syslog_destinations: {}
+syslog_destinations_default:
+  # identifier:
+  #   - driver: foo_driver
+  #     params: foo_params
+  #   - driver: bar_driver
+  #     params: bar_params
+  # ----
+  # destination identifier {
+  #     foo_driver(foo_params);
+  #     bar_driver(bar_params);
+  # };
+  syslog:
+    - driver: file
+      params: '"/var/log/syslog.log"' # double quotes are mandatory
+  authlog:
+    - driver: file
+      params: '"/var/log/auth.log"'
+  cron:
+    - driver: file
+      params: '"/var/log/cron.log"'
+  daemon:
+    - driver: file
+      params: '"/var/log/daemon.log"'
+  kern:
+    - driver: file
+      params: '"/var/log/kern.log"'
+  lpr:
+    - driver: file
+      params: '"/var/log/lpr.log"'
+  user:
+    - driver: file
+      params: '"/var/log/user.log"'
+  mail:
+    - driver: file
+      params: '"/var/log/mail.log"'
+  news:
+    - driver: file
+      params: '"/var/log/news.log"'
+  debug:
+    - driver: file
+      params: '"/var/log/debug"'
+  messages:
+    - driver: file
+      params: '"/var/log/messages"'
+  console:
+    - driver: usertty
+      params: '"root"'
+  default:
+    - driver: file
+      params: '"/var/log/all"'
+
+syslog_filters: {}
+syslog_filters_default:
+  # identifier: 'filter'
+  # ----
+  # filter identifier { filter };
+  authpriv: 'facility(auth, authpriv);'
+  syslog: 'not facility(authpriv, mail);'
+  cron: 'facility(cron);'
+  daemon: 'facility(daemon);'
+  kern: 'facility(kern);'
+  lpr: 'facility(lpr);'
+  mail: 'facility(mail);'
+  user: 'facility(user);'
+  debug: 'not facility(auth, authpriv, news, mail);'
+  messages: 'level(info..warn) and not facility(auth, authpriv, mail, news);'
+  emergency: 'level(emerg);'
+
+  info: 'level(info);'
+  notice: 'level(notice);'
+  warn: 'level(warn);'
+  crit: 'level(crit);'
+  err: 'level(err);'
+  failed: 'message("failed");'
+  denied: 'message("denied");'
+
+syslog_logs: []
+syslog_logs_default:
+  # - source: [ 's_foo', ]
+  #   filters: [ 'f_foo', 'f_bar' ]
+  #   destinations: [ 'd_foo' ]
+  # ----
+  # log {
+  #   source(s_foo);
+  #   filter(f_foo);
+  #   filter(f_bar);
+  #   destination(d_foo);
+  # };
+  - sources: [ 'src' ]
+    filters: [ 'authpriv' ]
+    destinations: [ 'authlog' ]
+  - sources: [ 'src' ]
+    filters: [ 'syslog' ]
+    destinations: [ 'syslog' ]
+  - sources: [ 'src' ]
+    filters: [ 'cron' ]
+    destinations: [ 'cron' ]
+  - sources: [ 'src' ]
+    filters: [ 'daemon' ]
+    destinations: [ 'daemon' ]
+  - sources: [ 'kernel' ]
+    filters: [ 'kern' ]
+    destinations: [ 'kern' ]
+  - sources: [ 'src' ]
+    filters: [ 'lpr' ]
+    destinations: [ 'lpr' ]
+  - sources: [ 'src' ]
+    filters: [ 'mail' ]
+    destinations: [ 'mail' ]
+  - sources: [ 'src' ]
+    filters: [ 'user' ]
+    destinations: [ 'user' ]
+  - sources: [ 'src' ]
+    filters: [ 'debug' ]
+    destinations: [ 'debug' ]
+  - sources: [ 'src' ]
+    filters: [ 'messages' ]
+    destinations: [ 'messages' ]
+  - sources: [ 'src' ]
+    filters: [ 'emergency' ]
+    destinations: [ 'console' ]
+  - sources: [ 'src' ]
+    destinations: [ 'default' ]

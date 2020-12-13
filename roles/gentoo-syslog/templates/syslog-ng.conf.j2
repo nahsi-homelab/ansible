@@ -1,0 +1,43 @@
+#jinja2: trim_blocks: True, lstrip_blocks: True
+# {{ ansible_managed }}
+@version: {{ syslog_config_version }}
+
+options {
+    {% for key, value in __options.items() %}
+    {{ key }}({{ value }});
+    {% endfor %}
+};
+
+{% for key, value in __sources.items() %}
+source {{ key }} {
+    {% for item in value %}
+    {{ item.driver }}({{ item.params }});
+    {% endfor %}
+};
+{% endfor %}
+
+{% for key, value in __destinations.items() %}
+destination {{ key }} {
+    {% for item in value %}
+    {{ item.driver }}({{ item.params }});
+    {% endfor %}
+};
+{% endfor %}
+
+{% for key, value in __filters.items() %}
+filter {{ key }} { {{ value }} };
+{% endfor %}
+
+{% for item in __logs %}
+log {
+    {% for s in item.sources | default([]) %}
+    source({{ s }});
+    {% endfor %}
+    {% for f in item.filters | default([]) %}
+    filter({{ f }});
+    {% endfor %}
+    {% for d in item.destinations | default([]) %}
+    destination({{ d }});
+    {% endfor %}
+};
+{% endfor %}

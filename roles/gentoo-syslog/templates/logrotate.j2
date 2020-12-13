@@ -1,0 +1,16 @@
+#jinja2: trim_blocks: True, lstrip_blocks: True
+# {{ ansible_managed }}
+{% for _, destinations in __destinations.items() %}
+{% for destination in destinations %}
+{% if destination.driver == "file" %}
+{{ destination.params }} {
+    {% if destination.logrotate is defined %}
+    {% set logrotate_syslog_settings = destination.logrotate %}
+    {% endif %}
+    {% for option in logrotate_syslog_settings %}
+    {{ option }}
+    {% endfor %}
+}
+{% endif %}
+{% endfor %}
+{% endfor %}

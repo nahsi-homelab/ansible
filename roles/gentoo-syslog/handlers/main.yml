@@ -1,0 +1,13 @@
+- name: reload syslog-ng
+  service:
+    name: syslog-ng
+    state: reloaded
+  when:
+    - not chroot | default("false")
+
+- name: restart syslog-ng
+  service:
+    name: syslog-ng
+    state: restarted
+  when:
+    - not chroot | default("false")

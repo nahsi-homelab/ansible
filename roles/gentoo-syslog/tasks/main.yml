@@ -1,0 +1,8 @@
+- name: Preflight
+  include_tasks: 00-preflight.yml
+
+- name: Configure syslog-ng
+  include_tasks: 01-syslog-ng.yml
+
+- name: Configure logrotate
+  include_tasks: 02-logrotate.yml

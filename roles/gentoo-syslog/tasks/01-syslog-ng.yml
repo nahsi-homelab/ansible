@@ -1,0 +1,18 @@
+- name: install syslog-ng
+  portage:
+    package: app-admin/syslog-ng
+  notify: restart syslog-ng
+
+- name: copy syslog-ng config
+  template:
+    src: syslog-ng.conf.j2
+    dest: /etc/syslog-ng/syslog-ng.conf
+    validate: "syslog-ng --syntax-only --cfgfile %s"
+    mode: 0660
+  notify: reload syslog-ng
+
+- name: enable syslog-ng
+  service:
+    name: syslog-ng
+    enabled: true
+    runlevel: default

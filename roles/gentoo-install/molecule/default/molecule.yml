@@ -1,0 +1,23 @@
+driver:
+  name: podman
+
+platforms:
+  - name: gentoo-install
+    image: docker.io/python:buster
+    pre_build_image: true
+    cmd: ["bash"]
+
+lint: ansible-lint --force-color .
+
+provisioner:
+  name: ansible
+  inventory:
+    host_vars:
+      gentoo-install:
+        arch: amd64
+
+verifier:
+  name: testinfra
+  options:
+    # show which tests where executed in test output
+    v: 1

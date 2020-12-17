@@ -1,0 +1,13 @@
+- name: check required variables
+  assert:
+    that:
+      - arch is defined
+    quiet: true
+
+- name: fail when install prefix is not mounted
+  assert:
+    that: "{{ install_prefix }} in {{ ansible_mounts | map(attribute='mount') | list }}"
+    fail_msg: "'{{ install_prefix }}' not mounted"
+    quiet: true
+  tags:
+    - notest

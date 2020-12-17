@@ -1,0 +1,7 @@
+- name: Prepare
+  hosts: all
+  tasks:
+    - name: create gentoo installation prefix
+      file:
+        dest: "/mnt/gentoo"
+        state: directory

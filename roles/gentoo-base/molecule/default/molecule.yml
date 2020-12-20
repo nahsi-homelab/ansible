@@ -3,7 +3,7 @@ driver:
 
 platforms:
   - name: gentoo-base
-    image: localhost/stage3-amd64
+    image: localhost/gentoo-base
     pre_build_image: true
     tmpfs:
       - /tmp

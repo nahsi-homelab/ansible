@@ -1,0 +1,139 @@
+# vim: set ft=kconfig:
+# TODO:
+# - write help for each option describing what is enabled and why
+# - "smarter" selection (dependencies, deselect etc)
+menu "X470D4U"
+
+config LOCAL_X470D4U_IOMMU
+    bool    "AMD IOMMU"
+
+    default y
+
+    select  AMD_IOMMU
+    select  AMD_IOMMU_V2
+
+config LOCAL_X470D4U_VIDEO
+    bool    "Video"
+
+    default y
+
+    select  DRM
+    select  DRM_AST
+
+config  LOCAL_X470D4U_NET
+    bool    "Ethernet"
+
+    default y
+
+    select  NET_VENDOR_INTEL
+    select  IGB
+    select  IGB_HWMON
+
+    help
+            For "2 x RJ45 GLAN by Intel i210AT"
+
+config LOCAL_X470D4U_IPMI
+    bool    "IPMI"
+
+    default y
+
+    select  IPMI_HANDLER
+    select  ACPI_IPMI
+    select  IPMI_DEVICE_INTERFACE
+    select  IPMI_SI
+    select  IPMI_SSIF
+    select  IPMI_WATCHDOG
+    select  IPMI_POWEROFF
+
+    help
+            Yes, I have a motherboard with IPMI :3
+
+config LOCAL_X470D4U_PSTORE
+    bool    "Persistent storage filesystem"
+
+    default n
+
+    select  PSTORE
+    select  PSTORE_ZSTD_COMPRESS
+    select  PSTORE_ZSTD_COMPRESS_DEFAULT
+    select  EFI_VARS_PSTORE
+
+config LOCAL_PERF_EVENTS
+    bool    "Power reporting mechanism"
+
+    default y
+
+    select  PERF_EVENTS_AMD_POWER
+    select  PERF_EVENTS_INTEL_RAPL
+
+# https://www.kernel.org/doc/html/latest/devicetree/usage-model.html
+config  LOCAL_X470D4U_OF
+    bool    "Device tree infrastructure"
+
+    default n
+
+    select  OF
+    select  OF_OVERLAY
+
+config  LOCAL_X470D4U_GPIO
+    bool    "GPIO"
+
+    default y
+
+    select  GPIOLIB
+    select  GPIO_AMDPT
+
+config  LOCAL_X470D4U_USBNET
+    bool    "NET over USB"
+
+    default n
+
+    select  USB_NET_DRIVERS
+    select  USB_USBNET
+    select  USB_NET_CDCETHER
+
+config  LOCAL_X470D4U_WMI
+    bool    "WMI"
+
+    default y
+
+    select  X86_PLATFORM_DEVICES
+    select  WMI_BMOF
+    select  ACPI_WMI
+
+config LOCAL_X470D4U_MISC
+    bool    "Modules loaded on Ubuntu 20.20"
+
+    default y
+
+    select  SENSORS_AMD_ENERGY
+    select  NET_SCH_FQ_CODEL
+    select  PARPORT
+    select  PARPORT_PC
+    select  PRINTER
+    select  PPDEV
+    select  JOYDEV
+    select  MACINTOSH_DRIVERS
+    select  MAC_EMUMOUSEBTN
+    select  INTEL_IOATDMA
+    select  MEDIA_CEC_SUPPORT
+    select  DP_CEC
+    select  RC_CORE
+    select  RAS_CEC
+
+    help
+            Not sure if I really need this.
+
+config  LOCAL_X470D4U_CRYPTO
+    bool    "Cryptography"
+    default y
+
+    select  CRYPTO_CRCT10DIF_PCLMUL
+    select  CRYPTO_CRC32_PCLMUL
+    select  CRYPTO_DEV_CCP
+    select  CRYPTO_DEV_CCP_DD
+    select  CRYPTO_AES_NI_INTEL
+    select  CRYPTO_SIMD
+    select  CRYPTO_GHASH_CLMUL_NI_INTEL
+
+endmenu

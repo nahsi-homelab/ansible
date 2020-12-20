@@ -1,0 +1,38 @@
+- name: mount /boot/efi
+  mount:
+    src: "{{ kernel_efi_device }}"
+    opts: "noatime,noauto"
+    path: "/boot/efi/"
+    fstype: "vfat"
+    state: mounted
+  tags:
+    - notest
+
+- name: create refind directories
+  file:
+    dest: "{{ item }}"
+    state: directory
+  loop:
+    - /boot/efi/EFI
+    - /boot/efi/EFI/Gentoo
+    - /boot/efi/EFI/refind
+
+- name: copy Gentoo refind menu config
+  template:
+    src: refind_linux.conf.j2
+    dest: /boot/efi/EFI/Gentoo/refind_linux.conf
+
+- name: install refind boot manager
+  portage:
+    package: sys-boot/refind
+    state: latest
+
+- name: update refind
+  command: "refind-install"
+  tags:
+    - notest
+
+- name: copy refind config
+  template:
+    src: refind.conf.j2
+    dest: /boot/efi/EFI/refind/refind.conf

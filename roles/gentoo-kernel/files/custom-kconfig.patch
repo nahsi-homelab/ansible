@@ -1,0 +1,10 @@
+diff --git a/Kconfig b/Kconfig
+index e306bac..728b5e6 100644
+--- a/Kconfig
++++ b/Kconfig
+@@ -32,3 +32,5 @@ source "lib/Kconfig.debug"
+ source "Documentation/Kconfig"
+
+ source "distro/Kconfig"
++
++source "/etc/kernel/Kconfig"

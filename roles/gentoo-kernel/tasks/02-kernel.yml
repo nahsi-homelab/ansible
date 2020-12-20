@@ -1,0 +1,75 @@
+- name: create kernel related directories
+  file:
+    dest: "{{ item }}"
+    state: directory
+  loop:
+    - /etc/kernel/config.d/
+    - /etc/kernel/kconfig.d/
+    - /etc/kernel/postinst.d/
+    - /etc/portage/savedconfig/sys-kernel/
+    - /etc/portage/patches/sys-kernel/gentoo-kernel/
+    - /etc/portage/package.mask/
+    - /etc/portage/package.use/
+
+- name: copy gentoo-kernel savedconfig
+  copy:
+    src: "configs/{{ arch }}-base.config"
+    dest: "/etc/portage/savedconfig/sys-kernel/gentoo-kernel"
+
+- name: create linux-firmware savedconfig
+  template:
+    src: linux-firmware.j2
+    dest: "/etc/portage/savedconfig/sys-kernel/linux-firmware"
+
+- name: configure builtin firmare
+  copy:
+    content: "CONFIG_EXTRA_FIRMWARE=\"{{ base_kernel_firmware | join(' ') }}\""
+    dest: /etc/kernel/config.d/firmware.config
+  when: kernel_firmware | length > 0
+
+- name: copy kconfigs
+  copy:
+    src: "kconfig.d/{{ item }}"
+    dest: "/etc/kernel/kconfig.d/{{ item }}"
+  loop: "{{ kernel_kconfigs }}"
+
+- name: create custom Kconfig to include in Linux src
+  template:
+    src: Kconfig.j2
+    dest: "/etc/kernel/Kconfig"
+
+- name: use custom Kconfig when building kernel
+  copy:
+    src: custom-kconfig.patch
+    dest: /etc/portage/patches/sys-kernel/gentoo-kernel/custom-kconfig.patch
+
+- name: copy postinstall scripts
+  copy:
+    src: "postinst.d/{{ item }}"
+    dest: "/etc/kernel/postinst.d/{{ item }}"
+    mode: 745
+  loop: "{{ kernel_postinst }}"
+
+- name: force gentoo-kernel version
+  copy:
+    content: ">sys-kernel/gentoo-kernel-{{ kernel_version }}"
+    dest: /etc/portage/package.mask/kernel.mask
+
+- name: enable savedconfigs
+  copy:
+    content: |
+      sys-kernel/gentoo-kernel savedconfig
+      sys-kernel/linux-firmware savedconfig
+    dest: /etc/portage/package.use/kernel.use
+
+- name: install linux-firmware
+  portage:
+    package: sys-kernel/linux-firmware
+    state: latest
+  when: kernel_firmware | length > 0
+
+- name: install gentoo-kernel
+  portage:
+    package: sys-kernel/gentoo-kernel
+    state: latest
+  notify: rebuild modules

@@ -1,0 +1,7 @@
+- name: check required variables
+  assert:
+    that:
+      - kernel_refind_menu is defined
+      - kernel_efi_device is defined
+      - arch is defined
+    quiet: true

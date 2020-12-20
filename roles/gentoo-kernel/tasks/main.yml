@@ -1,0 +1,12 @@
+- name: Preflight
+  include_tasks: 00-preflight.yml
+
+- name: Configure refind
+  include_tasks: 01-refind.yml
+
+- name: Configure kernel
+  include_tasks: 02-kernel.yml
+
+- name: Configure zfs
+  include_tasks: 03-zfs.yml
+  when: kernel_zfs_on_root | default(false)

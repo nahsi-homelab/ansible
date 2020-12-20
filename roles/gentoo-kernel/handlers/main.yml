@@ -1,0 +1,5 @@
+- name: update initramfs
+  command: emerge --config sys-kernel/gentoo-kernel
+
+- name: rebuild modules
+  command: emerge @module-rebuild

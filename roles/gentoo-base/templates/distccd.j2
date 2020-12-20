@@ -1,0 +1,7 @@
+#jinja2: trim_blocks: True, lstrip_blocks: True
+# {{ ansible_managed }}
+DISTCCD_OPTS="{%- for k,v in base_distccd.items() -%}
+--{{ k }}={{ v }}{{ " " if not loop.last }}
+{%- endfor -%}"
+DISTCCD_OPTS="${DISTCCD_OPTS} {% for c in base_distccd_allow %}--allow={{ c }} {%- endfor %}"
+DISTCCS_EXEC="/usr/bin/distccd"

@@ -1,0 +1,20 @@
+- name: install distcc
+  portage:
+    package: distcc
+    state: present
+
+- name: configure distcc server
+  block:
+  - name: copy distccd config
+    template:
+      src: distccd.j2
+      dest: /etc/conf.d/distccd
+      mode: 0644
+    notify: restart distccd
+
+  - name: enable distccd
+    service:
+      name: distccd
+      enabled: yes
+      runlevel: default
+  when: base_distccd is defined

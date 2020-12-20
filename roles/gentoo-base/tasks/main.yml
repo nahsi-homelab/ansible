@@ -1,0 +1,22 @@
+- name: Preflight
+  include_tasks: 00-preflight.yml
+
+- name: Configure portage
+  include_tasks: 01-portage.yml
+
+- name: Configure system
+  include_tasks: 02-system.yml
+
+- name: Create users
+  include_tasks: 03-users.yml
+  loop: "{{ users }}"
+  loop_control:
+    loop_var: user
+    label: "{{ user.name }}"
+
+- name: Configure distcc
+  include_tasks: 04-distcc.yml
+  when: '"distcc" in __makeconf.FEATURES or base_distccd is defined'
+
+# - name: Configure network
+#   include_tasks: 05-network.yml

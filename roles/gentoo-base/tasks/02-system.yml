@@ -1,0 +1,60 @@
+- name: set timezone
+  copy:
+    content: "{{ base_timezone }}"
+    dest: /etc/timezone
+    mode: 0644
+  notify: update timezone
+
+- name: update locales
+  template:
+    src: system/locale.gen.j2
+    dest: /etc/locale.gen
+    mode: 0644
+  notify: update locales
+
+- name: set hostname
+  hostname:
+    name: "{{ inventory_hostname }}"
+    use: openrc
+
+- meta: flush_handlers
+
+- name: setup hwclock
+  template:
+    src: system/hwclock.j2
+    dest: /etc/conf.d/hwclock
+    mode: 0644
+
+- name: copy rc.conf
+  template:
+    src: system/rc.conf.j2
+    dest: /etc/rc.conf
+    mode: 0644
+
+- name: install base packages
+  portage:
+    package: "{{ item }}"
+  loop: "{{ base_packages_default + base_packages }}"
+
+- name: enable cronie
+  service:
+    name: cronie
+    enabled: yes
+    runlevel: default
+
+- name: set env vars with eselect
+  eselect:
+    module: "{{ item.key }}"
+    target: "{{ item.value }}"
+  loop: "{{ base_env | dict2items }}"
+  loop_control:
+    label: "{{ item.key }}"
+  notify: update env
+
+- name: add doas rules
+  copy:
+    content: "permit nopass :wheel"
+    dest: /etc/doas.conf
+    mode: 0644
+
+- meta: flush_handlers

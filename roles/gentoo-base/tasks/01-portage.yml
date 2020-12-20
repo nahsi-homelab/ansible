@@ -1,0 +1,29 @@
+- name: combine makeconf options
+  set_fact:
+    __makeconf: "{{ base_portage_makeconf_default | combine(base_portage_makeconf, recursive=True) }}"
+
+- name: create portage directories
+  file:
+    dest: "{{ item }}"
+    state: directory
+    mode: 0755
+  loop:
+    - /etc/portage/package.use
+    - /etc/portage/package.mask
+    - /etc/portage/package.accept_keywords
+    - /etc/portage/repos.conf
+    - /etc/portage/savedconfig
+    - /etc/portage/env
+    - /etc/portage/patches
+
+- name: copy make.conf
+  template:
+    src: portage/make.conf.j2
+    dest: /etc/portage/make.conf
+    mode: 0644
+
+- name: set packages use flags
+  copy:
+    content: "{% for p in base_portage_package_use %}{{ p }}{% endfor %}"
+    dest: /etc/portage/package.use/ansible.use
+    mode: 0644

@@ -1,0 +1,21 @@
+- name: update locales
+  command: locale-gen --update
+
+- name: update env
+  command: env-update
+
+- name: update timezone
+  command: emerge --config sys-libs/timezone-data
+
+- name: update hostname
+  service:
+    name: hostname
+    state: restarted
+
+  # https://github.com/ansible/ansible/issues/50822
+- name: restart distccd
+  service:
+    name: distccd
+    state: restarted
+  when:
+    - not chroot | default("false")

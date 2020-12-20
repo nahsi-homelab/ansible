@@ -1,0 +1,6 @@
+- name: fail when no network interfaces defined
+  assert:
+    that:
+      - base_network is defined
+    fail_msg: "Define 'base_network'"
+    quiet: true

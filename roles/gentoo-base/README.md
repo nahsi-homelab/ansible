@@ -36,6 +36,11 @@ For examples see comments in <defaults>.
 | `base_nwclock` | `{}` | host/group vars, will be merged with `base_hwclock_default` |
 | `base_network` | see <defaults/system.yml> |
 | `base_network_interfaces` | `[]` | list of network interfaces to enable |
+|||
+| `base_sshd_allow_groups` | `[ "wheel" ]` | only allow users from groups to connect |
+| `base_sshd_allow_users` | `[]` | only allow users to connect |
+| `base_sshd_host_keys` | `[ "/etc/ssh/ssh_host_rsa_key", "/etc/ssh/ssh_host_ed25519_key" ]` | enabled cryptosystems |
+| `base_sshd` | see <defaults/system.yml> | sshd config |
 | `chroot` | `false` | whether system this host is running again is in chroot - if `true` some services will not be restarted |
 | `users` | `{}` | map of users, see below |
 

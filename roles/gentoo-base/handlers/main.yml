@@ -12,10 +12,17 @@
     name: hostname
     state: restarted
 
-  # https://github.com/ansible/ansible/issues/50822
+# https://github.com/ansible/ansible/issues/50822
 - name: restart distccd
   service:
     name: distccd
+    state: restarted
+  when:
+    - not chroot | default("false")
+
+- name: restart sshd
+  service:
+    name: sshd
     state: restarted
   when:
     - not chroot | default("false")

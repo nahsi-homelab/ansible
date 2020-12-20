@@ -44,10 +44,39 @@ base_hwclock_default:
   clock_hctosys: "YES"
   clock_args: ""
 
+# Only allow users in the following groups to login via SSH.
+base_sshd_allow_groups:
+  - wheel
+# Only allow the following users.
+base_sshd_allow_users: []
+
+# Enable only following cryptosystems (RSA)
+base_sshd_host_keys:
+  - /etc/ssh/ssh_host_rsa_key
+  - /etc/ssh/ssh_host_ed25519_key
+
+# https://wiki.gentoo.org/wiki/Security_Handbook/Securing_services#SSH
+# https://syslink.pl/cipherlist/
+base_sshd:
+  Protocol: 2
+  KexAlgorithms: "curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256"
+  Ciphers: "chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr"
+  MACs: "hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,umac-128@openssh.com"
+  PermitRootLogin: "no"
+  PubkeyAuthentication: "yes"
+  AuthorizedKeysFile: ".ssh/authorized_key"
+  # Disable .rhost and normal password authentication.
+  HostbasedAuthentication: "no"
+  PasswordAuthentication: "no"
+  PermitEmptyPasswords: "no"
+  SyslogFacility: "AUTH"
+  LogLevel: "INFO"
+  ListenAddress: "{{ ansible_default_ipv4.address }}"
+
 # Network interfaces configuration
 # /usr/share/doc/netifrc-*/net.example.bz2
 # Example config:
 # base_network: |
 #   config_{{ ansible_default_ipv4.interface }}="dhcp"
 # base_network_interfaces:
-#   - "{{ ansible_defailt_ipv4.interface }}"
+#   - "{{ ansible_default_ipv4.interface }}"

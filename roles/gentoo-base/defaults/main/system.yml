@@ -12,14 +12,14 @@ base_env: {}
 
 # List of packages to be installed
 base_packages: []
-  # - app-shells/gentoo-bashcomp
   # - app-editors/neovim
   # - sys-process/htop
-  # - app-admin/doas
 base_packages_default:
   - dev-vcs/git
   - sys-process/cronie
   - app-eselect/eselect-repository
+  - app-admin/doas
+  - app-shells/gentoo-bashcomp
 
 # OpenRC configuration
 # https://github.com/OpenRC/openrc/blob/master/etc/rc.conf
@@ -37,7 +37,7 @@ base_hwclock: {}
 base_hwclock_default:
   # Is your hardware clock set to local or to UTC?
   # If you dualboot with Windows set to "local"
-  clock_local: "local"
+  clock_local: "utc"
   # Set the hardware clock to the current systemtime during shutdown
   clock_systohc: "YES"
   # Set systemtime to current hardware clock durning boot

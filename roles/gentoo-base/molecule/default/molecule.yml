@@ -34,6 +34,9 @@ provisioner:
         base_network: |
           config_{{ ansible_default_ipv4.interface }}="dhcp"
 
+        base_network_interfaces:
+          - "{{ ansible_default_ipv4.interface }}"
+
         users:
           - name: test
             groups:
@@ -43,9 +46,9 @@ provisioner:
               - key: >
                   ssh-rsa aaaab3nzac1yc2eaaaadaqabaaabaqdz9opats/fwt8nkgctyj4j9rzw+wzicc1h91odepdk6mdyo4dikb7mbqlrmnfdkoonx3aervv5nzi0lebm4auvmayya3v4ox7zjwiprnfbjsjuzxtk5qyfya5shuoqtwlydmpy9u7hxadsnxvmw+opp/cxhzoagbccbr33iaqbmpxwynz+9iu6znccy/0ahyomk8lt830ekjtu0wreii5x7p6kyeak6sryvunnp34regtfttf7xf6hbugwfp9ggbpozvfph6cqbeusat6fhgjkrh8xvn3ba+v0odcdooczhdr0dponjlxdm3xltidqn3h/zxooqabm4kiiiavhogov
                 comment: "test"
-        - name: test2
-          groups:
-            - wheel
+          - name: test2
+            groups:
+              - wheel
 
 verifier:
   name: testinfra

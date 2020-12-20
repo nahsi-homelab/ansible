@@ -35,6 +35,7 @@ For examples see comments in <defaults>.
 | `base_hwclock_default` | see <defaults/system.yml> | used to construct `/etc/conf.d/hwclock` |
 | `base_nwclock` | `{}` | host/group vars, will be merged with `base_hwclock_default` |
 | `base_network` | see <defaults/system.yml> |
+| `base_network_interfaces` | `[]` | list of network interfaces to enable |
 | `chroot` | `false` | whether system this host is running again is in chroot - if `true` some services will not be restarted |
 | `users` | `{}` | map of users, see below |
 

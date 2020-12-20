@@ -49,3 +49,5 @@ base_hwclock_default:
 # Example config:
 # base_network: |
 #   config_{{ ansible_default_ipv4.interface }}="dhcp"
+# base_network_interfaces:
+#   - "{{ ansible_defailt_ipv4.interface }}"

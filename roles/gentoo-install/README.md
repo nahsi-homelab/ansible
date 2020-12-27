@@ -1,7 +1,6 @@
 # Ansible Role: gentoo-install
 
 ## Description
-
 Prepare Gentoo stage3.
 
 Does roughly the following:
@@ -9,6 +8,7 @@ Does roughly the following:
 - Unpack stage3 with correct permissions
 - Prepare chroot (mount virtual filesystems, copy resolv.conf etc)
 - Install gentoolkit - `portage` module dependency
+
 ## Requirements
 - Ansible version >= 2.9
 
@@ -21,8 +21,7 @@ Does roughly the following:
 ## Preparation
 1. Boot into installation media
 2. [Configure network](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Networking) if necessary
-3. Format disks and mount Gentoo rootfs to `install_prefix` (defaults to `/mnt/gentoo`)
-[Configure disks](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Disks)
+3. Format disks and mount Gentoo rootfs to `install_prefix` (defaults to `/mnt/gentoo`) see [Configure disks](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Disks)
 
 ## Examples
 ```yaml

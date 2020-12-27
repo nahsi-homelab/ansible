@@ -41,6 +41,7 @@
     name: cronie
     enabled: yes
     runlevel: default
+    use: openrc
 
 - name: set env vars with eselect
   eselect:
@@ -62,6 +63,7 @@
     name: "{{ service.name }}"
     enabled: yes
     runlevel: "{{ service.runlevel }}"
+    use: openrc
   loop: "{{ base_services }}"
   loop_control:
     loop_var: service

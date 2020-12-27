@@ -23,7 +23,7 @@
 
 - name: configure builtin firmare
   copy:
-    content: "CONFIG_EXTRA_FIRMWARE=\"{{ base_kernel_firmware | join(' ') }}\""
+    content: "CONFIG_EXTRA_FIRMWARE=\"{{ kernel_firmware | join(' ') }}\""
     dest: /etc/kernel/config.d/firmware.config
   when: kernel_firmware | length > 0
 
@@ -52,7 +52,9 @@
 
 - name: force gentoo-kernel version
   copy:
-    content: ">sys-kernel/gentoo-kernel-{{ kernel_version }}"
+    content: |
+      >sys-kernel/gentoo-kernel-{{ kernel_version }}
+      >sys-kernel/gentoo-sources-{{ kernel_version }}
     dest: /etc/portage/package.mask/kernel.mask
 
 - name: enable savedconfigs

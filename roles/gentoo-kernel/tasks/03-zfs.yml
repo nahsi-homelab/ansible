@@ -21,12 +21,33 @@
   portage:
     package: sys-kernel/zfsbootmenu
     state: latest
-    update: yes
-    deep: yes
   notify: update initramfs
+
+- name: enable zfs services
+  service:
+    name: "{{ service.name }}"
+    enabled: yes
+    runlevel: "{{ service.runlevel }}"
+    use: openrc
+  loop:
+    - name: zfs-import
+      runlevel: boot
+    - name: zfs-mount
+      runlevel: boot
+  loop_control:
+    loop_var: service
+    label: "{{ service.name }}"
 
 - name: copy zfsbootmenu initramfs generator script
   copy:
-    src: "kernel/postinst.d/zfsbootmenu.sh"
+    src: "postinst.d/zfsbootmenu.sh"
     dest: "/etc/kernel/postinst.d/zfsbootmenu.sh"
     mode: 745
+  notify: update initramfs
+
+- name: copy zfsbootmenu config
+  copy:
+    src: "zfsbootmenu.yml"
+    dest: "/etc/zfsbootmenu/config.yaml"
+    mode: 644
+  notify: update initramfs

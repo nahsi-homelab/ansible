@@ -10,6 +10,7 @@
     name: "net.{{ item }}"
     enabled: yes
     runlevel: default
+    use: openrc
   loop: "{{ base_network_interfaces }}"
 
 - name: configure interfaces

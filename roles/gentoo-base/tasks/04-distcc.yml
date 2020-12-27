@@ -17,4 +17,5 @@
       name: distccd
       enabled: yes
       runlevel: default
+      use: openrc
   when: base_distccd is defined

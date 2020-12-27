@@ -25,5 +25,6 @@
 - name: enable sshd
   service:
     name: sshd
-    enabled: true
+    enabled: yes
     runlevel: default
+    use: openrc

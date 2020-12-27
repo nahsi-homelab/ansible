@@ -26,10 +26,12 @@ For examples see comments in <defaults>.
 | `base_distccd` | | distccd config, see <defaults/distcc.yml> |
 | `base_distccd_allow` | host ipv4 subnet | list of ips/subnets allowed to connect to distccd |
 |||
+| `base_filesystems` | `[]` | filesystem to mount and add to fstab, see <defaults/system.yml> |
 | `base_timezone` | "Europe/Moscow" | |
 | `base_env` | `{}` | variables to set with eselect |
 | `base_packages_default` | see <defaults/system.yml> | list of packages to install |
 | `base_packages` | `[]` | list of packages to install, will be added to `base_packages_default` |
+| `base_servies` | `[]` | list of services to enable, see <defaults/system.yml> |
 | `base_openrc_default` | see <defaults/system.yml> | used to construct `/etc/rc.conf` |
 | `base_openrc` | `{}` | host/group vars, will be merged with `base_openrc_default` |
 | `base_hwclock_default` | see <defaults/system.yml> | used to construct `/etc/conf.d/hwclock` |

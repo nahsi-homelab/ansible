@@ -57,4 +57,26 @@
     dest: /etc/doas.conf
     mode: 0644
 
+- name: enable services
+  service:
+    name: "{{ service.name }}"
+    enabled: yes
+    runlevel: "{{ service.runlevel }}"
+  loop: "{{ base_services }}"
+  loop_control:
+    loop_var: service
+    label: "{{ service.name }}"
+
+- name: mount filesystems
+  mount:
+    src: "{{ fs.path }}"
+    opts: "{{ fs.opts }}"
+    path: "{{ fs.path }}"
+    fstype: "{{ fs.type }}"
+    state: mounted
+  loop: "{{ base_filesystems }}"
+  loop_control:
+    loop_var: fs
+    label: "{{ fs.path }}"
+
 - meta: flush_handlers

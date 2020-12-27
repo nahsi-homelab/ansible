@@ -1,3 +1,9 @@
+# Filesystems to mount
+base_filesystems: []
+  # - path: "/var/tmp"
+  #   opts: "rw,nosuid,noatime,nodev,size=50%,mode=1777"
+  #   type: "tmpfs"
+
 # Chose timezone from /usr/share/zoneinfo
 base_timezone: Europe/Moscow
 
@@ -20,6 +26,13 @@ base_packages_default:
   - app-eselect/eselect-repository
   - app-admin/doas
   - app-shells/gentoo-bashcomp
+
+# List of services to enable
+base_services: []
+  # - name: zfs-import
+  #   runlevel: boot
+  # - name: zfs-mount
+  #   runlevel: boot
 
 # OpenRC configuration
 # https://github.com/OpenRC/openrc/blob/master/etc/rc.conf

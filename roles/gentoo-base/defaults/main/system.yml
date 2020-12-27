@@ -26,6 +26,7 @@ base_packages_default:
   - app-eselect/eselect-repository
   - app-admin/doas
   - app-shells/gentoo-bashcomp
+  - media-fonts/terminus-font
 
 # List of services to enable
 base_services: []
@@ -33,6 +34,9 @@ base_services: []
   #   runlevel: boot
   # - name: zfs-mount
   #   runlevel: boot
+base_services_default:
+  - name: consolefont
+    runlevel: boot
 
 # OpenRC configuration
 # https://github.com/OpenRC/openrc/blob/master/etc/rc.conf

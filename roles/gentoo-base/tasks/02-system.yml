@@ -58,13 +58,18 @@
     dest: /etc/doas.conf
     mode: 0644
 
+- name: set terminus as default consolefont
+  copy:
+    content: "consolefont=ter-i24b"
+    dest: /etc/conf.d/consolefont
+
 - name: enable services
   service:
     name: "{{ service.name }}"
     enabled: yes
     runlevel: "{{ service.runlevel }}"
     use: openrc
-  loop: "{{ base_services }}"
+  loop: "{{ base_services_default + base_services }}"
   loop_control:
     loop_var: service
     label: "{{ service.name }}"

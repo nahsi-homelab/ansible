@@ -31,7 +31,8 @@ For examples see comments in <defaults>.
 | `base_env` | `{}` | variables to set with eselect |
 | `base_packages_default` | see <defaults/system.yml> | list of packages to install |
 | `base_packages` | `[]` | list of packages to install, will be added to `base_packages_default` |
-| `base_servies` | `[]` | list of services to enable, see <defaults/system.yml> |
+| `base_services_default` | see <defaults/system.yml> | list of services to enable |
+| `base_services` | `[]` | list of services to enable, will be added to `base_services_default` |
 | `base_openrc_default` | see <defaults/system.yml> | used to construct `/etc/rc.conf` |
 | `base_openrc` | `{}` | host/group vars, will be merged with `base_openrc_default` |
 | `base_hwclock_default` | see <defaults/system.yml> | used to construct `/etc/conf.d/hwclock` |

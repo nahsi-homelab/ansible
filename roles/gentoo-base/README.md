@@ -44,6 +44,7 @@ For examples see comments in <defaults>.
 | `base_sshd_allow_groups` | `[ "wheel" ]` | only allow users from groups to connect |
 | `base_sshd_allow_users` | `[]` | only allow users to connect |
 | `base_sshd_host_keys` | `[ "/etc/ssh/ssh_host_rsa_key", "/etc/ssh/ssh_host_ed25519_key" ]` | enabled cryptosystems |
+| `base_sshd_listen_address` | `{{ ansible_default_ipv4.address }}` | sshd listen address |
 | `base_sshd` | see <defaults/system.yml> | sshd config |
 | `chroot` | `false` | whether system this host is running again is in chroot - if `true` some services will not be restarted |
 | `users` | `{}` | map of users, see below |

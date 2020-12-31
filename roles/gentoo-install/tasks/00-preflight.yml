@@ -16,6 +16,7 @@
 - name: get mounted filesystems
   shell: "mount | grep -q -e ' {{ install_prefix }} '"
   register: __mount_check
+  changed_when: false
   tags:
     - notest
 

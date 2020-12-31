@@ -18,3 +18,4 @@
     content: "{{ base_network }}"
     dest: /etc/conf.d/net
     mode: 0644
+  notify: restart network

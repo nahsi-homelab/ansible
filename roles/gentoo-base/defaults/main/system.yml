@@ -1,3 +1,5 @@
+chroot: false
+
 # Filesystems to mount
 base_filesystems: []
   # - path: "/var/tmp"
@@ -89,7 +91,7 @@ base_sshd:
   PermitEmptyPasswords: "no"
   SyslogFacility: "AUTH"
   LogLevel: "INFO"
-  ListenAddress: "{{ ansible_default_ipv4.address }}"
+  ListenAddress: "{{ base_sshd_listen_address | default(ansible_default_ipv4.address) }}"
 
 # Network interfaces configuration
 # /usr/share/doc/netifrc-*/net.example.bz2

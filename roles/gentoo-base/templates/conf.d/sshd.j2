@@ -2,4 +2,4 @@
 # {{ ansible_managed }}
 SSHD_CONFDIR="${RC_PREFIX%/}/etc/ssh"
 SSHD_OPTS=""
-rc-need="{% for i in base_network_interfaces %}net.{{ i }}{% endfor %}"
+rc_need="{% for i in base_network_interfaces %}net.{{ i }}{% endfor %}"

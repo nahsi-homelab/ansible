@@ -29,6 +29,7 @@
 
 - name: update refind
   command: "refind-install"
+  changed_when: false
   tags:
     - notest
 

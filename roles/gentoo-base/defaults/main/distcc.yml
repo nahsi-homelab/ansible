@@ -13,6 +13,6 @@
 
 # clients allow to use distccd server
 base_distccd_allow:
-  - "{{ ansible_default_ipv4.address | ipaddr('net') }}"
+  - "{{ ansible_default_ipv4.network }}"
   # - 192.168.1.0/24
   # - 192.168.1.2

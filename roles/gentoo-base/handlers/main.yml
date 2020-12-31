@@ -12,17 +12,26 @@
     name: hostname
     state: restarted
 
+- name: restart network
+  service:
+    name: "net.{{ item }}"
+    state: restarted
+    use: openrc
+  loop: "{{ base_network_interfaces }}"
+
 # https://github.com/ansible/ansible/issues/50822
 - name: restart distccd
   service:
     name: distccd
     state: restarted
+    use: openrc
   when:
-    - not chroot | default("false")
+    - not chroot
 
 - name: restart sshd
   service:
     name: sshd
     state: restarted
+    use: openrc
   when:
-    - not chroot | default("false")
+    - not chroot

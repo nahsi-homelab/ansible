@@ -54,13 +54,13 @@
 
 - name: add doas rules
   copy:
-    content: "permit nopass :wheel"
+    content: "permit nopass :wheel\n"
     dest: /etc/doas.conf
     mode: 0644
 
 - name: set terminus as default consolefont
   copy:
-    content: "consolefont={{ base_consolefont }}"
+    content: "consolefont={{ base_consolefont }}\n"
     dest: /etc/conf.d/consolefont
 
 - name: enable services

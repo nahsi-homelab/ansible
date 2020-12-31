@@ -76,7 +76,7 @@
 
 - name: mount filesystems
   mount:
-    src: "{{ fs.path }}"
+    src: "{{ fs.src }}"
     opts: "{{ fs.opts }}"
     path: "{{ fs.path }}"
     fstype: "{{ fs.type }}"

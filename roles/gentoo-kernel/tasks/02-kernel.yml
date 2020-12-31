@@ -14,8 +14,10 @@
 - name: copy gentoo-kernel savedconfig
   copy:
     src: "configs/{{ arch }}-base.config"
-    dest: "/etc/portage/savedconfig/sys-kernel/gentoo-kernel"
-  notify: rebuild kernel
+    dest: "/etc/portage/savedconfig/sys-kernel/gentoo-kernel:{{ kernel_version }}"
+  notify:
+    - rebuild modules
+    - rebuild kernel
 
 - name: create linux-firmware savedconfig
   template:
@@ -27,20 +29,26 @@
     content: "CONFIG_EXTRA_FIRMWARE=\"{{ kernel_firmware | join(' ') }}\""
     dest: /etc/kernel/config.d/firmware.config
   when: kernel_firmware | length > 0
-  notify: rebuild kernel
+  notify:
+    - rebuild modules
+    - rebuild kernel
 
 - name: copy kconfigs
   copy:
     src: "kconfig.d/{{ item }}"
     dest: "/etc/kernel/kconfig.d/{{ item }}"
   loop: "{{ kernel_kconfigs }}"
-  notify: rebuild kernel
+  notify:
+    - rebuild modules
+    - rebuild kernel
 
 - name: create custom Kconfig to include in Linux src
   template:
     src: Kconfig.j2
     dest: "/etc/kernel/Kconfig"
-  notify: rebuild kernel
+  notify:
+    - rebuild modules
+    - rebuild kernel
 
 - name: use custom Kconfig when building kernel
   copy:
@@ -79,7 +87,9 @@
   portage:
     package: sys-kernel/gentoo-kernel
     state: latest
-  notify: rebuild modules
+  notify:
+    - rebuild modules
+    - rebuild kernel
 
 - name: remove old kernels
   portage:

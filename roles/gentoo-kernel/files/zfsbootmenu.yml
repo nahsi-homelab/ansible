@@ -4,7 +4,7 @@ Global:
   DracutConfDir: /etc/zfsbootmenu/dracut.conf.d
 Components:
   ImageDir: /boot/efi/EFI/gentoo
-  Versions: 3
+  Versions: 1
   Enabled: true
 Kernel:
   CommandLine: ro quiet loglevel=0

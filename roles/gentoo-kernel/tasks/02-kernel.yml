@@ -15,6 +15,7 @@
   copy:
     src: "configs/{{ arch }}-base.config"
     dest: "/etc/portage/savedconfig/sys-kernel/gentoo-kernel"
+  notify: rebuild kernel
 
 - name: create linux-firmware savedconfig
   template:
@@ -26,17 +27,20 @@
     content: "CONFIG_EXTRA_FIRMWARE=\"{{ kernel_firmware | join(' ') }}\""
     dest: /etc/kernel/config.d/firmware.config
   when: kernel_firmware | length > 0
+  notify: rebuild kernel
 
 - name: copy kconfigs
   copy:
     src: "kconfig.d/{{ item }}"
     dest: "/etc/kernel/kconfig.d/{{ item }}"
   loop: "{{ kernel_kconfigs }}"
+  notify: rebuild kernel
 
 - name: create custom Kconfig to include in Linux src
   template:
     src: Kconfig.j2
     dest: "/etc/kernel/Kconfig"
+  notify: rebuild kernel
 
 - name: use custom Kconfig when building kernel
   copy:
@@ -49,6 +53,7 @@
     dest: "/etc/kernel/postinst.d/{{ item }}"
     mode: 745
   loop: "{{ kernel_postinst }}"
+  notify: update initramfs
 
 - name: force gentoo-kernel version
   copy:
@@ -74,4 +79,5 @@
   portage:
     package: sys-kernel/gentoo-kernel
     state: latest
+    depclean: yes
   notify: rebuild modules

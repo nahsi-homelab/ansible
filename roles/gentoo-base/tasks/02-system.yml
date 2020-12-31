@@ -60,7 +60,7 @@
 
 - name: set terminus as default consolefont
   copy:
-    content: "consolefont=ter-i24b"
+    content: "consolefont={{ base_consolefont }}"
     dest: /etc/conf.d/consolefont
 
 - name: enable services

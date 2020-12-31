@@ -12,3 +12,5 @@ AllowUsers {{ base_sshd_allow_users | join(' ') }}
 {% for key in base_sshd_host_keys %}
 HostKey {{ key }}
 {% endfor %}
+
+Subsystem sftp /usr/libexec/sftp-server

@@ -28,3 +28,10 @@
     enabled: yes
     runlevel: default
     use: openrc
+
+- name: add /etc/conf.d/sshd
+  template:
+    src: conf.d/sshd.j2
+    dest: /etc/conf.d/sshd
+    mode: 0644
+  notify: restart sshd

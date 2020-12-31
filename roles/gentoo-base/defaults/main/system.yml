@@ -4,6 +4,7 @@ base_filesystems: []
   #   opts: "rw,nosuid,noatime,nodev,size=50%,mode=1777"
   #   type: "tmpfs"
 
+base_consolefont: ter-i16b
 # Chose timezone from /usr/share/zoneinfo
 base_timezone: Europe/Moscow
 
@@ -27,6 +28,7 @@ base_packages_default:
   - app-admin/doas
   - app-shells/gentoo-bashcomp
   - media-fonts/terminus-font
+  - sys-fs/dosfstools
 
 # List of services to enable
 base_services: []
@@ -81,7 +83,6 @@ base_sshd:
   MACs: "hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,umac-128@openssh.com"
   PermitRootLogin: "no"
   PubkeyAuthentication: "yes"
-  AuthorizedKeysFile: ".ssh/authorized_key"
   # Disable .rhost and normal password authentication.
   HostbasedAuthentication: "no"
   PasswordAuthentication: "no"

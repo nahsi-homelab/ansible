@@ -28,6 +28,7 @@ For examples see comments in <defaults>.
 |||
 | `base_filesystems` | `[]` | filesystem to mount and add to fstab, see <defaults/system.yml> |
 | `base_timezone` | "Europe/Moscow" | |
+| `base_consolefont` | ter-16b | one of `/usr/share/consolefonts` |
 | `base_env` | `{}` | variables to set with eselect |
 | `base_packages_default` | see <defaults/system.yml> | list of packages to install |
 | `base_packages` | `[]` | list of packages to install, will be added to `base_packages_default` |

@@ -79,5 +79,10 @@
   portage:
     package: sys-kernel/gentoo-kernel
     state: latest
-    depclean: yes
   notify: rebuild modules
+
+- name: remove old kernels
+  portage:
+    package: sys-kernel/gentoo-kernel
+    state: absent
+    depclean: yes

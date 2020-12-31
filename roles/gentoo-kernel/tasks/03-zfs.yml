@@ -23,6 +23,11 @@
     state: latest
   notify: update initramfs
 
+- name: generate hostid
+  command: zgenhostid
+  args:
+    creates: /etc/hostid
+
 - name: enable zfs services
   service:
     name: "{{ service.name }}"

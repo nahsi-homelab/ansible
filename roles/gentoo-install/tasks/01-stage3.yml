@@ -3,6 +3,8 @@
   get_url:
     url: "{{ __stage3_link }}"
     dest: "/tmp/stage3.tar.xz"
+  args:
+    creates: "/tmp/stage3.tar.xz"
 
 - name: unpack stage3 tarball
   unarchive:
@@ -47,16 +49,13 @@
     fstype: "{{ fs.type }}"
     state: mounted
   loop:
-    - proc:
-      path: "/proc"
+    - path: "/proc"
       opts: "noauto"
       type: "proc"
-    - dev:
-      path: "/dev"
+    - path: "/dev"
       opts: "rbind,noauto"
       type: "devtmpfs"
-    - sys:
-      path: "/sys"
+    - path: "/sys"
       opts: "rbind,noauto"
       type: "sysfs"
   loop_control:

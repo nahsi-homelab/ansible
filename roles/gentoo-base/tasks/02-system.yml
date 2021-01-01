@@ -21,7 +21,7 @@
 
 - name: setup hwclock
   template:
-    src: system/hwclock.j2
+    src: conf.d/hwclock.j2
     dest: /etc/conf.d/hwclock
     mode: 0644
 

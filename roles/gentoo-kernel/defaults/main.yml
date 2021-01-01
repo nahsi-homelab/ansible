@@ -16,8 +16,9 @@ kernel_refind_default:
   scan_all_linux_kernels: "true"
   fold_linux_kernels: "true"
 
+# https://github.com/zbm-dev/zfsbootmenu/blob/master/pod/zfsbootmenu.7.pod
 # kernel_refind_menu:
 #   - name: "Boot default"
-#     cmd: "zfsbootmenu:ROOT=zroot spl_hostid=$( hostid ) timeout=0 ro quiet loglevel=0"
+#     cmd: "root=zfsbootmenu:POOL=zroot spl_hostid=$( hostid ) timeout=10 ro quiet loglevel=0"
 #   - name: "Boot to menu"
-#     cmd: "zfsbootmenu:ROOT=zroot spl_hostid=$( hostid ) timeout=-1 ro quiet loglevel=0"
+#     cmd: "root=zfsbootmenu:POOL=zroot spl_hostid=$( hostid ) timeout=-1 ro quiet loglevel=0"

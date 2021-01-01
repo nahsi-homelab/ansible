@@ -14,7 +14,7 @@
 - name: copy gentoo-kernel savedconfig
   copy:
     src: "configs/{{ arch }}-base.config"
-    dest: "/etc/portage/savedconfig/sys-kernel/gentoo-kernel:{{ kernel_version }}"
+    dest: "/etc/portage/savedconfig/sys-kernel/gentoo-kernel-{{ kernel_version }}"
   notify:
     - rebuild modules
     - rebuild kernel

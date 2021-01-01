@@ -27,6 +27,9 @@ This file is sourced in Linux main Kconfig file using this
 Custom Kconfig in turn sources other Kconfig [files](files/kconfig.d/) in
 `/etc/kernel/kconfig.d/` managed with `kernel_kconfigs` variable.
 
+## Requirements
+- Ansible version >= 2.9
+
 ## Role Variables
 | Name | Default value | Description |
 | ---- | ------------- | ----------- |

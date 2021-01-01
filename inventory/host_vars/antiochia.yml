@@ -10,10 +10,6 @@ base_filesystems:
     opts: "rw,nosuid,noatime,nodev,size=2G,mode=1777"
     type: "tmpfs"
 
-base_portage_package_use:
-  - net_misc/openssh -pam
-  - sys-devel/gcc pgo
-
 base_packages:
   - app-editors/neovim
   - sys-process/htop
@@ -53,7 +49,7 @@ base_gentoo_mirrors:
   - https://mirror.yandex.ru/gentoo-distfiles/
   - https://distfiles.gentoo.org/
 
-base_features:
+base_portage_features:
   - parallel-install
 
 base_portage_use:
@@ -61,6 +57,10 @@ base_portage_use:
   - luajit
   - -X
   # - libressl
+
+base_portage_package_use:
+  - net_misc/openssh -pam
+  - sys-devel/gcc pgo
 
 base_portage_makeconf:
   COMMON_FLAGS: "-O2 -march=znver2"

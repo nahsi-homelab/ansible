@@ -25,7 +25,6 @@
     use: openrc
   loop: "{{ base_network_interfaces }}"
 
-# https://github.com/ansible/ansible/issues/50822
 - name: restart distccd
   service:
     name: distccd

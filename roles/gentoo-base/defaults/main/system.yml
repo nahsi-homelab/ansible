@@ -1,13 +1,15 @@
 chroot: false
 
 # Filesystems to mount
+# will create an entry in /etc/fstab
 base_filesystems: []
   # - path: "/var/tmp"
   #   opts: "rw,nosuid,noatime,nodev,size=50%,mode=1777"
   #   type: "tmpfs"
 
 base_consolefont: ter-i16b
-# Chose timezone from /usr/share/zoneinfo
+
+# Choose timezone from /usr/share/zoneinfo
 base_timezone: Europe/Moscow
 
 # List of locales to generate
@@ -54,9 +56,9 @@ base_openrc_default:
   rc_logger: "YES"
   rc_log_path: "/var/log/rc.log"
   # Number of ttys allocated for logins
-  rc_tty_number: 12
+  rc_tty_number: 2
 
-# Hardware Clock configuration
+# Hardware clock configuration
 base_hwclock: {}
 base_hwclock_default:
   # Is your hardware clock set to local or to UTC?
@@ -68,13 +70,13 @@ base_hwclock_default:
   clock_hctosys: "YES"
   clock_args: ""
 
-# Only allow users in the following groups to login via SSH.
+# Only allow users in the following groups to login via SSH
 base_sshd_allow_groups:
   - wheel
-# Only allow the following users.
+# Only allow the following users
 base_sshd_allow_users: []
 
-# Enable only following cryptosystems (RSA)
+# Enable only following cryptosystems
 base_sshd_host_keys:
   - /etc/ssh/ssh_host_rsa_key
   - /etc/ssh/ssh_host_ed25519_key
@@ -100,6 +102,6 @@ base_sshd:
 # /usr/share/doc/netifrc-*/net.example.bz2
 # Example config:
 # base_network: |
-#   config_{{ ansible_default_ipv4.interface }}="dhcp"
+#   config_eth0="dhcp"
 # base_network_interfaces:
-#   - "{{ ansible_default_ipv4.interface }}"
+#   - "eth0"

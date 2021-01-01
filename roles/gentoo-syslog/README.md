@@ -1,4 +1,4 @@
-# Ansible Role: gentoo-syslog
+# gentoo-syslog
 
 ## Description
 

@@ -55,8 +55,8 @@ base_portage_features:
 base_portage_use:
   - zstd
   - luajit
+  - libressl
   - -X
-  # - libressl
 
 base_portage_package_use:
   - net_misc/openssh -pam

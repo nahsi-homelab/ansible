@@ -32,18 +32,13 @@ Custom Kconfig in turn sources other Kconfig [files](files/kconfig.d/) in
 | ---- | ------------- | ----------- |
 | `arch` | | HW architecture: amd64, arm64 etc |
 | `kernel_version` | `""` |  |
-| `kernel_firmware` | `[]` | list of firmware, used in `linux-firmware`
-savedconfig and in `CONFIG_EXTRA_FIRMWARE=` |
+| `kernel_firmware` | `[]` | list of firmware, used in `linux-firmware` savedconfig and in `CONFIG_EXTRA_FIRMWARE=` |
 | `kernel_kconfigs` | `[]` | see [files/kconfig.d](files/kconfig.d) |
-| `kernel_postinst` | `[]` | scripts to run after kernel install,
-see [files/postinst.d](files/postinst.d) |
+| `kernel_postinst` | `[]` | scripts to run after kernel install, see [files/postinst.d](files/postinst.d) |
 | `kernel_zfs_on_root` | `false` | flag to trigger zfsbootmenu install |
-| `kernel_efi_device` | `""` | path to device with `/boot/efi`,
-example `/dev/disk/by-partlabel/EFI` |
-| `kernel_refind_default` | see [defaults/main.yml](defaults/main.yml) |
-used to construct `/boot/efi/EFI/refind/refind.conf` |
-| `kernel_refind` | `{}` | refind config, will be merged with
-`kernel_refind_default` |
+| `kernel_efi_device` | `""` | path to device with `/boot/efi`, example `/dev/disk/by-partlabel/EFI` |
+| `kernel_refind_default` | see [defaults/main.yml](defaults/main.yml) | used to construct `/boot/efi/EFI/refind/refind.conf` |
+| `kernel_refind` | `{}` | refind config, will be merged with `kernel_refind_default` |
 | `kernel_refind_menu` | `[]` | see [defaults/main.yml](defaults/main.yml) |
 
 ## Examples

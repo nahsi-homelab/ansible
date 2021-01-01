@@ -13,4 +13,4 @@ AllowUsers {{ base_sshd_allow_users | join(' ') }}
 HostKey {{ key }}
 {% endfor %}
 
-Subsystem sftp /usr/lib64/misc/sftp-server
+Subsystem sftp internal-sftp

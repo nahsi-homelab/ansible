@@ -29,7 +29,7 @@ For examples see comments in [defaults](defaults).
 | `base_filesystems` | `[]` | filesystem to mount and add to fstab, see [defaults/system.yml](defaults/system.yml) |
 | `base_timezone` | `"Europe/Moscow"` | |
 | `base_consolefont` | `"ter-16b"` | one of `/usr/share/consolefonts` |
-| `base_env` | `{}` | variables to set with eselect |
+| `base_env` | `{}` | variables to set with eselect, see [defaults/system.yml](defaults/system.yml) |
 |||
 | `base_packages_default` | see [defaults/system.yml](defaults/system.yml) | list of packages to install |
 | `base_packages` | `[]` | list of packages to install, will be added to `base_packages_default` |
@@ -52,7 +52,7 @@ For examples see comments in [defaults](defaults).
 | `base_sshd_host_keys` | `[ "/etc/ssh/ssh_host_rsa_key", "/etc/ssh/ssh_host_ed25519_key" ]` | enabled cryptosystems |
 |||
 | `base_distccd` | see [defaults/distcc.yml](defaults/distcc.yml) | distccd config |
-| `base_distccd_allow` | host or subnet | list of IPs/subnets allowed to connect to distccd |
+| `base_distccd_allow` | `["{{ ansible_default_ipv4.network }}"]` | list of IPs/subnets allowed to connect to distccd |
 
 ## Examples
 

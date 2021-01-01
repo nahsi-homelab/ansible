@@ -1,4 +1,21 @@
-chroot: false
+# List of packages to be installed
+base_packages: []
+  # - app-editors/neovim
+  # - sys-process/htop
+base_packages_default:
+  - app-admin/doas
+  - dev-vcs/git
+  - sys-process/cronie
+  - app-eselect/eselect-repository
+  - sys-fs/dosfstools
+  - media-fonts/terminus-font
+
+  # nice to have packages
+  - app-shells/gentoo-bashcomp
+  - app-portage/flaggie
+  - app-portage/portage-utils
+  - app-misc/nnn
+
 
 # Filesystems to mount
 # will create an entry in /etc/fstab
@@ -20,22 +37,6 @@ base_locales:
 base_env: {}
   # locale: "en_US.UTF-8"
   # editor: "nvim"
-
-# List of packages to be installed
-base_packages: []
-  # - app-editors/neovim
-  # - sys-process/htop
-base_packages_default:
-  - dev-vcs/git
-  - sys-process/cronie
-  - app-eselect/eselect-repository
-  - app-admin/doas
-  - media-fonts/terminus-font
-  - sys-fs/dosfstools
-  # nice to have packages
-  - app-shells/gentoo-bashcomp
-  - app-portage/flaggie
-  - app-portage/portage-utils
 
 # List of services to enable
 base_services: []
@@ -105,3 +106,5 @@ base_sshd:
 #   config_eth0="dhcp"
 # base_network_interfaces:
 #   - "eth0"
+
+chroot: false

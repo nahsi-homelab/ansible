@@ -21,6 +21,6 @@ provisioner:
         kernel_zfs_on_root: true
         kernel_refind_menu:
           - name: "Boot default"
-            cmd: "zfsbootmenu:ROOT=zroot spl_hostid=$$( hostid ) timeout=0 ro quiet loglevel=0"
+            cmd: "timeout=0 ro quiet loglevel=0"
           - name: "Boot to menu"
-            cmd:  "zfsbootmenu:ROOT=zroot spl_hostid=$$( hostid ) timeout=-1 ro quiet loglevel=0"
+            cmd:  "timeout=-1 ro quiet loglevel=0"

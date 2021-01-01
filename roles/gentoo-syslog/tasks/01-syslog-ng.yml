@@ -14,5 +14,6 @@
 - name: enable syslog-ng
   service:
     name: syslog-ng
-    enabled: true
+    enabled: yes
     runlevel: default
+    use: openrc

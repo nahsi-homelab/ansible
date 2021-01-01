@@ -18,5 +18,8 @@
   include_tasks: 04-distcc.yml
   when: '"distcc" in __makeconf.FEATURES or base_distccd is defined'
 
-# - name: Configure network
-#   include_tasks: 05-network.yml
+- name: Configure network
+  include_tasks: 05-network.yml
+
+- name: Configure sshd
+  include_tasks: 06-ssh.yml

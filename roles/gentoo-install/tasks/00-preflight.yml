@@ -4,10 +4,26 @@
       - arch is defined
     quiet: true
 
+# https://github.com/ansible/ansible/pull/72659
+# - name: fail when install prefix is not mounted
+#   assert:
+#     that: "{{ install_prefix }} in {{ ansible_mounts | map(attribute='mount') | list }}"
+#     fail_msg: "'{{ install_prefix }}' not mounted"
+#     quiet: true
+#   tags:
+#     - notest
+
+- name: get mounted filesystems
+  shell: "mount | grep -q -e ' {{ install_prefix }} '"
+  register: __mount_check
+  changed_when: false
+  tags:
+    - notest
+
 - name: fail when install prefix is not mounted
   assert:
-    that: "{{ install_prefix }} in {{ ansible_mounts | map(attribute='mount') | list }}"
-    fail_msg: "'{{ install_prefix }}' not mounted"
+    that:
+      - __mount_check.rc == 0
     quiet: true
   tags:
     - notest

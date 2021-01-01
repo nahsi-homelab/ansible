@@ -7,7 +7,7 @@
   block:
   - name: copy distccd config
     template:
-      src: distccd.j2
+      src: conf.d/distccd.j2
       dest: /etc/conf.d/distccd
       mode: 0644
     notify: restart distccd
@@ -17,4 +17,5 @@
       name: distccd
       enabled: yes
       runlevel: default
+      use: openrc
   when: base_distccd is defined

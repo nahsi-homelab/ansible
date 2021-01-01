@@ -26,15 +26,26 @@ For examples see comments in <defaults>.
 | `base_distccd` | | distccd config, see <defaults/distcc.yml> |
 | `base_distccd_allow` | host ipv4 subnet | list of ips/subnets allowed to connect to distccd |
 |||
+| `base_filesystems` | `[]` | filesystem to mount and add to fstab, see <defaults/system.yml> |
 | `base_timezone` | "Europe/Moscow" | |
+| `base_consolefont` | ter-16b | one of `/usr/share/consolefonts` |
 | `base_env` | `{}` | variables to set with eselect |
 | `base_packages_default` | see <defaults/system.yml> | list of packages to install |
 | `base_packages` | `[]` | list of packages to install, will be added to `base_packages_default` |
+| `base_services_default` | see <defaults/system.yml> | list of services to enable |
+| `base_services` | `[]` | list of services to enable, will be added to `base_services_default` |
 | `base_openrc_default` | see <defaults/system.yml> | used to construct `/etc/rc.conf` |
 | `base_openrc` | `{}` | host/group vars, will be merged with `base_openrc_default` |
 | `base_hwclock_default` | see <defaults/system.yml> | used to construct `/etc/conf.d/hwclock` |
 | `base_nwclock` | `{}` | host/group vars, will be merged with `base_hwclock_default` |
 | `base_network` | see <defaults/system.yml> |
+| `base_network_interfaces` | `[]` | list of network interfaces to enable |
+|||
+| `base_sshd_allow_groups` | `[ "wheel" ]` | only allow users from groups to connect |
+| `base_sshd_allow_users` | `[]` | only allow users to connect |
+| `base_sshd_host_keys` | `[ "/etc/ssh/ssh_host_rsa_key", "/etc/ssh/ssh_host_ed25519_key" ]` | enabled cryptosystems |
+| `base_sshd_listen_address` | `{{ ansible_default_ipv4.address }}` | sshd listen address |
+| `base_sshd` | see <defaults/system.yml> | sshd config |
 | `chroot` | `false` | whether system this host is running again is in chroot - if `true` some services will not be restarted |
 | `users` | `{}` | map of users, see below |
 

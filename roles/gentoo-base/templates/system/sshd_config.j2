@@ -1,0 +1,16 @@
+#jinja2: trim_blocks: True, lstrip_blocks: True
+# {{ ansible_managed }}
+{% for key, value in base_sshd.items() %}
+{{ key }} {{ value }}
+{% endfor %}
+{% if base_sshd_allow_groups | length %}
+AllowGroups {{ base_sshd_allow_groups | join(' ') }}
+{% endif %}
+{% if base_sshd_allow_users | length %}
+AllowUsers {{ base_sshd_allow_users | join(' ') }}
+{% endif %}
+{% for key in base_sshd_host_keys %}
+HostKey {{ key }}
+{% endfor %}
+
+Subsystem sftp internal-sftp

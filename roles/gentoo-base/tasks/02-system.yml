@@ -41,6 +41,7 @@
     name: cronie
     enabled: yes
     runlevel: default
+    use: openrc
 
 - name: set env vars with eselect
   eselect:
@@ -53,8 +54,36 @@
 
 - name: add doas rules
   copy:
-    content: "permit nopass :wheel"
+    content: "permit nopass :wheel\n"
     dest: /etc/doas.conf
     mode: 0644
+
+- name: set terminus as default consolefont
+  copy:
+    content: "consolefont={{ base_consolefont }}\n"
+    dest: /etc/conf.d/consolefont
+
+- name: enable services
+  service:
+    name: "{{ service.name }}"
+    enabled: yes
+    runlevel: "{{ service.runlevel }}"
+    use: openrc
+  loop: "{{ base_services_default + base_services }}"
+  loop_control:
+    loop_var: service
+    label: "{{ service.name }}"
+
+- name: mount filesystems
+  mount:
+    src: "{{ fs.src }}"
+    opts: "{{ fs.opts }}"
+    path: "{{ fs.path }}"
+    fstype: "{{ fs.type }}"
+    state: mounted
+  loop: "{{ base_filesystems }}"
+  loop_control:
+    loop_var: fs
+    label: "{{ fs.path }}"
 
 - meta: flush_handlers

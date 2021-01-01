@@ -2,6 +2,8 @@ kernel_firmware: []
 kernel_kconfigs: []
 kernel_postinst: []
 
+# kernel_efi_device: "/dev/disk/by-partlabel/EFI"
+
 # https://rodsbooks.com/refind/configfile.html
 kernel_refind: {}
 kernel_refind_default:

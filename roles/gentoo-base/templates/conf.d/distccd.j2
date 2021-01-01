@@ -5,3 +5,4 @@ DISTCCD_OPTS="{%- for k,v in base_distccd.items() -%}
 {%- endfor -%}"
 DISTCCD_OPTS="${DISTCCD_OPTS} {% for c in base_distccd_allow %}--allow={{ c }} {%- endfor %}"
 DISTCCS_EXEC="/usr/bin/distccd"
+rc_need="net"

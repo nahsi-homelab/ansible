@@ -14,7 +14,10 @@
 - name: copy gentoo-kernel savedconfig
   copy:
     src: "configs/{{ arch }}-base.config"
-    dest: "/etc/portage/savedconfig/sys-kernel/gentoo-kernel"
+    dest: "/etc/portage/savedconfig/sys-kernel/gentoo-kernel-{{ kernel_version }}"
+  notify:
+    - rebuild modules
+    - rebuild kernel
 
 - name: create linux-firmware savedconfig
   template:
@@ -23,20 +26,29 @@
 
 - name: configure builtin firmare
   copy:
-    content: "CONFIG_EXTRA_FIRMWARE=\"{{ base_kernel_firmware | join(' ') }}\""
+    content: "CONFIG_EXTRA_FIRMWARE=\"{{ kernel_firmware | join(' ') }}\""
     dest: /etc/kernel/config.d/firmware.config
   when: kernel_firmware | length > 0
+  notify:
+    - rebuild modules
+    - rebuild kernel
 
 - name: copy kconfigs
   copy:
     src: "kconfig.d/{{ item }}"
     dest: "/etc/kernel/kconfig.d/{{ item }}"
   loop: "{{ kernel_kconfigs }}"
+  notify:
+    - rebuild modules
+    - rebuild kernel
 
 - name: create custom Kconfig to include in Linux src
   template:
     src: Kconfig.j2
     dest: "/etc/kernel/Kconfig"
+  notify:
+    - rebuild modules
+    - rebuild kernel
 
 - name: use custom Kconfig when building kernel
   copy:
@@ -49,10 +61,13 @@
     dest: "/etc/kernel/postinst.d/{{ item }}"
     mode: 745
   loop: "{{ kernel_postinst }}"
+  notify: update initramfs
 
 - name: force gentoo-kernel version
   copy:
-    content: ">sys-kernel/gentoo-kernel-{{ kernel_version }}"
+    content: |
+      >sys-kernel/gentoo-kernel-{{ kernel_version }}
+      >sys-kernel/gentoo-sources-{{ kernel_version }}
     dest: /etc/portage/package.mask/kernel.mask
 
 - name: enable savedconfigs
@@ -72,4 +87,12 @@
   portage:
     package: sys-kernel/gentoo-kernel
     state: latest
-  notify: rebuild modules
+  notify:
+    - rebuild modules
+    - rebuild kernel
+
+- name: remove old kernels
+  portage:
+    package: sys-kernel/gentoo-kernel
+    state: absent
+    depclean: yes

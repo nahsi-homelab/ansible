@@ -28,9 +28,12 @@ base_packages_default:
   - sys-process/cronie
   - app-eselect/eselect-repository
   - app-admin/doas
-  - app-shells/gentoo-bashcomp
   - media-fonts/terminus-font
   - sys-fs/dosfstools
+  # nice to have packages
+  - app-shells/gentoo-bashcomp
+  - app-portage/flaggie
+  - app-portage/portage-utils
 
 # List of services to enable
 base_services: []

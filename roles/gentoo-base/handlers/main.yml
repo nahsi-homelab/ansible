@@ -1,3 +1,9 @@
+- name: update use
+  portage:
+    package: "@world"
+    newuse: yes
+    changed_use: yes
+
 - name: update locales
   command: locale-gen --update
 

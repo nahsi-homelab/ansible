@@ -24,6 +24,10 @@
 
 - name: set packages use flags
   copy:
-    content: "{% for p in base_portage_package_use %}{{ p }}{% endfor %}"
+    content: |
+      {% for p in base_portage_package_use %}
+      {{ p }}
+      {% endfor %}
     dest: /etc/portage/package.use/ansible.use
     mode: 0644
+  notify: update use

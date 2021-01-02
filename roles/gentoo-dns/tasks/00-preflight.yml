@@ -1,0 +1,11 @@
+- name: check that dnscrypt_servers or dnscrypt_routes are defined
+  assert:
+    that: dns_dnscrypt_servers is defined or dns_dnscrypt_routes is defined
+    quiet: true
+
+- name: warn when both dnscrypt_servers and dnscrypt_routes are defined
+  debug:
+    msg: "Both dns_dnscrypt_servers and dns_dnscrypt_routes are defined. dns_dsncrypt_servers will be ignored"
+  when:
+    - dns_dnscrypt_servers is defined
+    - dns_dnscrypt_routes is defined

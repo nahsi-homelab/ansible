@@ -1,0 +1,19 @@
+- name: install unbound
+  portage:
+    package: net-dns/unbound
+  notify: restart unbound
+
+# - name: copy unbound config
+#   template:
+#     src: unbound.conf.j2
+#     dest: /etc/unbound/unbound.conf
+#     validate: "unbound-checkconf %s"
+#     mode: 0660
+#   notify: reload unbound
+
+- name: enable unbound
+  service:
+    name: unbound
+    enabled: yes
+    runlevel: default
+    use: openrc

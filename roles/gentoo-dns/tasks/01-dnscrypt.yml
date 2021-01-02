@@ -1,0 +1,28 @@
+- name: install dnscrypt
+  portage:
+    package: net-dns/dnscrypt-proxy
+
+- name: copy dnscrypt config
+  template:
+    src: dnscrypt-proxy.toml.j2
+    dest: /etc/dnscrypt-proxy/dnscrypt-proxy.toml
+    validate: "dnscrypt-proxy -check -config %s"
+    mode: 0660
+  notify: restart dnscrypt
+
+- name: copy dnscrypt openrc config
+  copy:
+    content: |
+      DNSCRYPT_PROXY_OPTS="-config /etc/dnscrypt-proxy/dnscrypt-proxy.toml"
+      DNSCRYPT_PROXY_USER="dnscrypt-proxy"
+      DNSCRYPT_PROXY_GROUP="dnscrypt-proxy"
+    dest: /etc/conf.d/dnscrypt-proxy
+    mode: 0660
+  notify: restart dnscrypt
+
+- name: enable dnscrypt
+  service:
+    name: dnscrypt-proxy
+    enabled: yes
+    runlevel: default
+    use: openrc

@@ -1,6 +1,7 @@
 - name: install dnscrypt
   portage:
     package: net-dns/dnscrypt-proxy
+  notify: restart dnscrypt
 
 - name: copy dnscrypt config
   template:

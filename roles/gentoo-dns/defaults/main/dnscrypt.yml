@@ -7,10 +7,10 @@ dns_dnscrypt_whitelist: {}
   # whitelist_file: "whitelist.txt"
 
 dns_dnscrypt_listen:
-  - "127.0.0.1:5300"
+  - "127.0.0.1:5053"
 
 dns_dnscrypt_options:
-  log_level: 5
+  log_level: 4
   use_syslog: true
   max_clients: 10
   timeout: 500
@@ -39,16 +39,16 @@ dns_dnscrypt_options:
   cache: false # Unbound will do the caching
 
 # If Anonimized DNS enabled server_names are ignored
-dns_dnscrypt_servers:
-  - cloudflare
-  - google
+dns_dnscrypt_servers: []
+#   - cloudflare
+#   - google
 # Anonimized DNS
 # https://github.com/DNSCrypt/dnscrypt-proxy/wiki/Anonymized-DNS
 dns_dnscrypt_routes:
   - server_name: "*"
     via:
-      - anon-cs-fr
-      - anon-bcn
+      - anon-cs-nl
+      - anon-scaleway-ams
 
 dns_dnscrypt_sources:
   public-resolvers:

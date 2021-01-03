@@ -32,9 +32,11 @@ server:
     {% endif %}
 
 {% for __zone in dns_unbound_forward_zone | default([]) %}
-{% for key, value in __zone.items() %}
 forward-zone:
-    {% if key == "forward-addr" %}
+{% for key, value in __zone.items() %}
+    {% if key == "name" %}
+    name: "{{ value }}"
+    {% elif key == "forward-addr" %}
     {% for option in value %}
     forward-addr: {{ option }}
     {% endfor %}

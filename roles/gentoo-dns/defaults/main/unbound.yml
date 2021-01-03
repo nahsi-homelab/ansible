@@ -7,8 +7,7 @@ dns_unbound_server_default:
   # Config files to load.
   include: []
   # Interfaces to answer queries. Are not changed on reload, only on restart.
-  interface:
-    - 0.0.0.0@53
+  interface: []
   # Interfaces to send outgoing queries to authoritative server from.
   # If none, the default (all) interface are used.
   outgoing-interface: []

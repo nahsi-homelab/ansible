@@ -30,7 +30,7 @@
     owner: unbound
     group: unbound
     mode: 0660
-    # validate: "unbound-checkconf %s"
+    validate: "unbound-checkconf %s"
   notify: reload unbound
 
 - name: enable unbound

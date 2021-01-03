@@ -17,6 +17,17 @@ lint: ansible-lint --force-color .
 
 provisioner:
   name: ansible
+  inventory:
+    host_vars:
+      gentoo-dns:
+        dns_unbound_forward_zone:
+          - name: "."
+            forward-addr:
+              - 127.0.0.1@5053 # dnscrypt
+
+        dns_unbound_server:
+          interface:
+            - 0.0.0.0@53
 
 verifier:
   name: testinfra

@@ -15,7 +15,6 @@ dns_unbound_server_default:
   access-control:
     - "0.0.0.0/0 refuse"
     - "127.0.0.0/8 allow"
-    - "{{ ansible_default_ipv4.network }} allow"
   do-ip4: "yes"
   do-ip6: "no"
   do-udp: "yes"

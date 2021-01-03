@@ -107,4 +107,7 @@ base_sshd:
 # base_network_interfaces:
 #   - "eth0"
 
+base_dns:
+  name_servers: 1.1.1.1
+
 chroot: false

@@ -9,6 +9,7 @@ base_packages_default:
   - app-eselect/eselect-repository
   - sys-fs/dosfstools
   - media-fonts/terminus-font
+  - net-dns/bind-tools
 
   # nice to have packages
   - app-shells/gentoo-bashcomp

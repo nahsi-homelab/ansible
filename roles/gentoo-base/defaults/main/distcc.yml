@@ -12,7 +12,6 @@
 #   N: 15 # niceness
 
 # Clients allowed to use distccd server
-base_distccd_allow:
-  - "{{ ansible_default_ipv4.network }}"
+base_distccd_allow: []
   # - 192.168.1.0/24
   # - 192.168.1.2

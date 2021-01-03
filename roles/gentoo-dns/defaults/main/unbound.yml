@@ -1,0 +1,49 @@
+dns_unbound_server: {}
+dns_unbound_server_default:
+  use-syslog: "yes"
+  verbosity: 2
+  num-threads: 2
+  do-daemonize: "yes"
+  # Config files to load.
+  include: []
+  # Interfaces to answer queries. Are not changed on reload, only on restart.
+  interface:
+    - 0.0.0.0@53
+  # Interfaces to send outgoing queries to authoritative server from.
+  # If none, the default (all) interface are used.
+  outgoing-interface: []
+  # Control which clients are allowed to make (recursive) queries.
+  access-control:
+    - "0.0.0.0/0 refuse"
+    - "127.0.0.0/8 allow"
+    - "{{ ansible_default_ipv4.network }} allow"
+  do-ip4: "yes"
+  do-ip6: "no"
+  do-udp: "yes"
+  do-tcp: "yes"
+  hide-identity: "yes"
+  hide-version: "yes"
+  cache-min-ttl: 3600
+  cache-max-ttl: 86400
+  # If yes, message cache elements are prefetched before they expire
+  prefetch: "yes"
+  # If yes, fetch the DNSKEYs earlier in the validation process,
+  # when a DS record is encountered.
+  prefetch-key: "yes"
+  # You need this as no for dnscrypt-proxy to work
+  do-not-query-localhost: "no"
+  # Reduce EDNS reassembly buffer size.
+  edns-buffer-size: 1232
+  # Must be power of 2 times the number of num-threads.
+  msg-cache-slabs: 4
+  rrset-cache-slabs: 4
+  infra-cache-slabs: 4
+  key-cache-slabs: 4
+  # Ensure privacy of local IP ranges.
+  private-address:
+    - 0.0.0.0/8
+    - 172.16.0.0/12
+    - 192.168.0.0/16
+    - 169.254.0.0/16
+  # Allow this domain, and all its subdomains to contain private addresses.
+  private-domain: []

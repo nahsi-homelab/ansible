@@ -9,3 +9,7 @@
   when:
     - dns_dnscrypt_servers is defined
     - dns_dnscrypt_routes is defined
+
+- name: combine dns_unbound_server_default and dns_unbound_server
+  set_fact:
+    __unbound: "{{ dns_unbound_server_default | combine(dns_unbound_server, recursive=True) }}"

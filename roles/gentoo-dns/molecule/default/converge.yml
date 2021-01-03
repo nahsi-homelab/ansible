@@ -1,4 +1,9 @@
 - name: Converge
   hosts: all
+  # vars:
+  #   dns_unbound_forward_zone:
+  #     - name: "."
+  #       forward-addr:
+  #         - 127.0.0.1@5053 # dnscrypt
   roles:
     - gentoo-dns

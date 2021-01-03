@@ -4,5 +4,5 @@
 - name: Configure dnscrypt-proxy
   include_tasks: 01-dnscrypt.yml
 
-# - name: Configure unbound
-#   include_tasks: 02-logrotate.yml
+- name: Configure unbound
+  include_tasks: 02-unbound.yml

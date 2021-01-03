@@ -3,13 +3,35 @@
     package: net-dns/unbound
   notify: restart unbound
 
-# - name: copy unbound config
-#   template:
-#     src: unbound.conf.j2
-#     dest: /etc/unbound/unbound.conf
-#     validate: "unbound-checkconf %s"
-#     mode: 0660
-#   notify: reload unbound
+- name: create unbound conf.d directory
+  file:
+    path: /etc/unbound/conf.d
+    state: directory
+    owner: unbound
+    group: unbound
+
+- name: copy unbound interfaces config
+  template:
+    src: unbound/interfaces.conf.j2
+    dest: /etc/unbound/conf.d/interfaces.conf
+    owner: unbound
+    group: unbound
+    mode: 0660
+    validate: "unbound-checkconf %s"
+  notify: restart unbound
+  when:
+    - __unbound.interface is defined
+    - __unbound.interface | length
+
+- name: copy unbound config
+  template:
+    src: unbound/unbound.conf.j2
+    dest: /etc/unbound/unbound.conf
+    owner: unbound
+    group: unbound
+    mode: 0660
+    # validate: "unbound-checkconf %s"
+  notify: reload unbound
 
 - name: enable unbound
   service:

@@ -27,11 +27,17 @@ def test_unbound_configured(host):
     assert f.exists
     assert f.contains("interface: 0.0.0.0@53")
 
+    s = host.socket("tcp://0.0.0.0:53")
+    assert s.is_listening
+
 
 def test_dnscrypt_configured(host):
     f = host.file("/etc/dnscrypt-proxy/dnscrypt-proxy.toml")
     assert f.exists
     assert f.contains("require_nolog = true")
+
+    s = host.socket("tcp://127.0.0.1:5053")
+    assert s.is_listening
 
 
 @pytest.mark.parametrize("service", [
@@ -45,10 +51,7 @@ def test_services(host, service):
     assert service.is_enabled
 
 
-@pytest.mark.parametrize("port", [
-    "53",
-    "5053"
-    ])
-def test_sockets(host, port):
-    s = host.socket("tcp://0.0.0.0:{}".format(port))
-    assert s.is_listening
+def test_dns(host):
+    google = host.addr("google.com")
+
+    assert google.is_resolvable

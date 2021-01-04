@@ -40,8 +40,8 @@ dns_dnscrypt_options:
 
 # If Anonimized DNS enabled server_names are ignored
 dns_dnscrypt_servers: []
-#   - cloudflare
-#   - google
+  #   - cloudflare
+  #   - google
 # Anonimized DNS
 # https://github.com/DNSCrypt/dnscrypt-proxy/wiki/Anonymized-DNS
 dns_dnscrypt_routes:

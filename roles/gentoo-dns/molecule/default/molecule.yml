@@ -5,6 +5,8 @@ platforms:
   - name: gentoo-dns
     image: localhost:5000/gentoo-dns
     pre_build_image: true
+    dns_servers:
+      - 127.0.0.1
     tmpfs:
       - /run
       - /tmp
@@ -13,7 +15,7 @@ platforms:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     command: /sbin/openrc-init
 
-lint: ansible-lint --force-color .
+lint: ansible-lint -c ../../.ansible-lint --force-color .
 
 provisioner:
   name: ansible

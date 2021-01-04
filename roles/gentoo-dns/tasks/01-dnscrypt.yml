@@ -21,6 +21,14 @@
     mode: 0660
   notify: restart dnscrypt
 
+- name: ensure dnscrypt directory ownership
+  file:
+    path: "/etc/dnscrypt-proxy"
+    state: directory
+    owner: dnscrypt-proxy
+    group: dnscrypt-proxy
+    recurse: yes
+
 - name: enable dnscrypt
   service:
     name: dnscrypt-proxy

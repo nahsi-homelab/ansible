@@ -8,7 +8,9 @@
     src: dnscrypt-proxy.toml.j2
     dest: /etc/dnscrypt-proxy/dnscrypt-proxy.toml
     validate: "dnscrypt-proxy -check -config %s"
-    mode: 0660
+    owner: root
+    group: dnscrypt-proxy
+    mode: 0640
   notify: restart dnscrypt
 
 - name: copy dnscrypt openrc config
@@ -18,6 +20,8 @@
       DNSCRYPT_PROXY_USER="dnscrypt-proxy"
       DNSCRYPT_PROXY_GROUP="dnscrypt-proxy"
     dest: /etc/conf.d/dnscrypt-proxy
+    owner: root
+    group: root
     mode: 0660
   notify: restart dnscrypt
 
@@ -25,8 +29,9 @@
   file:
     path: "/etc/dnscrypt-proxy"
     state: directory
-    owner: dnscrypt-proxy
+    owner: root
     group: dnscrypt-proxy
+    mode: "u=rwX,g=rX,o="
     recurse: yes
 
 - name: enable dnscrypt

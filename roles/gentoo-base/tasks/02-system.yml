@@ -31,6 +31,17 @@
     dest: /etc/rc.conf
     mode: 0644
 
+- name: install openresolv
+  portage:
+    package: net-dns/openresolv
+    state: present
+
+- name: configure openresolv
+  template:
+    src: system/resolvconf.conf.j2
+    dest: /etc/resolvconf.conf
+  notify: run resolvconf
+
 - name: install base packages
   portage:
     package: "{{ item }}"

@@ -1,0 +1,8 @@
+- name: Preflight
+  include_tasks: 00-preflight.yml
+
+- name: Configure dnscrypt-proxy
+  include_tasks: 01-dnscrypt.yml
+
+- name: Configure unbound
+  include_tasks: 02-unbound.yml

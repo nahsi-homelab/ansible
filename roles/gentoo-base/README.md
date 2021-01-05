@@ -44,6 +44,7 @@ For examples see comments in [defaults](defaults).
 |||
 | `base_network` | see [defaults/system.yml](defaults/system.yml) | netifrc configuration |
 | `base_network_interfaces` | `[]` | list of network interfaces to enable |
+| `base_dns` | see [defaults/system.yml](defaults/system.yml) | used to create `/etc/resolvconf.conf` |
 |||
 | `base_sshd` | see [defaults/system.yml](defaults/system.yml) | sshd config |
 | `base_sshd_listen_address` | `{{ ansible_default_ipv4.address }}` | sshd listen address |

@@ -1,0 +1,38 @@
+driver:
+  name: podman
+
+platforms:
+  - name: gentoo-dns
+    image: localhost:5000/gentoo-dns
+    pre_build_image: true
+    dns_servers:
+      - 127.0.0.1
+    tmpfs:
+      - /run
+      - /tmp
+      - /var/tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    command: /sbin/openrc-init
+
+lint: ansible-lint -c ../../.ansible-lint --force-color .
+
+provisioner:
+  name: ansible
+  inventory:
+    host_vars:
+      gentoo-dns:
+        dns_unbound_forward_zone:
+          - name: "."
+            forward-addr:
+              - 127.0.0.1@5053 # dnscrypt
+
+        dns_unbound_server:
+          interface:
+            - 0.0.0.0@53
+
+verifier:
+  name: testinfra
+  options:
+    # show which tests where executed in test output
+    v: 1

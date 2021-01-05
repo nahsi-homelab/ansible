@@ -1,0 +1,18 @@
+dns_unbound_forward_zone:
+  - name: "."
+    forward-addr:
+      - 127.0.0.1@5053 # dnscrypt
+
+dns_unbound_server:
+  interface:
+    - 0.0.0.0@53
+  access-control:
+    - "0.0.0.0/0 refuse"
+    - "127.0.0.0/8 allow"
+    - "192.168.1.0/24 allow"
+
+dns_dnscrypt_routes:
+  - server_name: "*"
+    via:
+      - anon-dnscrypt.one
+      - anon-cs-nl

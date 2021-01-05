@@ -1,0 +1,73 @@
+dns_dnscrypt_blacklist: {}
+  # blacklist_file: "blacklist.txt"
+  # log_file: "/var/log/dnscrypt-proxy/blocked.log"
+  # log_format: "tsv"
+dns_dnscrypt_ip_blacklist: {}
+dns_dnscrypt_whitelist: {}
+  # whitelist_file: "whitelist.txt"
+
+dns_dnscrypt_listen:
+  - "127.0.0.1:5053"
+
+dns_dnscrypt_options:
+  log_level: 4
+  use_syslog: true
+  max_clients: 10
+  timeout: 500
+  keepalive: 30
+  ipv4_servers: true
+  ipv6_servers: false
+  dnscrypt_servers: true
+  doh_servers: false
+  require_dnssec: true
+  require_nolog: true
+  require_nofilter: true
+  force_tcp: false
+  # "p2", "ph", "first" or "random"
+  lb_strategy: "random"
+  # try to estimate the latency of all the resolvers
+  lb_estimator: false
+  ignore_system_dns: true
+  # Maximum time (in seconds) to wait for network connectivity before
+  # initializing the proxy.
+  netprobe_timeout: 60
+  netprobe_address: "9.9.9.9:53"
+  block_ipv6: true
+  block_unqualified: true
+  block_undelegated: true
+  reject_ttl: 600
+  cache: false # Unbound will do the caching
+
+# If Anonimized DNS enabled server_names are ignored
+dns_dnscrypt_servers: []
+  #   - cloudflare
+  #   - google
+# Anonimized DNS
+# https://github.com/DNSCrypt/dnscrypt-proxy/wiki/Anonymized-DNS
+dns_dnscrypt_routes:
+  - server_name: "*"
+    via:
+      - anon-cs-nl
+      - anon-scaleway-ams
+
+dns_dnscrypt_sources:
+  public-resolvers:
+    urls:
+      - https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v2/public-resolvers.md
+      - https://download.dnscrypt.info/resolvers-list/v2/public-resolvers.md
+    cache_file: "/var/cache/dnscrypt-proxy/public-resolvers.md"
+    minisign_key: "RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3"
+    prefix: ""
+
+  relays:
+    urls:
+      - https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v2/relays.md
+      - https://download.dnscrypt.info/resolvers-list/v2/relays.md
+    cache_file: "/var/cache/dnscrypt-proxy/relays.md"
+    minisign_key: "RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3"
+    refresh_delay: 72
+    prefix: ""
+
+dns_dnscrypt_static: {}
+  # myserver:
+  #   stamp: "sdns:AQcAAAAAAAAAAAAQMi5kbnNjcnlwdC1jZXJ0Lg"

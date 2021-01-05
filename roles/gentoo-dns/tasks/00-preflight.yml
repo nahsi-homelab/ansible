@@ -1,0 +1,15 @@
+- name: check that dnscrypt_servers or dnscrypt_routes are defined
+  assert:
+    that: dns_dnscrypt_servers | length or dns_dnscrypt_routes | length
+    quiet: true
+
+- name: warn when both dnscrypt_servers and dnscrypt_routes are defined
+  debug:
+    msg: "Both dns_dnscrypt_servers and dns_dnscrypt_routes are defined. dns_dsncrypt_servers will be ignored"
+  when:
+    - dns_dnscrypt_servers | length
+    - dns_dnscrypt_routes | length
+
+- name: combine dns_unbound_server_default and dns_unbound_server
+  set_fact:
+    __unbound: "{{ dns_unbound_server_default | combine(dns_unbound_server, recursive=True) }}"

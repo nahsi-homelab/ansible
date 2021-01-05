@@ -73,3 +73,6 @@ base_network: |
 
 base_network_interfaces:
   - "enp35s0"
+
+base_dns:
+  name_servers: 127.0.0.1

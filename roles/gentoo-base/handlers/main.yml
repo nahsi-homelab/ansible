@@ -13,6 +13,9 @@
 - name: update timezone
   command: emerge --config sys-libs/timezone-data
 
+- name: run resolvconf
+  command: resolvconf -u
+
 - name: update hostname
   service:
     name: hostname

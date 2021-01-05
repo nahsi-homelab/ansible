@@ -1,0 +1,42 @@
+- name: install unbound
+  portage:
+    package: net-dns/unbound
+  notify: restart unbound
+
+- name: create unbound conf.d directory
+  file:
+    path: /etc/unbound/conf.d
+    state: directory
+    owner: root
+    group: unbound
+    mode: 0750
+
+- name: copy unbound interfaces config
+  template:
+    src: unbound/interfaces.conf.j2
+    dest: /etc/unbound/conf.d/interfaces.conf
+    owner: root
+    group: unbound
+    mode: 0660
+    validate: "unbound-checkconf %s"
+  notify: restart unbound
+  when:
+    - __unbound.interface is defined
+    - __unbound.interface | length
+
+- name: copy unbound config
+  template:
+    src: unbound/unbound.conf.j2
+    dest: /etc/unbound/unbound.conf
+    owner: root
+    group: unbound
+    mode: 0660
+    validate: "unbound-checkconf %s"
+  notify: reload unbound
+
+- name: enable unbound
+  service:
+    name: unbound
+    enabled: yes
+    runlevel: default
+    use: openrc

@@ -1,0 +1,14 @@
+- name: restart unbound
+  service:
+    name: unbound
+    state: restarted
+
+- name: reload unbound
+  service:
+    name: unbound
+    state: reloaded
+
+- name: restart dnscrypt
+  service:
+    name: dnscrypt-proxy
+    state: restarted

@@ -38,12 +38,6 @@ consul_config_base:
   # files.
   enable_local_script_checks: true
 
-  ui_config:
-    enabled: false
-
-  acl:
-    enabled: false
-
   telemetry:
     disable_compat_1.9: true
 consul_config_group: {}

@@ -1,5 +1,5 @@
 - name: download consul to localhost
-  become: true
+  become: false
   run_once: true
   delegate_to: localhost
   get_url:
@@ -40,17 +40,15 @@
     label: "{{ dir.key }}"
 
 - name: create consul archive directory
-  become: true
+  become: false
   delegate_to: localhost
   file:
     path: "{{ __archive_dir }}"
     state: directory
-    owner: root
-    group: root
     mode: 0755
 
 - name: unpack consul
-  become: true
+  become: false
   delegate_to: localhost
   unarchive:
     src: "/tmp/{{ __archive }}"

@@ -1,0 +1,69 @@
+# Overwrite this variable at group_vars level for consul servers.
+consul_bootstrap_config:
+  # client config
+  server: false
+  # DNS forward for consul domain must be working in order for agent to join
+  retry_join: ["consul.domain.internal"]
+
+  # server config
+  # server: true
+  # bootstrap_expect: 3
+
+consul_config_base:
+  # This flag controls the datacenter in which the agent is running.
+  datacenter: "{{ consul_datacenter }}"
+
+  # Directory to store state.
+  data_dir: "{{ consul_dirs.data.path }}"
+
+  # Use syslog to store logs.
+  enable_syslog: true
+  # "trace", "debug", "info", "warn", "err"
+  log_level: "warn"
+
+  # The address that should be bound to for internal cluster communications.
+  # https://www.consul.io/docs/agent/options.html#bind_addr
+  bind_addr: "{{ ansible_default_ipv4.address }}"
+
+  # Addresses to bind to. Defaults to 'client_addr'
+  # https://www.consul.io/docs/agent/options.html#addresses
+  # addresses:
+  #   dns: "{{ consul_config.client_addr }}"
+  #   http: "{{ consul_config.client_addr }}"
+  #   https: "{{ consul_config.client_addr }}"
+  #   rpc: "{{ consul_config.client_addr }}"
+  #   grpc: "{{ consul_config.client_addr }}"
+
+  # Enable scripts in checks when they are defined in the local configuration
+  # files.
+  enable_local_script_checks: true
+
+  telemetry:
+    disable_compat_1.9: true
+consul_config_group: {}
+consul_config_host: {}
+consul_config: >
+  {{
+    consul_config_base |
+    combine(consul_config_group, recursive=true) |
+    combine(consul_config_host, recursive=true)
+  }}
+
+# Main consul directory.
+consul_dir: "/opt/consul"
+consul_dirs_base:
+  configs:
+    path: "{{ consul_dir }}/conf.d"
+  scripts:
+    path: "{{ consul_dir }}/scripts"
+  data:
+    path: "{{ consul_dir }}/data"
+    mode: "u=rwX,g=rX,o="
+consul_dirs_group: {}
+consul_dirs_host: {}
+consul_dirs: >
+  {{
+    consul_dirs_base |
+    combine(consul_dirs_group, recursive=true) |
+    combine(consul_dirs_host, recursive=true)
+  }}

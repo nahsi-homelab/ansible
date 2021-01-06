@@ -3,6 +3,11 @@ dns_unbound_forward_zone:
     forward-addr:
       - 127.0.0.1@5053 # dnscrypt
 
+dns_unbound_stub_zone:
+  - name: "consul"
+    stub-addr:
+      - 127.0.0.1@8600
+
 dns_unbound_server:
   interface:
     - 0.0.0.0@53
@@ -10,6 +15,13 @@ dns_unbound_server:
     - "0.0.0.0/0 refuse"
     - "127.0.0.0/8 allow"
     - "192.168.1.0/24 allow"
+  do-not-query-localhost: "no"
+  domain-insecure: "consul"
+  # workaround for a bug in consul
+  # https://github.com/hashicorp/consul/issues/6579
+  qname-minimisation: "no"
+  private-domain:
+    - "consul"
 
 dns_dnscrypt_routes:
   - server_name: "*"

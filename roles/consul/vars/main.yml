@@ -1,0 +1,7 @@
+required_vars:
+  - consul_version
+
+__archive: "consul_{{ consul_version }}_linux_amd64.zip"
+__archive_url: "https://releases.hashicorp.com/consul/{{ consul_version }}/{{ __archive }}"
+__archive_checksum: "https://releases.hashicorp.com/consul/{{ consul_version }}/consul_{{ consul_version }}_SHA256SUMS"
+__archive_dir: "/tmp/{{ __archive | splitext | first }}"

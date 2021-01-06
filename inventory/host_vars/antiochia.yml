@@ -76,3 +76,4 @@ base_network_interfaces:
 
 base_dns:
   name_servers: 127.0.0.1
+  search_domains: "node.consul service.consul"

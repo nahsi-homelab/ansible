@@ -1,0 +1,71 @@
+driver:
+  name: podman
+
+platforms:
+  - name: consul01
+    image: localhost:5000/stage3-amd64:latest
+    pre_build_image: true
+    tmpfs:
+      - /run
+      - /tmp
+      - /var/tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    command: /sbin/openrc-init
+    groups:
+      - consul
+
+#   - name: consul02
+#     image: localhost:5000/stage3-amd64:latest
+#     pre_build_image: true
+#     tmpfs:
+#       - /run
+#       - /tmp
+#       - /var/tmp
+#     volumes:
+#       - /sys/fs/cgroup:/sys/fs/cgroup:ro
+#     command: /sbin/openrc-init
+
+  # no systemd on host
+  # - name: consul03
+  #   image: docker.io/centos:7
+  #   pre_build_image: true
+  #   tmpfs:
+  #     - /run
+  #     - /tmp
+  #     - /var/tmp
+  #   volumes:
+  #     - /sys/fs/cgroup:/sys/fs/cgroup:ro
+  #   command: /usr/sbin/init
+
+lint: ansible-lint -c ../../.ansible-lint --force-color .
+
+provisioner:
+  name: ansible
+  inventory:
+    host_vars:
+      consul01:
+        consul_config_host:
+          ports:
+            dns: 8601
+          addresses:
+            http: 0.0.0.0
+
+    group_vars:
+      all:
+        consul_version: 1.9.1
+        consul_datacenter: molecule
+        consul_config_group:
+          enable_syslog: false
+          log_file: /opt/consul/log
+
+      consul:
+        consul_bootstrap_config:
+          server: true
+          bootstrap_expect: 1
+
+verifier:
+  name: testinfra
+  options:
+    # show which tests where executed in test output
+    v: 1

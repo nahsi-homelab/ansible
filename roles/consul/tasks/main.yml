@@ -1,0 +1,5 @@
+- name: Preflight
+  include_tasks: 00-preflight.yml
+
+- name: Install and configure Consul
+  include_tasks: 01-consul.yml

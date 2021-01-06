@@ -1,0 +1,104 @@
+- name: download consul to localhost
+  become: false
+  run_once: true
+  delegate_to: localhost
+  get_url:
+    url: "{{ __archive_url }}"
+    dest: "/tmp/{{ __archive }}"
+    checksum: "sha256:{{ __archive_checksum }}"
+  register: __download_archive
+  until: __download_archive is succeeded
+  retries: 5
+  delay: 2
+
+- name: create consul system group
+  group:
+    name: consul
+    system: true
+    state: present
+
+- name: create consul system user
+  user:
+    name: consul
+    system: true
+    shell: "/sbin/nologin"
+    group: consul
+    create_home: false
+    home: "{{ consul_dir }}"
+    state: present
+
+- name: create consul directories
+  file:
+    path: "{{ dir.value.path }}"
+    state: directory
+    owner: consul
+    group: consul
+    mode: "{{ dir.value.mode | default(0740) }}"
+  loop: "{{ consul_dirs | dict2items }}"
+  loop_control:
+    loop_var: dir
+    label: "{{ dir.key }}"
+
+- name: create consul archive directory
+  become: false
+  delegate_to: localhost
+  file:
+    path: "{{ __archive_dir }}"
+    state: directory
+    mode: 0755
+
+- name: unpack consul
+  become: false
+  delegate_to: localhost
+  unarchive:
+    src: "/tmp/{{ __archive }}"
+    dest: "{{ __archive_dir }}"
+
+- name: propagate consul binary
+  copy:
+    src: "{{ __archive_dir }}/consul"
+    dest: "/usr/local/bin/consul"
+    owner: consul
+    group: consul
+    mode: 0555
+  notify:
+    - restart consul
+
+- name: create consul unitfile
+  template:
+    src: consul.service.j2
+    dest: "/usr/lib/systemd/system/consul.service"
+    owner: root
+    group: root
+    mode: 0640
+  when: ansible_service_mgr == "systemd"
+  notify:
+    - daemon reload
+    - restart consul
+
+- name: create consul initfile
+  template:
+    src: consul.initd.j2
+    dest: "/etc/init.d/consul"
+    owner: root
+    group: root
+    mode: 0740
+  when: ansible_service_mgr == "openrc"
+  notify:
+    - restart consul
+
+- name: create consul configuration
+  copy:
+    content: "{{ consul_config | combine(consul_bootstrap_config, recursive=true) | to_nice_json(indent=2) }}"
+    dest: "{{ consul_dirs.configs.path }}/consul.json"
+    owner: consul
+    group: consul
+    mode: 0640
+    # Not able to make validation work
+    # validate: "consul validate %s"
+  notify: restart consul
+
+- name: enable consul
+  service:
+    name: consul
+    enabled: yes

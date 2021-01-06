@@ -2,5 +2,5 @@
 # {{ ansible_managed }}
 resolv_conf=/etc/resolv.conf
 {% for key, value in base_dns.items() %}
-{{ key }}={{ value }}
+{{ key }}="{{ value }}"
 {% endfor %}

@@ -1,0 +1,22 @@
+#!/sbin/openrc-run
+# {{ ansible_managed }}
+description="HashiCorp Consul"
+extra_started_commands="reload"
+group="consul"
+user="consul"
+pidfile="/run/consul.pid"
+rc_ulimit="-n 65536"
+command="/usr/local/bin/consul"
+command_args="agent -config-dir={{ consul_dirs.configs.path }}"
+command_background="true"
+start_stop_daemon_args="--user ${user} --group ${group}"
+
+depend() {
+	need net
+}
+
+reload() {
+	ebegin "Reloading consul"
+	${command} reload
+	eend $?
+}

@@ -30,6 +30,7 @@ provisioner:
         dns_unbound_server:
           interface:
             - 0.0.0.0@53
+          do-not-query-localhost: "no"
 
 verifier:
   name: testinfra

@@ -28,8 +28,6 @@ dns_unbound_server_default:
   # If yes, fetch the DNSKEYs earlier in the validation process,
   # when a DS record is encountered.
   prefetch-key: "yes"
-  # You need this as no for dnscrypt-proxy to work
-  do-not-query-localhost: "no"
   # Reduce EDNS reassembly buffer size.
   edns-buffer-size: 1232
   # Must be power of 2 times the number of num-threads.

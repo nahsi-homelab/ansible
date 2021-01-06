@@ -49,3 +49,22 @@ forward-zone:
     {% endif %}
 {% endfor %}
 {% endfor %}
+
+{% for __zone in dns_unbound_stub_zone | default([]) %}
+stub-zone:
+{% for key, value in __zone.items() %}
+    {% if key == "name" %}
+    name: "{{ value }}"
+    {% elif key == "stub-addr" %}
+    {% for option in value %}
+    stub-addr: {{ option }}
+    {% endfor %}
+    {% elif key == "stub-host" %}
+    {% for option in value %}
+    stub-host: {{ option }}
+    {% endfor %}
+    {% else %}
+    key: {{ value }}
+    {% endif %}
+{% endfor %}
+{% endfor %}

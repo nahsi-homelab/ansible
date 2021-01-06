@@ -3,3 +3,6 @@ antiochia
 
 [routers]
 antiochia
+
+[consul]
+antiochia

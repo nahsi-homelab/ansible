@@ -1,0 +1,103 @@
+- name: download vault to localhost
+  become: false
+  run_once: true
+  delegate_to: localhost
+  get_url:
+    url: "{{ __archive_url }}"
+    dest: "/tmp/{{ __archive }}"
+    checksum: "sha256:{{ __archive_checksum }}"
+  register: __download_archive
+  until: __download_archive is succeeded
+  retries: 5
+  delay: 2
+
+- name: create vault system group
+  group:
+    name: vault
+    system: true
+    state: present
+
+- name: create vault system user
+  user:
+    name: vault
+    system: true
+    shell: "/sbin/nologin"
+    group: vault
+    create_home: false
+    home: "{{ vault_dir }}"
+    state: present
+
+- name: create vault directories
+  file:
+    path: "{{ dir.value.path }}"
+    state: directory
+    owner: vault
+    group: vault
+    mode: "{{ dir.value.mode | default(0740) }}"
+  loop: "{{ vault_dirs | dict2items }}"
+  loop_control:
+    loop_var: dir
+    label: "{{ dir.key }}"
+
+- name: create vault archive directory
+  become: false
+  delegate_to: localhost
+  file:
+    path: "{{ __archive_dir }}"
+    state: directory
+    mode: 0755
+
+- name: unpack vault
+  become: false
+  delegate_to: localhost
+  unarchive:
+    src: "/tmp/{{ __archive }}"
+    dest: "{{ __archive_dir }}"
+
+- name: propagate vault binary
+  copy:
+    src: "{{ __archive_dir }}/vault"
+    dest: "/usr/local/bin/vault"
+    owner: root
+    group: root
+    mode: 0555
+  notify:
+    - restart vault
+
+- name: create vault unitfile
+  template:
+    src: vault.service.j2
+    dest: "/usr/lib/systemd/system/vault.service"
+    owner: root
+    group: root
+    mode: 0640
+  when: ansible_service_mgr == "systemd"
+  notify:
+    - daemon reload
+    - restart vault
+
+- name: create vault initfile
+  template:
+    src: vault.initd.j2
+    dest: "/etc/init.d/vault"
+    owner: root
+    group: root
+    mode: 0740
+  when: ansible_service_mgr == "openrc"
+  notify:
+    - restart vault
+
+- name: create vault configuration
+  copy:
+    content: "{{ vault_config | to_nice_json(indent=2) }}"
+    dest: "{{ vault_dirs.configs.path }}/vault.json"
+    owner: vault
+    group: vault
+    mode: 0640
+    # validate: "vault validate %s"
+  notify: restart vault
+
+- name: enable vault
+  service:
+    name: vault
+    enabled: yes

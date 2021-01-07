@@ -39,6 +39,7 @@ def test_service_is_running(host):
     assert service.is_running
     assert service.is_enabled
 
+
 def test_consul_working(host):
     cmd = host.run("consul catalog services")
 

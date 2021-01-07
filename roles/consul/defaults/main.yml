@@ -31,7 +31,6 @@ consul_config_base:
   #   dns: "{{ consul_config.client_addr }}"
   #   http: "{{ consul_config.client_addr }}"
   #   https: "{{ consul_config.client_addr }}"
-  #   rpc: "{{ consul_config.client_addr }}"
   #   grpc: "{{ consul_config.client_addr }}"
 
   # Enable scripts in checks when they are defined in the local configuration
@@ -40,13 +39,11 @@ consul_config_base:
 
   telemetry:
     disable_compat_1.9: true
-consul_config_group: {}
-consul_config_host: {}
+consul_config_overlay: {}
 consul_config: >
   {{
     consul_config_base |
-    combine(consul_config_group, recursive=true) |
-    combine(consul_config_host, recursive=true)
+    combine(consul_config_overlay, recursive=true)
   }}
 
 # Main consul directory.
@@ -59,11 +56,9 @@ consul_dirs_base:
   data:
     path: "{{ consul_dir }}/data"
     mode: "u=rwX,g=rX,o="
-consul_dirs_group: {}
-consul_dirs_host: {}
+consul_dirs_overlay: {}
 consul_dirs: >
   {{
     consul_dirs_base |
-    combine(consul_dirs_group, recursive=true) |
-    combine(consul_dirs_host, recursive=true)
+    combine(consul_dirs_overlay, recursive=true)
   }}

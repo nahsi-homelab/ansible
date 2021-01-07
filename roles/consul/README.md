@@ -15,13 +15,10 @@ See [defaults/main.yml](defaults/main.yml) for details and examples.
 | consul_version | string | |
 | consul_datacenter | string | |
 
-`consul_config` and `consul_dirs` are three level variables, i.e. there are:
+`consul_config` and `consul_dirs` are two level variables, i.e. there are:
 
 * `consul_config_base` - variable with default Consul configuration parameters
-* `consul_config_group` - empty variable with parameters to be defined at
-group_vars level
-* `consul_config_host` - empty variable with parameters to be defined at
-host_vars level
+* `consul_config_overlay` - empty variable with parameters to be defined in Ansible inventory
 * `consul_config` - variable containing all above variables merged in order
 
 `consul_config` can be specified at any level (group_vars or host_vars) to

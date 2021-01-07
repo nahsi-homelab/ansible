@@ -1,7 +1,3 @@
 consul_bootstrap_config:
   server: true
   bootstrap_expect: 1
-
-consul_config_group:
-  ui_config:
-    enabled: true

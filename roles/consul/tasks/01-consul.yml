@@ -58,8 +58,8 @@
   copy:
     src: "{{ __archive_dir }}/consul"
     dest: "/usr/local/bin/consul"
-    owner: consul
-    group: consul
+    owner: root
+    group: root
     mode: 0555
   notify:
     - restart consul

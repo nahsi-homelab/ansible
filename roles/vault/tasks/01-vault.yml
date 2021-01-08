@@ -1,4 +1,4 @@
-- name: download consul to localhost
+- name: download vault to localhost
   become: false
   run_once: true
   delegate_to: localhost
@@ -11,35 +11,35 @@
   retries: 5
   delay: 2
 
-- name: create consul system group
+- name: create vault system group
   group:
-    name: consul
+    name: vault
     system: true
     state: present
 
-- name: create consul system user
+- name: create vault system user
   user:
-    name: consul
+    name: vault
     system: true
     shell: "/sbin/nologin"
-    group: consul
+    group: vault
     create_home: false
-    home: "{{ consul_dir }}"
+    home: "{{ vault_dir }}"
     state: present
 
-- name: create consul directories
+- name: create vault directories
   file:
     path: "{{ dir.value.path }}"
     state: directory
-    owner: consul
-    group: consul
+    owner: vault
+    group: vault
     mode: "{{ dir.value.mode | default(0740) }}"
-  loop: "{{ consul_dirs | dict2items }}"
+  loop: "{{ vault_dirs | dict2items }}"
   loop_control:
     loop_var: dir
     label: "{{ dir.key }}"
 
-- name: create consul archive directory
+- name: create vault archive directory
   become: false
   delegate_to: localhost
   file:
@@ -47,58 +47,57 @@
     state: directory
     mode: 0755
 
-- name: unpack consul
+- name: unpack vault
   become: false
   delegate_to: localhost
   unarchive:
     src: "/tmp/{{ __archive }}"
     dest: "{{ __archive_dir }}"
 
-- name: propagate consul binary
+- name: propagate vault binary
   copy:
-    src: "{{ __archive_dir }}/consul"
-    dest: "/usr/local/bin/consul"
+    src: "{{ __archive_dir }}/vault"
+    dest: "/usr/local/bin/vault"
     owner: root
     group: root
     mode: 0555
   notify:
-    - restart consul
+    - restart vault
 
-- name: create consul unitfile
+- name: create vault unitfile
   template:
-    src: consul.service.j2
-    dest: "/usr/lib/systemd/system/consul.service"
+    src: vault.service.j2
+    dest: "/usr/lib/systemd/system/vault.service"
     owner: root
     group: root
     mode: 0640
   when: ansible_service_mgr == "systemd"
   notify:
     - daemon reload
-    - restart consul
+    - restart vault
 
-- name: create consul initfile
+- name: create vault initfile
   template:
-    src: consul.initd.j2
-    dest: "/etc/init.d/consul"
+    src: vault.initd.j2
+    dest: "/etc/init.d/vault"
     owner: root
     group: root
     mode: 0740
   when: ansible_service_mgr == "openrc"
   notify:
-    - restart consul
+    - restart vault
 
-- name: create consul configuration
+- name: create vault configuration
   copy:
-    content: "{{ consul_config | combine(consul_bootstrap_config, recursive=true) | to_nice_json(indent=2) }}"
-    dest: "{{ consul_dirs.configs.path }}/consul.json"
-    owner: consul
-    group: consul
+    content: "{{ vault_config | to_nice_json(indent=2) }}"
+    dest: "{{ vault_dirs.configs.path }}/vault.json"
+    owner: vault
+    group: vault
     mode: 0640
-    # Not able to make validation work
-    # validate: "consul validate %s"
-  notify: restart consul
+    # validate: "vault validate %s"
+  notify: restart vault
 
-- name: enable consul
+- name: enable vault
   service:
-    name: consul
+    name: vault
     enabled: yes

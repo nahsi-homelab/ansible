@@ -1,0 +1,33 @@
+vault_config_base:
+  disable_mlock: true
+
+  listener:
+    tcp:
+      address: "127.0.0.1:8200"
+      tls_disable: true
+
+  storage:
+    file:
+      path: "{{ vault_dirs.data.path }}"
+
+vault_config_overlay: {}
+vault_config: >
+  {{
+    vault_config_base |
+    combine(vault_config_overlay, recursive=true)
+  }}
+
+# Main vault directory.
+vault_dir: "/opt/vault"
+vault_dirs_base:
+  configs:
+    path: "{{ vault_dir }}/conf.d"
+  data:
+    path: "{{ vault_dir }}/data"
+    mode: "u=rwX,g=rX,o="
+vault_dirs_overlay: {}
+vault_dirs: >
+  {{
+    vault_dirs_base |
+    combine(vault_dirs_overlay, recursive=true)
+  }}

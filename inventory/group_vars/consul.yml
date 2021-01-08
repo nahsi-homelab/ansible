@@ -1,3 +1,0 @@
-consul_bootstrap_config:
-  server: true
-  bootstrap_expect: 1

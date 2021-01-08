@@ -9,9 +9,8 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 
 
 @pytest.mark.parametrize("dirs", [
-    "/opt/consul",
-    "/opt/consul/scripts",
-    "/opt/consul/data"
+    "/opt/vault",
+    "/opt/vault/data"
 ])
 def test_directories(host, dirs):
     d = host.file(dirs)
@@ -20,7 +19,7 @@ def test_directories(host, dirs):
 
 
 @pytest.mark.parametrize("files", [
-    "/opt/consul/conf.d/consul.json"
+    "/opt/vault/conf.d/vault.json"
 ])
 def test_files(host, files):
     f = host.file(files)
@@ -29,18 +28,18 @@ def test_files(host, files):
 
 
 def test_user(host):
-    assert host.group("consul").exists
-    assert host.user("consul").exists
+    assert host.group("vault").exists
+    assert host.user("vault").exists
 
 
 def test_service_is_running(host):
-    service = host.service("consul")
+    service = host.service("vault")
 
     assert service.is_running
     assert service.is_enabled
 
 
-def test_consul_working(host):
-    cmd = host.run("consul catalog services")
+def test_server_sockets(host):
+    http = host.socket("tcp://127.0.0.1:8200")
 
-    assert cmd.succeeded
+    assert http.is_listening

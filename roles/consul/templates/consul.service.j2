@@ -4,7 +4,7 @@ Description="HashiCorp Consul - A service mesh solution"
 Documentation=https://www.consul.io/
 Requires=network-online.target
 After=network-online.target
-ConditionFileNotEmpty={{ consul.dirs.configs.path }}/consul.json
+ConditionFileNotEmpty={{ consul_dirs.configs.path }}/consul.json
 
 [Service]
 Type=notify

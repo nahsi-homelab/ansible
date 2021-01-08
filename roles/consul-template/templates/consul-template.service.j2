@@ -1,0 +1,20 @@
+# {{ ansible_managed }}
+[Unit]
+Description="HashiCorp Consul Template"
+Documentation=https://github.com/hashicorp/consul-template
+Requires=network-online.target
+After=network-online.target
+ConditionFileNotEmpty={{ consul_template_dirs.configs.path }}/consul-template.json
+
+[Service]
+Type=notify
+User=consul-template
+Group=consul-template
+ExecStart=/usr/local/bin/consul-template -config={{ consul_template_dirs.configs.path }} -config={{ consul_template_dirs.templates.path }}
+ExecReload=/bin/kill --signal HUP $MAINPID
+KillMode=process
+KillSignal=SIGTERM
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

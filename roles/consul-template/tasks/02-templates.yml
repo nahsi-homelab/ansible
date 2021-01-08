@@ -1,0 +1,33 @@
+- name: register present templates
+  find:
+    paths: "{{ consul_template_dirs.templates.path }}"
+    recurse: yes
+    patterns:
+      - "*.hcl"
+  register: __templates_present
+
+- name: copy templates
+  template:
+    src: "template.hcl.j2"
+    dest: "{{ consul_template_dirs.templates.path }}/{{ templates.key }}.hcl"
+    owner: root
+    group: consul-template
+    mode: 0640
+  loop: "{{ consul_template_templates | dict2items }}"
+  loop_control:
+    loop_var: templates
+    label: "{{ templates.key }}"
+  register: __templates_copied
+  notify: reload consul-template
+
+- name: ansible magic
+  set_fact:
+    __templates_present_list: "{{ __templates_present | json_query('files[*].path') | default([]) }}"
+    __templates_copied_list: "{{ __templates_copied | json_query('results[*].dest') | default([]) }}"
+
+- name: syncronize templates
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop: "{{ __templates_present_list | difference( __templates_copied_list ) }}"
+  notify: reload consul-template

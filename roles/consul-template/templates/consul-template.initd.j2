@@ -2,7 +2,8 @@
 # {{ ansible_managed }}
 
 description="HashiCorp Consul Tmplate"
-user="${RC_SVCNAME}"
+# user="${RC_SVCNAME}"
+user="root"
 # https://github.com/hashicorp/consul-template/issues/1379
 group="hashi"
 pidfile="/run/${RC_SVCNAME}.pid"

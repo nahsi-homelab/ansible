@@ -3,7 +3,8 @@
 
 description="HashiCorp Consul Tmplate"
 user="${RC_SVCNAME}"
-group="${RC_SVCNAME}"
+# https://github.com/hashicorp/consul-template/issues/1379
+group="hashi"
 pidfile="/run/${RC_SVCNAME}.pid"
 
 extra_started_commands="reload"

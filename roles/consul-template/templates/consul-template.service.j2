@@ -9,7 +9,8 @@ ConditionFileNotEmpty={{ consul_template_dirs.configs.path }}/consul-template.js
 [Service]
 Type=notify
 User=consul-template
-Group=consul-template
+# https://github.com/hashicorp/consul-template/issues/1379
+Group=hashi
 ExecStart=/usr/local/bin/consul-template -config={{ consul_template_dirs.configs.path }} -config={{ consul_template_dirs.templates.path }}
 ExecReload=/bin/kill --signal HUP $MAINPID
 KillMode=process

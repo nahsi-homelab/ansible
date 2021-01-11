@@ -32,7 +32,7 @@
     groups:
       - hashi
     create_home: false
-    home: "{{ consul_dir }}"
+    home: "{{ consul_dirs.main.path }}"
     state: present
 
 - name: create consul directories

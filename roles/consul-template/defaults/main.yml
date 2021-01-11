@@ -13,13 +13,14 @@ consul_template_templates: {}
     #     destination: "/tmp/test.txt"
     #     backup: true
 
-consul_template_dir: "/opt/consul-template"
 consul_template_dirs:
+  main:
+    path: "/opt/consul-template"
   configs:
-    path: "{{ consul_template_dir }}/conf.d"
-  # for templates managed by Ansible
+    path: "{{ consul_template_dirs.main.path }}/conf.d"
+  # for templaconsul_template_dirs.main.pathble
   templates:
-    path: "{{ consul_template_dir }}/template.d"
-  # for source template files
+    path: "{{ consul_template_dirs.main.path }}/template.d"
+  # for sourceconsul_template_dirs.main.path
   sources:
-    path: "{{ consul_template_dir }}/source.d"
+    path: "{{ consul_template_dirs.main.path }}/source.d"

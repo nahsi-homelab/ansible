@@ -11,6 +11,12 @@
   retries: 5
   delay: 2
 
+- name: create hashi system group
+  group:
+    name: hashi
+    system: true
+    state: present
+
 - name: create consul-template system group
   group:
     name: consul-template

@@ -11,7 +11,6 @@ See [defaults/main.yml](defaults/main.yml) for details and examples.
 | consul_config| map | consul confgiration |
 | consul_bootstrap_config | bootstrap parameters |
 | consul_dirs | map | consul directories to create |
-| consul_dir | string | main consul dir, used in `consul_dirs` |
 | consul_version | string | |
 | consul_datacenter | string | |
 

@@ -55,8 +55,6 @@ consul_dirs_base:
     path: "{{ consul_dir }}/conf.d"
   certs:
     path: "{{ consul_dir }}/certs"
-  templates:
-    path: "{{ consul_dir }}/templates"
   scripts:
     path: "{{ consul_dir }}/scripts"
   data:

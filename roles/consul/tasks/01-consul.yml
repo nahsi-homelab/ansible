@@ -110,14 +110,3 @@
   service:
     name: consul
     enabled: yes
-
-- name: copy templates for consul-template
-  copy:
-    src: "{{ template }}.tpl"
-    dest: "{{ consul_dirs.templates.path }}/{{ template }}.tpl"
-    owner: consul
-    group: hashi
-    mode: 0440
-  loop: "{{ consul_templates }}"
-  loop_control:
-    loop_var: template

@@ -20,6 +20,7 @@ consul_config_base:
   enable_syslog: true
   # "trace", "debug", "info", "warn", "err"
   log_level: "warn"
+  facility: "LOCAL5"
 
   # The address that should be bound to for internal cluster communications.
   # https://www.consul.io/docs/agent/options.html#bind_addr

@@ -46,11 +46,17 @@ consul_config: >
     combine(consul_config_overlay, recursive=true)
   }}
 
-# Main consul directory.
 consul_dir: "/opt/consul"
 consul_dirs_base:
   configs:
     path: "{{ consul_dir }}/conf.d"
+  certs:
+    path: "{{ consul_dir }}/certs"
+    group: "hashi"
+    mode: "u=rX,g=rwX,o="
+  templates:
+    path: "{{ consul_dir }}/templates"
+    group: "hashi"
   scripts:
     path: "{{ consul_dir }}/scripts"
   data:
@@ -62,3 +68,8 @@ consul_dirs: >
     consul_dirs_base |
     combine(consul_dirs_overlay, recursive=true)
   }}
+
+consul_templates:
+  - key
+  - cert
+  - ca

@@ -47,19 +47,20 @@ consul_config: >
     combine(consul_config_overlay, recursive=true)
   }}
 
+consul_dir: "/opt/consul"
 consul_dirs_base:
   main:
-    path: "/opt/consul"
+    path: "{{ consul_dir }}"
   configs:
-    path: "{{ consul_dirs.main.path }}/conf.d"
+    path: "{{ consul_dir }}/conf.d"
   certs:
-    path: "{{ consul_dirs.main.path }}/certs"
+    path: "{{ consul_dir }}/certs"
   templates:
-    path: "{{ consul_dirs.main.path }}/templates"
+    path: "{{ consul_dir }}/templates"
   scripts:
-    path: "{{ consul_dirs.main.path }}/scripts"
+    path: "{{ consul_dir }}/scripts"
   data:
-    path: "{{ consul_dirs.main.path }}/data"
+    path: "{{ consul_dir }}/data"
     mode: "u=rwX,g=rX,o="
 consul_dirs_overlay: {}
 consul_dirs: >

@@ -30,7 +30,7 @@
     shell: "/sbin/nologin"
     group: consul-template
     create_home: false
-    home: "{{ consul_template_dirs.main.path }}"
+    home: "{{ consul_template_dir }}"
     state: present
 
 - name: create consul-template directories

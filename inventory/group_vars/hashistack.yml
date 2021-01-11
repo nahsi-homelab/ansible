@@ -39,14 +39,19 @@ consul_template_config:
     enabled: true
     facility: "LOCAL5"
 
+consul_template_sources:
+  - consul/cert
+  - consul/ca
+  - consul/key
+
 consul_template_templates:
-    consul:
-      - source: "/opt/consul/templates/cert.tpl"
-        destination: "/opt/consul/certs/cert.pem"
-        perms: 0640
-      - source: "/opt/consul/templates/ca.tpl"
-        destination: "/opt/consul/certs/ca.pem"
-        perms: 0640
-      - source: "/opt/consul/templates/key.tpl"
-        destination: "/opt/consul/certs/key.pem"
-        perms: 0640
+  consul:
+    - source: "{{ consul_template_dirs.sources.path }}/consul_cert.tpl"
+      destination: "/opt/consul/certs/cert.pem"
+      perms: 0640
+    - source: "{{ consul_template_dirs.sources.path }}/consul_ca.tpl"
+      destination: "/opt/consul/certs/ca.pem"
+      perms: 0640
+    - source: "{{ consul_template_dirs.sources.path }}/consul_key.tpl"
+      destination: "/opt/consul/certs/key.pem"
+      perms: 0640

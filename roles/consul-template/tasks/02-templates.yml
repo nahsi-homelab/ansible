@@ -1,3 +1,4 @@
+# templates
 - name: register present templates
   find:
     paths: "{{ consul_template_dirs.templates.path }}"
@@ -31,3 +32,38 @@
     state: absent
   loop: "{{ __templates_present_list | difference( __templates_copied_list ) }}"
   notify: reload consul-template
+
+# source files
+- name: register present source files
+  find:
+    paths: "{{ consul_template_dirs.sources.path }}"
+    recurse: yes
+    patterns:
+      - "*.tpl"
+  register: __sources_present
+
+- name: copy sources
+  copy:
+    src: "{{ source }}.tpl"
+    dest: "{{ consul_template_dirs.sources.path }}/{{ source | regex_replace ('/', '_') }}.tpl"
+    owner: root
+    group: consul-template
+    mode: 0440
+  loop: "{{ consul_template_sources }}"
+  loop_control:
+    loop_var: source
+  register: __sources_copied
+  notify: reload consul-template
+
+- name: ansible magic
+  set_fact:
+    __sources_present_list: "{{ __sources_present | json_query('files[*].path') | default([]) }}"
+    __sources_copied_list: "{{ __sources_copied | json_query('results[*].dest') | default([]) }}"
+
+- name: syncronize sources
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop: "{{ __sources_present_list | difference( __sources_copied_list ) }}"
+  notify: reload consul-template
+

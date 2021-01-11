@@ -88,7 +88,8 @@
   template:
     src: consul.initd.j2
     dest: "/etc/init.d/consul"
-    owner: root group: root
+    owner: root
+    group: root
     mode: 0740
   when: ansible_service_mgr == "openrc"
   notify:
@@ -111,7 +112,7 @@
     enabled: yes
 
 - name: copy templates for consul-template
-  file:
+  copy:
     src: "{{ template }}.tpl"
     dest: "{{ consul_dirs.templates.path }}/{{ template }}.tpl"
     owner: consul

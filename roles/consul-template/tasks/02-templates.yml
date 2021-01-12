@@ -43,7 +43,7 @@
   register: __sources_present
 
 - name: copy sources
-  copy:
+  template:
     src: "{{ source }}.tpl"
     dest: "{{ consul_template_dirs.sources.path }}/{{ source | regex_replace ('/', '_') }}.tpl"
     owner: root

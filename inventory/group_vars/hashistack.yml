@@ -29,7 +29,8 @@ vault_config:
   listener:
     tcp:
       address: "0.0.0.0:8200"
-      tls_disable: true
+      tls_cert_file: "/opt/vault/certs/cert.pem"
+      tls_key_file: "/opt/vault/certs/key.pem"
 
   storage:
     consul:
@@ -59,6 +60,7 @@ consul_template_templates:
       destination: "/usr/local/share/ca-certificates/internal.crt"
       perms: 0640
       command: "update-ca-certificates"
+
   consul:
     - source: "{{ consul_template_dirs.sources.path }}/consul_cert.tpl"
       left_delimiter: "<<"
@@ -79,11 +81,31 @@ consul_template_templates:
       perms: 0640
       command: "consul reload"
 
+  vault:
+    - source: "{{ consul_template_dirs.sources.path }}/vault_cert.tpl"
+      left_delimiter: "<<"
+      right_delimiter: ">>"
+      destination: "/opt/vault/certs/cert.pem"
+      perms: 0640
+      command: "rc-service vault reload"
+    - source: "{{ consul_template_dirs.sources.path }}/vault_key.tpl"
+      left_delimiter: "<<"
+      right_delimiter: ">>"
+      destination: "/opt/vault/certs/key.pem"
+      perms: 0640
+      command: "rc-service vault reload"
+
 __consul_cert_args: >-
     "pki/internal/issue/consul"
     "common_name=consul.service.consul"
     "alt_names=consul.service.{{ consul_datacenter }}.consul,server.{{ consul_datacenter }}.consul"
     "ip_sans=127.0.0.1"
+__vault_cert_args: >-
+    "pki/internal/issue/consul"
+    "common_name=vault.service.consul"
+    "alt_names=vault.service.{{ consul_datacenter }}.consul,server.{{ consul_datacenter }}.consul"
+    "ip_sans=127.0.0.1"
+
 consul_template_sources:
   internal_ca: |
     << with secret "pki/internal/cert/ca" >>
@@ -97,4 +119,13 @@ consul_template_sources:
     <<- .Data.issuing_ca >><< end >>
   consul_key: |
     << with secret {{ __consul_cert_args }} >>
+    <<- .Data.private_key >><< end >>
+
+  vault_cert: |
+    << with secret {{ __vault_cert_args }} >>
+    <<- .Data.certificate >><< end >>
+    << with secret {{ __vault_cert_args }} >>
+    <<- .Data.issuing_ca >><< end >>
+  vault_key: |
+    << with secret {{ __vault_cert_args }} >>
     <<- .Data.private_key >><< end >>

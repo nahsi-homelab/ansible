@@ -44,7 +44,7 @@ consul_template_config:
     address: "https://consul.service.syria.consul:8501"
 
   vault:
-    address: "http://vault.service.consul:8200"
+    address: "https://vault.service.consul:8200"
     token: "{{ __vault_token }}"
     renew_token: true
 

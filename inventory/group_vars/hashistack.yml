@@ -1,14 +1,27 @@
+# consul
 consul_bootstrap_config:
   server: true
   bootstrap_expect: 1
 
 consul_config_overlay:
+  log_level: "info"
   ui_config:
     enabled: true
 
   addresses:
-    http: 0.0.0.0
+    https: 0.0.0.0
 
+  ports:
+    https: 8501
+
+  verify_incoming_rpc: true
+  verify_outgoing: true
+  verify_server_hostname: true
+  ca_file: "/opt/consul/certs/ca.pem"
+  cert_file: "/opt/consul/certs/cert.pem"
+  key_file: "/opt/consul/certs/key.pem"
+
+# vault
 vault_config:
   disable_mlock: true
   ui: true
@@ -16,7 +29,103 @@ vault_config:
   listener:
     tcp:
       address: "0.0.0.0:8200"
-      tls_disable: true
+      tls_cert_file: "/opt/vault/certs/cert.pem"
+      tls_key_file: "/opt/vault/certs/key.pem"
 
   storage:
-    consul: {}
+    consul:
+      address: "https://consul.service.syria.consul:8501"
+
+# consul-template
+consul_template_config:
+  log_level: "warn"
+
+  consul:
+    address: "https://consul.service.syria.consul:8501"
+
+  vault:
+    address: "https://vault.service.consul:8200"
+    token: "{{ __vault_token }}"
+    renew_token: true
+
+  syslog:
+    enabled: true
+    facility: "LOCAL5"
+
+consul_template_templates:
+  internal_ca:
+    - source: "{{ consul_template_dirs.sources.path }}/internal_ca.tpl"
+      left_delimiter: "<<"
+      right_delimiter: ">>"
+      destination: "/usr/local/share/ca-certificates/internal.crt"
+      perms: 0640
+      command: "update-ca-certificates"
+
+  consul:
+    - source: "{{ consul_template_dirs.sources.path }}/consul_cert.tpl"
+      left_delimiter: "<<"
+      right_delimiter: ">>"
+      destination: "/opt/consul/certs/cert.pem"
+      perms: 0640
+      command: "consul reload"
+    - source: "{{ consul_template_dirs.sources.path }}/consul_ca.tpl"
+      left_delimiter: "<<"
+      right_delimiter: ">>"
+      destination: "/opt/consul/certs/ca.pem"
+      perms: 0640
+      command: "consul reload"
+    - source: "{{ consul_template_dirs.sources.path }}/consul_key.tpl"
+      left_delimiter: "<<"
+      right_delimiter: ">>"
+      destination: "/opt/consul/certs/key.pem"
+      perms: 0640
+      command: "consul reload"
+
+  vault:
+    - source: "{{ consul_template_dirs.sources.path }}/vault_cert.tpl"
+      left_delimiter: "<<"
+      right_delimiter: ">>"
+      destination: "/opt/vault/certs/cert.pem"
+      perms: 0640
+      command: "rc-service vault reload"
+    - source: "{{ consul_template_dirs.sources.path }}/vault_key.tpl"
+      left_delimiter: "<<"
+      right_delimiter: ">>"
+      destination: "/opt/vault/certs/key.pem"
+      perms: 0640
+      command: "rc-service vault reload"
+
+__consul_cert_args: >-
+    "pki/internal/issue/consul"
+    "common_name=consul.service.consul"
+    "alt_names=consul.service.{{ consul_datacenter }}.consul,server.{{ consul_datacenter }}.consul"
+    "ip_sans=127.0.0.1"
+__vault_cert_args: >-
+    "pki/internal/issue/consul"
+    "common_name=vault.service.consul"
+    "alt_names=vault.service.{{ consul_datacenter }}.consul,server.{{ consul_datacenter }}.consul"
+    "ip_sans=127.0.0.1"
+
+consul_template_sources:
+  internal_ca: |
+    << with secret "pki/internal/cert/ca" >>
+    <<- .Data.certificate >><< end >>
+
+  consul_cert: |
+    << with secret {{ __consul_cert_args }} >>
+    <<- .Data.certificate >><< end >>
+  consul_ca: |
+    << with secret {{ __consul_cert_args }} >>
+    <<- .Data.issuing_ca >><< end >>
+  consul_key: |
+    << with secret {{ __consul_cert_args }} >>
+    <<- .Data.private_key >><< end >>
+
+  vault_cert: |
+    << with secret {{ __vault_cert_args }} >>
+    <<- .Data.certificate >><< end >>
+    << with secret {{ __vault_cert_args }} >>
+    <<- .Data.issuing_ca >><< end >>
+  vault_key: |
+    << with secret {{ __vault_cert_args }} >>
+    <<- .Data.private_key >><< end >>

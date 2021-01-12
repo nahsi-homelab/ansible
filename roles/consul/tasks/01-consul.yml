@@ -11,6 +11,12 @@
   retries: 5
   delay: 2
 
+- name: create hashi system group
+  group:
+    name: hashi
+    system: true
+    state: present
+
 - name: create consul system group
   group:
     name: consul
@@ -23,6 +29,8 @@
     system: true
     shell: "/sbin/nologin"
     group: consul
+    groups:
+      - hashi
     create_home: false
     home: "{{ consul_dir }}"
     state: present
@@ -32,7 +40,7 @@
     path: "{{ dir.value.path }}"
     state: directory
     owner: consul
-    group: consul
+    group: "{{ dir.group | default('consul')}}"
     mode: "{{ dir.value.mode | default(0740) }}"
   loop: "{{ consul_dirs | dict2items }}"
   loop_control:
@@ -93,7 +101,7 @@
     dest: "{{ consul_dirs.configs.path }}/consul.json"
     owner: consul
     group: consul
-    mode: 0640
+    mode: 0440
     # Not able to make validation work
     # validate: "consul validate %s"
   notify: restart consul

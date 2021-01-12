@@ -2,8 +2,10 @@
 # {{ ansible_managed }}
 
 description="HashiCorp Consul Tmplate"
-user="${RC_SVCNAME}"
-group="${RC_SVCNAME}"
+# user="${RC_SVCNAME}"
+user="root"
+# https://github.com/hashicorp/consul-template/issues/1379
+group="hashi"
 pidfile="/run/${RC_SVCNAME}.pid"
 
 extra_started_commands="reload"

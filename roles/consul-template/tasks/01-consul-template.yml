@@ -11,6 +11,12 @@
   retries: 5
   delay: 2
 
+- name: create hashi system group
+  group:
+    name: hashi
+    system: true
+    state: present
+
 - name: create consul-template system group
   group:
     name: consul-template
@@ -31,7 +37,7 @@
   file:
     path: "{{ dir.value.path }}"
     state: directory
-    owner: root
+    owner: consul-template
     group: consul-template
     mode: "{{ dir.value.mode | default(0750) }}"
   loop: "{{ consul_template_dirs | dict2items }}"
@@ -91,7 +97,7 @@
   copy:
     content: "{{ consul_template_config | to_nice_json(indent=2) }}"
     dest: "{{ consul_template_dirs.configs.path }}/consul-template.json"
-    owner: root
+    owner: consul-template
     group: consul-template
     mode: 0640
   notify: restart consul-template

@@ -11,6 +11,12 @@
   retries: 5
   delay: 2
 
+- name: create hashi system group
+  group:
+    name: hashi
+    system: true
+    state: present
+
 - name: create vault system group
   group:
     name: vault
@@ -23,6 +29,8 @@
     system: true
     shell: "/sbin/nologin"
     group: vault
+    groups:
+      - hashi
     create_home: false
     home: "{{ vault_dir }}"
     state: present
@@ -32,7 +40,7 @@
     path: "{{ dir.value.path }}"
     state: directory
     owner: vault
-    group: vault
+    group: "{{ dir.group | default('vault')}}"
     mode: "{{ dir.value.mode | default(0740) }}"
   loop: "{{ vault_dirs | dict2items }}"
   loop_control:

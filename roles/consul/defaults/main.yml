@@ -20,6 +20,7 @@ consul_config_base:
   enable_syslog: true
   # "trace", "debug", "info", "warn", "err"
   log_level: "warn"
+  syslog_facility: "LOCAL5"
 
   # The address that should be bound to for internal cluster communications.
   # https://www.consul.io/docs/agent/options.html#bind_addr
@@ -46,11 +47,14 @@ consul_config: >
     combine(consul_config_overlay, recursive=true)
   }}
 
-# Main consul directory.
 consul_dir: "/opt/consul"
 consul_dirs_base:
+  main:
+    path: "{{ consul_dir }}"
   configs:
     path: "{{ consul_dir }}/conf.d"
+  certs:
+    path: "{{ consul_dir }}/certs"
   scripts:
     path: "{{ consul_dir }}/scripts"
   data:

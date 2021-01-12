@@ -7,6 +7,8 @@ user="${RC_SVCNAME}"
 pidfile="/run/vault.pid"
 rc_ulimit="-n 65536"
 
+extra_started_commands="reload"
+
 command="/usr/local/bin/${RC_SVCNAME}"
 command_args="server -config={{ vault_dirs.configs.path }}"
 command_background="true"
@@ -14,4 +16,10 @@ start_stop_daemon_args="--user ${user} --group ${group}"
 
 depend() {
 	need net
+}
+
+reload() {
+    ebegin "Reloading Vault"
+    start-stop-daemon --signal HUP --pidfile "${pidfile}"
+    eend $?
 }

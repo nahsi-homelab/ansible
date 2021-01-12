@@ -43,15 +43,16 @@
   register: __sources_present
 
 - name: copy sources
-  template:
-    src: "{{ source }}.tpl"
-    dest: "{{ consul_template_dirs.sources.path }}/{{ source | regex_replace ('/', '_') }}.tpl"
+  copy:
+    content: "{{ source.value }}"
+    dest: "{{ consul_template_dirs.sources.path }}/{{ source.key }}.tpl"
     owner: root
     group: consul-template
     mode: 0440
-  loop: "{{ consul_template_sources }}"
+  loop: "{{ consul_template_sources | dict2items }}"
   loop_control:
     loop_var: source
+    label: "{{ source.key }}"
   register: __sources_copied
   notify: reload consul-template
 

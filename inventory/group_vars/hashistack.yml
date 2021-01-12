@@ -4,11 +4,22 @@ consul_bootstrap_config:
   bootstrap_expect: 1
 
 consul_config_overlay:
+  log_level: "info"
   ui_config:
     enabled: true
 
   addresses:
-    http: 0.0.0.0
+    https: 0.0.0.0
+
+  ports:
+    https: 8501
+
+  verify_incoming_rpc: true
+  verify_outgoing: true
+  verify_server_hostname: true
+  ca_file: "/opt/consul/certs/ca.pem"
+  cert_file: "/opt/consul/certs/cert.pem"
+  key_file: "/opt/consul/certs/key.pem"
 
 # vault
 vault_config:
@@ -21,14 +32,15 @@ vault_config:
       tls_disable: true
 
   storage:
-    consul: {}
+    consul:
+      address: "https://consul.service.syria.consul:8501"
 
 # consul-template
 consul_template_config:
   log_level: "warn"
 
   consul:
-    address: "127.0.0.1:8500"
+    address: "https://consul.service.syria.consul:8501"
 
   vault:
     address: "http://vault.service.consul:8200"
@@ -39,19 +51,50 @@ consul_template_config:
     enabled: true
     facility: "LOCAL5"
 
-consul_template_sources:
-  - consul/cert
-  - consul/ca
-  - consul/key
-
 consul_template_templates:
+  internal_ca:
+    - source: "{{ consul_template_dirs.sources.path }}/internal_ca.tpl"
+      left_delimiter: "<<"
+      right_delimiter: ">>"
+      destination: "/usr/local/share/ca-certificates/internal.crt"
+      perms: 0640
+      command: "update-ca-certificates"
   consul:
     - source: "{{ consul_template_dirs.sources.path }}/consul_cert.tpl"
+      left_delimiter: "<<"
+      right_delimiter: ">>"
       destination: "/opt/consul/certs/cert.pem"
       perms: 0640
+      command: "consul reload"
     - source: "{{ consul_template_dirs.sources.path }}/consul_ca.tpl"
+      left_delimiter: "<<"
+      right_delimiter: ">>"
       destination: "/opt/consul/certs/ca.pem"
       perms: 0640
+      command: "consul reload"
     - source: "{{ consul_template_dirs.sources.path }}/consul_key.tpl"
+      left_delimiter: "<<"
+      right_delimiter: ">>"
       destination: "/opt/consul/certs/key.pem"
       perms: 0640
+      command: "consul reload"
+
+__consul_cert_args: >-
+    "pki/internal/issue/consul"
+    "common_name=consul.service.consul"
+    "alt_names=consul.service.{{ consul_datacenter }}.consul,server.{{ consul_datacenter }}.consul"
+    "ip_sans=127.0.0.1"
+consul_template_sources:
+  internal_ca: |
+    << with secret "pki/internal/cert/ca" >>
+    <<- .Data.certificate >><< end >>
+
+  consul_cert: |
+    << with secret {{ __consul_cert_args }} >>
+    <<- .Data.certificate >><< end >>
+  consul_ca: |
+    << with secret {{ __consul_cert_args }} >>
+    <<- .Data.issuing_ca >><< end >>
+  consul_key: |
+    << with secret {{ __consul_cert_args }} >>
+    <<- .Data.private_key >><< end >>

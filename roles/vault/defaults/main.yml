@@ -20,11 +20,15 @@ vault_config: >
 # Main vault directory.
 vault_dir: "/opt/vault"
 vault_dirs_base:
+  main:
+    path: "{{ vault_dir }}"
   configs:
     path: "{{ vault_dir }}/conf.d"
   data:
     path: "{{ vault_dir }}/data"
     mode: "u=rwX,g=rX,o="
+  certs:
+    path: "{{ vault_dir }}/certs"
 vault_dirs_overlay: {}
 vault_dirs: >
   {{

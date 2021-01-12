@@ -67,4 +67,3 @@
     state: absent
   loop: "{{ __sources_present_list | difference( __sources_copied_list ) }}"
   notify: reload consul-template
-

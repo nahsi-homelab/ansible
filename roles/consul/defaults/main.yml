@@ -66,8 +66,3 @@ consul_dirs: >
     consul_dirs_base |
     combine(consul_dirs_overlay, recursive=true)
   }}
-
-consul_templates:
-  - key
-  - cert
-  - ca

@@ -13,9 +13,10 @@ consul_template_templates: {}
     #     destination: "/tmp/test.txt"
     #     backup: true
 
-# Files from 'files' role directory
 consul_template_sources: []
-  # - consul/cert.tpl
+  # internal_ca: |
+  #   << with secret "pki/internal/cert/ca" >>
+  #   <<- .Data.certificate >><< end >>
 
 consul_template_dir: "/opt/consul-template"
 consul_template_dirs:

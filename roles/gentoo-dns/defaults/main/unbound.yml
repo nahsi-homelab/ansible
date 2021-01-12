@@ -1,7 +1,7 @@
 dns_unbound_server: {}
 dns_unbound_server_default:
   use-syslog: "yes"
-  verbosity: 2
+  verbosity: 1
   num-threads: 2
   do-daemonize: "yes"
   # Config files to load.

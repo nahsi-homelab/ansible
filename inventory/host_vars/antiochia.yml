@@ -55,7 +55,6 @@ base_portage_features:
 base_portage_use:
   - zstd
   - luajit
-  - libressl
   - -X
 
 base_portage_package_use:

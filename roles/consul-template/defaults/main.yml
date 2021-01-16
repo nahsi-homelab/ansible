@@ -13,7 +13,7 @@ consul_template_templates: {}
     #     destination: "/tmp/test.txt"
     #     backup: true
 
-consul_template_sources: []
+consul_template_sources: {}
   # internal_ca: |
   #   << with secret "pki/internal/cert/ca" >>
   #   <<- .Data.certificate >><< end >>

@@ -14,11 +14,11 @@ command_background="true"
 start_stop_daemon_args="--user ${user} --group ${group}"
 
 depend() {
-	need net
+    need net
 }
 
 reload() {
-	ebegin "Reloading consul"
-	${command} reload
-	eend $?
+    ebegin "Reloading consul"
+    ${command} reload
+    eend $?
 }

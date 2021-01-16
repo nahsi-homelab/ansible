@@ -30,15 +30,15 @@ checkconfig() {
 }
 
 start_pre() {
-  if [[ "${RC_CMD}" != "restart" ]] ; then
-      checkconfig || return $?
-  fi
+    if [[ "${RC_CMD}" != "restart" ]] ; then
+        checkconfig || return $?
+    fi
 }
 
 stop_pre() {
-  if [[ "${RC_CMD}" = "restart" ]] ; then
-      checkconfig || return $?
-  fi
+    if [[ "${RC_CMD}" = "restart" ]] ; then
+        checkconfig || return $?
+    fi
 }
 
 reload() {

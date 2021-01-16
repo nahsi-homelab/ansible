@@ -1,6 +1,6 @@
 - name: daemon reload
   systemd:
-    name: consul
+    name: consul-template
     daemon_reload: yes
 
 - name: restart consul-template

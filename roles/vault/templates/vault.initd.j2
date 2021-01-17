@@ -12,7 +12,9 @@ extra_started_commands="reload"
 command="/usr/local/bin/${RC_SVCNAME}"
 command_args="server -config={{ vault_dirs.configs.path }}"
 command_background="true"
-start_stop_daemon_args="--user ${user} --group ${group}"
+start_stop_daemon_args="--user ${user} --group ${group} \
+                        --stdout-logger logger -p user.info \
+                        --stderr-logger logger -p user.warn"
 
 depend() {
     need net

@@ -12,11 +12,5 @@
       cache:
         use_auto_auth_token: false
 
-      template:
-        - contents: !unsafe '{{ base64Decode "aGVsbG8=" }}'
-          # source: "{{ vault_agent_dirs.sources.path }}/hello.ctmpl"
-          destination: "/tmp/hello.txt"
-        - contents: 'test'
-          destination: "/tmp/test.txt"
   roles:
     - vault-agent

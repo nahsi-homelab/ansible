@@ -10,7 +10,7 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 
 @pytest.mark.parametrize("dirs", [
     "/opt/vault-agent",
-    "/opt/vault-agent/template.d/",
+    "/opt/vault-agent/source.d",
 ])
 def test_directories(host, dirs):
     d = host.file(dirs)
@@ -18,27 +18,13 @@ def test_directories(host, dirs):
     assert d.exists
 
 @pytest.mark.parametrize("files", [
-    "/opt/vault-agent/conf.d/vault-agent.json",
-    "/opt/vault-agent/template.d/test.hcl",
+    "/opt/vault-agent/vault-agent.json"
 ])
 def test_files(host, files):
     f = host.file(files)
 
     assert f.exists
     assert f.is_file
-
-
-def test_templates(host):
-    f = host.file("/tmp/hello.txt")
-
-    assert f.exists
-    assert f.is_file
-    assert f.contains("hello")
-
-    f = host.file("/tmp/test.txt")
-    assert f.exists
-    assert f.is_file
-    assert f.contains("test")
 
 
 def test_user(host):

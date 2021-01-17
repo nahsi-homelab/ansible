@@ -1,0 +1,22 @@
+- name: Converge
+  hosts: all
+  vars:
+    vault_agent_version: "1.6.1"
+
+    vault_agent_config:
+      listener:
+        tcp:
+          address: "0.0.0.0:8100"
+          tls_disable: true
+
+      cache:
+        use_auto_auth_token: false
+
+      template:
+        - contents: !unsafe '{{ base64Decode "aGVsbG8=" }}'
+          # source: "{{ vault_agent_dirs.sources.path }}/hello.ctmpl"
+          destination: "/tmp/hello.txt"
+        - contents: 'test'
+          destination: "/tmp/test.txt"
+  roles:
+    - vault-agent

@@ -1,0 +1,15 @@
+- name: check 'vault_agent_version' variable
+  assert:
+    that:
+      - vault_agent_version is defined
+      - vault_agent_version is string
+      - vault_agent_version | length
+    quiet: true
+
+- name: check 'vault_agent_config' variable
+  assert:
+    that:
+      - vault_agent_config is defined
+      - vault_agent_config is mapping
+      - vault_agent_config | length
+    quiet: true

@@ -1,0 +1,108 @@
+- name: download vault-agent to localhost
+  become: false
+  run_once: true
+  delegate_to: localhost
+  get_url:
+    url: "{{ __archive_url }}"
+    dest: "/tmp/{{ __archive }}"
+    checksum: "sha256:{{ __archive_checksum }}"
+  register: __download_archive
+  until: __download_archive is succeeded
+  retries: 5
+  delay: 2
+
+- name: create hashi system group
+  group:
+    name: hashi
+    system: true
+    state: present
+
+- name: create vault-agent system group
+  group:
+    name: vault-agent
+    system: true
+    state: present
+
+- name: create vault-agent system user
+  user:
+    name: vault-agent
+    system: true
+    shell: "/sbin/nologin"
+    group: vault-agent
+    create_home: false
+    home: "{{ vault_agent_dir }}"
+    state: present
+
+- name: create vault-agent directories
+  file:
+    path: "{{ dir.value.path }}"
+    state: directory
+    owner: vault-agent
+    group: vault-agent
+    mode: "{{ dir.value.mode | default(0750) }}"
+  loop: "{{ vault_agent_dirs | dict2items }}"
+  loop_control:
+    loop_var: dir
+    label: "{{ dir.key }}"
+
+- name: create vault-agent archive directory
+  become: false
+  delegate_to: localhost
+  file:
+    path: "{{ __archive_dir }}"
+    state: directory
+    mode: 0755
+
+- name: unpack vault-agent
+  become: false
+  delegate_to: localhost
+  unarchive:
+    src: "/tmp/{{ __archive }}"
+    dest: "{{ __archive_dir }}"
+
+- name: propagate vault-agent binary
+  copy:
+    src: "{{ __archive_dir }}/vault"
+    dest: "/usr/local/bin/vault-agent"
+    owner: root
+    group: root
+    mode: 0555
+  notify:
+    - restart vault-agent
+
+- name: create vault-agent unitfile
+  template:
+    src: consul.service.j2
+    dest: "/usr/lib/systemd/system/vault-agent.service"
+    owner: root
+    group: root
+    mode: 0640
+  when: ansible_service_mgr == "systemd"
+  notify:
+    - daemon reload
+    - restart vault-agent
+
+- name: create vault-agent initfile
+  template:
+    src: vault-agent.initd.j2
+    dest: "/etc/init.d/vault-agent"
+    owner: root
+    group: root
+    mode: 0740
+  when: ansible_service_mgr == "openrc"
+  notify:
+    - restart vault-agent
+
+- name: create vault-agent configuration
+  copy:
+    content: "{{ vault_agent_config | to_nice_json(indent=2) }}"
+    dest: "{{ vault_agent_dirs.main.path }}/vault-agent.json"
+    owner: vault-agent
+    group: vault-agent
+    mode: 0640
+  notify: restart vault-agent
+
+- name: enable vault-agent
+  service:
+    name: vault-agent
+    enabled: yes

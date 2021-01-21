@@ -1,0 +1,11 @@
+nomad_version: "1.0.2"
+nomad_server_config:
+  server:
+    enabled: true
+    bootstrap_expect: 1
+
+  vault:
+    enabled: true
+    address: "https://vault.service.consul:8200"
+    token: "{{ nomad_token }}"
+    create_from_role: "nomad"

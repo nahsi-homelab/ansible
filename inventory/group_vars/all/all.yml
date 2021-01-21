@@ -1,0 +1,2 @@
+vault_agent_version: "1.6.1"
+consul_template_version: "0.25.1"

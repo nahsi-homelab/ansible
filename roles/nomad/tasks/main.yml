@@ -1,0 +1,5 @@
+- name: Preflight
+  include_tasks: 00-preflight.yml
+
+- name: Install and configure Nomad
+  include_tasks: 01-nomad.yml

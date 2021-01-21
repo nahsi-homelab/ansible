@@ -1,0 +1,28 @@
+#!/sbin/openrc-run
+# {{ ansible_managed }}
+
+description="HashiCorp nomad"
+user="root"
+group="root"
+pidfile="/run/nomad.pid"
+
+extra_started_commands="reload"
+
+command="/usr/local/bin/${RC_SVCNAME}"
+command_args="agent -config={{ nomad_dirs.configs.path }}"
+command_background="true"
+stopsig=SIGINT
+
+start_stop_daemon_args="--user ${user} --group ${group} \
+                        --stdout-logger logger -p user.info \
+                        --stderr-logger logger -p user.warn"
+
+depend() {
+    need net
+}
+
+reload() {
+    ebegin "Reloading nomad"
+    start-stop-daemon --signal HUP --pidfile "${pidfile}"
+    eend $?
+}

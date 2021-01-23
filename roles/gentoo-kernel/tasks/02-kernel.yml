@@ -16,7 +16,6 @@
     src: "configs/{{ arch }}-base.config"
     dest: "/etc/portage/savedconfig/sys-kernel/gentoo-kernel-{{ kernel_version }}"
   notify:
-    - rebuild modules
     - rebuild kernel
 
 - name: create linux-firmware savedconfig
@@ -30,7 +29,6 @@
     dest: /etc/kernel/config.d/firmware.config
   when: kernel_firmware | length > 0
   notify:
-    - rebuild modules
     - rebuild kernel
 
 - name: copy kconfigs
@@ -47,7 +45,6 @@
     src: Kconfig.j2
     dest: "/etc/kernel/Kconfig"
   notify:
-    - rebuild modules
     - rebuild kernel
 
 - name: use custom Kconfig when building kernel

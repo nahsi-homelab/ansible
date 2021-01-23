@@ -37,9 +37,9 @@ base_distccd_allow:
 base_distccd:
   port: 3632
   log-level: "warning"
-  listen: "192.168.1.15"
+  listen: "192.168.1.17"
 
-base_sshd_listen_address: 192.168.1.15
+base_sshd_listen_address: 192.168.1.7
 
 base_env:
   locale: "en_US.UTF-8"
@@ -66,12 +66,14 @@ base_portage_makeconf:
   CPU_FLAGS_X86: "aes avx avx2 f16c fma3 mmx mmxext pclmul popcnt rdrand sha sse sse2 sse3 sse4_1 sse4_2 sse4a ssse3"
 
 base_network: |
-  config_enp35s0="192.168.1.15/24"
-  config_enp35s0="192.168.1.15 netmask 255.255.255.0"
+  config_enp35s0="192.168.1.7/24"
+  config_enp35s0="192.168.1.7 netmask 255.255.255.0"
   routes_enp35s0="default via 192.168.1.1"
+  wireguard_wg0="/etc/wireguard/server.conf"
 
 base_network_interfaces:
   - "enp35s0"
+  - "wg0"
 
 base_dns:
   name_servers: 127.0.0.1

@@ -9,14 +9,16 @@ consul_config_overlay:
     enabled: true
 
   addresses:
+    http: 0.0.0.0
     https: 0.0.0.0
 
   ports:
     https: 8501
+    http: 8500
 
-  verify_incoming_rpc: true
-  verify_outgoing: true
-  verify_server_hostname: true
-  ca_file: "/opt/consul/certs/ca.pem"
-  cert_file: "/opt/consul/certs/cert.pem"
-  key_file: "/opt/consul/certs/key.pem"
+  # verify_incoming_rpc: true
+  # verify_outgoing: true
+  # verify_server_hostname: true
+  # ca_file: "/opt/consul/certs/ca.pem"
+  # cert_file: "/opt/consul/certs/cert.pem"
+  # key_file: "/opt/consul/certs/key.pem"

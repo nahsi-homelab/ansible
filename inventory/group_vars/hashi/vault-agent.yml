@@ -1,6 +1,6 @@
 vault_agent_config:
   vault:
-    address: "https://vault.service.consul:8200"
+    address: "http://vault.service.consul:8200"
 
   auto_auth:
     method:

@@ -1,14 +1,14 @@
 vault_version: "1.6.1"
 vault_config:
-  disable_mlock: true
   ui: true
 
   listener:
     tcp:
       address: "0.0.0.0:8200"
-      tls_cert_file: "/opt/vault/certs/cert.pem"
-      tls_key_file: "/opt/vault/certs/key.pem"
+      # tls_cert_file: "/opt/vault/certs/cert.pem"
+      # tls_key_file: "/opt/vault/certs/key.pem"
+      tls_disable: true
 
   storage:
     consul:
-      address: "https://consul.service.syria.consul:8501"
+      address: "http://consul.service.syria.consul:8500"

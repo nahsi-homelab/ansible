@@ -3,8 +3,6 @@
   get_url:
     url: "{{ __stage3_link }}"
     dest: "/tmp/stage3.tar.xz"
-  args:
-    creates: "/tmp/stage3.tar.xz"
 
 - name: unpack stage3 tarball
   unarchive:

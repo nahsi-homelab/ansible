@@ -5,10 +5,9 @@ vault_config:
   listener:
     tcp:
       address: "0.0.0.0:8200"
-      # tls_cert_file: "/opt/vault/certs/cert.pem"
-      # tls_key_file: "/opt/vault/certs/key.pem"
-      tls_disable: true
+      tls_cert_file: "/opt/vault/certs/cert.pem"
+      tls_key_file: "/opt/vault/certs/key.pem"
 
   storage:
     consul:
-      address: "http://consul.service.syria.consul:8500"
+      address: "https://consul.service.syria.consul:8501"

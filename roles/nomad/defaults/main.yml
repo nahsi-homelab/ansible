@@ -60,7 +60,7 @@ nomad_vault_config: {}
   # vault:
   #   enabled: true
   #   address: "https://vault.service.consul:8200"
-  #   token: "{{ __nomad_token.token.auth.client_token}}"
+  #   token: "{{ __nomad_token.token.auth.client_token }}"
   #   create_from_role: "nomad"
 
 # When set to 'true' will get Nomad token from Vault

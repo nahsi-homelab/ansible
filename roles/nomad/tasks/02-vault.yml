@@ -16,14 +16,5 @@
     owner: root
     group: root
     mode: 0640
-  when:
-    - nomad_vault_config | length
-    - nomad_vault_init | length
-  notify: restart nomad
-
-- name: delete nomad vault configuration
-  file:
-    dest: "{{ nomad_dirs.configs.path }}/vault.json"
-    state: absent
-  when: ! nomad_vault_config | length
+  when: ! nomad_vault_init
   notify: restart nomad

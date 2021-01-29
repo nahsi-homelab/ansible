@@ -20,16 +20,16 @@ vault_agent_config:
       command: "update-ca-certificates"
 
     # Consul keys
-    - source: "{{ vault_agent_dirs.sources.path }}/consul_cert.tpl"
-      left_delimiter: "<<"
-      right_delimiter: ">>"
-      destination: "/opt/consul/certs/cert.pem"
-      perms: 0640
-      command: "consul reload"
     - source: "{{ vault_agent_dirs.sources.path }}/consul_ca.tpl"
       left_delimiter: "<<"
       right_delimiter: ">>"
       destination: "/opt/consul/certs/ca.pem"
+      perms: 0640
+      command: "consul reload"
+    - source: "{{ vault_agent_dirs.sources.path }}/consul_cert.tpl"
+      left_delimiter: "<<"
+      right_delimiter: ">>"
+      destination: "/opt/consul/certs/cert.pem"
       perms: 0640
       command: "consul reload"
     - source: "{{ vault_agent_dirs.sources.path }}/consul_key.tpl"
@@ -53,6 +53,46 @@ vault_agent_config:
       perms: 0640
       command: "rc-service vault reload"
 
+    # Nomad server keys
+    - source: "{{ vault_agent_dirs.sources.path }}/nomad_server_ca.tpl"
+      left_delimiter: "<<"
+      right_delimiter: ">>"
+      destination: "/opt/nomad/certs/server_ca.pem"
+      perms: 0640
+      command: "rc-service nomad reload"
+    - source: "{{ vault_agent_dirs.sources.path }}/nomad_server_cert.tpl"
+      left_delimiter: "<<"
+      right_delimiter: ">>"
+      destination: "/opt/nomad/certs/server_cert.pem"
+      perms: 0640
+      command: "rc-service nomad reload"
+    - source: "{{ vault_agent_dirs.sources.path }}/nomad_server_key.tpl"
+      left_delimiter: "<<"
+      right_delimiter: ">>"
+      destination: "/opt/nomad/certs/server_key.pem"
+      perms: 0640
+      command: "rc-service nomad reload"
+
+    # Nomad client keys
+    - source: "{{ vault_agent_dirs.sources.path }}/nomad_client_ca.tpl"
+      left_delimiter: "<<"
+      right_delimiter: ">>"
+      destination: "/opt/nomad/certs/client_ca.pem"
+      perms: 0640
+      command: "rc-service nomad reload"
+    - source: "{{ vault_agent_dirs.sources.path }}/nomad_client_cert.tpl"
+      left_delimiter: "<<"
+      right_delimiter: ">>"
+      destination: "/opt/nomad/certs/client_cert.pem"
+      perms: 0640
+      command: "rc-service nomad reload"
+    - source: "{{ vault_agent_dirs.sources.path }}/nomad_client_key.tpl"
+      left_delimiter: "<<"
+      right_delimiter: ">>"
+      destination: "/opt/nomad/certs/client_key.pem"
+      perms: 0640
+      command: "rc-service nomad reload"
+
 __consul_cert_args: >-
     "pki/internal/issue/consul"
     "common_name=consul.service.consul"
@@ -61,7 +101,17 @@ __consul_cert_args: >-
 __vault_cert_args: >-
     "pki/internal/issue/consul"
     "common_name=vault.service.consul"
-    "alt_names=vault.service.{{ consul_datacenter }}.consul,server.{{ consul_datacenter }}.consul"
+    "alt_names=vault.service.{{ consul_datacenter }}.consul"
+    "ip_sans=127.0.0.1"
+__nomad_server_cert_args: >-
+    "pki/internal/issue/consul"
+    "common_name=nomad.service.consul"
+    "alt_names=nomad.service.{{ consul_datacenter }}.consul,server.{{ nomad_region }}.nomad"
+    "ip_sans=127.0.0.1"
+__nomad_client_cert_args: >-
+    "pki/internal/issue/consul"
+    "common_name=nomad-client.service.consul"
+    "alt_names=nomad-client.service.{{ consul_datacenter }}.consul,client.{{ nomad_region }}.nomad"
     "ip_sans=127.0.0.1"
 
 vault_agent_sources:
@@ -69,14 +119,34 @@ vault_agent_sources:
     << with secret "pki/internal/cert/ca" >>
     <<- .Data.certificate >><< end >>
 
-  consul_cert: |
-    << with secret {{ __consul_cert_args }} >>
-    <<- .Data.certificate >><< end >>
   consul_ca: |
     << with secret {{ __consul_cert_args }} >>
     <<- .Data.issuing_ca >><< end >>
+  consul_cert: |
+    << with secret {{ __consul_cert_args }} >>
+    <<- .Data.certificate >><< end >>
   consul_key: |
     << with secret {{ __consul_cert_args }} >>
+    <<- .Data.private_key >><< end >>
+
+  nomad_server_ca: |
+    << with secret {{ __nomad_server_cert_args }} >>
+    <<- .Data.issuing_ca >><< end >>
+  nomad_server_cert: |
+    << with secret {{ __nomad_server_cert_args }} >>
+    <<- .Data.certificate >><< end >>
+  nomad_server_key: |
+    << with secret {{ __nomad_server_cert_args }} >>
+    <<- .Data.private_key >><< end >>
+
+  nomad_client_ca: |
+    << with secret {{ __nomad_client_cert_args }} >>
+    <<- .Data.issuing_ca >><< end >>
+  nomad_client_cert: |
+    << with secret {{ __nomad_client_cert_args }} >>
+    <<- .Data.certificate >><< end >>
+  nomad_client_key: |
+    << with secret {{ __nomad_client_cert_args }} >>
     <<- .Data.private_key >><< end >>
 
   vault_cert: |

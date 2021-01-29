@@ -1,6 +1,8 @@
 nomad_version: "1.0.2"
+nomad_region: "oikumene"
+
 nomad_config:
-  region: "oikumene"
+  region: "{{ nomad_region }}"
   datacenter: "syria"
   data_dir: "{{ nomad_dirs.data.path }}"
   plugin_dir: "{{ nomad_dirs.plugins.path }}"
@@ -23,3 +25,13 @@ nomad_client_config:
   vault:
     enabled: true
     address: "https://vault.service.consul:8200"
+
+  tls:
+    http: true
+    rpc: true
+
+    verify_server_hostname: true
+
+    ca_file: "/opt/nomad/certs/client-ca.pem"
+    cert_file: "/opt/nomad/certs/client-cert.pem"
+    key_file: "/opt/nomad/certs/client-key.pem"

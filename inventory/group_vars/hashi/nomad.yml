@@ -4,9 +4,19 @@ nomad_server_config:
     enabled: true
     bootstrap_expect: 1
 
+  tls:
+    http: true
+    rpc: true
+
+    verify_server_hostname: true
+
+    ca_file: "/opt/nomad/certs/server-ca.pem"
+    cert_file: "/opt/nomad/certs/server-cert.pem"
+    key_file: "/opt/nomad/certs/server-key.pem"
+
 nomad_vault_config:
   vault:
     enabled: true
     address: "https://vault.service.consul:8200"
-    token: "{{ __nomad_token.token.auth.client_token}}"
+    token: "{{ __nomad_token.token.auth.client_token }}"
     create_from_role: "nomad"

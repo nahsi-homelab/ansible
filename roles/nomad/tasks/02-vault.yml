@@ -1,0 +1,29 @@
+- name: get nomad token
+  delegate_to: localhost
+  become: false
+  hashivault_token_create:
+    display_name: "nomad"
+    policies: [ "nomad-server" ]
+    renewable: true
+    orphan: true
+  when: nomad_vault_init
+  register: __nomad_token
+
+- name: create nomad vault configuration
+  copy:
+    content: "{{ nomad_vault_config | to_nice_json(indent=2) }}"
+    dest: "{{ nomad_dirs.configs.path }}/vault.json"
+    owner: root
+    group: root
+    mode: 0640
+  when:
+    - nomad_vault_config | length
+    - nomad_vault_init | length
+  notify: restart nomad
+
+- name: delete nomad vault configuration
+  file:
+    dest: "{{ nomad_dirs.configs.path }}/vault.json"
+    state: absent
+  when: ! nomad_vault_config | length
+  notify: restart nomad

@@ -51,13 +51,20 @@ nomad_client_config: {}
   #     retry_join: [ "1.1.1.1", "2.2.2.2" ]
   #     retry_max: 3
   #     retry_interval: "15s"
-  #   meta: {{ nomad_client_meta | default({}) }}
+  #   meta:
+  #     key: "value"
+  #     foo: "bar"
+  #     gpu: true
 
-# Nomad client metadata used in constrains
-nomad_client_meta: {}
-  # key: "value"
-  # foo: "bar"
-  # gpu: true
+nomad_vault_config: {}
+  # vault:
+  #   enabled: true
+  #   address: "https://vault.service.consul:8200"
+  #   token: "{{ __nomad_token.token.auth.client_token}}"
+  #   create_from_role: "nomad"
+
+# When set to 'true' will get Nomad token from Vault
+nomad_vault_init: false
 
 nomad_server_config: {}
   # https://www.nomadproject.io/docs/configuration/server

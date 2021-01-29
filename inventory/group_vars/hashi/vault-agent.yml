@@ -53,7 +53,6 @@ vault_agent_config:
       perms: 0640
       command: "rc-service vault reload"
 
-
 __consul_cert_args: >-
     "pki/internal/issue/consul"
     "common_name=consul.service.consul"

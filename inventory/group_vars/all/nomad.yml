@@ -32,6 +32,12 @@ nomad_client_config:
 
     verify_server_hostname: true
 
-    ca_file: "/opt/nomad/certs/client-ca.pem"
-    cert_file: "/opt/nomad/certs/client-cert.pem"
-    key_file: "/opt/nomad/certs/client-key.pem"
+    ca_file: "/opt/nomad/certs/client_ca.pem"
+    cert_file: "/opt/nomad/certs/client_cert.pem"
+    key_file: "/opt/nomad/certs/client_key.pem"
+
+  client:
+    enabled: true
+    servers: ["nomad.service.consul:4647"]
+    meta:
+      storage: true

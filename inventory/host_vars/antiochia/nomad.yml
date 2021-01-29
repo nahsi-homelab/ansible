@@ -1,6 +1,0 @@
-nomad_client_config:
-  client:
-    enabled: true
-    servers: ["nomad.service.consul:4647"]
-    meta:
-      storage: true

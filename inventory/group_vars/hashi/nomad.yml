@@ -3,6 +3,7 @@ nomad_server_config:
   server:
     enabled: true
     bootstrap_expect: 1
+    encrypt: "{{ lookup('hashi_vault', 'secret=secret/gossip:nomad') }}"
 
   tls:
     http: true
@@ -10,9 +11,9 @@ nomad_server_config:
 
     verify_server_hostname: true
 
-    ca_file: "/opt/nomad/certs/server-ca.pem"
-    cert_file: "/opt/nomad/certs/server-cert.pem"
-    key_file: "/opt/nomad/certs/server-key.pem"
+    ca_file: "/opt/nomad/certs/server_ca.pem"
+    cert_file: "/opt/nomad/certs/server_cert.pem"
+    key_file: "/opt/nomad/certs/server_key.pem"
 
 nomad_vault_config:
   vault:

@@ -1,3 +1,7 @@
+chroot: false
+
+# Packages
+# ----------------------------------------------------------------------------
 # List of packages to be installed
 base_packages: []
   # - app-editors/neovim
@@ -18,6 +22,8 @@ base_packages_default:
   - app-misc/nnn
 
 
+# System
+# ----------------------------------------------------------------------------
 # Filesystems to mount
 # will create an entry in /etc/fstab
 base_filesystems: []
@@ -49,17 +55,6 @@ base_services_default:
   - name: consolefont
     runlevel: boot
 
-# OpenRC configuration
-# https://github.com/OpenRC/openrc/blob/master/etc/rc.conf
-# https://wiki.gentoo.org/wiki/OpenRC
-base_openrc: {}
-base_openrc_default:
-  # Enable logging
-  rc_logger: "YES"
-  rc_log_path: "/var/log/rc.log"
-  # Number of ttys allocated for logins
-  rc_tty_number: 2
-
 # Hardware clock configuration
 base_hwclock: {}
 base_hwclock_default:
@@ -72,6 +67,47 @@ base_hwclock_default:
   clock_hctosys: "YES"
   clock_args: ""
 
+# Network interfaces configuration
+# /usr/share/doc/netifrc-*/net.example.bz2
+# Example config:
+# base_network: |
+#   config_eth0="dhcp"
+# base_network_interfaces:
+#   - "eth0"
+
+base_dns:
+  name_servers: 1.1.1.1
+
+
+# OpenRC
+# ----------------------------------------------------------------------------
+# https://github.com/OpenRC/openrc/blob/master/etc/rc.conf
+# https://wiki.gentoo.org/wiki/OpenRC
+base_openrc: {}
+base_openrc_default:
+  # Enable logging
+  rc_logger: "YES"
+  rc_log_path: "/var/log/rc.log"
+  # Number of ttys allocated for logins
+  rc_tty_number: 2
+
+
+# Podman
+# ----------------------------------------------------------------------------
+# https://github.com/containers/image/blob/master/docs/containers-registries.conf.5.md
+base_podman_registries:
+  search:
+    - docker.io
+    - quay.io
+
+# https://github.com/containers/image/blob/master/docs/containers-policy.json.5.md
+base_podman_policy:
+  default:
+    - type: insecureAcceptAnything
+
+
+# SSH
+# ----------------------------------------------------------------------------
 # Only allow users in the following groups to login via SSH
 base_sshd_allow_groups:
   - wheel
@@ -99,16 +135,3 @@ base_sshd:
   SyslogFacility: "AUTH"
   LogLevel: "INFO"
   ListenAddress: "{{ base_sshd_listen_address | default(ansible_default_ipv4.address) }}"
-
-# Network interfaces configuration
-# /usr/share/doc/netifrc-*/net.example.bz2
-# Example config:
-# base_network: |
-#   config_eth0="dhcp"
-# base_network_interfaces:
-#   - "eth0"
-
-base_dns:
-  name_servers: 1.1.1.1
-
-chroot: false

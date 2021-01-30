@@ -21,7 +21,7 @@ consul_config_overlay:
   cert_file: "/opt/consul/certs/cert.pem"
   key_file: "/opt/consul/certs/key.pem"
 
-  encrypt: "{{ lookup('hashi_vault', 'secret/gossip:consul') }}"
+  encrypt: "{{ lookup('hashi_vault', 'secret-v1/gossip:consul') }}"
 
   dns_config:
     soa:

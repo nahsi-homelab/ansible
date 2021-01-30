@@ -3,7 +3,7 @@ nomad_server_config:
   server:
     enabled: true
     bootstrap_expect: 1
-    encrypt: "{{ lookup('hashi_vault', 'secret=secret/gossip:nomad') }}"
+    encrypt: "{{ lookup('hashi_vault', 'secret-v1/gossip:nomad') }}"
 
   tls:
     http: true

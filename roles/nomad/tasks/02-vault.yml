@@ -4,6 +4,7 @@
   hashivault_token_create:
     display_name: "nomad"
     policies: [ "nomad-server" ]
+    period: "72h"
     renewable: true
     orphan: true
   when: nomad_vault_init

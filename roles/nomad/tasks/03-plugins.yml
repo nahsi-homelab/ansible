@@ -1,0 +1,35 @@
+- name: download nomad-podman-driver to localhost
+  become: false
+  run_once: true
+  delegate_to: localhost
+  get_url:
+    url: "{{ __archive_podman_url }}"
+    dest: "/tmp/{{ __archive_podman }}"
+    checksum: "sha256:{{ __archive_podman_checksum }}"
+  register: __download_archive
+  until: __download_archive is succeeded
+  retries: 5
+  delay: 2
+
+- name: create nomad archive directory
+  become: false
+  delegate_to: localhost
+  file:
+    path: "{{ __archive_podman_dir }}"
+    state: directory
+    mode: 0755
+
+- name: unpack nomad-podman-driver
+  become: false
+  delegate_to: localhost
+  unarchive:
+    src: "/tmp/{{ __archive_podman }}"
+    dest: "{{ __archive_podman_dir }}"
+
+- name: propagate nomad-podmand-driver
+  copy:
+    src: "{{ __archive_podman_dir }}/nomad-driver-podman"
+    dest: "{{ nomad_dirs.plugins.path }}/nomad-driver-podman"
+    owner: root
+    group: root
+    mode: 0500

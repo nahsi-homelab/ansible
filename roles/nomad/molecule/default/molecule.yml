@@ -1,0 +1,25 @@
+driver:
+  name: podman
+
+platforms:
+  - name: nomad
+    image: localhost:5000/stage3-amd64:latest
+    pre_build_image: true
+    tmpfs:
+      - /run
+      - /tmp
+      - /var/tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    command: /sbin/openrc-init
+
+lint: ansible-lint -c ../../.ansible-lint --force-color .
+
+provisioner:
+  name: ansible
+
+verifier:
+  name: testinfra
+  options:
+    # show which tests where executed in test output
+    v: 1

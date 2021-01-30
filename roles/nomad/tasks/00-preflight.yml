@@ -1,0 +1,14 @@
+- name: check 'nomad_version' variable
+  assert:
+    that:
+      - nomad_version is defined
+      - nomad_version is string
+      - nomad_version | length
+    quiet: true
+
+- name: check 'nomad_token' variable
+  assert:
+    that:
+      - nomad_token | length
+    quiet: true
+  when: nomad_server_config | length and "vault" in nomad_server_config

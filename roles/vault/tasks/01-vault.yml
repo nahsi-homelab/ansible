@@ -72,6 +72,12 @@
   notify:
     - restart vault
 
+- name: add vault mlock capability
+  capabilities:
+    path: "/usr/local/bin/vault"
+    capability: cap_ipc_lock=ep
+  ignore_errors: true
+
 - name: create vault unitfile
   template:
     src: vault.service.j2

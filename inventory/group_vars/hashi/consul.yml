@@ -1,3 +1,4 @@
+consul_version: "1.9.1"
 consul_bootstrap_config:
   server: true
   bootstrap_expect: 1
@@ -19,3 +20,9 @@ consul_config_overlay:
   ca_file: "/opt/consul/certs/ca.pem"
   cert_file: "/opt/consul/certs/cert.pem"
   key_file: "/opt/consul/certs/key.pem"
+
+  encrypt: "{{ lookup('hashi_vault', 'secret-v1/gossip:consul') }}"
+
+  dns_config:
+    soa:
+      min_ttl: 60

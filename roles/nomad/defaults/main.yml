@@ -1,0 +1,97 @@
+nomad_config:
+  # Region in which Nomad is running.
+  # https://www.nomadproject.io/docs/configuration#region
+  # region: "{{ nomad_region }}"
+
+  # Datacenter in which Nomad is running.
+  # datacenter: "{{ nomad_datacenter }}"
+
+  # Directory to store state.
+  # data_dir: "{{ nomad_dirs.data.path }}"
+
+  # Directory with nomad plugins.
+  # plugin_dir: "{{ nomad_dirs.plugins.path }}"
+
+  # Bind all services (http, rpc, serf) to interface.
+  # bind_addr: "0.0.0.0"
+
+  # Bind services to interfaces.
+  # addresses:
+  #   http: "0.0.0.0"
+  #   rpc: "0.0.0.0"
+  #   serf: "0.0.0.0"
+
+  # ports:
+  #   http: 4646
+  #   rpc: 4647
+  #   serf: 4648
+
+  # Use syslog to store logs.
+  # enable_syslog: true
+  # "trace", "debug", "info", "warn", "err"
+  # log_level: "warn"
+  # syslog_facility: "LOCAL5"
+
+  # https://www.nomadproject.io/docs/configuration/consul
+  # If consul agent is running locally there is no need to fill 'consul' stanza
+  # consul:
+  #   enabled: true
+  #   address: "https://consul.service.consul:8500"
+
+  # https://www.nomadproject.io/docs/configuration/vault
+  # vault:
+  #   enabled: true
+  #   address: "https://vault.service.consul:8200"
+
+nomad_client_config: {}
+  # https://www.nomadproject.io/docs/configuration/client
+  # client:
+  #   enabled: true
+  #   server_join:
+  #     retry_join: [ "1.1.1.1", "2.2.2.2" ]
+  #     retry_max: 3
+  #     retry_interval: "15s"
+  #   meta:
+  #     key: "value"
+  #     foo: "bar"
+  #     gpu: true
+
+nomad_vault_config: {}
+  # vault:
+  #   enabled: true
+  #   address: "https://vault.service.consul:8200"
+  #   token: "{{ __nomad_token.token.auth.client_token }}"
+  #   create_from_role: "nomad"
+
+# When set to 'true' will get Nomad token from Vault
+nomad_vault_init: false
+
+nomad_server_config: {}
+  # https://www.nomadproject.io/docs/configuration/server
+  # server:
+  #   enabled: true
+  #   bootstrap_expect: 1
+  #   server_join:
+  #     retry_join: [ "1.1.1.1", "2.2.2.2" ]
+  #     retry_max: 3
+  #     retry_interval: "15s"
+
+nomad_dir: "/opt/nomad"
+nomad_dirs_base:
+  main:
+    path: "{{ nomad_dir }}"
+  configs:
+    path: "{{ nomad_dir }}/conf.d"
+  data:
+    path: "{{ nomad_dir }}/data"
+    mode: "u=rwX,g=,o="
+  plugins:
+    path: "{{ nomad_dir }}/plugins"
+  certs:
+    path: "{{ nomad_dir }}/certs"
+nomad_dirs_overlay: {}
+nomad_dirs: >
+  {{
+    nomad_dirs_base |
+    combine(nomad_dirs_overlay, recursive=true)
+  }}

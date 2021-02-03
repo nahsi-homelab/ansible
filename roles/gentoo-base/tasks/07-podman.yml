@@ -10,7 +10,7 @@
     dest: "/etc/containers/registries.conf"
     owner: root
     group: root
-    mode: 0600
+    mode: 0644
 
 - name: configure podman policy
   copy:
@@ -18,7 +18,7 @@
     dest: "/etc/containers/policy.json"
     owner: root
     group: root
-    mode: 0600
+    mode: 0644
 
 - name: create containers.conf
   copy:
@@ -27,4 +27,4 @@
     dest: "/etc/containers/containers.conf"
     owner: root
     group: root
-    mode: 0600
+    mode: 0644

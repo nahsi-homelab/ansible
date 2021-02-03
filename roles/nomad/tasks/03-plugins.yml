@@ -26,7 +26,7 @@
     src: "/tmp/{{ __archive_podman }}"
     dest: "{{ __archive_podman_dir }}"
 
-- name: propagate nomad-podmand-driver
+- name: propagate nomad-podman-driver
   copy:
     src: "{{ __archive_podman_dir }}/nomad-driver-podman"
     dest: "{{ nomad_dirs.plugins.path }}/nomad-driver-podman"

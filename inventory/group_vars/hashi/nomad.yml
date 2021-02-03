@@ -20,4 +20,4 @@ nomad_vault_config:
     enabled: true
     address: "https://vault.service.consul:8200"
     token: "{{ __nomad_token.token.auth.client_token }}"
-    create_from_role: "nomad"
+    create_from_role: "nomad-cluster"

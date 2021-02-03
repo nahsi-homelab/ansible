@@ -19,3 +19,12 @@
     owner: root
     group: root
     mode: 0600
+
+- name: create containers.conf
+  copy:
+    content: |
+      runtime="crun"
+    dest: "/etc/containers/containers.conf"
+    owner: root
+    group: root
+    mode: 0600

@@ -1,0 +1,12 @@
+# Podman
+# ----------------------------------------------------------------------------
+# https://github.com/containers/image/blob/master/docs/containers-registries.conf.5.md
+base_podman_registries:
+  search:
+    - docker.io
+    - quay.io
+
+# https://github.com/containers/image/blob/master/docs/containers-policy.json.5.md
+base_podman_policy:
+  default:
+    - type: insecureAcceptAnything

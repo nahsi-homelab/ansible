@@ -1,6 +1,0 @@
-molecule>=3.0.0
-molecule[podman]
-molecule[lint]
-podman
-testinfra>=1.7.0
-ansible-lint

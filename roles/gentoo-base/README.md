@@ -54,6 +54,9 @@ For examples see comments in [defaults](defaults).
 |||
 | `base_distccd` | see [defaults/distcc.yml](defaults/distcc.yml) | distccd config |
 | `base_distccd_allow` | `["{{ ansible_default_ipv4.network }}"]` | list of IPs/subnets allowed to connect to distccd |
+|||
+| `base_podman_policy` | see [defaults/containers.yml](defaults/containers.yml) | podman policy settings |
+| `base_podman_registries` | see [defaults/containers.yml](defaults/containers.yml) | podman registries |
 
 ## Examples
 
@@ -75,33 +78,6 @@ users:
   hosts: all
   roles:
     - gentoo-base
-```
-
-## Testing
-Tests are WIP.
-
-Since I don't host my own container registry at this moment you have to
-[build](../../dockerfiles) container with Gentoo locally before running tests.
-
-Tests will be automated with:
-
-- [tox](https://tox.readthedocs.io/en/latest/)
-- [Molecule](http://molecule.readthedocs.org/en/latest/)
-- [testinfra](https://testinfra.readthedocs.io/en/latest/index.html)
-
-To install tox run:
-```sh
-pip install tox
-```
-
-To run tests on all ansible versions:
-```sh
-tox
-```
-
-To run a custom molecule command on custom environment:
-```sh
-tox -e ansible29 -- molecule test -s
 ```
 
 ## Credits

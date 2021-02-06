@@ -23,8 +23,30 @@
 - name: create containers.conf
   copy:
     content: |
+      [engine]
       runtime="crun"
     dest: "/etc/containers/containers.conf"
     owner: root
     group: root
     mode: 0644
+
+- name: enable podman socket api
+  service:
+    name: podman
+    state: started
+    enabled: yes
+    runlevel: default
+    use: openrc
+
+- name: install docker
+  portage:
+    package:
+      - app-emulation/docker
+
+- name: enable docker
+  service:
+    name: docker
+    state: started
+    enabled: yes
+    runlevel: default
+    use: openrc

@@ -2,8 +2,9 @@
   command: "emerge @module-rebuild --exclude sys-kernel/gentoo-kernel"
 
 - name: rebuild kernel
-  command: "emerge sys-kernel/gentoo-kernel:{{ kernel_version }}"
+  shell: |
+    emerge @modules-rebuild --exclude sys-kernel/gentoo-kernel
+    emerge --update sys-kernel/gentoo-kernel:{{ kernel_version }}
 
 - name: update initramfs
   command: "emerge --config sys-kernel/gentoo-kernel:{{ kernel_version }}"
-

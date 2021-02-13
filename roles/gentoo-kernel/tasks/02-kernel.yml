@@ -37,7 +37,6 @@
     dest: "/etc/kernel/kconfig.d/{{ item }}"
   loop: "{{ kernel_kconfigs }}"
   notify:
-    - rebuild modules
     - rebuild kernel
 
 - name: create custom Kconfig to include in Linux src
@@ -58,7 +57,8 @@
     dest: "/etc/kernel/postinst.d/{{ item }}"
     mode: 745
   loop: "{{ kernel_postinst }}"
-  notify: update initramfs
+  notify:
+    - update initramfs
 
 - name: force gentoo-kernel version
   copy:
@@ -66,6 +66,8 @@
       >sys-kernel/gentoo-kernel-{{ kernel_version }}
       >sys-kernel/gentoo-sources-{{ kernel_version }}
     dest: /etc/portage/package.mask/kernel.mask
+  notify:
+    - rebuild kernel
 
 - name: enable savedconfigs
   copy:
@@ -79,14 +81,6 @@
     package: sys-kernel/linux-firmware
     state: latest
   when: kernel_firmware | length > 0
-
-- name: install gentoo-kernel
-  portage:
-    package: sys-kernel/gentoo-kernel
-    state: latest
-  notify:
-    - rebuild modules
-    - rebuild kernel
 
 - name: remove old kernels
   portage:

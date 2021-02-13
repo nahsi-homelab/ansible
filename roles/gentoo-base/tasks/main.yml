@@ -23,3 +23,6 @@
 
 - name: Configure sshd
   include_tasks: 06-ssh.yml
+
+- name: Configure containers
+  include_tasks: 07-containers.yml

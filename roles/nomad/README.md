@@ -20,6 +20,7 @@ See [defaults/main.yml](defaults/main.yml) for details and examples.
 | `nomad_dirs` | map | Nomad directories to create |
 | `nomad_dir` | string | main Nomad dir, used in `nomad_dirs` |
 | `nomad_version` | string | |
+| `nomad_podman_version` | string | podman plugin version |
 
 ## Examples
 Deploy Nomad server with Vault integration:

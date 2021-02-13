@@ -33,6 +33,7 @@ kernel_refind_menu:
 
 base_distccd_allow:
   - 192.168.1.0/24
+  - 192.168.5.0/24
 
 base_distccd:
   port: 3632

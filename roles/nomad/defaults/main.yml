@@ -1,3 +1,4 @@
+nomad_podman_version: 0.2.0
 nomad_config:
   # Region in which Nomad is running.
   # https://www.nomadproject.io/docs/configuration#region

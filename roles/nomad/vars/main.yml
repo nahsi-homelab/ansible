@@ -2,3 +2,8 @@ __archive: "nomad_{{ nomad_version }}_linux_amd64.zip"
 __archive_url: "https://releases.hashicorp.com/nomad/{{ nomad_version }}/{{ __archive }}"
 __archive_checksum: "https://releases.hashicorp.com/nomad/{{ nomad_version }}/nomad_{{ nomad_version }}_SHA256SUMS"
 __archive_dir: "/tmp/{{ __archive | splitext | first }}"
+
+__archive_podman: "nomad-driver-podman_{{ nomad_podman_version }}_linux_amd64.zip"
+__archive_podman_url: "https://releases.hashicorp.com/nomad-driver-podman/{{ nomad_podman_version }}/{{ __archive_podman }}"
+__archive_podman_checksum: "https://releases.hashicorp.com/nomad-driver-podman/{{ nomad_podman_version }}/nomad-driver-podman_{{ nomad_podman_version }}_SHA256SUMS"
+__archive_podman_dir: "/tmp/{{ __archive_podman | splitext | first }}"

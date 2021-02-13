@@ -6,3 +6,6 @@
 
 - name: Integrate with Vault
   include_tasks: 02-vault.yml
+
+- name: Intall Nomad plugins
+  include_tasks: 03-plugins.yml

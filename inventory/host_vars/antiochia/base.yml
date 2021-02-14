@@ -13,6 +13,7 @@ base_filesystems:
 base_packages:
   - app-editors/neovim
   - sys-process/htop
+  - media-video/ffmpeg
 
 kernel_version: 5.9.16
 kernel_firmware:
@@ -38,7 +39,7 @@ base_distccd_allow:
 base_distccd:
   port: 3632
   log-level: "warning"
-  listen: "192.168.1.17"
+  listen: "192.168.1.7"
 
 base_sshd_listen_address: 192.168.1.7
 
@@ -61,6 +62,7 @@ base_portage_use:
 base_portage_package_use:
   - net_misc/openssh -pam
   - sys-devel/gcc pgo
+  - media-video/ffmpeg vpx x264 x265 vorbis opus
 
 base_portage_makeconf:
   COMMON_FLAGS: "-O2 -march=znver2"

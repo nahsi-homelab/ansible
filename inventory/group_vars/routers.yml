@@ -17,6 +17,7 @@ dns_unbound_server:
     - "192.168.1.0/24 allow"
     - "192.168.5.0/24 allow"
     - "172.17.0.0/16 allow"
+    - "10.88.0.0/16 allow"
   do-not-query-localhost: "no"
   domain-insecure: "consul"
   # workaround for a bug in consul

@@ -14,6 +14,7 @@ base_packages:
   - app-editors/neovim
   - sys-process/htop
   - media-video/ffmpeg
+  - net-p2p/transmission
 
 kernel_version: 5.9.16
 kernel_firmware:
@@ -62,7 +63,7 @@ base_portage_use:
 base_portage_package_use:
   - net_misc/openssh -pam
   - sys-devel/gcc pgo
-  - media-video/ffmpeg vpx x264 x265 vorbis opus
+  - media-video/ffmpeg vpx x264 x265 vorbis opus theora
 
 base_portage_makeconf:
   COMMON_FLAGS: "-O2 -march=znver2"

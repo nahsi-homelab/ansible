@@ -9,9 +9,11 @@ consul_config_overlay:
     enabled: true
 
   addresses:
+    http: 0.0.0.0
     https: 0.0.0.0
 
   ports:
+    http: 8500
     https: 8501
 
   verify_incoming_rpc: true

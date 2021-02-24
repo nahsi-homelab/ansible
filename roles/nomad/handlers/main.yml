@@ -7,3 +7,8 @@
   service:
     name: nomad
     state: restarted
+
+- name: reload nomad
+  service:
+    name: nomad
+    state: restarted

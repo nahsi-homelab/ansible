@@ -18,4 +18,4 @@
     group: root
     mode: 0640
   when: ! nomad_vault_init
-  notify: restart nomad
+  notify: reload nomad

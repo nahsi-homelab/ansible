@@ -13,3 +13,20 @@
       - telegraf_checksum is string
       - telegraf_checksum | length
     quiet: true
+
+- name: check 'telegraf_agent_config' variable
+  assert:
+    that:
+      - telegraf_agent_config is defined
+      - telegraf_agent_config is string
+      - telegraf_agent_config | length
+    quiet: true
+
+- name: check 'telegraf_configs' variable
+  assert:
+    that:
+      - telegraf_configs is defined
+      - telegraf_configs is mapping
+      - telegraf_configs | length
+    quiet: true
+

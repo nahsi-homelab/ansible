@@ -18,7 +18,7 @@
     loop_var: config
     label: "{{ config.key }}"
   register: __configs_copied
-  notify: reload telegraf
+  notify: restart telegraf
 
 - name: ansible magic
   set_fact:

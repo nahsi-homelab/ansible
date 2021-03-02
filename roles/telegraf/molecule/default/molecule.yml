@@ -64,6 +64,7 @@ provisioner:
 
 verifier:
   name: testinfra
+  directory: ../tests
   options:
     # show which tests where executed in test output
     v: 1

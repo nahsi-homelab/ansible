@@ -1,0 +1,8 @@
+telegraf_dir: "/opt/telegraf"
+telegraf_dirs:
+  main:
+    path: "{{ telegraf_dir }}"
+  configs:
+    path: "{{ telegraf_dir }}/conf.d"
+  scripts:
+    path: "{{ telegraf_dir }}/scripts"

@@ -1,0 +1,8 @@
+- name: Preflight
+  include_tasks: 00-preflight.yml
+
+- name: Install and configure Telegraf
+  include_tasks: 01-install.yml
+
+- name: Configure Telegraf plugins
+  include_tasks: 02-plugins.yml

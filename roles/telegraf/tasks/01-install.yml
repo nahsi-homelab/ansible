@@ -54,7 +54,7 @@
     src: "/tmp/{{ __archive }}"
     dest: "{{ __archive_dir }}"
 
-- name: propagate consul binary
+- name: propagate telegraf binary
   copy:
     src: "{{ __archive_dir }}/telegraf-{{ telegraf_version }}/usr/bin/telegraf"
     dest: "/usr/local/bin/telegraf"

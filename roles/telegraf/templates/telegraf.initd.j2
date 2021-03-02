@@ -13,8 +13,8 @@ command="/usr/local/bin/${RC_SVCNAME}"
 command_args="-config {{ telegraf_dirs.main.path }}/telegraf.conf -config-directory={{ telegraf_dirs.configs.path }}"
 command_background="true"
 start_stop_daemon_args="--user ${user} --group ${group} \
-                        --stdout-logger logger -p user.info \
-                        --stderr-logger logger -p user.warn"
+                        --stdout-logger 'logger -p user.info' \
+                        --stderr-logger 'logger -p user.warn'"
 
 reload() {
     ebegin "Reloading telegraf"

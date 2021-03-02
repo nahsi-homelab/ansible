@@ -47,5 +47,5 @@ def test_files_absent(host, files):
 
 
 def test_telegraf_prometheus_listening(host):
-    s = host.socket("udp://0.0.0.0:9271")
+    s = host.socket("tcp://0.0.0.0:9271")
     assert s.is_listening

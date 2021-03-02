@@ -1,0 +1,33 @@
+- name: register present plugins configs
+  find:
+    paths: "{{ telegraf_dirs.configs.path }}"
+    recurse: yes
+    patterns:
+      - "*.conf"
+  register: __configs_present
+
+- name: copy plugin configs
+  copy:
+    content: "{{ config.value }}"
+    dest: "{{ telegraf_dirs.configs.path }}/{{ config.key }}.conf"
+    owner: telegraf
+    group: telegraf
+    mode: 0440
+  loop: "{{ telegraf_configs | dict2items }}"
+  loop_control:
+    loop_var: config
+    label: "{{ config.key }}"
+  register: __configs_copied
+  notify: reload telegraf
+
+- name: ansible magic
+  set_fact:
+    __configs_present_list: "{{ __configs_present | json_query('files[*].path') | default([]) }}"
+    __configs_copied_list: "{{ __configs_copied | json_query('results[*].dest') | default([]) }}"
+
+- name: syncronize plugin configs
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop: "{{ __configs_present_list | difference( __configs_copied_list ) }}"
+  notify: restart telegraf

@@ -1,0 +1,23 @@
+#!/sbin/openrc-run
+# {{ ansible_managed }}
+
+description="Telegraf - metrics collection agent"
+extra_started_commands="reload"
+
+group="${RC_SVCNAME}"
+user="${RC_SVCNAME}"
+
+pidfile="/run/${RC_SVCNAME}.pid"
+
+command="/usr/local/bin/${RC_SVCNAME}"
+command_args="-config {{ telegraf_dirs.main.path }}/telegraf.conf -config-directory={{ telegraf_dirs.configs.path }}"
+command_background="true"
+start_stop_daemon_args="--user ${user} --group ${group} \
+                        --stdout-logger logger -p user.info \
+                        --stderr-logger logger -p user.warn"
+
+reload() {
+    ebegin "Reloading telegraf"
+    start-stop-daemon --signal HUP --pidfile "${PIDFILE}"
+    eend $?
+}

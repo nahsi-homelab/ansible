@@ -1,0 +1,69 @@
+driver:
+  name: podman
+
+platforms:
+  - name: telegraf
+    image: gentoo/stage3:latest
+    pre_build_image: true
+    tmpfs:
+      - /run
+      - /tmp
+      - /var/tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    command: /sbin/openrc-init
+
+lint: ansible-lint -c ../../.ansible-lint --force-color .
+
+provisioner:
+  name: ansible
+  inventory:
+    host_vars:
+      telegraf:
+
+    group_vars:
+      all:
+        telegraf_version: "1.17.3"
+        telegraf_checksum: "b36305454045abbef36f069d623622d0e8ce537ac6e62996f6585c9caa4fdfd7"
+
+        telegraf_agent_config: |
+          [agent]
+            interval = "15s"
+            round_interval = true
+            metric_batch_size = 10000
+            metric_buffer_limit = 100000
+            collection_jitter = "0s"
+            flush_interval = "15s"
+            flush_jitter = "0s"
+            precision = ""
+            logtarget = "stdeer"
+            ## Override default hostname, if empty use os.Hostname()
+            hostname = ""
+            ## If set to true, do no set the "host" tag in the telegraf agent.
+            omit_hostname = true
+
+        telegraf_configs:
+          health: |
+            [[outputs.health]]
+              service_address = "http://127.0.0.1:9270"
+
+          prometheus: |
+            [[outputs.prometheus_client]]
+              listen = ":9271"
+              metric_version = 2
+              path = "/metrics"
+              expiration_interval = "30s"
+
+          system: |
+            [[inputs.system]]
+            [[inputs.mem]]
+            [[inputs.cpu]]
+              percpu = true
+              totalcpu = true
+              collect_cpu_time = false
+
+verifier:
+  name: testinfra
+  options:
+    # show which tests where executed in test output
+    v: 1

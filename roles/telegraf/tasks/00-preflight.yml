@@ -1,0 +1,15 @@
+- name: check 'telegraf_version' variable
+  assert:
+    that:
+      - telegraf_version is defined
+      - telegraf_version is string
+      - telegraf_version | length
+    quiet: true
+
+- name: check 'telegraf_checksum' variable
+  assert:
+    that:
+      - telegraf_checksum is defined
+      - telegraf_checksum is string
+      - telegraf_checksum | length
+    quiet: true

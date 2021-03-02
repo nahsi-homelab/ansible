@@ -1,0 +1,102 @@
+- name: download telegraf to localhost
+  become: false
+  run_once: true
+  delegate_to: localhost
+  get_url:
+    url: "{{ __archive_url }}"
+    dest: "/tmp/{{ __archive }}"
+    checksum: "sha256:{{ telegraf_checksum }}"
+  register: __download_archive
+  until: __download_archive is succeeded
+  retries: 5
+  delay: 2
+
+- name: create telegraf system group
+  group:
+    name: telegraf
+    system: true
+    state: present
+
+- name: create telegraf system user
+  user:
+    name: telegraf
+    system: true
+    shell: "/sbin/nologin"
+    group: telegraf
+    create_home: false
+    home: "{{ telegraf_dir }}"
+    state: present
+
+- name: create telegraf directories
+  file:
+    path: "{{ dir.value.path }}"
+    state: directory
+    owner: telegraf
+    group: "{{ dir.group | default('telegraf')}}"
+    mode: "{{ dir.value.mode | default(0740) }}"
+  loop: "{{ telegraf_dirs | dict2items }}"
+  loop_control:
+    loop_var: dir
+    label: "{{ dir.key }}"
+
+- name: create telegraf archive directory
+  become: false
+  delegate_to: localhost
+  file:
+    path: "{{ __archive_dir }}"
+    state: directory
+    mode: 0755
+
+- name: unpack telegraf
+  become: false
+  delegate_to: localhost
+  unarchive:
+    src: "/tmp/{{ __archive }}"
+    dest: "{{ __archive_dir }}"
+
+- name: propagate consul binary
+  copy:
+    src: "{{ __archive_dir }}/telegraf-{{ telegraf_version }}/usr/bin/telegraf"
+    dest: "/usr/local/bin/telegraf"
+    owner: root
+    group: root
+    mode: 0555
+  notify:
+    - restart telegraf
+
+- name: create telegraf unitfile
+  template:
+    src: telegraf.service.j2
+    dest: "/usr/lib/systemd/system/telegraf.service"
+    owner: root
+    group: root
+    mode: 0640
+  when: ansible_service_mgr == "systemd"
+  notify:
+    - daemon reload
+    - restart telegraf
+
+- name: create telegraf initfile
+  template:
+    src: telegraf.initd.j2
+    dest: "/etc/init.d/telegraf"
+    owner: root
+    group: root
+    mode: 0740
+  when: ansible_service_mgr == "openrc"
+  notify:
+    - restart telegraf
+
+- name: create telegraf configuration
+  copy:
+    content: "{{ telegraf_agent_config }}"
+    dest: "{{ telegraf_dirs.main.path }}/telegraf.conf"
+    owner: telegraf
+    group: telegraf
+    mode: 0440
+  notify: restart telegraf
+
+- name: enable telegraf
+  service:
+    name: telegraf
+    enabled: yes

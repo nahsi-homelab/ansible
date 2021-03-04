@@ -3,7 +3,7 @@ arch: "amd64"
 base_filesystems:
   - path: "/var/tmp"
     src: "tmpfs"
-    opts: "rw,nosuid,noatime,nodev,size=16G,mode=1777"
+    opts: "rw,nosuid,noatime,nodev,size=75%,mode=1777"
     type: "tmpfs"
   - path: "/tmp"
     src: "tmpfs"

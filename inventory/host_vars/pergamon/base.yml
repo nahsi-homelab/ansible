@@ -75,7 +75,3 @@ base_network: |
 
 base_network_interfaces:
   - "enp35s0"
-
-base_dns:
-  name_servers: "1.1.1.1"
-  search_domains: "node.consul service.consul"

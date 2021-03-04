@@ -24,7 +24,7 @@ kernel_kconfigs:
   - amd
   - x470d4u
 
-kernel_efi_device: "/dev/disk/by-partlabel/EFI"
+kernel_boot_device: "/dev/disk/by-partlabel/EFI"
 
 kernel_zfs_on_root: true
 kernel_refind_menu:

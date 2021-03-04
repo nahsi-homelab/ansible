@@ -1,0 +1,81 @@
+arch: "amd64"
+
+base_filesystems:
+  - path: "/var/tmp"
+    src: "tmpfs"
+    opts: "rw,nosuid,noatime,nodev,size=16G,mode=1777"
+    type: "tmpfs"
+  - path: "/tmp"
+    src: "tmpfs"
+    opts: "rw,nosuid,noatime,nodev,size=2G,mode=1777"
+    type: "tmpfs"
+
+base_packages:
+  - app-editors/neovim
+  - sys-process/htop
+
+kernel_version: 5.9.16
+kernel_firmware:
+  - amd-ucode/microcode_amd.bin
+  - amdgpu/polaris11_ce.bin
+  - amdgpu/polaris11_k_smc.bin
+  - amdgpu/polaris11_k2_smc.bin
+  - amdgpu/polaris11_k_mc.bin
+  - amdgpu/polaris11_mc.bin
+  - amdgpu/polaris11_me.bin
+  - amdgpu/polaris11_mec2.bin
+  - amdgpu/polaris11_mec.bin
+  - amdgpu/polaris11_pfp.bin
+  - amdgpu/polaris11_rlc.bin
+  - amdgpu/polaris11_sdma1.bin
+  - amdgpu/polaris11_sdma.bin
+  - amdgpu/polaris11_smc.bin
+  - amdgpu/polaris11_smc_sk.bin
+  - amdgpu/polaris11_uvd.bin
+  - amdgpu/polaris11_vce.bin
+kernel_kconfigs:
+  - amd
+
+kernel_boot_device: "/dev/disk/by-uuid/b26607a4-b2a5-4130-bea3-778a1ef26dc2"
+
+kernel_zfs_on_root: true
+
+base_sshd_listen_address: 192.168.50.10
+
+base_env:
+  locale: "en_US.UTF-8"
+  editor: "nvim"
+
+base_gentoo_mirrors:
+  - https://mirror.yandex.ru/gentoo-distfiles/
+  - https://distfiles.gentoo.org/
+
+base_portage_features:
+  - parallel-install
+
+base_portage_use:
+  - zstd
+  - luajit
+  - -X
+
+base_portage_package_use:
+  - net_misc/openssh -pam
+  - sys-devel/gcc pgo
+
+base_portage_makeconf:
+  COMMON_FLAGS: "-O2 -march=amdfam10 -mtune=amdfam10 -mcx16 -mpopcnt"
+  CPU_FLAGS_X86: "3dnow 3dnowext popcnt mmx mmxext sse sse2 sse3 sse4a"
+  INPUT_DEVICES: "evdev"
+  VIDEO_CARDS: "amdgpu radeonsi"
+  GRUB_PLATFORMS: "pc"
+
+base_network: |
+  config_enp35s0="192.168.50.10 netmask 255.255.255.0"
+  routes_enp35s0="default via 192.168.50.1"
+
+base_network_interfaces:
+  - "enp35s0"
+
+base_dns:
+  name_servers: "1.1.1.1"
+  search_domains: "node.consul service.consul"

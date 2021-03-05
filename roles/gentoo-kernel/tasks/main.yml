@@ -5,6 +5,12 @@
   include_tasks: 01-refind.yml
   when: kernel_refind_menu is defined
 
+- name: Configure syslinux semiautomatically
+  # https://github.com/zbm-dev/zfsbootmenu/wiki/Void-Linux----Single-disk-syslinux-MBR
+  # https://wiki.gentoo.org/wiki/Syslinux
+  include_tasks: 01-legacy.yml
+  when: kernel_refind_menu is not defined
+
 - name: Configure kernel
   include_tasks: 02-kernel.yml
 

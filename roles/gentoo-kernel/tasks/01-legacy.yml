@@ -1,0 +1,9 @@
+- name: mount /boot/syslinux
+  mount:
+    src: "{{ kernel_boot_device }}"
+    opts: "noatime,noauto"
+    path: "/boot/syslinux/"
+    fstype: "ext4"
+    state: mounted
+  tags:
+    - notest

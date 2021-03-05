@@ -1,6 +1,6 @@
 kernel_version: 5.9.16
 
-kernel_boot_device: "/dev/disk/by-uuid/b26607a4-b2a5-4130-bea3-778a1ef26dc2"
+kernel_boot_device: "/dev/disk/by-uuid/42aa2c5d-80d4-4216-b6e2-b35891da6684"
 
 kernel_firmware:
   - amd-ucode/microcode_amd.bin

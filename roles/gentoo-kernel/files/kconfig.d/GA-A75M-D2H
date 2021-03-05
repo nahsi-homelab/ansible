@@ -1,6 +1,6 @@
-menu "GA-A75-D2H"
+menu "GA-A75M-D2H"
 
-config LOCAL_GA_A75_D2H_VIDEO
+config LOCAL_GA_A75M_D2H_VIDEO
     bool    "Video"
 
     default y
@@ -8,7 +8,7 @@ config LOCAL_GA_A75_D2H_VIDEO
     select  DRM
     select  DRM_AMDGPU
 
-config LOCAL_GA_A75_D2H_SOUND
+config LOCAL_GA_A75M_D2H_SOUND
     bool    "Sound"
 
     default y
@@ -21,7 +21,7 @@ config LOCAL_GA_A75_D2H_SOUND
     select  SND_USB_AUDIO
     select  SND_HWDEP
 
-config  LOCAL_GA_A75_D2H_NET
+config  LOCAL_GA_A75M_D2H_NET
     bool    "Ethernet"
 
     default y
@@ -30,7 +30,7 @@ config  LOCAL_GA_A75_D2H_NET
     select  CONFIG_R8169
 
 
-config LOCAL_GA_A75_D2H_MISC
+config LOCAL_GA_A75M_D2H_MISC
     bool    "Modules loaded on Ubuntu 20.20"
 
     default y
@@ -40,7 +40,7 @@ config LOCAL_GA_A75_D2H_MISC
     select  PRINTER
     select  JOYDEV
 
-config  LOCAL_GA_A75_D2H_CRYPTO
+config  LOCAL_GA_A75M_D2H_CRYPTO
     bool    "Cryptography"
     default y
 

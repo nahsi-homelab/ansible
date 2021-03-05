@@ -1,6 +1,6 @@
-kernel_version: 5.9.16
+kernel_mask_version: "5.11"
 
-kernel_boot_device: "/dev/disk/by-uuid/42aa2c5d-80d4-4216-b6e2-b35891da6684"
+kernel_boot_device: "/dev/disk/by-uuid/1a40a9e4-68a3-4af0-bb2d-784349817a60"
 
 kernel_firmware:
   - amd-ucode/microcode_amd.bin
@@ -22,12 +22,12 @@ kernel_firmware:
   - amdgpu/polaris11_vce.bin
 
 kernel_kconfigs:
-  - amd
+  - AMD
   - GA-A75M-D2H
 
 kernel_zfs_on_root: true
 
-kenel_zfsbootmenu_config:
+kernel_zfsbootmenu_config:
   Global:
     ManageImages: true
     BootMountPoint: /boot/syslinux

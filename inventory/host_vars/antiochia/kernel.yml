@@ -1,4 +1,4 @@
-kernel_version: 5.9.16
+kernel_mask_version: "5.10"
 
 kernel_boot_device: "/dev/disk/by-partlabel/EFI"
 
@@ -7,12 +7,12 @@ kernel_firmware:
   - amd-ucode/microcode_amd_fam17h.bin
 
 kernel_kconfigs:
-  - amd
+  - AMD
   - X470D4U
 
 kernel_zfs_on_root: true
 
-kenel_zfsbootmenu_config:
+kernel_zfsbootmenu_config:
   Global:
     ManageImages: true
     BootMountPoint: /boot/efi

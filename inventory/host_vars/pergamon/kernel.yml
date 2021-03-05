@@ -1,0 +1,41 @@
+kernel_version: 5.9.16
+
+kernel_boot_device: "/dev/disk/by-uuid/b26607a4-b2a5-4130-bea3-778a1ef26dc2"
+
+kernel_firmware:
+  - amd-ucode/microcode_amd.bin
+  - amdgpu/polaris11_ce.bin
+  - amdgpu/polaris11_k_smc.bin
+  - amdgpu/polaris11_k2_smc.bin
+  - amdgpu/polaris11_k_mc.bin
+  - amdgpu/polaris11_mc.bin
+  - amdgpu/polaris11_me.bin
+  - amdgpu/polaris11_mec2.bin
+  - amdgpu/polaris11_mec.bin
+  - amdgpu/polaris11_pfp.bin
+  - amdgpu/polaris11_rlc.bin
+  - amdgpu/polaris11_sdma1.bin
+  - amdgpu/polaris11_sdma.bin
+  - amdgpu/polaris11_smc.bin
+  - amdgpu/polaris11_smc_sk.bin
+  - amdgpu/polaris11_uvd.bin
+  - amdgpu/polaris11_vce.bin
+
+kernel_kconfigs:
+  - amd
+
+kernel_zfs_on_root: true
+
+kenel_zfsbootmenu_config:
+  Global:
+    ManageImages: true
+    BootMountPoint: /boot/syslinux
+    DracutConfDir: /etc/zfsbootmenu/dracut.conf.d
+  Components:
+    ImageDir: /boot/syslinux/zfsbootmenu
+    Versions: 3
+    Enabled: true
+    syslinux:
+      Enabled: true
+  Kernel:
+    CommandLine: ro quiet loglevel=0

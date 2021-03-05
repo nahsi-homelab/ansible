@@ -3,6 +3,7 @@
 
 - name: Configure refind
   include_tasks: 01-refind.yml
+  when: kernel_refind_menu is defined
 
 - name: Configure kernel
   include_tasks: 02-kernel.yml

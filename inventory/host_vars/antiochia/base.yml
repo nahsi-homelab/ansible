@@ -16,23 +16,6 @@ base_packages:
   - media-video/ffmpeg
   - net-p2p/transmission
 
-kernel_version: 5.9.16
-kernel_firmware:
-  - amd/amd_sev_fam17h_model0xh.sbin
-  - amd-ucode/microcode_amd_fam17h.bin
-kernel_kconfigs:
-  - amd
-  - x470d4u
-
-kernel_boot_device: "/dev/disk/by-partlabel/EFI"
-
-kernel_zfs_on_root: true
-kernel_refind_menu:
-  - name: "Boot default"
-    cmd: "root=zfsbootmenu:POOL=hot timeout=10 ro quiet loglevel=0"
-  - name: "Boot to menu"
-    cmd: "root=zfsbootmenu:POOL=hot timeout=-1 ro quiet loglevel=0"
-
 base_distccd_allow:
   - 192.168.1.0/24
   - 192.168.5.0/24

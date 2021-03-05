@@ -8,5 +8,6 @@
 
 - name: check that install_prefix is in mounted filesystems
   shell: "mount | grep -q -e ' {{ install_prefix }} '"
+  args:
+    warn: false
   changed_when: false
-  warn: false

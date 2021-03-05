@@ -59,5 +59,3 @@
   loop_control:
     loop_var: fs
     label: "{{ fs.path }}"
-  tags:
-    - notest

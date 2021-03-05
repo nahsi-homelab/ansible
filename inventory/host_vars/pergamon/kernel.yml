@@ -34,9 +34,10 @@ kernel_zfsbootmenu_config:
     DracutConfDir: /etc/zfsbootmenu/dracut.conf.d
   Components:
     ImageDir: /boot/syslinux/zfsbootmenu
-    Versions: 3
+    Versions: 1
     Enabled: true
     syslinux:
+      Config: /boot/syslinux/syslinux.cfg
       Enabled: true
   Kernel:
     CommandLine: ro quiet loglevel=0

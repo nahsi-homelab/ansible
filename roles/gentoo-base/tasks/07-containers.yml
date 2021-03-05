@@ -3,6 +3,7 @@
     package:
       - app-emulation/crun
       - app-emulation/podman
+  notify: restart podman
 
 - name: configure podman registries
   template:
@@ -33,7 +34,6 @@
 - name: enable podman socket api
   service:
     name: podman
-    state: started
     enabled: yes
     runlevel: default
     use: openrc
@@ -42,11 +42,11 @@
   portage:
     package:
       - app-emulation/docker
+  notify: restart podman
 
 - name: enable docker
   service:
     name: docker
-    state: started
     enabled: yes
     runlevel: default
     use: openrc

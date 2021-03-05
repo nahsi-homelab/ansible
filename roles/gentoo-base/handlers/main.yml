@@ -27,6 +27,8 @@
     state: restarted
     use: openrc
   loop: "{{ base_network_interfaces }}"
+  when:
+    - not chroot
 
 - name: restart distccd
   service:
@@ -48,6 +50,24 @@
   service:
     name: sshd
     state: restarted
+    use: openrc
+  when:
+    - not chroot
+
+- name: restart podman
+  service:
+    name: podman
+    state: restarted
+    runlevel: default
+    use: openrc
+  when:
+    - not chroot
+
+- name: restart docker
+  service:
+    name: docker
+    state: restarted
+    runlevel: default
     use: openrc
   when:
     - not chroot

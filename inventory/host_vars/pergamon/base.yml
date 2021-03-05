@@ -30,7 +30,7 @@ base_portage_features:
 base_portage_use:
   - zstd
   - luajit
-  - -X
+  - dist-kernel
 
 base_portage_package_use:
   - net_misc/openssh -pam
@@ -41,7 +41,6 @@ base_portage_makeconf:
   CPU_FLAGS_X86: "3dnow 3dnowext popcnt mmx mmxext sse sse2 sse3 sse4a"
   INPUT_DEVICES: "evdev"
   VIDEO_CARDS: "amdgpu radeonsi"
-  GRUB_PLATFORMS: "pc"
 
 base_network: |
   config_enp35s0="192.168.50.10 netmask 255.255.255.0"

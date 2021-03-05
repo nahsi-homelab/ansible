@@ -42,6 +42,7 @@ base_portage_use:
   - zstd
   - luajit
   - -X
+  - dist-kernel
 
 base_portage_package_use:
   - net_misc/openssh -pam

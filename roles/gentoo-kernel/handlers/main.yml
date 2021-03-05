@@ -1,10 +1,7 @@
-- name: rebuild modules
-  command: "emerge @module-rebuild --exclude sys-kernel/gentoo-kernel"
-
 - name: rebuild kernel
-  shell: |
-    emerge @modules-rebuild --exclude sys-kernel/gentoo-kernel
-    emerge --update sys-kernel/gentoo-kernel
+  portage:
+    package: sys-kernel/gentoo-kernel
+    state: emerged
 
 - name: update initramfs
   command: "emerge --config sys-kernel/gentoo-kernel"

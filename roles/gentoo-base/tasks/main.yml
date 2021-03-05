@@ -26,3 +26,6 @@
 
 - name: Configure containers
   include_tasks: 07-containers.yml
+
+- name: Add nahsi-overlay
+  include_tasks: 08-nahsi-overlay.yml

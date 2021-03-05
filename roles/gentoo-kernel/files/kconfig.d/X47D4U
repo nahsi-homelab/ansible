@@ -4,14 +4,6 @@
 # - "smarter" selection (dependencies, deselect etc)
 menu "X470D4U"
 
-config LOCAL_X470D4U_IOMMU
-    bool    "AMD IOMMU"
-
-    default y
-
-    select  AMD_IOMMU
-    select  AMD_IOMMU_V2
-
 config LOCAL_X470D4U_VIDEO
     bool    "Video"
 
@@ -107,7 +99,7 @@ config LOCAL_X470D4U_MISC
     default y
 
     select  SENSORS_AMD_ENERGY
-    select  NET_SCH_FQ_CODEL
+    select  SENSORS_FAM15H_POWER
     select  PARPORT
     select  PARPORT_PC
     select  PRINTER

@@ -8,7 +8,7 @@ kernel_firmware:
 
 kernel_kconfigs:
   - amd
-  - x470d4u
+  - X470D4U
 
 kernel_zfs_on_root: true
 

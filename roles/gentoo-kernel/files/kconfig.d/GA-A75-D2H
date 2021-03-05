@@ -1,0 +1,50 @@
+menu "GA-A75-D2H"
+
+config LOCAL_GA_A75_D2H_VIDEO
+    bool    "Video"
+
+    default y
+
+    select  DRM
+    select  DRM_AMDGPU
+
+config LOCAL_GA_A75_D2H_SOUND
+    bool    "Sound"
+
+    default y
+
+    select  SOUND
+    select  SND
+    select  SND_HRTIMER
+    select  SND_HDA_INTEL
+    select  SND_HDA_CODEC_REALTEK
+    select  SND_USB_AUDIO
+    select  SND_HWDEP
+
+config  LOCAL_GA_A75_D2H_NET
+    bool    "Ethernet"
+
+    default y
+
+    select  NET_VENDOR_REALTEK
+    select  CONFIG_R8169
+
+
+config LOCAL_GA_A75_D2H_MISC
+    bool    "Modules loaded on Ubuntu 20.20"
+
+    default y
+
+    select  PARPORT
+    select  PARPORT_PC
+    select  PRINTER
+    select  JOYDEV
+
+config  LOCAL_GA_A75_D2H_CRYPTO
+    bool    "Cryptography"
+    default y
+
+    select  CRYPTO_DEV_CCP
+    select  CRYPTO_DEV_CCP_DD
+
+endmenu

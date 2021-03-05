@@ -23,6 +23,7 @@ kernel_firmware:
 
 kernel_kconfigs:
   - amd
+  - GA-A75M-D2H
 
 kernel_zfs_on_root: true
 

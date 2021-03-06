@@ -4,12 +4,43 @@
 0. Add host to inventory with all required variables
 1. Boot into installation media ([hrmpf](https://github.com/leahneukirchen/hrmpf))
 2. Prepare disks (see below)
-3. Mount Gentoo rootfs to `install_prefix` (defaults to `/mnt/gentoo`)
+3. Make sure Gentoo rootfs is mounted to `install_prefix` (defaults to `/mnt/gentoo`)
 4. Run bootstrap playbook
 
 ## Prepare disks
-### UEFI
+### ZFS
+- https://blog.victormendonca.com/2020/11/03/zfs-for-dummies
+- https://arstechnica.com/information-technology/2020/05/zfs-101-understanding-zfs-storage-and-performance
 
+```sh
+zpool create -o ashift=12 \
+    -O xattr=sa \
+    -O relatime=on \
+    -O acltype=posix \
+    -O canmount=off \
+    -O normalization=formD \
+    -O compression=zstd-3 \
+    -O dnodesize=auto \
+    main /dev/disk/by-id/id
+```
+
+#### Example dataset layout
+```
+NAME                   USED  AVAIL     REFER  MOUNTPOINT
+main                  3.78G   895G       96K  none
+main/system           3.78G   895G       96K  none
+main/system/gentoo    3.78G   895G     3.78G  /
+main/user              292K   895G       96K  none
+main/user/nahsi        196K   895G       96K  none
+main/user/nahsi/home   100K   895G      100K  /home/nahsi
+```
+
+```
+zpool set bootfs=main/system/gentoo main
+zfs set canmount=noauto main/system/gentoo
+```
+
+### UEFI
 - `gdisk /path/to/disk`
 - Last sector: +512M
 - HEX: EF00
@@ -59,39 +90,7 @@ mount /path/to/partition /mnt/gentoo/boot/syslinux
 extlinux --install /mnt/gentoo/boot/syslinux
 ```
 
-#### INstall syslinux MBR data
+#### Install syslinux MBR data
 ```
 dd bs=440 count=1 conv=notrunc if=/usr/lib/syslinux/gptmbr.bin of=/path/to/disk
-```
-
-### ZFS
-- https://blog.victormendonca.com/2020/11/03/zfs-for-dummies
-- https://arstechnica.com/information-technology/2020/05/zfs-101-understanding-zfs-storage-and-performance
-
-```sh
-zpool create -o ashift=12 \
-    -O xattr=sa \
-    -O relatime=on \
-    -O acltype=posix \
-    -O canmount=off \
-    -O normalization=formD \
-    -O compression=zstd-3 \
-    -O dnodesize=auto \
-    hot /dev/disk/by-id/id
-```
-
-#### Example dataset layout
-```
-NAME                             USED  AVAIL     REFER  MOUNTPOINT
-main                             2.48M   899G       96K  none
-main/system                      1.05M   899G       96K  none
-main/system/gentoo                120K   899G      120K  /
-main/user                         288K   899G       96K  none
-main/user/nahsi                   192K   899G       96K  none
-main/user/nahsi/home               96K   899G       96K  /home/nahsi
-```
-
-```
-zpool set bootfs=main/system/gentoo main
-zfs set canmount=noauto main/system/gentoo
 ```

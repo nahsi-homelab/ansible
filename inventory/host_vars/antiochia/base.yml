@@ -15,9 +15,9 @@ base_packages:
   - media-video/ffmpeg
   - net-p2p/transmission
 
-base_distccd_allow:
-  - 192.168.1.0/24
-  - 192.168.5.0/24
+base_distccd_access:
+  - "--allow=192.168.1.0/24"
+  - "--allow=192.168.5.0/24"
 
 base_distccd:
   port: 3632

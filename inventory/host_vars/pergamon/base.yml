@@ -34,13 +34,23 @@ base_portage_use:
   - zstd
   - luajit
   - dist-kernel
-  - policykit
+  - vulkan
+  - vdpau
+  - -policykit
 
 base_portage_package_use:
   - net_misc/openssh -pam
   - sys-devel/gcc pgo
+  - media-libs/mesa -classic -gles2
+
+  # awesome
   - x11-libs/cairo X
   - x11-libs/libxkbcommon X
+
+  # xorg-server
+  - media-libs/libglvnd X
+  - sys-auth/pambase elogind
+  - x11-libs/libdrm video_cards_radeon
 
 base_distcc_hosts: |
   192.168.1.7/16
@@ -48,7 +58,6 @@ base_distcc_hosts: |
 base_portage_makeconf:
   COMMON_FLAGS: "-O2 -march=amdfam10 -mtune=amdfam10 -mcx16 -mpopcnt"
   CPU_FLAGS_X86: "3dnow 3dnowext popcnt mmx mmxext sse sse2 sse3 sse4a"
-  INPUT_DEVICES: "evdev"
   VIDEO_CARDS: "amdgpu radeonsi"
   LUA_TARGETS: "luajit"
   LUA_SINGLE_TARGET: "luajit"

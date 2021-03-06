@@ -18,6 +18,7 @@ base_packages_default:
   - sys-fs/ncdu
   - app-editors/neovim
   - sys-process/htop
+  - app-shells/bash-completion
   - app-shells/gentoo-bashcomp
   - app-portage/flaggie
   - app-portage/portage-utils

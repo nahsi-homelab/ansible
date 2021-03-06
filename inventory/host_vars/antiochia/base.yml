@@ -12,8 +12,6 @@ base_filesystems:
     type: "tmpfs"
 
 base_packages:
-  - app-editors/neovim
-  - sys-process/htop
   - media-video/ffmpeg
   - net-p2p/transmission
 

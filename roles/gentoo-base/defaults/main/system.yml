@@ -16,8 +16,8 @@ base_packages_default:
   - net-dns/bind-tools
   - app-text/tree
   - sys-fs/ncdu
-
-  # nice to have packages
+  - app-editors/neovim
+  - sys-process/htop
   - app-shells/gentoo-bashcomp
   - app-portage/flaggie
   - app-portage/portage-utils

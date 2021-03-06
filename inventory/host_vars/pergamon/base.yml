@@ -13,10 +13,6 @@ base_filesystems:
     opts: "rw,nosuid,noatime,nodev,size=2G,mode=1777"
     type: "tmpfs"
 
-base_packages:
-  - app-editors/neovim
-  - sys-process/htop
-
 base_sshd_listen_address: 192.168.50.10
 
 base_env:
@@ -46,8 +42,8 @@ base_portage_makeconf:
   VIDEO_CARDS: "amdgpu radeonsi"
 
 base_network: |
-  config_enp35s0="192.168.50.10 netmask 255.255.255.0"
-  routes_enp35s0="default via 192.168.50.1"
+  config_enp2s0="192.168.50.10 netmask 255.255.255.0"
+  routes_enp2s0="default via 192.168.50.1"
 
 base_network_interfaces:
-  - "enp35s0"
+  - "enp2s0"

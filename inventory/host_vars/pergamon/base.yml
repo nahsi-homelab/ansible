@@ -1,5 +1,7 @@
 arch: "amd64"
 
+base_consolefont: "ter-i24b"
+
 base_filesystems:
   - path: "/var/tmp"
     src: "tmpfs"

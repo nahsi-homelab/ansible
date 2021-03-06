@@ -1,9 +1,10 @@
-kernel_mask_version: "5.11"
+kernel_version: "5.10.20"
 
 kernel_boot_device: "/dev/disk/by-uuid/1a40a9e4-68a3-4af0-bb2d-784349817a60"
 
 kernel_firmware:
   - amd-ucode/microcode_amd.bin
+
   - amdgpu/polaris11_ce.bin
   - amdgpu/polaris11_k_smc.bin
   - amdgpu/polaris11_k2_smc.bin
@@ -20,6 +21,8 @@ kernel_firmware:
   - amdgpu/polaris11_smc_sk.bin
   - amdgpu/polaris11_uvd.bin
   - amdgpu/polaris11_vce.bin
+
+  - rtl_nic/rtl8168e-2.fw
 
 kernel_kconfigs:
   - AMD

@@ -22,6 +22,10 @@
   template:
     src: linux-firmware.j2
     dest: "/etc/portage/savedconfig/sys-kernel/linux-firmware"
+  notify:
+    - rebuild linux-firmware
+    - rebuild kernel
+    - generate zbm
 
 - name: copy kconfigs
   copy:
@@ -30,6 +34,7 @@
   loop: "{{ kernel_kconfigs }}"
   notify:
     - rebuild kernel
+    - generate zbm
 
 - name: create custom Kconfig to include in Linux src
   template:
@@ -37,6 +42,7 @@
     dest: "/etc/kernel/Kconfig"
   notify:
     - rebuild kernel
+    - generate zbm
 
 - name: use custom Kconfig when building kernel
   copy:
@@ -51,16 +57,18 @@
   loop: "{{ kernel_postinst }}"
   notify:
     - rebuild kernel
+    - generate zbm
 
 - name: force gentoo-kernel version
   copy:
     content: |
-      >sys-kernel/gentoo-kernel-{{ kernel_mask_version }}
+      >sys-kernel/gentoo-kernel-{{ kernel_version }}
       sys-kernel/gentoo-kernel-bin
       sys-kernel/vanilla-kernel
     dest: /etc/portage/package.mask/kernel.mask
   notify:
     - rebuild kernel
+    - generate zbm
 
 - name: enable savedconfigs
   copy:
@@ -79,3 +87,5 @@
   portage:
     package: sys-kernel/gentoo-kernel
     update: yes
+  notify:
+    - generate zbm

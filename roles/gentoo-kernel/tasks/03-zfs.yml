@@ -3,7 +3,7 @@
     package: sys-kernel/zfsbootmenu
     state: latest
   notify:
-    - rebuild kernel
+    - generate zbm
 
 - name: generate hostid
   command: zgenhostid
@@ -31,24 +31,4 @@
     dest: "/etc/zfsbootmenu/config.yaml"
     mode: 644
   notify:
-    - rebuild kernel
-
-- name: create portage env/sys-kernel directory
-  file:
-    path: "/etc/portage/env/sys-kernel"
-    state: directory
-    owner: root
-    group: root
-    mode: 640
-
-- name: create gentoo-kernel zfsbootmenu hook
-  copy:
-    content: |
-      if [[ $EBUILD_PHASE == "postinst" ]]; then
-        elog "Generating zfsbootmenu"
-        elog "$(generate-zbm --kver ${PV})"
-      fi
-    dest: "/etc/portage/env/sys-kernel/gentoo-kernel"
-    owner: root
-    group: root
-    mode: 640
+    - generate zbm

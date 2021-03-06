@@ -6,12 +6,12 @@
       - arch | length
     quiet: true
 
-- name: check 'kernel_mask_version' variable
+- name: check 'kernel_version' variable
   assert:
     that:
-      - kernel_mask_version is defined
-      - kernel_mask_version is string
-      - kernel_mask_version | length
+      - kernel_version is defined
+      - kernel_version is string
+      - kernel_version | length
     quiet: true
 
 - name: check 'kernel_boot_device' variable

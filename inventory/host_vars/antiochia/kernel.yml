@@ -1,4 +1,4 @@
-kernel_mask_version: "5.10"
+kernel_version: "5.10.20"
 
 kernel_boot_device: "/dev/disk/by-partlabel/EFI"
 

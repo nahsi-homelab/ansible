@@ -2,6 +2,8 @@ kernel_firmware: []
 kernel_kconfigs: []
 kernel_postinst: []
 
+kernel_zfs_on_root: false
+
 # kernel_boot_device: "/dev/disk/by-partlabel/EFI"
 
 # https://rodsbooks.com/refind/configfile.html

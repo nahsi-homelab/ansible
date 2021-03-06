@@ -64,12 +64,10 @@
   copy:
     content: |
       >sys-kernel/gentoo-kernel-{{ kernel_version }}
+      >virtual/dist-kernel-{{ kernel_version }}
       sys-kernel/gentoo-kernel-bin
       sys-kernel/vanilla-kernel
     dest: /etc/portage/package.mask/kernel.mask
-  notify:
-    - rebuild kernel
-    - generate zbm
 
 - name: enable savedconfigs
   copy:

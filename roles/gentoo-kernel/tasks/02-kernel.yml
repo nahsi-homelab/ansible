@@ -23,14 +23,6 @@
     src: linux-firmware.j2
     dest: "/etc/portage/savedconfig/sys-kernel/linux-firmware"
 
-- name: configure builtin firmare
-  copy:
-    content: "CONFIG_EXTRA_FIRMWARE=\"{{ kernel_firmware | join(' ') }}\""
-    dest: /etc/kernel/config.d/firmware.config
-  when: kernel_firmware | length > 0
-  notify:
-    - rebuild kernel
-
 - name: copy kconfigs
   copy:
     src: "kconfig.d/{{ item }}"
@@ -58,12 +50,14 @@
     mode: 745
   loop: "{{ kernel_postinst }}"
   notify:
-    - update initramfs
+    - rebuild kernel
 
 - name: force gentoo-kernel version
   copy:
     content: |
       >sys-kernel/gentoo-kernel-{{ kernel_mask_version }}
+      sys-kernel/gentoo-kernel-bin
+      sys-kernel/vanilla-kernel
     dest: /etc/portage/package.mask/kernel.mask
   notify:
     - rebuild kernel
@@ -84,9 +78,4 @@
 - name: install gentoo-kernel
   portage:
     package: sys-kernel/gentoo-kernel
-
-- name: remove old kernels
-  portage:
-    package: sys-kernel/gentoo-kernel
-    state: absent
-    depclean: yes
+    update: yes

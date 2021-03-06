@@ -1,5 +1,7 @@
 menu "GA-A75M-D2H"
 
+menu "Video"
+
 config LOCAL_GA_A75M_D2H_VIDEO
     bool    "Video"
 
@@ -7,6 +9,8 @@ config LOCAL_GA_A75M_D2H_VIDEO
 
     select  DRM
     select  DRM_AMDGPU
+
+endmenu
 
 config LOCAL_GA_A75M_D2H_SOUND
     bool    "Sound"
@@ -27,7 +31,7 @@ config  LOCAL_GA_A75M_D2H_NET
     default y
 
     select  NET_VENDOR_REALTEK
-    select  CONFIG_R8169
+    select  R8169
 
 
 config LOCAL_GA_A75M_D2H_MISC

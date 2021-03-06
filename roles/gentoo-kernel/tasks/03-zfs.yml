@@ -2,7 +2,8 @@
   portage:
     package: sys-kernel/zfsbootmenu
     state: latest
-  notify: update initramfs
+  notify:
+    - rebuild kernel
 
 - name: generate hostid
   command: zgenhostid
@@ -24,16 +25,30 @@
     loop_var: service
     label: "{{ service.name }}"
 
-- name: copy zfsbootmenu initramfs generator script
-  copy:
-    src: "postinst.d/zfsbootmenu.sh"
-    dest: "/etc/kernel/postinst.d/zfsbootmenu.sh"
-    mode: 745
-  notify: update initramfs
-
 - name: copy zfsbootmenu config
   copy:
     content: "{{ kernel_zfsbootmenu_config | to_nice_yaml }}"
     dest: "/etc/zfsbootmenu/config.yaml"
     mode: 644
-  notify: update initramfs
+  notify:
+    - rebuild kernel
+
+- name: create portage env/sys-kernel directory
+  file:
+    path: "/etc/portage/env/sys-kernel"
+    state: directory
+    owner: root
+    group: root
+    mode: 640
+
+- name: create gentoo-kernel zfsbootmenu hook
+  copy:
+    content: |
+      if [[ $EBUILD_PHASE == "postinst" ]]; then
+        elog "Generating zfsbootmenu"
+        elog "$(generate-zbm --kver ${PV})"
+      fi
+    dest: "/etc/portage/env/sys-kernel/gentoo-kernel"
+    owner: root
+    group: root
+    mode: 640

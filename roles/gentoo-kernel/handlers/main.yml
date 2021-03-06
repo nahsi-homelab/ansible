@@ -1,7 +1,5 @@
 - name: rebuild kernel
-  portage:
-    package: sys-kernel/gentoo-kernel
-    state: emerged
+  command: "emerge sys-kernel/gentoo-kernel"
 
 - name: update initramfs
   command: "emerge --config sys-kernel/gentoo-kernel"

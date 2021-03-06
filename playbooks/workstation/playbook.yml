@@ -1,0 +1,4 @@
+- hosts: "{{ target }}"
+  become: yes
+  become_method: doas
+  tasks:

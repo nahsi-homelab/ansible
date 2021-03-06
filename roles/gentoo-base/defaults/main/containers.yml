@@ -10,3 +10,13 @@ base_podman_registries:
 base_podman_policy:
   default:
     - type: insecureAcceptAnything
+
+# https://github.com/containers/storage/blob/master/docs/containers-storage.conf.5.md
+base_podman_storage: |
+  [storage]
+  driver="overlay"
+
+# Docker
+# ----------------------------------------------------------------------------
+base_docker_config:
+  storage-driver: "overlay2"

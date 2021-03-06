@@ -31,6 +31,14 @@
     group: root
     mode: 0644
 
+- name: create storage.conf
+  copy:
+    content: "{{ base_podman_storage }}"
+    dest: "/etc/containers/storage.conf"
+    owner: root
+    group: root
+    mode: 0644
+
 - name: enable podman socket api
   service:
     name: podman
@@ -43,6 +51,15 @@
     package:
       - app-emulation/docker
   notify: restart podman
+
+- name: configure docker
+  copy:
+    content: "{{ base_docker_config | to_nice_json(indent=2) }}"
+    dest: "/etc/docker/daemon.json"
+    owner: root
+    group: root
+    mode: 0600
+  notify: restart docker
 
 - name: enable docker
   service:

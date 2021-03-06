@@ -19,6 +19,9 @@ base_env:
   locale: "en_US.UTF-8"
   editor: "nvim"
 
+base_packages:
+  - net-misc/r8168
+
 base_gentoo_mirrors:
   - https://mirror.yandex.ru/gentoo-distfiles/
   - https://distfiles.gentoo.org/

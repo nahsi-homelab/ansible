@@ -25,15 +25,6 @@ config LOCAL_GA_A75M_D2H_SOUND
     select  SND_USB_AUDIO
     select  SND_HWDEP
 
-config  LOCAL_GA_A75M_D2H_NET
-    bool    "Ethernet"
-
-    default y
-
-    select  NET_VENDOR_REALTEK
-    select  R8169
-
-
 config LOCAL_GA_A75M_D2H_MISC
     bool    "Modules loaded on Ubuntu 20.20"
 

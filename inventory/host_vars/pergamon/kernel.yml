@@ -1,6 +1,6 @@
 kernel_version: "5.10.20"
 
-kernel_boot_device: "/dev/disk/by-uuid/1a40a9e4-68a3-4af0-bb2d-784349817a60"
+kernel_boot_device: "/dev/disk/by-uuid/21c81eb4-4509-4c87-9e4e-f0a391e7e2ee"
 
 kernel_firmware:
   - amd-ucode/microcode_amd.bin

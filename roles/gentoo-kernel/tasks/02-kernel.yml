@@ -12,11 +12,12 @@
     - /etc/portage/package.use/
 
 - name: copy gentoo-kernel savedconfig
-  copy:
-    src: "configs/{{ arch }}-base.config"
+  template:
+    src: "files/configs/{{ arch }}-base.config"
     dest: "/etc/portage/savedconfig/sys-kernel/gentoo-kernel"
   notify:
     - rebuild kernel
+    - generate zbm
 
 - name: create linux-firmware savedconfig
   template:

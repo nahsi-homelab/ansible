@@ -1,4 +1,5 @@
 arch: "amd64"
+bios: "uefi"
 
 base_filesystems:
   - path: "/var/tmp"

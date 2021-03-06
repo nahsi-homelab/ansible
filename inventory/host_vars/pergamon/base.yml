@@ -1,4 +1,5 @@
 arch: "amd64"
+bios: "legacy"
 
 base_consolefont: "ter-i24b"
 

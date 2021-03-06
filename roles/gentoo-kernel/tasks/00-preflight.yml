@@ -6,6 +6,14 @@
       - arch | length
     quiet: true
 
+- name: check 'bios' variable
+  assert:
+    that:
+      - bios is defined
+      - bios is string
+      - bios | length
+    quiet: true
+
 - name: check 'kernel_version' variable
   assert:
     that:

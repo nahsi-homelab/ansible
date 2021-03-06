@@ -19,3 +19,12 @@
       runlevel: default
       use: openrc
   when: base_distccd is defined
+
+- name: configure distcc client
+  copy:
+    content: "{{ base_distcc_hosts }}"
+    dest: "/etc/distcc/hosts"
+    owner: root
+    group: root
+    mode: 0644
+  when: base_distcc_hosts is defined

@@ -54,8 +54,8 @@ mkfs.ext4 /path/to/boot/partition
 
 #### Install extlinux
 ```
-mount /path/to/partition /mnt/gentoo/boot
 mkdir /mnt/gentoo/boot/syslinux
+mount /path/to/partition /mnt/gentoo/boot/syslinux
 extlinux --install /mnt/gentoo/boot/syslinux
 ```
 

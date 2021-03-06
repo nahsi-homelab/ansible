@@ -19,7 +19,7 @@ mkfs.vfat -F 32 /dev/disk/by-partlabel/EFI
 ```
 
 ### Legacy GPT
-
+#### Partition disk
 ```
 gdisk /path/to/disk
 Command (? for help): x
@@ -47,8 +47,21 @@ Toggle which attribute field (0-63, 64 or <Enter> to exit):
 Expert command (? for help): w
 ```
 
+#### Format partition to ext4
 ```
 mkfs.ext4 /path/to/boot/partition
+```
+
+#### Install extlinux
+```
+mount /path/to/partition /mnt/gentoo/boot
+mkdir /mnt/gentoo/boot/syslinux
+extlinux --install /mnt/gentoo/boot/syslinux
+```
+
+#### INstall syslinux MBR data
+```
+dd bs=440 count=1 conv=notrunc if=/usr/lib/syslinux/gptmbr.bin of=/path/to/disk
 ```
 
 ### ZFS

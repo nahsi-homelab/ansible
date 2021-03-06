@@ -3,12 +3,12 @@
 
 0. Add host to inventory with all required variables
 1. Boot into installation media ([hrmpf](https://github.com/leahneukirchen/hrmpf))
-2. Format disks (see below)
+2. Prepare disks (see below)
 3. Mount Gentoo rootfs to `install_prefix` (defaults to `/mnt/gentoo`)
 4. Run bootstrap playbook
 
-## Formating disks
-### EFI
+## Prepare disks
+### UEFI
 
 - `gdisk /path/to/disk`
 - Last sector: +512M
@@ -16,6 +16,39 @@
 
 ```sh
 mkfs.vfat -F 32 /dev/disk/by-partlabel/EFI
+```
+
+### Legacy GPT
+
+```
+gdisk /path/to/disk
+Command (? for help): x
+ 
+Expert command (? for help): a
+Partition number (1-3): 1
+Known attributes are:
+0: system partition
+1: hide from EFI
+2: legacy BIOS bootable
+60: read-only
+62: hidden
+63: do not automount
+ 
+Attribute value is 0000000000000000. Set fields are:
+  No fields set
+ 
+Toggle which attribute field (0-63, 64 or <Enter> to exit): 2
+Have enabled the 'legacy BIOS bootable' attribute.
+Attribute value is 0000000000000004. Set fields are:
+2 (legacy BIOS bootable)
+ 
+Toggle which attribute field (0-63, 64 or <Enter> to exit): 
+ 
+Expert command (? for help): w
+```
+
+```
+mkfs.ext4 /path/to/boot/partition
 ```
 
 ### ZFS
@@ -34,30 +67,18 @@ zpool create -o ashift=12 \
     hot /dev/disk/by-id/id
 ```
 
-### Dataset layout
+#### Example dataset layout
 ```
 NAME                             USED  AVAIL     REFER  MOUNTPOINT
-hot                             2.48M   899G       96K  none
-hot/system                      1.05M   899G       96K  none
-hot/system/gentoo                120K   899G      120K  /mnt/gentoo
-hot/system/opt                    96K   899G       96K  /mnt/gentoo/opt
-hot/system/usr                   192K   899G       96K  none
-hot/system/usr/local              96K   899G       96K  /mnt/gentoo/usr/local
-hot/system/var                   480K   899G       96K  none
-hot/system/var/cache             192K   899G       96K  none
-hot/system/var/cache/distfiles    96K   899G       96K  /mnt/gentoo/var/cache/distfiles
-hot/system/var/db                192K   899G       96K  none
-hot/system/var/db/repos           96K   899G       96K  /mnt/gentoo/var/db/repos
-hot/user                         288K   899G       96K  none
-hot/user/home                    192K   899G       96K  none
-hot/user/home/nahsi               96K   899G       96K  /mnt/gentoo/home/nahsi
+main                             2.48M   899G       96K  none
+main/system                      1.05M   899G       96K  none
+main/system/gentoo                120K   899G      120K  /
+main/user                         288K   899G       96K  none
+main/user/nahsi                   192K   899G       96K  none
+main/user/nahsi/home               96K   899G       96K  /home/nahsi
 ```
 
 ```
-zfs set recordsize=16K hot/system/var/cache/distfiles
-zfs set recordsize=1K hot/system/var/db/repos
-```
-
-```
-zpool set bootfs=hot/system/gentoo hot
+zpool set bootfs=main/system/gentoo main
+zfs set canmount=noauto main/system/gentoo
 ```

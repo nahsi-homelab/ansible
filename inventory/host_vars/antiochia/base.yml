@@ -56,7 +56,6 @@ base_portage_makeconf:
 
 base_network: |
   config_enp35s0="192.168.1.7/24"
-  config_enp35s0="192.168.1.7 netmask 255.255.255.0"
   routes_enp35s0="default via 192.168.1.1"
   wireguard_wg0="/etc/wireguard/server.conf"
   config_wg0="192.168.5.1/24"

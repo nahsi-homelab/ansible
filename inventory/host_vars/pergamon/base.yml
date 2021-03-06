@@ -34,6 +34,7 @@ base_portage_use:
   - zstd
   - luajit
   - dist-kernel
+  - elogind
 
 base_portage_package_use:
   - net_misc/openssh -pam
@@ -44,26 +45,22 @@ base_portage_package_use:
 base_portage_makeconf:
   COMMON_FLAGS: "-O2 -march=amdfam10 -mtune=amdfam10 -mcx16 -mpopcnt"
   CPU_FLAGS_X86: "3dnow 3dnowext popcnt mmx mmxext sse sse2 sse3 sse4a"
+  DISTCC_HOSTS: "192.168.1.7/16"
   INPUT_DEVICES: "evdev"
   VIDEO_CARDS: "amdgpu radeonsi"
   LUA_TARGETS: "luajit"
   LUA_SINGLE_TARGET: "luajit"
-  DISTCC_HOSTS: "192.168.1.7/16"
+  LLVM_TARGETS: "AMDGPU X86"
 
 base_wireguard_configs:
   syria: "{{ lookup('hashi_vault', 'secret/data/wireguard/pergamon:syria') }}"
+
+base_wireguard_interfaces:
+  - "syria"
 
 base_network: |
   config_enp2s0="192.168.50.10/24"
   routes_enp2s0="default via 192.168.50.1"
 
-  wireguard_syria="/etc/wireguard/syria.conf"
-  config_syria="192.168.5.2/24"
-  routes_syria="
-    192.168.1.0/24 via 192.168.5.1
-    192.168.5.0/24 via 192.168.5.1"
-  dns_servers_syria="192.168.5.1"
-
 base_network_interfaces:
   - "enp2s0"
-  - "syria"

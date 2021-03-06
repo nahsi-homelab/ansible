@@ -40,6 +40,7 @@ base_portage_makeconf:
   CPU_FLAGS_X86: "3dnow 3dnowext popcnt mmx mmxext sse sse2 sse3 sse4a"
   INPUT_DEVICES: "evdev"
   VIDEO_CARDS: "amdgpu radeonsi"
+  LUA_SINGLE_TARGET: "luajit"
 
 base_network: |
   config_enp2s0="192.168.50.10 netmask 255.255.255.0"

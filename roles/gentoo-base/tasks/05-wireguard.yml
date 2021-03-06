@@ -21,4 +21,20 @@
   loop: "{{ base_wireguard_configs | dict2items }}"
   loop_control:
     loop_var: "config"
-  notify: restart network
+    label: "{{ config.key }}"
+  notify: restart wireguard
+
+- name: create symlinks in /etc/init.d
+  file:
+    src: "/etc/init.d/wg-quick"
+    dest: "/etc/init.d/net.{{ item }}"
+    state: link
+  loop: "{{ base_wireguard_interfaces }}"
+
+- name: enable wireguard interfaces
+  service:
+    name: "net.{{ item }}"
+    enabled: yes
+    runlevel: default
+    use: openrc
+  loop: "{{ base_wireguard_interfaces }}"

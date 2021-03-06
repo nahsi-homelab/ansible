@@ -10,29 +10,6 @@
     group: root
     mode: 0700
 
-# - name: create symlinks in /etc/init.d
-#   no_log: true
-#   file:
-#     src: "/etc/init.d/wg-quick"
-#     dest: "/etc/init.d/net.{{ config.key }}"
-#     state: link
-#   loop: "{{ base_wireguard_configs| dict2items }}"
-#   loop_control:
-#     loop_var: "config"
-#     label: "{{ config.key }}"
-
-# - name: enable wireguard interfaces
-#   no_log: true
-#   service:
-#     name: "net.{{ config.key }}"
-#     enabled: yes
-#     runlevel: default
-#     use: openrc
-#   loop: "{{ base_wireguard_configs | dict2items }}"
-#   loop_control:
-#     loop_var: "config"
-#     label: "{{ config.key }}"
-
 - name: copy wireguard configurations
   no_log: true
   copy:
@@ -44,5 +21,4 @@
   loop: "{{ base_wireguard_configs | dict2items }}"
   loop_control:
     loop_var: "config"
-    label: "{{ config.key }}"
   notify: restart network

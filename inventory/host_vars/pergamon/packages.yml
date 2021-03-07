@@ -15,6 +15,7 @@ base_packages:
   # - x11-themes/adwaita-icon-theme
   - x11-themes/papirus-icon-theme
   - app-crypt/pinentry
+  - sys-apps/bat
 
   - media-fonts/fira-sans
   - media-fonts/fira-mono
@@ -37,6 +38,7 @@ base_portage_package_use:
   - media-gfx/imagemagick -X
   - media-fonts/noto cjk
   - app-crypt/pinentry gtk
+  - media-plugins/hyperion -usb -v4l -qt-grabber -zeroconf
 
   # xorg-server
   - x11-libs/libdrm video_cards_radeon

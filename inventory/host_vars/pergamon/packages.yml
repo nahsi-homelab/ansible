@@ -7,10 +7,20 @@ base_packages:
   - media-video/mpv
   - x11-terms/kitty
   - x11-misc/picom
+  - app-crypt/gnupg
+  - app-admin/pass
+  - app-misc/tmux
+  - media-sound/alsa-utils
+  - x11-themes/adwaita-icon-theme
+  - x11-themes/papirus-icon-theme
+  - app-crypt/pinentry
 
   - media-fonts/fira-sans
   - media-fonts/fira-mono
   - media-fonts/fira-code
+
+  - media-fonts/noto
+  - media-fonts/noto-emoji
 
 base_portage_package_use:
   - net_misc/openssh -pam -X
@@ -18,6 +28,8 @@ base_portage_package_use:
   - media-libs/mesa -classic -gles2
   - media-video/ffmpeg chromium libdrm x264 x265 webp vpx vorbis theora
   - media-gfx/imagemagick -X
+  - media-fonts/noto cjk
+  - app-crypt/pinentry gtk
 
   # xorg-server
   - x11-libs/libdrm video_cards_radeon

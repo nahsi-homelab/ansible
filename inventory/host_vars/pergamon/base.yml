@@ -29,6 +29,8 @@ base_portage_features:
 base_services:
   - name: "elogind"
     runlevel: "boot"
+  - name: "alsasound"
+    runlevel: "default"
 
 base_distcc_hosts: |
   192.168.1.7/16

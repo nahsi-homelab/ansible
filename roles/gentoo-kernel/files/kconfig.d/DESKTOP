@@ -7,5 +7,5 @@ config LOCAL_DESKTOP
     help
             Enables input devices
 
-    select  EVDEV
+    select  INPUT_EVDEV
     select  INPUT_MOUSE

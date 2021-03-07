@@ -15,7 +15,6 @@ base_packages:
   # - x11-themes/adwaita-icon-theme
   - x11-themes/papirus-icon-theme
   - app-crypt/pinentry
-  - sys-apps/bat
 
   - media-fonts/fira-sans
   - media-fonts/fira-mono

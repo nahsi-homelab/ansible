@@ -3,6 +3,7 @@ base_packages:
   - media-video/ffmpeg
   - x11-base/xorg-server
   - x11-wm/awesome
+  - x11-app/xrandr
   - www-client/qutebrowser
   - media-video/mpv
   - x11-terms/kitty
@@ -21,6 +22,11 @@ base_packages:
 
   - media-fonts/noto
   - media-fonts/noto-emoji
+
+  - app-admin/ansible
+  - app-admin/ansible-lint
+  - app-admin/ansible-hashivault-module
+  - dev-python/hvac
 
 base_portage_package_use:
   - net_misc/openssh -pam -X

@@ -23,7 +23,7 @@ base_packages_default:
   - app-portage/flaggie
   - app-portage/portage-utils
   - app-misc/nnn
-  - sys-apps/bat
+  # - sys-apps/bat
 
 
 # System
@@ -124,4 +124,6 @@ base_sshd:
   PermitEmptyPasswords: "no"
   SyslogFacility: "AUTH"
   LogLevel: "INFO"
-  ListenAddress: "{{ base_sshd_listen_address | default(ansible_default_ipv4.address) }}"
+
+base_sshd_listen:
+  - "{{ ansible_default_ipv4.address }}"

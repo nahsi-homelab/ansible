@@ -24,7 +24,8 @@ base_distccd:
   log-level: "warning"
   listen: "192.168.1.7"
 
-base_sshd_listen_address: 192.168.1.7
+base_sshd_listen:
+  - "{{ ansible_default_ipv4.address }}"
 
 base_env:
   locale: "en_US.UTF-8"

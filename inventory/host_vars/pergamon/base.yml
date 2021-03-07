@@ -13,7 +13,9 @@ base_filesystems:
     opts: "rw,nosuid,noatime,nodev,size=2G,mode=1777"
     type: "tmpfs"
 
-base_sshd_listen_address: 192.168.50.10
+base_sshd_listen:
+  - "{{ ansible_default_ipv4.address }}"
+  - "127.0.0.1"
 
 base_env:
   locale: "en_US.UTF-8"

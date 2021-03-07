@@ -1,6 +1,7 @@
 - name: update use
   portage:
     package: "@world"
+    deep: yes
     newuse: yes
     changed_use: yes
 

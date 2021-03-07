@@ -18,17 +18,6 @@ base_sshd_listen_address: 192.168.50.10
 base_env:
   locale: "en_US.UTF-8"
   editor: "nvim"
-
-base_packages:
-  - net-misc/r8168
-  - media-video/ffmpeg
-  - x11-base/xorg-server
-  - x11-wm/awesome
-  - www-client/qutebrowser
-  - media-video/mpv
-  - x11-terms/kitty
-  - x11-misc/picom
-
 base_gentoo_mirrors:
   - https://mirror.yandex.ru/gentoo-distfiles/
   - https://distfiles.gentoo.org/
@@ -36,64 +25,6 @@ base_gentoo_mirrors:
 base_portage_features:
   - distcc
   - parallel-install
-
-base_portage_use:
-  - zstd
-  - luajit
-  - dist-kernel
-
-  # desktop
-  - elogind
-  - -policykit
-  - dri
-  - drm
-  - icu
-  - xcb
-  - -gtk
-  - -gtk3
-  - -sound
-
-  - alsa
-  - vulkan
-  - vdpau
-  - opengl
-
-  - opus
-  - ogg
-  - vorbis
-  - flac
-  - gif
-  - jpeg
-  - png
-  - webp
-  - aac
-  - dts
-
-base_portage_package_use:
-  - net_misc/openssh -pam
-  - sys-devel/gcc pgo
-  - media-libs/mesa -classic -gles2
-  - media-video/ffmpeg X chromium libdrm x264 x265 webp vpx vorbis theora
-  - media-video/mpv X
-  - media-libs/vulkan-loader X
-
-  # awesome
-  - x11-libs/cairo X
-  - x11-libs/libxkbcommon X
-
-  # xorg-server
-  - media-libs/libglvnd X
-  - x11-libs/libdrm video_cards_radeon
-
-  # qutebrowser
-  - www-client/qutebrowser scripts
-  - dev-python/PyQt5 declarative printsupport widgets gui network opengl sql multimedia webchannel websockets
-  - dev-libs/libpcre2 pcre16
-  - sys-libs/zlib minizip
-  - dev-qt/qtmultimedia widgets
-  - dev-qt/qtwebengine widgets
-  - dev-qt/qtwebchannel qml
-  - media-libs/libvpx svc
 
 base_services:
   - name: "elogind"

@@ -1,0 +1,66 @@
+base_packages:
+  - net-misc/r8168
+  - media-video/ffmpeg
+  - x11-base/xorg-server
+  - x11-wm/awesome
+  - www-client/qutebrowser
+  - media-video/mpv
+  - x11-terms/kitty
+  - x11-misc/picom
+
+  - media-fonts/fira-sans
+  - media-fonts/fira-mono
+  - media-fonts/fira-code
+
+base_portage_package_use:
+  - net_misc/openssh -pam -X
+  - sys-devel/gcc pgo
+  - media-libs/mesa -classic -gles2
+  - media-video/ffmpeg chromium libdrm x264 x265 webp vpx vorbis theora
+  - media-gfx/imagemagick -X
+
+  # xorg-server
+  - x11-libs/libdrm video_cards_radeon
+
+  # qutebrowser
+  - www-client/qutebrowser scripts
+  - dev-python/PyQt5 declarative printsupport widgets gui network opengl sql multimedia webchannel websockets
+  - dev-libs/libpcre2 pcre16
+  - sys-libs/zlib minizip
+  - dev-qt/qtmultimedia widgets
+  - dev-qt/qtwebengine widgets
+  - dev-qt/qtwebchannel qml
+  - media-libs/libvpx svc
+
+base_portage_use:
+  - zstd
+  - luajit
+  - dist-kernel
+
+  # desktop
+  - X
+  - elogind
+  - -policykit
+  - dri
+  - drm
+  - icu
+  - xcb
+  - -gtk
+  - -gtk3
+  - -sound
+
+  - alsa
+  - vulkan
+  - vdpau
+  - opengl
+
+  - opus
+  - ogg
+  - vorbis
+  - flac
+  - gif
+  - jpeg
+  - png
+  - webp
+  - aac
+  - dts

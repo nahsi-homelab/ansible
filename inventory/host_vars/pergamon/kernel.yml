@@ -26,6 +26,7 @@ kernel_firmware:
 
 kernel_kconfigs:
   - AMD
+  - DESKTOP
   - GA-A75M-D2H
 
 kernel_zfs_on_root: true

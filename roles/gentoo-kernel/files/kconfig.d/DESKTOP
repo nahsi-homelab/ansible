@@ -1,0 +1,11 @@
+# vim: set ft=kconfig:
+config LOCAL_DESKTOP
+    bool "Input devices"
+
+    default y
+
+    help
+            Enables input devices
+
+    select  EVDEV
+    select  INPUT_MOUSE

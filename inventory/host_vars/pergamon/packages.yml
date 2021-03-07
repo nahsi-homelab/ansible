@@ -3,7 +3,7 @@ base_packages:
   - media-video/ffmpeg
   - x11-base/xorg-server
   - x11-wm/awesome
-  - x11-app/xrandr
+  - x11-apps/xrandr
   - www-client/qutebrowser
   - media-video/mpv
   - x11-terms/kitty
@@ -12,7 +12,7 @@ base_packages:
   - app-admin/pass
   - app-misc/tmux
   - media-sound/alsa-utils
-  - x11-themes/adwaita-icon-theme
+  # - x11-themes/adwaita-icon-theme
   - x11-themes/papirus-icon-theme
   - app-crypt/pinentry
 
@@ -25,12 +25,13 @@ base_packages:
 
   - app-admin/ansible
   - app-admin/ansible-lint
-  - app-admin/ansible-hashivault-module
+  - app-admin/ansible-modules-hashivault
   - dev-python/hvac
 
 base_portage_package_use:
   - net_misc/openssh -pam -X
   - sys-devel/gcc pgo
+  - dev-lang/rust clippy rls rustfmt
   - media-libs/mesa -classic -gles2
   - media-video/ffmpeg chromium libdrm x264 x265 webp vpx vorbis theora
   - media-gfx/imagemagick -X
@@ -49,6 +50,10 @@ base_portage_package_use:
   - dev-qt/qtwebengine widgets
   - dev-qt/qtwebchannel qml
   - media-libs/libvpx svc
+
+  # ansible
+  - net-libs/zeromq drafts
+  - dev-lang/python sqlite
 
 base_portage_use:
   - zstd

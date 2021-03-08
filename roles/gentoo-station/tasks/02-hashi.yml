@@ -1,0 +1,42 @@
+- name: set facts
+  set_fact:
+    __name: "{{ item.value.name | default(item.key) }}"
+    __version: "{{ item.value.version }}"
+
+- name: download {{ item.key }} to localhost
+  become: false
+  run_once: true
+  delegate_to: localhost
+  get_url:
+    url: "{{ __archive_url }}"
+    dest: "/tmp/{{ __archive }}"
+    checksum: "sha256:{{ __archive_checksum }}"
+  register: __download_archive
+  until: __download_archive is succeeded
+  retries: 5
+  delay: 2
+
+- name: create {{ item.key }} archive directory
+  become: false
+  run_once: true
+  delegate_to: localhost
+  file:
+    path: "{{ __archive_dir }}"
+    state: directory
+    mode: 0755
+
+- name: unpack {{ item.key }}
+  become: false
+  run_once: true
+  delegate_to: localhost
+  unarchive:
+    src: "/tmp/{{ __archive }}"
+    dest: "{{ __archive_dir }}"
+
+- name: propagate {{ item.key }} binary
+  copy:
+    src: "{{ __archive_dir }}/{{ __name }}"
+    dest: "/usr/local/bin/{{ __name }}"
+    owner: root
+    group: root
+    mode: 0555

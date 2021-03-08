@@ -34,6 +34,7 @@ station_packages:
   - x11-misc/rofi
   - app-misc/tmux
   - app-misc/smug
+  - app-misc/task
 
   - www-client/qutebrowser
   - dev-python/tldextract # for qute-pass

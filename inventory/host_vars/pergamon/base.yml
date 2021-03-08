@@ -14,7 +14,7 @@ base_filesystems:
     type: "tmpfs"
 
 base_sshd_listen:
-  - "{{ ansible_default_ipv4.address }}"
+  - "192.168.50.10"
   - "127.0.0.1"
 
 base_env:

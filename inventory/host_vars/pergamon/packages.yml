@@ -12,7 +12,6 @@ base_packages:
   - app-admin/pass
   - app-misc/tmux
   - media-sound/alsa-utils
-  # - x11-themes/adwaita-icon-theme
   - x11-themes/papirus-icon-theme
   - app-crypt/pinentry
   - app-portage/repoman
@@ -39,8 +38,10 @@ base_portage_package_use:
   - media-video/ffmpeg chromium libdrm x264 x265 webp vpx vorbis theora
   - media-gfx/imagemagick -X
   - media-fonts/noto cjk
-  - app-crypt/pinentry gtk
   - media-plugins/hyperion -usb -v4l -qt-grabber -zeroconf
+
+  - app-crypt/pinentry gtk
+  - app-crypt/gkr gtk
 
   # xorg-server
   - x11-libs/libdrm video_cards_radeon

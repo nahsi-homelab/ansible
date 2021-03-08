@@ -16,6 +16,7 @@ base_packages:
   - x11-themes/papirus-icon-theme
   - app-crypt/pinentry
   - app-portage/repoman
+  - sys-apps/bat
 
   - media-fonts/fira-sans
   - media-fonts/fira-mono
@@ -23,6 +24,7 @@ base_packages:
 
   - media-fonts/noto
   - media-fonts/noto-emoji
+  - media-fonts/roboto
 
   - app-admin/ansible
   - app-admin/ansible-lint

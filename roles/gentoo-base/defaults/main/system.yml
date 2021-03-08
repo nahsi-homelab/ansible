@@ -23,7 +23,6 @@ base_packages_default:
   - app-portage/flaggie
   - app-portage/portage-utils
   - app-misc/nnn
-  # - sys-apps/bat
 
 
 # System

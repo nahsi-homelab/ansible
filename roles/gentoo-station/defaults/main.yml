@@ -29,10 +29,11 @@ station_packages:
   - media-video/ffmpeg
   - media-video/mpv
   - x11-terms/kitty
-  - app-misc/tmux
   - app-portage/repoman
   - sys-apps/bat
   - x11-misc/rofi
+  - app-misc/tmux
+  - app-misc/smug
 
   - www-client/qutebrowser
   - dev-python/tldextract # for qute-pass

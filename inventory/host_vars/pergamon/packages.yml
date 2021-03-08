@@ -4,7 +4,6 @@ base_packages:
   - x11-base/xorg-server
   - x11-wm/awesome
   - x11-apps/xrandr
-  - www-client/qutebrowser
   - media-video/mpv
   - x11-terms/kitty
   - x11-misc/picom
@@ -16,6 +15,9 @@ base_packages:
   - app-crypt/pinentry
   - app-portage/repoman
   - sys-apps/bat
+
+  - www-client/qutebrowser
+  - dev-python/tldextract # for userpass script
 
   - media-fonts/fira-sans
   - media-fonts/fira-mono

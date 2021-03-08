@@ -4,7 +4,7 @@
   vars:
     suckless:
       - media-gfx/sxiv
-      # - x11-terms/st
+      - x11-terms/st
       - x11-misc/dmenu
   tasks:
     - name: create suckless savedconfig directories

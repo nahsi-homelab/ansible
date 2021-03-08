@@ -16,11 +16,11 @@ base_packages:
   - app-crypt/pinentry
   - app-portage/repoman
   - sys-apps/bat
+  - x11-misc/rofi
 
   - media-fonts/fira-sans
   - media-fonts/fira-mono
   - media-fonts/fira-code
-
   - media-fonts/noto
   - media-fonts/noto-emoji
   - media-fonts/roboto
@@ -41,7 +41,7 @@ base_portage_package_use:
   - media-plugins/hyperion -usb -v4l -qt-grabber -zeroconf
 
   - app-crypt/pinentry gtk
-  - app-crypt/gkr gtk
+  - app-crypt/gcr gtk
 
   # xorg-server
   - x11-libs/libdrm video_cards_radeon

@@ -1,0 +1,31 @@
+kernel_version: "5.10.20"
+
+kernel_boot_device: "/dev/disk/by-partlabel/EFI"
+
+kernel_firmware:
+  - amd/amd_sev_fam17h_model0xh.sbin
+  - amd-ucode/microcode_amd_fam17h.bin
+
+kernel_kconfigs:
+  - AMD
+  - X470D4U
+
+kernel_zfs_on_root: true
+
+kernel_zfsbootmenu_config:
+  Global:
+    ManageImages: true
+    BootMountPoint: /boot/efi
+    DracutConfDir: /etc/zfsbootmenu/dracut.conf.d
+  Components:
+    ImageDir: /boot/efi/EFI/gentoo
+    Versions: 1 # this will keep two versions, possibly a bug
+    Enabled: true
+  Kernel:
+    CommandLine: ro quiet loglevel=0
+
+kernel_refind_menu:
+  - name: "Boot default"
+    cmd: "root=zfsbootmenu:POOL=hot timeout=10 ro quiet loglevel=0"
+  - name: "Boot to menu"
+    cmd: "root=zfsbootmenu:POOL=hot timeout=-1 ro quiet loglevel=0"

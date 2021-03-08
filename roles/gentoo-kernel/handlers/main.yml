@@ -1,10 +1,12 @@
-- name: rebuild modules
-  command: "emerge @module-rebuild --exclude sys-kernel/gentoo-kernel"
+- name: rebuild linux-firmware
+  command: "emerge sys-kernel/linux-firmware"
 
 - name: rebuild kernel
-  shell: |
-    emerge @modules-rebuild --exclude sys-kernel/gentoo-kernel
-    emerge --update sys-kernel/gentoo-kernel:{{ kernel_version }}
+  command: "emerge @module-rebuild"
+
+- name: generate zbm
+  command: "generate-zbm --kver {{ kernel_version }}"
+  when: kernel_zfs_on_root
 
 - name: update initramfs
-  command: "emerge --config sys-kernel/gentoo-kernel:{{ kernel_version }}"
+  command: "emerge --config sys-kernel/gentoo-kernel {{ kernel_version }}"

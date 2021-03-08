@@ -9,10 +9,12 @@ config LOCAL_AMD
 
     select  KVM
     select  KVM_AMD
+    select  KVM_AMD_SEV
     select  CPU_SUP_AMD
     select  X86_MCE_AMD
     select  X86_AMD_PLATFORM_DEVICE
     select  MICROCODE_AMD
     select  HW_RANDOM_AMD
     select  SENSORS_K10TEMP
-    select  SENSORS_FAM15H_POWER
+    select  AMD_IOMMU
+    select  AMD_IOMMU_V2

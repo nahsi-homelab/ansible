@@ -16,12 +16,14 @@ base_packages_default:
   - net-dns/bind-tools
   - app-text/tree
   - sys-fs/ncdu
-
-  # nice to have packages
+  - app-editors/neovim
+  - sys-process/htop
+  - app-shells/bash-completion
   - app-shells/gentoo-bashcomp
   - app-portage/flaggie
   - app-portage/portage-utils
   - app-misc/nnn
+  - net-firewall/iptables
 
 
 # System
@@ -77,8 +79,8 @@ base_hwclock_default:
 # base_network_interfaces:
 #   - "eth0"
 
-base_dns:
-  name_servers: 1.1.1.1
+base_dns: {}
+#   name_servers: "1.1.1.1"
 
 
 # OpenRC
@@ -122,4 +124,6 @@ base_sshd:
   PermitEmptyPasswords: "no"
   SyslogFacility: "AUTH"
   LogLevel: "INFO"
-  ListenAddress: "{{ base_sshd_listen_address | default(ansible_default_ipv4.address) }}"
+
+base_sshd_listen:
+  - "{{ ansible_default_ipv4.address }}"

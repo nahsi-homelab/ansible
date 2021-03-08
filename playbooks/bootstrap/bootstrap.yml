@@ -7,15 +7,19 @@
         that:
           - root_password is defined
         quiet: true
+
     - name: mount /var/tmp
       mount:
         src: "tmpfs"
-        opts: "rw,nosuid,noatime,nodev,size=50%,mode=1777"
+        opts: "rw,nosuid,noatime,nodev,size=75%,mode=1777"
         path: "{{ install_prefix }}/var/tmp"
         fstype: "tmpfs"
         state: mounted
+      when: ansible_memory_mb.real.total > 15000
+
   roles:
     - gentoo-install
+
   post_tasks:
     - name: create ssh keys
       command: "{{ __chroot }} '. /etc/profile; ssh-keygen -A'"

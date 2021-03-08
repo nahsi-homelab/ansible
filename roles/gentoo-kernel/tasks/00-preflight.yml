@@ -1,7 +1,31 @@
-- name: check required variables
+- name: check 'arch' variable
   assert:
     that:
-      - kernel_refind_menu is defined
-      - kernel_efi_device is defined
       - arch is defined
+      - arch is string
+      - arch | length
+    quiet: true
+
+- name: check 'bios' variable
+  assert:
+    that:
+      - bios is defined
+      - bios is string
+      - bios | length
+    quiet: true
+
+- name: check 'kernel_version' variable
+  assert:
+    that:
+      - kernel_version is defined
+      - kernel_version is string
+      - kernel_version | length
+    quiet: true
+
+- name: check 'kernel_boot_device' variable
+  assert:
+    that:
+      - kernel_boot_device is defined
+      - kernel_boot_device is string
+      - kernel_boot_device | length
     quiet: true

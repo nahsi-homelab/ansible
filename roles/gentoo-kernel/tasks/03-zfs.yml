@@ -1,27 +1,9 @@
-- name: install packages required for adding nahsi-overlay
-  portage:
-    package: "{{ item }}"
-  loop:
-    - app-eselect/eselect-repository
-    - dev-vcs/git
-
-- name: add nahsi-overlay repo
-  command: |
-    eselect repository add \
-      nahsi-overlay git https://github.com/nahsi/nahsi-overlay.git
-  args:
-    creates: /var/db/repos/nahsi-overlay
-  register: __overlay
-
-- name: sync nahsi-overlay repo
-  command: "emerge --sync nahsi-overlay"
-  when: __overlay.changed
-
 - name: install zfsbootmenu
   portage:
     package: sys-kernel/zfsbootmenu
     state: latest
-  notify: update initramfs
+  notify:
+    - generate zbm
 
 - name: generate hostid
   command: zgenhostid
@@ -43,16 +25,10 @@
     loop_var: service
     label: "{{ service.name }}"
 
-- name: copy zfsbootmenu initramfs generator script
-  copy:
-    src: "postinst.d/zfsbootmenu.sh"
-    dest: "/etc/kernel/postinst.d/zfsbootmenu.sh"
-    mode: 745
-  notify: update initramfs
-
 - name: copy zfsbootmenu config
   copy:
-    src: "zfsbootmenu.yml"
+    content: "{{ kernel_zfsbootmenu_config | to_nice_yaml }}"
     dest: "/etc/zfsbootmenu/config.yaml"
     mode: 644
-  notify: update initramfs
+  notify:
+    - generate zbm

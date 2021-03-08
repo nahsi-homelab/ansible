@@ -1,20 +1,13 @@
-- name: check required variables
+- name: check 'arch' variable
   assert:
     that:
       - arch is defined
+      - arch is string
+      - arch | length
     quiet: true
-
-# https://github.com/ansible/ansible/pull/72659
-# - name: fail when install prefix is not mounted
-#   assert:
-#     that: "{{ install_prefix }} in {{ ansible_mounts | map(attribute='mount') | list }}"
-#     fail_msg: "'{{ install_prefix }}' not mounted"
-#     quiet: true
-#   tags:
-#     - notest
 
 - name: check that install_prefix is in mounted filesystems
   shell: "mount | grep -q -e ' {{ install_prefix }} '"
+  args:
+    warn: false
   changed_when: false
-  tags:
-    - notest

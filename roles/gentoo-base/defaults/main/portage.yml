@@ -46,7 +46,7 @@ base_portage_makeconf_default:
   # to reduce disk wear
   # https://wiki.gentoo.org/wiki/Portage_TMPDIR_on_tmpfs
   PORTAGE_TMPDIR: "/var/tmp"
-  PORTAGE_ELOG_CLASSES: "log wanr error"
+  PORTAGE_ELOG_CLASSES: "log warn error"
   PORTAGE_ELOG_SYSTEM: "syslog"
   GENTOO_MIRRORS: "{{ base_portage_mirrors | join(' ') }}"
   ACCEPT_KEYWORDS: "~amd64"

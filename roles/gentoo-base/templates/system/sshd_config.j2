@@ -12,5 +12,10 @@ AllowUsers {{ base_sshd_allow_users | join(' ') }}
 {% for key in base_sshd_host_keys %}
 HostKey {{ key }}
 {% endfor %}
+{% if base_sshd_listen | length %}
+{% for addr in base_sshd_listen %}
+ListenAddress {{ addr }}
+{% endfor %}
+{% endif %}
 
 Subsystem sftp internal-sftp

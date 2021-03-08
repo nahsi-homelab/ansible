@@ -1,6 +1,6 @@
 - name: mount /boot/efi
   mount:
-    src: "{{ kernel_efi_device }}"
+    src: "{{ kernel_boot_device }}"
     opts: "noatime,noauto"
     path: "/boot/efi/"
     fstype: "vfat"

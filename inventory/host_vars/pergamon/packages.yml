@@ -1,0 +1,96 @@
+base_packages:
+  - net-misc/r8168
+  - media-video/ffmpeg
+  - x11-base/xorg-server
+  - x11-wm/awesome
+  - x11-apps/xrandr
+  - media-video/mpv
+  - x11-terms/kitty
+  - x11-misc/picom
+  - app-crypt/gnupg
+  - app-admin/pass
+  - app-misc/tmux
+  - media-sound/alsa-utils
+  - x11-themes/papirus-icon-theme
+  - app-crypt/pinentry
+  - app-portage/repoman
+  - sys-apps/bat
+  - x11-misc/rofi
+
+  - www-client/qutebrowser
+  - dev-python/tldextract # for userpass script
+
+  - media-fonts/fira-sans
+  - media-fonts/fira-mono
+  - media-fonts/fira-code
+  - media-fonts/noto
+  - media-fonts/noto-emoji
+  - media-fonts/roboto
+
+  - app-admin/ansible
+  - app-admin/ansible-lint
+  - app-admin/ansible-modules-hashivault
+  - dev-python/hvac
+
+base_portage_package_use:
+  - net_misc/openssh -pam -X
+  - sys-devel/gcc pgo
+  - dev-lang/rust clippy rls rustfmt
+  - media-libs/mesa -classic -gles2
+  - media-video/ffmpeg chromium libdrm x264 x265 webp vpx vorbis theora
+  - media-gfx/imagemagick -X
+  - media-fonts/noto cjk
+  - media-plugins/hyperion -usb -v4l -qt-grabber -zeroconf
+
+  - app-crypt/pinentry gtk
+  - app-crypt/gcr gtk
+
+  # xorg-server
+  - x11-libs/libdrm video_cards_radeon
+
+  # qutebrowser
+  - www-client/qutebrowser scripts
+  - dev-python/PyQt5 declarative printsupport widgets gui network opengl sql multimedia webchannel websockets
+  - dev-libs/libpcre2 pcre16
+  - sys-libs/zlib minizip
+  - dev-qt/qtmultimedia widgets
+  - dev-qt/qtwebengine widgets
+  - dev-qt/qtwebchannel qml
+  - media-libs/libvpx svc
+
+  # ansible
+  - net-libs/zeromq drafts
+  - dev-lang/python sqlite
+
+base_portage_use:
+  - zstd
+  - luajit
+  - dist-kernel
+
+  # desktop
+  - X
+  - elogind
+  - -policykit
+  - dri
+  - drm
+  - icu
+  - xcb
+  - -gtk
+  - -gtk3
+  - -sound
+
+  - alsa
+  - vulkan
+  - vdpau
+  - opengl
+
+  - opus
+  - ogg
+  - vorbis
+  - flac
+  - gif
+  - jpeg
+  - png
+  - webp
+  - aac
+  - dts

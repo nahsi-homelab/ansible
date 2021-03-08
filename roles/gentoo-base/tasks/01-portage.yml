@@ -21,6 +21,7 @@
     src: portage/make.conf.j2
     dest: /etc/portage/make.conf
     mode: 0644
+  notify: update use
 
 - name: set packages use flags
   copy:

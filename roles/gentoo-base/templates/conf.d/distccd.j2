@@ -3,6 +3,6 @@
 DISTCCD_OPTS="{%- for k,v in base_distccd.items() -%}
 --{{ k }}={{ v }}{{ " " if not loop.last }}
 {%- endfor -%}"
-DISTCCD_OPTS="${DISTCCD_OPTS} {% for c in base_distccd_allow %}--allow={{ c }} {%- endfor %}"
+DISTCCD_OPTS="${DISTCCD_OPTS} {{ base_distccd_access | join(' ') }}"
 DISTCCD_EXEC="/usr/bin/distccd"
 rc_need="net"

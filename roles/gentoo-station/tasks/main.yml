@@ -5,3 +5,8 @@
 - name: Install hashi
   include_tasks: 02-hashi.yml
   with_dict: "{{ station_hashi }}"
+
+- name: Install packages
+  portage:
+    package: "{{ item }}"
+  loop: "{{ station_packages }}"

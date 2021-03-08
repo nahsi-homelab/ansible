@@ -13,7 +13,7 @@ AllowUsers {{ base_sshd_allow_users | join(' ') }}
 HostKey {{ key }}
 {% endfor %}
 {% if base_sshd_listen | length %}
-{% for addr base_sshd_listen %}
+{% for addr in base_sshd_listen %}
 ListenAddress {{ addr }}
 {% endfor %}
 {% endif %}

@@ -34,6 +34,7 @@ config LOCAL_GA_A75M_D2H_MISC
     select  PARPORT_PC
     select  PRINTER
     select  JOYDEV
+    select  USB_SERIAL_CH341
 
 config  LOCAL_GA_A75M_D2H_CRYPTO
     bool    "Cryptography"

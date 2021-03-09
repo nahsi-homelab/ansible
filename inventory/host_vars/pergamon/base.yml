@@ -15,6 +15,7 @@ base_filesystems:
 
 base_sshd_listen:
   - "192.168.50.10"
+  - "192.168.5.2"
   - "127.0.0.1"
 
 base_env:

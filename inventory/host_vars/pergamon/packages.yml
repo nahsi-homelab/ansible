@@ -1,6 +1,7 @@
 base_packages:
   - net-misc/r8168
   - app-emulation/docker-compose
+  - media-plugins/hyperion
 
 base_portage_package_use:
   - net_misc/openssh -pam -X
@@ -10,7 +11,7 @@ base_portage_package_use:
   - media-video/ffmpeg chromium libdrm x264 x265 webp vpx vorbis theora
   - media-gfx/imagemagick -X
   - media-fonts/noto cjk
-  - media-plugins/hyperion -usb -v4l -qt-grabber -zeroconf
+  - media-plugins/hyperion -v4l -qt-grabber -zeroconf
 
   - app-crypt/pinentry gtk
   - app-crypt/gcr gtk

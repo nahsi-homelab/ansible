@@ -44,4 +44,4 @@ kernel_zfsbootmenu_config:
       Config: /boot/syslinux/syslinux.cfg
       Enabled: true
   Kernel:
-    CommandLine: ro quiet loglevel=0
+    CommandLine: ro quiet loglevel=0 amdgpu.dc=0

@@ -3,6 +3,7 @@ users:
     groups:
       - wheel
       - portage
+      - docker
       - uucp
       - audio
       - video

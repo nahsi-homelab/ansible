@@ -46,8 +46,8 @@ base_portage_makeconf:
   LLVM_TARGETS: "AMDGPU X86"
 
 base_wireguard_configs:
-  syria: "{{ lookup('hashi_vault', 'secret/data/wireguard/pergamon:syria') }}"
-  vpn: "{{ lookup('hashi_vault', 'secret/data/wireguard/pergamon:vpn') }}"
+  syria: "{{ lookup('hashi_vault', 'secret/data/wireguard/pergamon:syria validate_certs=no') }}"
+  vpn: "{{ lookup('hashi_vault', 'secret/data/wireguard/pergamon:vpn validate_certs=no') }}"
 
 base_wireguard_interfaces:
   - "syria"

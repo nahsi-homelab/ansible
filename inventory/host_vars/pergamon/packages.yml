@@ -1,36 +1,5 @@
 base_packages:
   - net-misc/r8168
-  - media-video/ffmpeg
-  - x11-base/xorg-server
-  - x11-wm/awesome
-  - x11-apps/xrandr
-  - media-video/mpv
-  - x11-terms/kitty
-  - x11-misc/picom
-  - app-crypt/gnupg
-  - app-admin/pass
-  - app-misc/tmux
-  - media-sound/alsa-utils
-  - x11-themes/papirus-icon-theme
-  - app-crypt/pinentry
-  - app-portage/repoman
-  - sys-apps/bat
-  - x11-misc/rofi
-
-  - www-client/qutebrowser
-  - dev-python/tldextract # for userpass script
-
-  - media-fonts/fira-sans
-  - media-fonts/fira-mono
-  - media-fonts/fira-code
-  - media-fonts/noto
-  - media-fonts/noto-emoji
-  - media-fonts/roboto
-
-  - app-admin/ansible
-  - app-admin/ansible-lint
-  - app-admin/ansible-modules-hashivault
-  - dev-python/hvac
 
 base_portage_package_use:
   - net_misc/openssh -pam -X

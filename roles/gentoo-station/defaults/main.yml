@@ -1,0 +1,57 @@
+station_suckless:
+  - media-gfx/sxiv
+  - x11-terms/st
+  - x11-misc/dmenu
+
+station_hashi:
+  terraform:
+    version: "0.14.7"
+  nomad:
+    version: "1.0.4"
+  vault:
+    version: "1.6.3"
+  packer:
+    version: "1.7.0"
+  vagrant:
+    version: "2.2.14"
+
+station_packages:
+  - x11-base/xorg-server
+  - x11-apps/xrandr
+  - x11-wm/awesome
+  - x11-misc/picom
+  - media-sound/alsa-utils
+
+  - app-crypt/gnupg
+  - app-crypt/pinentry
+  - app-admin/pass
+
+  - media-video/ffmpeg
+  - media-video/mpv
+  - x11-terms/kitty
+  - app-portage/repoman
+  - sys-apps/bat
+  - x11-misc/rofi
+  - app-misc/tmux
+  - app-misc/smug
+  - app-misc/task
+  - x11-misc/redshift
+
+  - www-client/qutebrowser
+  - dev-python/tldextract # for qute-pass
+
+  - media-fonts/fira-sans
+  - media-fonts/fira-mono
+  - media-fonts/fira-code
+  - media-fonts/noto
+  - media-fonts/noto-emoji
+  - media-fonts/roboto
+
+  - x11-themes/papirus-icon-theme
+
+  - app-admin/ansible
+  - app-admin/ansible-lint
+  - app-admin/ansible-modules-hashivault
+  - dev-python/hvac
+  - dev-python/virtualenv
+  - dev-python/pip

@@ -1,0 +1,12 @@
+- name: Install suckless
+  include_tasks: 01-suckless.yml
+  with_items: "{{ station_suckless }}"
+
+- name: Install hashi
+  include_tasks: 02-hashi.yml
+  with_dict: "{{ station_hashi }}"
+
+- name: Install packages
+  portage:
+    package: "{{ item }}"
+  loop: "{{ station_packages }}"

@@ -7,5 +7,8 @@
 - name: Integrate with Vault
   include_tasks: 02-vault.yml
 
-- name: Intall Nomad plugins
+- name: Install Nomad plugins
   include_tasks: 03-plugins.yml
+
+- name: Install cni plugins
+  include_tasks: 04-cni.yml

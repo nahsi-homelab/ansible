@@ -36,6 +36,7 @@ station_packages:
   - app-misc/smug
   - app-misc/task
   - x11-misc/redshift
+  - media-gfx/maim
 
   - www-client/qutebrowser
   - dev-python/tldextract # for qute-pass

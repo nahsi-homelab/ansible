@@ -24,6 +24,7 @@ base_packages_default:
   - app-portage/portage-utils
   - app-misc/nnn
   - net-firewall/iptables
+  - app-misc/jq
 
 
 # System

@@ -25,6 +25,7 @@ base_packages_default:
   - app-misc/nnn
   - net-firewall/iptables
   - app-misc/jq
+  - net-misc/iperf
 
 
 # System

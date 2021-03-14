@@ -21,6 +21,7 @@ station_packages:
   - x11-wm/awesome
   - x11-misc/picom
   - media-sound/alsa-utils
+  - media-sound/apulse
 
   - app-crypt/gnupg
   - app-crypt/pinentry

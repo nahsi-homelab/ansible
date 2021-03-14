@@ -2,6 +2,7 @@ base_packages:
   - net-misc/r8168
   - app-emulation/docker-compose
   - media-plugins/hyperion
+  - media-sound/beets
 
 base_portage_package_use:
   - net_misc/openssh -pam -X

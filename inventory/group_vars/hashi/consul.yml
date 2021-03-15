@@ -4,6 +4,7 @@ consul_bootstrap_config:
 
 consul_config_overlay:
   log_level: "info"
+
   ui_config:
     enabled: true
 
@@ -24,9 +25,6 @@ consul_config_overlay:
   key_file: "/opt/consul/certs/key.pem"
 
   encrypt: "{{ lookup('hashi_vault', 'secret-v1/gossip:consul') }}"
-
-  connect:
-    enabled: true
 
   dns_config:
     soa:

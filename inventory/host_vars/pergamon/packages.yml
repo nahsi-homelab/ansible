@@ -13,6 +13,7 @@ base_portage_package_use:
   - media-gfx/imagemagick -X
   - media-fonts/noto cjk
   - media-plugins/hyperion -v4l -qt-grabber -zeroconf
+  - net-p2p/transmission
 
   - app-crypt/pinentry gtk
   - app-crypt/gcr gtk

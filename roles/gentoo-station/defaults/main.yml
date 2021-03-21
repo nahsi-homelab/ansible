@@ -29,6 +29,7 @@ station_packages:
 
   - media-video/ffmpeg
   - media-video/mpv
+  - media-video/mediainfo
   - x11-terms/kitty
   - app-portage/repoman
   - sys-apps/bat

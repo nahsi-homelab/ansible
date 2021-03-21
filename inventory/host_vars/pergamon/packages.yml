@@ -14,6 +14,7 @@ base_portage_package_use:
   - media-fonts/noto cjk
   - media-plugins/hyperion -v4l -qt-grabber -zeroconf
   - net-p2p/transmission
+  - app-emulation/virtualbox headless -alsa -qt5 -sdk -udev -opengl -opus
 
   - app-crypt/pinentry gtk
   - app-crypt/gcr gtk

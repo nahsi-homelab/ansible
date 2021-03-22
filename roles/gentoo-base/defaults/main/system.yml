@@ -26,6 +26,7 @@ base_packages_default:
   - net-firewall/iptables
   - app-misc/jq
   - net-misc/iperf
+  - app-arch/p7zip
 
 
 # System

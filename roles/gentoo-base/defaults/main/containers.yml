@@ -13,10 +13,11 @@ base_podman_policy:
 
 # https://github.com/containers/storage/blob/master/docs/containers-storage.conf.5.md
 base_podman_storage: |
-  [storage]
-  driver="overlay"
+  [storage.options.zfs]
+  fsname="main/containers"
 
 # Docker
 # ----------------------------------------------------------------------------
-base_docker_config: {}
-  #  storage-driver: "overlay2"
+base_docker_config:
+  storage-opts:
+    - zfs.fsname=main/containers

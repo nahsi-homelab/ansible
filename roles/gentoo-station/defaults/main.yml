@@ -5,15 +5,15 @@ station_suckless:
 
 station_hashi:
   terraform:
-    version: "0.14.7"
+    version: "0.15.0"
   nomad:
     version: "1.0.4"
   vault:
-    version: "1.6.3"
-  packer:
     version: "1.7.0"
+  packer:
+    version: "1.7.2"
   vagrant:
-    version: "2.2.14"
+    version: "2.2.15"
 
 station_packages:
   - x11-base/xorg-server

@@ -1,3 +1,4 @@
+# vim: set ft=kconfig:
 menu "GA-A75M-D2H"
 
 menu "Video"

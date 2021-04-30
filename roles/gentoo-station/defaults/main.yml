@@ -58,3 +58,4 @@ station_packages:
   - dev-python/hvac
   - dev-python/virtualenv
   - dev-python/pip
+  - dev-python/jmespath

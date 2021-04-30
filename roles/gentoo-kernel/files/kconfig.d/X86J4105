@@ -1,0 +1,151 @@
+# vim: set ft=kconfig:
+menu "X86J4105"
+
+config LOCAL_X86J4105_PLATFORM
+    default y
+
+    select  CPU_SUP_INTEL
+    select  KVM
+    select  KVM_INTEL
+    select  X86_PLATFORM_DEVICES
+    select  MFD_INTEL_PMC_BXT
+    select  INTEL_POWERCLAMP
+    select  INTEL_PUNIT_IPC
+    select  INTEL_TELEMETRY
+    select  INTEL_IDMA64
+    select  IOSF_MBI
+    select  INTEL_RAPL
+    select  MFD_INTEL_LPSS_PCI
+    select  INTEL_SOC_DTS_THERMAL
+    select  INT340X_THERMAL
+    select  X86_PKG_TEMP_THERMAL
+    select  ITCO_WDT
+    select  I2C_I801
+    select  INTEL_IOATDMA
+    select  SENSORS_CORETEMP
+
+config  LOCAL_X86J4105_VIDEO
+    default y
+
+    select  DRM
+    select  DRM_KMS_HELPER
+    select  DRM_I915
+
+config  LOCAL_X86J4105_ACPI
+    default y
+
+    select  ACPI_VIDEO
+    select  ACPI_THERMAL_REL
+
+config  LOCAL_X86J4105_AUDIO
+    default n
+
+    select  SOUND
+    select  SND
+    select  SND_SOC
+    select  SND_SOC_ACPI
+    select  SND_PCM
+    select  SND_DMAENGINE_PCM
+    select  SND_SOC_SOF_HDA_COMMON
+    select  SND_HDA_GENERIC
+    select  SND_INTEL_DSP_CONFIG
+    select  SND_HDA_CODEC_REALTEK
+    select  SND_HDA_CORE
+    select  SND_HDA_INTEL
+    select  SND_SEQ_DEVICE
+    select  SND_SOC_SOF_INTEL_ATOM_HIFI_EP
+    select  SND_SOC_SOF_INTEL_HIFI_EP_IPC
+    select  SND_SOC_SOF_XTENSA
+    select  SND_HWDEP
+    select  SND_TIMER
+    select  SND_COMPRESS_OFFLOAD
+    select  SND_SOC_HDAC_HDA
+    select  SND_HDA
+    select  LEDS_TRIGGER_AUDIO
+    select  SND_SEQ_MIDI
+    select  SND_RAWMIDI
+    select  SND_HDA_CODEC_HDMI
+    select  SND_SOC_SOF
+    select  SND_SOC_SOF_HDA
+    select  SND_SEQ_MIDI_EVENT
+    select  SND_SOC_SOF_PCI
+    select  SND_SEQUENCER
+    select  SND_SOC_ACPI_INTEL_MATCH
+    select  SND_HDA_EXT_CORE
+
+config  LOCAL_X86J4105_NET
+    default y
+
+    select  WLAN
+    select  WLAN_VENDOR_INTEL
+    select  IWLWIFI
+    select  MAC80211
+    select  CFG80211
+    select  IGB
+
+    help
+            For "2 x RJ45 GLAN by Intel i211AT"
+
+config  LOCAL_X86J4105_BL
+    default y
+
+    select  BT
+    select  BT_LT
+    select  BT_HCIBTUSB
+    select  BT_HCIBTUSB_BCM
+    select  BT_RFCOMM
+    select  BT_BNET
+
+config LOCAL_X86J4105_PSTORE
+
+    default n
+
+    select  PSTORE
+    select  PSTORE_ZSTD_COMPRESS
+    select  PSTORE_ZSTD_COMPRESS_DEFAULT
+    select  EFI_VARS_PSTORE
+
+config  LOCAL_X86J4105_CRYPTO
+    default y
+
+    select  CRYPTO_GHASH_CLMUL_NI_INTEL
+    select  CRYPTO_CRC32_PCLMUL
+    select  CRYPTO_CRCT10DIF_PCLMUL
+    select  CRYPTO_SIMD
+    select  CRYPTO_GLUE_HELPER_X86
+    select  CRYPTO_AES_NI_INTEL
+    select  CRYPTO_USER_API
+    select  CRYPTO_LIB_ARC4
+    select  CRYPTO_USER_API_HASH
+    select  CRYPTO_CMAC
+    select  CRYPTO_USER_API_SKCIPHER
+
+config LOCAL_X86J4105_MISC
+    default y
+
+    select  PARPORT
+    select  PARPORT_PC
+    select  PRINTER
+    select  PPDEV
+    select  MAC_EMUMOUSEBTN
+    select  CEC_CORE
+    select  RAS_CEC
+    select  PINCTRL
+    select  PINCTRL_INTEL
+    select  PINCTRL_GEMINILAKE
+    select  SERIAL_8250_DW
+    select  SERIO_RAW
+    select  I2C_SMBUS
+    select  MISC_RTSX_USB
+    select  DW_DMAC
+    select  RC_CORE
+    select  MMC_SDHCI_PCI
+    select  MEMSTICK
+    select  MEMSTICK_REALTEK_USB
+    select  SPI
+    select  SPI_PXA2XX
+    select  I2C_HID
+    select  MMC_CQHCI
+    select  MMC_SDHCI
+
+endmenu

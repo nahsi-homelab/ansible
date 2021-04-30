@@ -1,11 +1,30 @@
 - hosts: "{{ target }}"
   become: yes
   become_method: sudo
+  vars:
+    install_prefix: "/mnt/gentoo"
+  vars_files: vars.yml
   pre_tasks:
-    - name: check that root_password is supplied
+    - name: check 'arch' variable
+      assert:
+        that:
+          - arch is defined
+          - arch is string
+          - arch | length
+        quiet: true
+
+    - name: check that install_prefix is in mounted filesystems
+      shell: "mount | grep -q -e ' {{ install_prefix }} '"
+      args:
+        warn: false
+      changed_when: false
+
+    - name: check that 'root_password' is supplied
       assert:
         that:
           - root_password is defined
+          - root_password is string
+          - root_password | length
         quiet: true
 
     - name: mount /var/tmp
@@ -17,8 +36,79 @@
         state: mounted
       when: ansible_memory_mb.real.total > 15000
 
-  roles:
-    - gentoo-install
+  tasks:
+    - name: download stage3 tarball
+      become: no
+      delegate_to: localhost
+      get_url:
+        url: "{{ __stage3_link }}"
+        dest: "/tmp/stage3.tar.xz"
+
+    - name: unpack stage3 tarball
+      unarchive:
+        src: "/tmp/stage3.tar.xz"
+        dest: "{{ install_prefix }}"
+        extra_opts:
+          - --xattrs-include='*.*'
+          - --numeric-owner
+        exclude:
+          - ./dev/*  # cannot run 'mknod' inside a container
+        creates: "{{ install_prefix }}/etc/portage/make.conf"
+
+    - name: copy resolv.conf
+      copy:
+        src: "/etc/resolv.conf"
+        dest: "{{ install_prefix }}/etc/resolv.conf"
+        mode: 0644
+        remote_src: yes
+
+    - name: create directories
+      file:
+        dest: "{{ install_prefix }}/{{ dir }}"
+        state: directory
+        mode: 0755
+      loop:
+        - "/etc/portage/repos.conf"
+      loop_control:
+        loop_var: dir
+
+    - name: copy gentoo repository configuration
+      copy:
+        src: "{{ install_prefix }}/usr/share/portage/config/repos.conf"
+        dest: "{{ install_prefix }}/etc/portage/repos.conf/gentoo.conf"
+        mode: 0644
+        remote_src: yes
+
+    - name: mount virtual filesystems
+      mount:
+        src: "{{ fs.path }}"
+        opts: "{{ fs.opts }}"
+        path: "{{ install_prefix + fs.path }}"
+        fstype: "{{ fs.type }}"
+        state: mounted
+      loop:
+        - path: "/proc"
+          opts: "noauto"
+          type: "proc"
+        - path: "/dev"
+          opts: "rbind,noauto"
+          type: "devtmpfs"
+        - path: "/sys"
+          opts: "rbind,noauto"
+          type: "sysfs"
+      loop_control:
+        loop_var: fs
+        label: "{{ fs.path }}"
+
+    - name: emerge-webrsync
+      command: "{{ __chroot }} '. /etc/profile; emerge-webrsync'"
+      args:
+        creates: "{{ install_prefix }}/var/db/repos/gentoo"
+
+    - name: install gentoolkit
+      command: "{{ __chroot }} '. /etc/profile; emerge app-portage/gentoolkit'"
+      args:
+        creates: "{{ install_prefix }}/usr/bin/equery"
 
   post_tasks:
     - name: create ssh keys

@@ -1,9 +1,0 @@
-- name: emerge-webrsync
-  command: "{{ __chroot }} '. /etc/profile; emerge-webrsync'"
-  args:
-    creates: "{{ install_prefix }}/var/db/repos/gentoo"
-
-- name: install gentoolkit
-  command: "{{ __chroot }} '. /etc/profile; emerge app-portage/gentoolkit'"
-  args:
-    creates: "{{ install_prefix }}/usr/bin/equery"

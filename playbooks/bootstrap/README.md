@@ -1,11 +1,17 @@
 # Bootstrap
 ## Steps
-
 0. Add host to inventory with all required variables
 1. Boot into installation media ([hrmpf](https://github.com/leahneukirchen/hrmpf))
 2. Prepare disks (see below)
-3. Make sure Gentoo rootfs is mounted to `install_prefix` (defaults to `/mnt/gentoo`)
-4. Run bootstrap playbook
+4. Make sure Gentoo rootfs is mounted to `install_prefix` (defaults to `/mnt/gentoo`)
+5. Run bootstrap playbook:
+```
+ansible-playbook stage3.yml -e "target=<target> root_password=<pass>"
+```
+6. Run base playbook:
+```
+ansible-playbook base.yml -k -e "target=<target>"
+```
 
 ## Prepare disks
 ### ZFS

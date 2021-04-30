@@ -13,12 +13,6 @@
           - arch | length
         quiet: true
 
-    - name: check that install_prefix is in mounted filesystems
-      shell: "mount | grep -q -e ' {{ install_prefix }} '"
-      args:
-        warn: false
-      changed_when: false
-
     - name: check that 'root_password' is supplied
       assert:
         that:
@@ -27,6 +21,13 @@
           - root_password | length
         quiet: true
 
+    - name: check that install_prefix is in mounted filesystems
+      shell: "mount | grep -q -e ' {{ install_prefix }} '"
+      args:
+        warn: false
+      changed_when: false
+
+  tasks:
     - name: mount /var/tmp
       mount:
         src: "tmpfs"
@@ -36,7 +37,6 @@
         state: mounted
       when: ansible_memory_mb.real.total > 15000
 
-  tasks:
     - name: download stage3 tarball
       become: no
       delegate_to: localhost
@@ -51,8 +51,6 @@
         extra_opts:
           - --xattrs-include='*.*'
           - --numeric-owner
-        exclude:
-          - ./dev/*  # cannot run 'mknod' inside a container
         creates: "{{ install_prefix }}/etc/portage/make.conf"
 
     - name: copy resolv.conf
@@ -110,7 +108,6 @@
       args:
         creates: "{{ install_prefix }}/usr/bin/equery"
 
-  post_tasks:
     - name: create ssh keys
       command: "{{ __chroot }} '. /etc/profile; ssh-keygen -A'"
       args:
@@ -135,18 +132,3 @@
       shell: |
         echo "root:{{ root_password }}" | \
               chpasswd -c SHA512 -R "{{ install_prefix }}"
-
-    - name: clean cache
-      meta: clear_facts
-
-- hosts: "{{ target }}"
-  vars_files: ../../users.yml
-  vars:
-    chroot: true
-    ansible_user: root
-    ansible_password: "{{ root_password }}"
-    ansible_port: 2222
-  roles:
-    - gentoo-base
-    - gentoo-kernel
-    - gentoo-syslog

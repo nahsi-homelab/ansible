@@ -1,0 +1,10 @@
+- hosts: "{{ target }}"
+  vars_files: ../../users.yml
+  vars:
+    chroot: true
+    ansible_user: root
+    ansible_port: 2222
+  roles:
+    - gentoo-base
+    - gentoo-kernel
+    - gentoo-syslog

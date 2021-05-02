@@ -27,14 +27,6 @@ base_distccd:
 base_sshd_listen:
   - "{{ ansible_default_ipv4.address }}"
 
-base_env:
-  locale: "en_US.UTF-8"
-  editor: "nvim"
-
-base_gentoo_mirrors:
-  - https://mirror.yandex.ru/gentoo-distfiles/
-  - https://distfiles.gentoo.org/
-
 base_portage_features:
   - parallel-install
 
@@ -44,12 +36,10 @@ base_portage_use:
   - -X
   - dist-kernel
 
-base_portage_package_use:
-  - net_misc/openssh -pam
-  - sys-devel/gcc pgo
-  - media-video/ffmpeg vpx x264 x265 vorbis opus theora
+base_portage_package_use_overlay:
+  media-video/ffmpeg: "vpx x264 x265 vorbis opus theora"
 
-base_portage_makeconf:
+base_portage_makeconf_overlay:
   COMMON_FLAGS: "-O2 -march=znver2"
   CPU_FLAGS_X86: "aes avx avx2 f16c fma3 mmx mmxext pclmul popcnt rdrand sha sse sse2 sse3 sse4_1 sse4_2 sse4a ssse3"
   LUA_TARGETS: "luajit"

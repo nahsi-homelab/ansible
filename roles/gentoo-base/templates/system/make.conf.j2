@@ -1,6 +1,5 @@
 #jinja2: trim_blocks: True, lstrip_blocks: True
 # {{ ansible_managed }}
-{% set __makeconf = base_portage_makeconf_default | combine(base_portage_makeconf, recursive=True) %}
-{% for key, value in __makeconf.items() %}
+{% for key, value in base_portage_makeconf.items() %}
 {{ key }}="{{ value }}"
 {% endfor %}

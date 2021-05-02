@@ -18,13 +18,6 @@ base_sshd_listen:
   - "192.168.5.2"
   - "127.0.0.1"
 
-base_env:
-  locale: "en_US.UTF-8"
-  editor: "nvim"
-base_gentoo_mirrors:
-  - https://mirror.yandex.ru/gentoo-distfiles/
-  - https://distfiles.gentoo.org/
-
 base_portage_features:
   - distcc
   - parallel-install
@@ -37,14 +30,6 @@ base_services:
 
 base_distcc_hosts: |
   192.168.1.7/16
-
-base_portage_makeconf:
-  COMMON_FLAGS: "-O2 -march=amdfam10 -mtune=amdfam10 -mcx16 -mpopcnt"
-  CPU_FLAGS_X86: "3dnow 3dnowext popcnt mmx mmxext sse sse2 sse3 sse4a"
-  VIDEO_CARDS: "amdgpu radeonsi"
-  LUA_TARGETS: "luajit"
-  LUA_SINGLE_TARGET: "luajit"
-  LLVM_TARGETS: "AMDGPU X86"
 
 base_wireguard_configs:
   syria: "{{ lookup('hashi_vault', 'secret/data/wireguard/pergamon:syria validate_certs=no') }}"

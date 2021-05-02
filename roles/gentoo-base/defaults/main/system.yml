@@ -47,9 +47,15 @@ base_locales:
   - "en_US.UTF-8 UTF-8"
 
 # Variables set with eselect
-base_env: {}
-  # locale: "en_US.UTF-8"
-  # editor: "nvim"
+base_env_base:
+  locale: "en_US.UTF-8"
+  editor: "nvim"
+base_env_overlay: {}
+base_env: >
+  {{
+    base_env_overlay |
+    combine(base_env_base, recursive=true)
+  }}
 
 # List of services to enable
 base_services: []

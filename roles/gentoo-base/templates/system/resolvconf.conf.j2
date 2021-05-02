@@ -1,6 +1,0 @@
-#jinja2: trim_blocks: True, lstrip_blocks: True
-# {{ ansible_managed }}
-resolv_conf=/etc/resolv.conf
-{% for key, value in base_dns.items() %}
-{{ key }}="{{ value }}"
-{% endfor %}

@@ -7,7 +7,7 @@
   block:
   - name: copy distccd config
     template:
-      src: conf.d/distccd.j2
+      src: distccd.j2
       dest: /etc/conf.d/distccd
       mode: 0644
     notify: restart distccd

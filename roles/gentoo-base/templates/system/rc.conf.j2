@@ -1,6 +1,0 @@
-#jinja2: trim_blocks: True, lstrip_blocks: True
-# {{ ansible_managed }}
-{% set __openrc = base_openrc_default | combine(base_openrc, recursive=True) %}
-{% for key, value in __openrc.items() %}
-{{ key }}="{{ value }}"
-{% endfor %}

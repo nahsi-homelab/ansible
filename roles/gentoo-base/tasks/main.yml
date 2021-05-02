@@ -16,7 +16,7 @@
 
 - name: Configure distcc
   include_tasks: 04-distcc.yml
-  when: '"distcc" in __makeconf.FEATURES or base_distccd is defined'
+  when: '"distcc" in base_portage_makeconf.FEATURES or base_distccd is defined'
 
 - name: Configure wireguard
   include_tasks: 05-wireguard.yml

@@ -25,7 +25,7 @@ base_distccd:
   listen: "192.168.1.7"
 
 base_sshd_listen:
-  - "{{ ansible_default_ipv4.address }}"
+  - "192.168.1.7"
 
 base_portage_features:
   - parallel-install

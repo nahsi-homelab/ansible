@@ -19,10 +19,8 @@ base_sshd_listen:
   - "127.0.0.1"
 
 base_services:
-  - name: "elogind"
-    runlevel: "boot"
-  - name: "alsasound"
-    runlevel: "default"
+  elogind: "boot"
+  alsasound: "default"
 
 base_distcc_hosts: |
   192.168.1.7/16
@@ -42,3 +40,7 @@ base_network: |
 
 base_network_interfaces:
   - "enp2s0"
+
+base_dns:
+  name_servers: 192.168.5.1
+  search_domains: "node.consul service.consul"

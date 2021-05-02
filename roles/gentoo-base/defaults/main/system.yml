@@ -3,10 +3,7 @@ chroot: false
 # Packages
 # ----------------------------------------------------------------------------
 # List of packages to be installed
-base_packages: []
-  # - app-editors/neovim
-  # - sys-process/htop
-base_packages_default:
+base_packages_base:
   - app-admin/doas
   - dev-vcs/git
   - sys-process/cronie
@@ -27,6 +24,8 @@ base_packages_default:
   - app-misc/jq
   - net-misc/iperf
   - app-arch/p7zip
+base_packages_overlay: []
+base_packages: "{{ base_packages_base + base_packages_overlay | unique }}"
 
 # System
 # ----------------------------------------------------------------------------
@@ -58,18 +57,17 @@ base_env: >
   }}
 
 # List of services to enable
-base_services: []
-  # - name: zfs-import
-  #   runlevel: boot
-  # - name: zfs-mount
-  #   runlevel: boot
-base_services_default:
-  - name: consolefont
-    runlevel: boot
+base_services_base:
+  consolefont: boot
+base_services_overlay: {}
+base_services: >
+  {{
+    base_services_base |
+    combine(base_services_overlay, recursive=true)
+  }}
 
 # Hardware clock configuration
-base_hwclock: {}
-base_hwclock_default:
+base_hwclock_base:
   # Is your hardware clock set to local or to UTC?
   # If you dualboot with Windows set to "local"
   clock_local: "utc"
@@ -78,6 +76,12 @@ base_hwclock_default:
   # Set systemtime to current hardware clock durning boot
   clock_hctosys: "YES"
   clock_args: ""
+base_hwclock_overlay: {}
+base_hwclock: >
+  {{
+    base_hwclock_base |
+    combine(base_hwclock_overlay, recursive=true)
+  }}
 
 # Network interfaces configuration
 # /usr/share/doc/netifrc-*/net.example.bz2
@@ -95,13 +99,18 @@ base_dns: {}
 # ----------------------------------------------------------------------------
 # https://github.com/OpenRC/openrc/blob/master/etc/rc.conf
 # https://wiki.gentoo.org/wiki/OpenRC
-base_openrc: {}
-base_openrc_default:
+base_openrc_base:
   # Enable logging
   rc_logger: "YES"
   rc_log_path: "/var/log/rc.log"
   # Number of ttys allocated for logins
   rc_tty_number: 2
+base_openrc_overlay: {}
+base_openrc: >
+  {{
+    base_openrc_base |
+    combine(base_openrc_overlay, recursive=true)
+  }}
 
 
 # SSH

@@ -7,7 +7,7 @@
 
 - name: configure podman registries
   template:
-    src: "system/podman_registries.conf.j2"
+    src: podman_registries.conf.j2
     dest: "/etc/containers/registries.conf"
     owner: root
     group: root

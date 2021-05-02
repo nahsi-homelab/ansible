@@ -1,6 +1,0 @@
-#jinja2: trim_blocks: True, lstrip_blocks: True
-# {{ ansible_managed }}
-{% set __hwclock = base_hwclock_default | combine(base_hwclock, recursive=True) %}
-{% for key, value in __hwclock.items() %}
-{{ key }}="{{ value }}"
-{% endfor %}

@@ -17,7 +17,7 @@
 
 - name: create sshd config
   template:
-    src: system/sshd_config.j2
+    src: sshd_config.j2
     dest: /etc/ssh/sshd_config
     validate: "sshd -t -f %s"
   notify: restart sshd
@@ -30,8 +30,11 @@
     use: openrc
 
 - name: add /etc/conf.d/sshd
-  template:
-    src: conf.d/sshd.j2
+  copy:
+    content: |
+      SSHD_CONFDIR="${RC_PREFIX%/}/etc/ssh"
+      SSHD_OPTS=""
+      rc_need="net"
     dest: /etc/conf.d/sshd
     mode: 0644
   notify: restart sshd

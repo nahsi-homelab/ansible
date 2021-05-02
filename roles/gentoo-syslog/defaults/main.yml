@@ -191,8 +191,4 @@ syslog_logs_base:
   - sources: [ 'src' ]
     destinations: [ 'default' ]
 syslog_logs_overlay: {}
-syslog_logs: >
-  {{
-    syslog_logs_base |
-    combine(syslog_logs_overlay, recursive=true)
-  }}
+syslog_logs: "{{ syslog_logs_base + syslog_logs_overlay | unique }}"

@@ -69,6 +69,7 @@
 - name: install base packages
   portage:
     package: "{{ item }}"
+    state: present
   loop: "{{ base_packages }}"
 
 - name: enable cronie

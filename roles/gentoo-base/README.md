@@ -1,7 +1,6 @@
 # gentoo-base
 
 ## Description
-
 Configure Gentoo. Install packages, configure portage, sshd, network etc.
 
 ## Credits

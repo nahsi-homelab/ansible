@@ -1,6 +1,6 @@
 - name: install wireguard-tools
   portage:
-    package: "net-vpn/wireguard-tools"
+    package: net-vpn/wireguard-tools
 
 - name: create wireguard directory
   file:

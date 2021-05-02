@@ -1,6 +1,6 @@
 #jinja2: trim_blocks: True, lstrip_blocks: True
 # {{ ansible_managed }}
-{% for _, destinations in __destinations.items() %}
+{% for _, destinations in syslog_destinations.items() %}
 {% for destination in destinations %}
 {% if destination.driver == "file" %}
 {{ destination.params }} {

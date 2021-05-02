@@ -6,4 +6,6 @@
   template:
     src: logrotate.j2
     dest: /etc/logrotate.d/syslog-ng
-    mode: 0660
+    owner: root
+    group: root
+    mode: 0640

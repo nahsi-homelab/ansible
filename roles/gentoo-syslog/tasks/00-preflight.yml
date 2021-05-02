@@ -1,16 +1,8 @@
-- name: merge default and user variables
-  set_fact:
-    __options: "{{ syslog_options_default | combine(syslog_options, recursive=True) }}"
-    __sources: "{{ syslog_sources_default | combine(syslog_sources, recursive=True) }}"
-    __filters: "{{ syslog_filters_default | combine(syslog_filters, recursive=True) }}"
-    __destinations: "{{ syslog_destinations_default | combine(syslog_destinations, recursive=True) }}"
-    __logs: "{{ syslog_logs_default + syslog_logs }}"
-
 - name: check that every filter ends in ";"
   assert:
     that:
       - item.value[-1] == ";"
     quiet: true
-  loop: "{{ __filters | dict2items }}"
+  loop: "{{ syslog_filters | dict2items }}"
   loop_control:
     label: "{{ item.key }}"

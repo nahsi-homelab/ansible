@@ -3,12 +3,12 @@
 @version: {{ syslog_config_version }}
 
 options {
-    {% for key, value in __options.items() %}
+    {% for key, value in syslog_options.items() %}
     {{ key }}({{ value }});
     {% endfor %}
 };
 
-{% for key, value in __sources.items() %}
+{% for key, value in syslog_sources.items() %}
 source {{ key }} {
     {% for item in value %}
     {{ item.driver }}({{ item.params }});
@@ -16,7 +16,7 @@ source {{ key }} {
 };
 {% endfor %}
 
-{% for key, value in __destinations.items() %}
+{% for key, value in syslog_destinations.items() %}
 destination {{ key }} {
     {% for item in value %}
     {{ item.driver }}({{ item.params }});
@@ -24,11 +24,11 @@ destination {{ key }} {
 };
 {% endfor %}
 
-{% for key, value in __filters.items() %}
+{% for key, value in syslog_filters.items() %}
 filter {{ key }} { {{ value }} };
 {% endfor %}
 
-{% for item in __logs %}
+{% for item in syslog_logs %}
 log {
     {% for s in item.sources | default([]) %}
     source({{ s }});

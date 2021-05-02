@@ -15,9 +15,7 @@ command_background="true"
 
 stopsig="SIGINT"
 
-start_stop_daemon_args="--user ${user} --group ${group} \
-                        --stdout-logger 'logger -p user.info' \
-                        --stderr-logger 'logger -p user.warn'"
+start_stop_daemon_args="--user ${user} --group ${group}"
 
 depend() {
     need net

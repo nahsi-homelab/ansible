@@ -36,8 +36,8 @@ base_portage_package_use_base:
 base_portage_package_use_overlay: {}
 base_portage_package_use: >
   {{
-    base_portage_package_use_overlay |
-    combine(base_portage_package_use_base, recursive=true)
+    base_portage_package_use_base |
+    combine(base_portage_package_use_overlay, recursive=true)
   }}
 
 # https://wiki.gentoo.org/wiki//etc/portage/make.conf
@@ -73,6 +73,6 @@ base_portage_makeconf_base:
 base_portage_makeconf_overlay: {}
 base_portage_makeconf: >
   {{
-    base_portage_makeconf_overlay |
-    combine(base_portage_makeconf_base, recursive=true)
+    base_portage_makeconf_base |
+    combine(base_portage_makeconf_overlay, recursive=true)
   }}

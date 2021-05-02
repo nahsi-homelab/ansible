@@ -53,8 +53,8 @@ base_env_base:
 base_env_overlay: {}
 base_env: >
   {{
-    base_env_overlay |
-    combine(base_env_base, recursive=true)
+    base_env_base |
+    combine(base_env_overlay, recursive=true)
   }}
 
 # List of services to enable

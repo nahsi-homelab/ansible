@@ -17,5 +17,7 @@
   copy:
     content: "{{ base_network }}"
     dest: /etc/conf.d/net
+    owner: root
+    group: root
     mode: 0644
   notify: restart network

@@ -9,6 +9,8 @@
     template:
       src: distccd.j2
       dest: /etc/conf.d/distccd
+      owner: root
+      group: root
       mode: 0644
     notify: restart distccd
 

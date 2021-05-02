@@ -20,6 +20,9 @@
     src: sshd_config.j2
     dest: /etc/ssh/sshd_config
     validate: "sshd -t -f %s"
+    owner: root
+    group: root
+    mode: 0600
   notify: restart sshd
 
 - name: enable sshd
@@ -36,5 +39,7 @@
       SSHD_OPTS=""
       rc_need="net"
     dest: /etc/conf.d/sshd
+    owner: root
+    group: root
     mode: 0644
   notify: restart sshd

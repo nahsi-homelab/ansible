@@ -1,60 +1,63 @@
-- name: install podman
+- name: install crun OCI runtime
+  tags: containers
+  portage:
+    package: app-emulation/crun
+
+- name: install docker and podman
+  tags: containers
   portage:
     package:
-      - app-emulation/crun
+      - app-emulation/docker
       - app-emulation/podman
-  notify: restart podman
 
-- name: configure podman registries
-  template:
-    src: podman_registries.conf.j2
+- name: configure registries
+  tags: containers
+  copy:
+    content: "{{ base_containers_registries }}"
     dest: "/etc/containers/registries.conf"
     owner: root
     group: root
     mode: 0644
 
-- name: configure podman policy
+- name: configure policy
+  tags: containers
   copy:
-    content: "{{ base_podman_policy | to_nice_json(indent=2) }}"
+    content: "{{ base_containers_policy | to_nice_json }}"
     dest: "/etc/containers/policy.json"
     owner: root
     group: root
     mode: 0644
 
 - name: create containers.conf
+  tags: containers
   copy:
-    content: |
-      [engine]
-      runtime="crun"
+    content: "{{ base_containers_containers }}"
     dest: "/etc/containers/containers.conf"
     owner: root
     group: root
     mode: 0644
 
 - name: create storage.conf
+  tags: containers
   copy:
-    content: "{{ base_podman_storage }}"
+    content: "{{ base_containers_storage }}"
     dest: "/etc/containers/storage.conf"
     owner: root
     group: root
     mode: 0644
 
 - name: enable podman socket api
+  tags: containers
   service:
     name: podman
     enabled: yes
     runlevel: default
     use: openrc
 
-- name: install docker
-  portage:
-    package:
-      - app-emulation/docker
-  notify: restart podman
-
 - name: configure docker
+  tags: containers
   copy:
-    content: "{{ base_docker_config | to_nice_json(indent=2) }}"
+    content: "{{ base_docker_config | to_nice_json }}"
     dest: "/etc/docker/daemon.json"
     owner: root
     group: root
@@ -62,6 +65,7 @@
   notify: restart docker
 
 - name: enable docker
+  tags: containers
   service:
     name: docker
     enabled: yes

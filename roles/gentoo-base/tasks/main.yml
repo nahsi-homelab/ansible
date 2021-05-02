@@ -22,6 +22,7 @@
   include_tasks: 06-ssh.yml
 
 - name: Configure containers
+  tags: containers
   include_tasks: 07-containers.yml
 
 - name: Add nahsi-overlay

@@ -41,3 +41,12 @@ base_network_interfaces:
 base_dns:
   name_servers: 192.168.5.1
   search_domains: "node.consul service.consul"
+
+base_docker_config_overlay:
+  storage-driver: "zfs"
+  storage-opts:
+    - zfs.fsname=main/containers
+
+base_containers_storage: |
+  [storage.options.zfs]
+  fsname="main/containers"

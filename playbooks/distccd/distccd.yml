@@ -2,13 +2,13 @@
   become: yes
   become_method: doas
   pre_tasks:
-    - name: check "distccd_conf" variable
+    - name: check "distccd_config" variable
       assert:
         that:
-          - distccd_conf is defined
-          - distccd_conf is string
-          - distccd_conf | length
-        fail_msg: "Variable 'distccd_conf' is not defined or empty"
+          - distccd_config is defined
+          - distccd_config is string
+          - distccd_config | length
+        fail_msg: "Variable 'distccd_config' is not defined or empty"
         quiet: true
   tasks:
     - name: Install distcc
@@ -20,7 +20,7 @@
       block:
       - name: copy distccd config
         copy:
-          content: "{{ distccd_conf }}"
+          content: "{{ distccd_config }}"
           dest: /etc/conf.d/distccd
           owner: root
           group: root

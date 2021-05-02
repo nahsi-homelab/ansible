@@ -18,7 +18,7 @@
   copy:
     content: |
       {% for key, value in base_portage_makeconf.items() %}
-      {{ key }}={{ value }}
+      {{ key }}="{{ value }}"
       {% endfor %}
     dest: /etc/portage/make.conf
     owner: root

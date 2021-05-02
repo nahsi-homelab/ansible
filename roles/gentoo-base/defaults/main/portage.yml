@@ -1,13 +1,22 @@
+base_portage_distcc_cores: 0
 # --jobs=N
 # where N is number of logical cores
 # when using distcc N is a number of local + remote logical cores
-base_portage_jobs: "{{ ansible_processor_cores * ansible_processor_threads_per_core }}"
+base_portage_jobs: >-
+  {{
+    ansible_processor_cores * ansible_processor_threads_per_core |
+    float + base_portage_distcc_cores
+  }}
 # --load-average=X.Y
 # where X.Y=N*0.9 where N is a number of local cores (even with distcc enabled)
-base_portage_la: "{{ base_portage_jobs | float * 0.9 }}"
+base_portage_la: >-
+  {{
+    ansible_processor_cores * ansible_processor_threads_per_core |
+    float * 0.9
+  }}
 
 # https://wiki.gentoo.org/wiki/GENTOO_MIRRORS
-base_gentoo_mirrors:
+base_portage_mirrors:
   - https://mirror.yandex.ru/gentoo-distfiles/
   - https://distfiles.gentoo.org/
 

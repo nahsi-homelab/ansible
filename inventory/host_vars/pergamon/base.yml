@@ -18,10 +18,6 @@ base_sshd_listen:
   - "192.168.5.2"
   - "127.0.0.1"
 
-base_portage_features:
-  - distcc
-  - parallel-install
-
 base_services:
   - name: "elogind"
     runlevel: "boot"

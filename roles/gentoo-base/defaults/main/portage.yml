@@ -4,8 +4,8 @@ base_portage_distcc_cores: 0
 # when using distcc N is a number of local + remote logical cores
 base_portage_jobs: >-
   {{
-    ansible_processor_cores * ansible_processor_threads_per_core |
-    float + base_portage_distcc_cores
+    (ansible_processor_cores * ansible_processor_threads_per_core) +
+    base_portage_distcc_cores
   }}
 # --load-average=X.Y
 # where X.Y=N*0.9 where N is a number of local cores (even with distcc enabled)

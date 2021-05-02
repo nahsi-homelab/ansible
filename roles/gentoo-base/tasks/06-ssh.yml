@@ -1,8 +1,10 @@
 - name: install sshd
+  tags: ssh
   portage:
     package: net-misc/openssh
 
 - name: generate secure ssh keys
+  tags: ssh
   command: "ssh-keygen {{ key.command }}"
   args:
     creates: "{{ key.path }}"
@@ -16,6 +18,7 @@
     label: "{{ key.path }}"
 
 - name: create sshd config
+  tags: ssh
   template:
     src: sshd_config.j2
     dest: /etc/ssh/sshd_config
@@ -26,6 +29,7 @@
   notify: restart sshd
 
 - name: enable sshd
+  tags: ssh
   service:
     name: sshd
     enabled: yes
@@ -33,6 +37,7 @@
     use: openrc
 
 - name: add /etc/conf.d/sshd
+  tags: ssh
   copy:
     content: |
       SSHD_CONFDIR="${RC_PREFIX%/}/etc/ssh"

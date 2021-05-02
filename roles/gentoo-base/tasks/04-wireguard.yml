@@ -1,8 +1,10 @@
 - name: install wireguard-tools
+  tags: wireguard
   portage:
     package: net-vpn/wireguard-tools
 
 - name: create wireguard directory
+  tags: wireguard
   file:
     path: "/etc/wireguard"
     state: directory
@@ -11,6 +13,7 @@
     mode: 0700
 
 - name: copy wireguard configurations
+  tags: wireguard
   no_log: true
   copy:
     content: "{{ config.value }}"
@@ -25,15 +28,17 @@
   notify: restart wireguard
 
 - name: create symlinks in /etc/init.d
+  tags: wireguard
   file:
     src: "/etc/init.d/wg-quick"
-    dest: "/etc/init.d/net.{{ item }}"
+    dest: "/etc/init.d/wg.{{ item }}"
     state: link
   loop: "{{ base_wireguard_interfaces }}"
 
 - name: enable wireguard interfaces
+  tags: wireguard
   service:
-    name: "net.{{ item }}"
+    name: "wg.{{ item }}"
     enabled: yes
     runlevel: default
     use: openrc

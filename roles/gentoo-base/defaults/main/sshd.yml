@@ -30,6 +30,3 @@ base_sshd: >
     base_sshd_base |
     combine(base_sshd_overlay, recursive=true)
   }}
-
-base_sshd_listen:
-  - "{{ ansible_default_ipv4.address }}"

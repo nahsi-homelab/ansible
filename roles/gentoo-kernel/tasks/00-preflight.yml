@@ -22,6 +22,10 @@
       - kernel_version | length
     quiet: true
 
+- name: check that "gentoo-kernel-{{ kernel_version }}" exists
+  shell: "emerge -p -q =gentoo-kernel-{{ kernel_version }}"
+  changed_when: false
+
 - name: check 'kernel_boot_device' variable
   assert:
     that:

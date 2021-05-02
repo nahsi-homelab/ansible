@@ -1,5 +1,6 @@
 - hosts: "{{ target }}"
-  vars_files: ../../users.yml
+  become: yes
+  become_method: sudo
   vars:
     chroot: true
     ansible_user: root

@@ -5,6 +5,7 @@ chroot: false
 # List of packages to be installed
 base_packages_base:
   - app-admin/doas
+  - sys-devel/distcc
   - dev-vcs/git
   - sys-process/cronie
   - app-eselect/eselect-repository

@@ -15,15 +15,6 @@ base_packages:
   - media-video/ffmpeg
   - net-p2p/transmission
 
-base_distccd_access:
-  - "--allow=192.168.1.0/24"
-  - "--allow=192.168.5.0/24"
-
-base_distccd:
-  port: 3632
-  log-level: "warning"
-  listen: "192.168.1.7"
-
 base_sshd_listen:
   - "192.168.1.7"
 

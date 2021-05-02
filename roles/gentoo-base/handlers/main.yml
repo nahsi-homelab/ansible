@@ -40,14 +40,6 @@
   when:
     - not chroot
 
-- name: restart distccd
-  service:
-    name: distccd
-    state: restarted
-    use: openrc
-  when:
-    - not chroot
-
 - name: restart docker
   service:
     name: docker

@@ -2,7 +2,6 @@ chroot: false
 
 # default logrotate settings for syslog-ng logs
 # if 'logrotate' is undefined in syslog_destinations
-# man logrotate
 logrotate_syslog_settings:
   - rotate 2
   - weekly
@@ -11,7 +10,7 @@ logrotate_syslog_settings:
   - maxsize 100M
   - dateext
 
-syslog_config_version: 3.30
+syslog_config_version: 3.33
 
 # https://www.syslog-ng.com/technical-documents/doc/syslog-ng-open-source-edition/3.26/administration-guide/60#TOPIC-1431133
 syslog_options: {}

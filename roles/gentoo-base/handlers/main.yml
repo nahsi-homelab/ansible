@@ -33,7 +33,7 @@
 
 - name: restart wireguard
   service:
-    name: "net.{{ item }}"
+    name: "wg.{{ item }}"
     state: restarted
     use: openrc
   loop: "{{ base_wireguard_interfaces }}"

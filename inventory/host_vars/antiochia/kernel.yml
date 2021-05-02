@@ -1,4 +1,4 @@
-kernel_version: "5.10.20"
+kernel_version: "5.11.17"
 
 kernel_boot_device: "/dev/disk/by-partlabel/EFI"
 

@@ -6,7 +6,3 @@
 
 - name: generate zbm
   command: "generate-zbm --kver {{ kernel_version }}"
-  when: kernel_zfs_on_root
-
-- name: update initramfs
-  command: "emerge --config sys-kernel/gentoo-kernel {{ kernel_version }}"

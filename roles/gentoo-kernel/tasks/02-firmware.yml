@@ -1,0 +1,26 @@
+- name: create savedconfig directory
+  file:
+    dest: "/etc/portage/savedconfig/sys-kernel"
+    state: directory
+
+- name: create linux-firmware savedconfig
+  copy:
+    content: |
+      {% for blob in kernel_firmware %}
+      {{ blob }}
+      {% endfor %}
+    dest: "/etc/portage/savedconfig/sys-kernel/linux-firmware"
+  notify: rebuild linux-firmware
+
+- name: enable savedconfigs for linux-firmware
+  lineinfile:
+    path: "/etc/portage/package.use/kernel.use"
+    line: "sys-kernel/linux-firmware savedconfig"
+    create: yes
+
+- name: install linux-firmware
+  portage:
+    package: sys-kernel/linux-firmware
+    state: present
+
+- meta: flush_handlers

@@ -1,14 +1,12 @@
 kernel_firmware: []
 kernel_kconfigs: []
-kernel_postinst: []
 
-kernel_zfs_on_root: false
+kernel_postinst: {}
 
 # kernel_boot_device: "/dev/disk/by-partlabel/EFI"
 
 # https://rodsbooks.com/refind/configfile.html
-kernel_refind: {}
-kernel_refind_default:
+kernel_refind_config_base:
   timeout: "10"
   shutdown_after_timeout: "false"
   use_nvram: "false"
@@ -17,6 +15,12 @@ kernel_refind_default:
   showtools: "shell,memtest,about,hidden_tags,shutdown,reboot,exit,firmware,fwupdate"
   scan_all_linux_kernels: "true"
   fold_linux_kernels: "true"
+kernel_refind_config_overlay: {}
+kernel_refind_config: >
+  {{
+    kernel_refind_config_base |
+    combine(kernel_refind_config_overlay, recursive=true)
+  }}
 
 # https://github.com/zbm-dev/zfsbootmenu/blob/master/pod/zfsbootmenu.7.pod
 # kernel_refind_menu:

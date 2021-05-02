@@ -1,6 +1,5 @@
 #jinja2: trim_blocks: True, lstrip_blocks: True
 # {{ ansible_managed }}
-{% set __refind = kernel_refind_default | combine(kernel_refind, recursive=True) %}
 {% for key, value in __refind.items() %}
 {{ key }} {{ value }}
 {% endfor %}

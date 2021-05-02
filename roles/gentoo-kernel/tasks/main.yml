@@ -3,17 +3,18 @@
 
 - name: Configure refind
   include_tasks: 01-refind.yml
-  when:
-    - bios == "uefi"
-    - kernel_refind_menu is defined
+  when: bios == "uefi"
 
 - name: Configure syslinux
   include_tasks: 01-legacy.yml
   when: bios == "legacy"
 
-- name: Configure kernel
-  include_tasks: 02-kernel.yml
+- name: Install linux-firmware
+  include_tasks: 02-firmware.yml
+  when: kernel_firmware | length
 
-- name: Configure zfs
-  include_tasks: 03-zfs.yml
-  when: kernel_zfs_on_root
+- name: Configure and install kernel
+  include_tasks: 03-kernel.yml
+
+- name: Configure zfs on root
+  include_tasks: 04-zfs.yml

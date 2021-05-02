@@ -1,0 +1,121 @@
+- name: create kernel related directories
+  file:
+    dest: "{{ item }}"
+    state: directory
+  loop:
+    - /etc/kernel/config.d/
+    - /etc/kernel/kconfig.d/
+    - /etc/kernel/postinst.d/
+    - /etc/portage/savedconfig/sys-kernel/
+    - /etc/portage/patches/sys-kernel/gentoo-kernel/
+
+- name: copy postinstall scripts
+  block:
+  - name: register present postinst scripts
+    find:
+      paths: "/etc/kernel/postinst.d/"
+      recurse: yes
+      patterns:
+        - "*.sh"
+    register: __postinst_present
+
+  - name: copy scripts
+    copy:
+      content: "{{ script.value }}"
+      dest: "/etc/kernel/postinst.d/{{ script.key }}.sh"
+      owner: root
+      group: root
+      mode: 0740
+    loop: "{{ kernel_postinst | dict2items }}"
+    loop_control:
+      loop_var: script
+      label: "{{ script.key }}"
+    register: __postinst_copied
+
+  - name: ansible_magic
+    set_fact:
+      __postinst_present_list: "{{ __postinst_present | json_query('files[*].path') | default([]) }}"
+      __postinst_copied_list: "{{ __postinst_copied | json_query('results[*].dest') | default([]) }}"
+
+  - name: delete scripts
+    file:
+      path: "{{ item }}"
+      state: absent
+    loop: "{{ __postinst_present_list | difference(__postinst_copied_list) }}"
+
+- name: copy kconfigs
+  block:
+  - name: register present kconfigs
+    find:
+      paths: "/etc/kernel/kconfig.d/"
+      recurse: yes
+    register: __kconfigs_present
+
+  - name: copy kconfigs
+    copy:
+      src: "kconfig.d/{{ item }}"
+      dest: "/etc/kernel/kconfig.d/{{ item }}"
+    loop: "{{ kernel_kconfigs }}"
+    register: __kconfigs_copied
+    notify:
+      - rebuild kernel
+      - generate zbm
+
+  - name: ansible_magic
+    set_fact:
+      __kconfigs_present_list: "{{ __kconfigs_present | json_query('files[*].path') | default([]) }}"
+      __kconfigs_copied_list: "{{ __kconfigs_copied | json_query('results[*].dest') | default([]) }}"
+
+  - name: delete kconfigs
+    file:
+      path: "{{ item }}"
+      state: absent
+    loop: "{{ __kconfigs_present_list | difference(__kconfigs_copied_list) }}"
+
+- name: create custom Kconfig to include in Linux src
+  copy:
+    content: |
+      menu "Local configuration"
+        {% for kconfig in kernel_kconfigs %}
+        source "/etc/kernel/kconfig.d/{{ kconfig }}"
+        {% endfor %}
+      endmenu
+    dest: "/etc/kernel/Kconfig"
+  notify:
+    - rebuild kernel
+    - generate zbm
+
+- name: use custom Kconfig when building kernel
+  copy:
+    src: custom-kconfig.patch
+    dest: /etc/portage/patches/sys-kernel/gentoo-kernel/custom-kconfig.patch
+
+- name: copy gentoo-kernel savedconfig
+  template:
+    src: "files/configs/{{ arch }}-base.config"
+    dest: "/etc/portage/savedconfig/sys-kernel/gentoo-kernel"
+  notify:
+    - rebuild kernel
+    - generate zbm
+
+- name: force gentoo-kernel version
+  copy:
+    content: |
+      >sys-kernel/gentoo-kernel-{{ kernel_version }}
+      >virtual/dist-kernel-{{ kernel_version }}
+      sys-kernel/gentoo-kernel-bin
+      sys-kernel/vanilla-kernel
+    dest: /etc/portage/package.mask/kernel.mask
+
+- name: enable savedconfigs for gentoo-kernel
+  lineinfile:
+    path: "/etc/portage/package.use/kernel.use"
+    line: sys-kernel/gentoo-kernel savedconfig
+    create: yes
+
+- name: install gentoo-kernel
+  portage:
+    package: =sys-kernel/gentoo-kernel-{{ kernel_version }}
+    state: present
+  notify:
+    - generate zbm

@@ -29,6 +29,6 @@
   copy:
     content: "{{ kernel_zfsbootmenu_config | to_nice_yaml }}"
     dest: "/etc/zfsbootmenu/config.yaml"
-    mode: 644
+    mode: 0644
   notify:
     - generate zbm

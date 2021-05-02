@@ -17,11 +17,6 @@
     - /boot/efi/EFI/Gentoo
     - /boot/efi/EFI/refind
 
-- name: copy Gentoo refind menu config
-  template:
-    src: refind_linux.conf.j2
-    dest: /boot/efi/EFI/Gentoo/refind_linux.conf
-
 - name: install refind boot manager
   portage:
     package: sys-boot/refind
@@ -34,6 +29,20 @@
     - notest
 
 - name: copy refind config
-  template:
-    src: refind.conf.j2
+  copy:
+    content: |
+      {% for key, value in kernel_refind_config.items() %}
+      {{ key }} {{ value }}
+      {% endfor %}
     dest: /boot/efi/EFI/refind/refind.conf
+    owner: root
+    group: root
+    mode: 0640
+
+- name: copy Gentoo refind menu config
+  copy:
+    content: "{{ kernel_refind_menu }}"
+    dest: /boot/efi/EFI/Gentoo/refind_linux.conf
+    owner: root
+    group: root
+    mode: 0640

@@ -8,11 +8,8 @@
   include_tasks: 02-system.yml
 
 - name: Create users
+  tags: users
   include_tasks: 03-users.yml
-  loop: "{{ users }}"
-  loop_control:
-    loop_var: user
-    label: "{{ user.name }}"
 
 - name: Configure distcc
   include_tasks: 04-distcc.yml

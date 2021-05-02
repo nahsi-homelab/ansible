@@ -1,6 +1,5 @@
 - hosts: "{{ target }}"
   become: yes
   become_method: doas
-  vars_files: users.yml
   roles:
     - "{{ role }}"

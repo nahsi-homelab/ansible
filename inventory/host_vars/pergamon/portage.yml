@@ -13,7 +13,7 @@ base_portage_features:
   - distcc
   - parallel-install
 
-base_packages:
+base_packages_overlay:
   - net-misc/r8168
   - app-emulation/docker-compose
   - media-plugins/hyperion

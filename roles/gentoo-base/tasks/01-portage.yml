@@ -37,3 +37,8 @@
     group: root
     mode: 0644
   notify: update use
+
+- name: install distcc
+  portage:
+    package: sys-devel/distcc
+    state: present

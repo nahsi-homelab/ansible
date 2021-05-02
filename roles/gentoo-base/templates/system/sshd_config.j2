@@ -1,6 +1,7 @@
 #jinja2: trim_blocks: True, lstrip_blocks: True
 # {{ ansible_managed }}
-{% for key, value in base_sshd.items() %}
+{% set __sshd = base_sshd_default | combine(base_sshd, recursive=True) %}
+{% for key, value in __sshd.items() %}
 {{ key }} {{ value }}
 {% endfor %}
 {% if base_sshd_allow_groups | length %}

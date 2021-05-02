@@ -28,7 +28,6 @@ base_packages_default:
   - net-misc/iperf
   - app-arch/p7zip
 
-
 # System
 # ----------------------------------------------------------------------------
 # Filesystems to mount
@@ -38,10 +37,10 @@ base_filesystems: []
   #   opts: "rw,nosuid,noatime,nodev,size=50%,mode=1777"
   #   type: "tmpfs"
 
-base_consolefont: ter-i16b
+base_consolefont: "ter-i16b"
 
 # Choose timezone from /usr/share/zoneinfo
-base_timezone: Europe/Moscow
+base_timezone: "Europe/Moscow"
 
 # List of locales to generate
 base_locales:
@@ -114,7 +113,7 @@ base_sshd_host_keys:
 
 # https://wiki.gentoo.org/wiki/Security_Handbook/Securing_services#SSH
 # https://syslink.pl/cipherlist/
-base_sshd:
+base_sshd_default:
   Protocol: 2
   KexAlgorithms: "curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256"
   Ciphers: "chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr"

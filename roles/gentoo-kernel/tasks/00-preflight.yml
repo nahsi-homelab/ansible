@@ -22,10 +22,6 @@
       - kernel_version | length
     quiet: true
 
-- name: check that "gentoo-kernel-{{ kernel_version }}" exists
-  shell: "emerge -p -q =gentoo-kernel-{{ kernel_version }}"
-  changed_when: false
-
 - name: check 'kernel_boot_device' variable
   assert:
     that:
@@ -38,7 +34,8 @@
   assert:
     that:
       - kernel_refind_menu is defined
-      - kernel_refind_menu is string
+      - kernel_refind_menu is iterable
+      - kennel_refind_menu is not string
       - kernel_refind_menu | length
     quiet: true
   when: bios == "uefi"

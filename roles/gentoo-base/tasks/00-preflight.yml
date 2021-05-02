@@ -25,3 +25,12 @@
       - base_wireguard_configs | length
     quiet: true
   when: base_wireguard_configs is defined
+
+- name: check portage "COMMON_FLAGS" when distcc enabled
+  tags: always
+  assert:
+    that:
+      - "'native' not in base_portage_makeconf.COMMON_FLAGS"
+    quiet: true
+    fail_msg: "march=native cannot be used with distcc"
+  when: "'distcc' in base_portage_makeconf.FEATURES"

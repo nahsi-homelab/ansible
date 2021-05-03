@@ -125,4 +125,10 @@
     loop_var: fs
     label: "{{ fs.path }}"
 
+- name: set swappiness to "1"
+  sysctl:
+    name: vm.swappiness
+    value: "1"
+    state: present
+
 - meta: flush_handlers

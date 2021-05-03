@@ -55,5 +55,7 @@ base_docker_config_overlay:
     - zfs.fsname=hot/containers
 
 base_containers_storage: |
+  [storage]
+  driver="zfs"
   [storage.options.zfs]
   fsname="hot/containers"

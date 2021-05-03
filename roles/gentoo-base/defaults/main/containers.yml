@@ -19,6 +19,10 @@ base_containers_containers: |
 # Docker
 # ----------------------------------------------------------------------------
 base_docker_config_base:
+  default-runtime: "crun"
+  runtimes:
+    crun:
+      path: "/usr/bin/crun"
   log-driver: "json-file"
   log-opts:
     max-size: "32m"

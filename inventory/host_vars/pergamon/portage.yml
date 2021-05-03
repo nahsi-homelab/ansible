@@ -48,12 +48,7 @@ base_portage_package_use_overlay:
   net-libs/zeromq: drafts
   dev-lang/python: sqlite
 
-base_portage_use:
-  - zstd
-  - luajit
-  - dist-kernel
-
-  # desktop
+base_portage_use_overlay:
   - X
   - elogind
   - -policykit

@@ -25,10 +25,12 @@ base_portage_features: []
   # - parallel-install
   # - candy
 
-base_portage_use: []
-  # - zstd
-  # - -gtk3
-  # - luajit
+base_portage_use_base:
+  - zstd
+  - luajit
+  - dist-kernel
+base_portage_use_overlay: []
+base_portage_use: "{{ base_portage_use_base + base_portage_use_overlay }}"
 
 base_portage_package_use_base:
   net_misc/openssh: "-pam"

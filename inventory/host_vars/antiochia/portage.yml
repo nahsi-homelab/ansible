@@ -1,11 +1,8 @@
 base_portage_features:
   - parallel-install
 
-base_portage_use:
-  - zstd
-  - luajit
+base_portage_use_overlay:
   - -X
-  - dist-kernel
 
 base_portage_package_use_overlay:
   media-video/ffmpeg: "vpx x264 x265 vorbis opus theora"

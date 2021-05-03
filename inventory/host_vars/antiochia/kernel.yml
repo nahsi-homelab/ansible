@@ -10,8 +10,6 @@ kernel_kconfigs:
   - AMD
   - X470D4U
 
-kernel_zfs_on_root: true
-
 kernel_zfsbootmenu_config:
   Global:
     ManageImages: true

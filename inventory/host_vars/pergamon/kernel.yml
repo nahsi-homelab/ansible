@@ -29,8 +29,6 @@ kernel_kconfigs:
   - DESKTOP
   - GA-A75M-D2H
 
-kernel_zfs_on_root: true
-
 kernel_zfsbootmenu_config:
   Global:
     ManageImages: true
@@ -44,4 +42,4 @@ kernel_zfsbootmenu_config:
       Config: /boot/syslinux/syslinux.cfg
       Enabled: true
   Kernel:
-    CommandLine: ro quiet loglevel=0 org.zfsbootmenu:commandline amdgpu.dc=0
+    CommandLine: ro quiet loglevel=0

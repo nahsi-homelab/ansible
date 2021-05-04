@@ -1,14 +1,9 @@
-kernel_version: "5.10.34"
+kernel_version: "5.11.17"
 
-kernel_boot_device: "/dev/disk/by-partlabel/EFI"
-
-kernel_firmware:
-  - amd/amd_sev_fam17h_model0xh.sbin
-  - amd-ucode/microcode_amd_fam17h.bin
+kernel_boot_device: "/dev/disk/by-uuid/3703-0B3F"
 
 kernel_kconfigs:
-  - AMD
-  - X470D4U
+  - X86J4105
 
 kernel_zfsbootmenu_config:
   Global:
@@ -24,6 +19,6 @@ kernel_zfsbootmenu_config:
 
 kernel_refind_menu:
   - name: "Boot default"
-    cmd: "root=zfsbootmenu:POOL=hot timeout=10 ro quiet loglevel=0"
+    cmd: "root=zfsbootmenu:POOL=main timeout=10 ro quiet loglevel=0"
   - name: "Boot to menu"
-    cmd: "root=zfsbootmenu:POOL=hot timeout=-1 ro quiet loglevel=0"
+    cmd: "root=zfsbootmenu:POOL=main timeout=-1 ro quiet loglevel=0"

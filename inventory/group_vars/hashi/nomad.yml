@@ -1,4 +1,3 @@
-nomad_version: "1.0.3"
 nomad_server_config:
   server:
     enabled: true

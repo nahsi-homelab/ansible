@@ -9,9 +9,9 @@
 - name: Configure system
   include_tasks: 02-system.yml
 
-- name: Create users
-  tags: users
-  include_tasks: 03-users.yml
+- name: Configure containers
+  tags: containers
+  include_tasks: 03-containers.yml
 
 - name: Configure wireguard
   tags: wireguard
@@ -25,6 +25,6 @@
   tags: ssh
   include_tasks: 06-ssh.yml
 
-- name: Configure containers
-  tags: containers
-  include_tasks: 07-containers.yml
+- name: Create users
+  tags: users
+  include_tasks: 07-users.yml

@@ -11,9 +11,7 @@ extra_started_commands="reload"
 command="/usr/local/bin/${RC_SVCNAME}"
 command_args="agent -config={{ vault_agent_dirs.main.path }}/vault-agent.json"
 command_background="true"
-start_stop_daemon_args="--user ${user} --group ${group} \
-                        --stdout-logger 'logger -p user.info' \
-                        --stderr-logger 'logger -p user.warn'"
+start_stop_daemon_args="--user ${user} --group ${group}"
 
 depend() {
     need net

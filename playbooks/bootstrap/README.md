@@ -6,7 +6,7 @@
 4. Make sure Gentoo rootfs is mounted to `install_prefix` (defaults to `/mnt/gentoo`)
 5. Run bootstrap playbook:
 ```
-ansible-playbook stage3.yml -e "target=<target> root_password=<pass>"
+ansible-playbook stage3.yml -k -e "target=<target> root_password=<pass>"
 ```
 6. Run base playbook:
 ```

@@ -115,7 +115,13 @@
 
 - name: install gentoo-kernel
   portage:
-    package: =sys-kernel/gentoo-kernel-{{ kernel_version }}
-    state: present
+    package: sys-kernel/gentoo-kernel
+    state: latest
   notify:
     - generate zbm
+
+- name: depclean gentoo-kernel
+  portage:
+    package: sys-kernel/gentoo-kernel
+    state: unmerged
+    depclean: yes

@@ -1,6 +1,4 @@
 kernel_firmware: []
-kernel_kconfigs: []
-
 kernel_postinst: {}
 
 # kernel_boot_device: "/dev/disk/by-partlabel/EFI"

@@ -1,7 +1,7 @@
 - name: install zfsbootmenu
   portage:
     package: sys-kernel/zfsbootmenu
-    state: latest
+    state: present
   notify:
     - generate zbm
 

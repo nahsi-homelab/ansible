@@ -7,6 +7,7 @@
     - /etc/kernel/postinst.d/
 
 - name: sync postinstall scripts
+  tags: kernel
   block:
   - name: register present scripts
     find:
@@ -39,6 +40,7 @@
     loop: "{{ __postinst_present_list | difference(__postinst_copied_list) }}"
 
 - name: copy kernel overlay configs
+  tags: kernel
   block:
   - name: register present configs
     find:
@@ -74,9 +76,9 @@
     loop: "{{ __configs_present_list | difference(__configs_copied_list) }}"
     notify:
       - rebuild kernel
-      - generate zbm
 
 - name: mask gentoo distribution kernel and set kernel version
+  tags: kernel
   copy:
     content: |
       >sys-kernel/nahsi-kernel-{{ kernel_version }}

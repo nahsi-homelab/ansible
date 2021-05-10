@@ -4,6 +4,7 @@
     state: directory
 
 - name: create linux-firmware savedconfig
+  tags: kernel
   copy:
     content: |
       {% for blob in kernel_firmware %}

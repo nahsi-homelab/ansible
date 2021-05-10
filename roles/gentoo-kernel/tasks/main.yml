@@ -1,4 +1,5 @@
 - name: Preflight
+  tags: always
   include_tasks: 00-preflight.yml
 
 - name: Configure refind
@@ -10,10 +11,12 @@
   when: bios == "legacy"
 
 - name: Install linux-firmware
+  tags: kernel
   include_tasks: 02-firmware.yml
   when: kernel_firmware | length
 
 - name: Configure and install kernel
+  tags: kernel
   include_tasks: 03-kernel.yml
 
 - name: Configure zfs on root

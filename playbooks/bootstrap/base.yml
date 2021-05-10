@@ -15,11 +15,7 @@
     - include_role:
         name: gentoo-syslog
         tasks_from: 00-preflight.yml
-  roles:
-    - gentoo-base
-    - gentoo-kernel
-    - gentoo-syslog
-  post_tasks:
+
     - name: Install packages required for adding nahsi-overlay
       portage:
         package: "{{ item }}"
@@ -33,9 +29,11 @@
           nahsi-overlay git https://github.com/nahsi/nahsi-overlay.git
       args:
         creates: /var/db/repos/nahsi-overlay
-      register: __overlay
 
     - name: Sync nahsi-overlay repo
-      command: "emerge --sync nahsi-overlay"
-      when: __overlay.changed
+      command: "emaint sync -r nahsi-overlay"
 
+  roles:
+    - gentoo-base
+    - gentoo-kernel
+    - gentoo-syslog

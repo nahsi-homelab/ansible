@@ -10,6 +10,13 @@
       - app-emulation/docker
       - app-emulation/podman
 
+- name: create /etc/docker
+  tags: containers
+  file:
+    dest: "/etc/docker"
+    state: directory
+    mode: 0755
+
 - name: configure registries
   tags: containers
   copy:

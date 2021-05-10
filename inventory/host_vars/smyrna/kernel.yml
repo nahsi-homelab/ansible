@@ -1,6 +1,6 @@
 kernel_version: "5.10.35"
 
-kernel_boot_device: "/dev/disk/by-uuid/3703-0B3F"
+kernel_boot_device: "/dev/disk/by-uuid/97AA-E9FE"
 
 kernel_zfsbootmenu_config:
   Global:

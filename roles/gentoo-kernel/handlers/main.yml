@@ -1,8 +1,16 @@
 - name: rebuild linux-firmware
-  command: "emerge sys-kernel/linux-firmware"
+  portage:
+    package: "sys-kernel/linux-firmware"
+    noreplace: no
+    state: emerged
 
 - name: rebuild kernel
-  command: "emerge @module-rebuild"
+  portage:
+    package:
+      - "@module-rebuild"
+      - "=sys-kernel/nahsi-kernel-{{ kernel_version }}"
+    noreplace: no
+    state: emerged
 
 - name: generate zbm
   command: "generate-zbm --kver {{ kernel_version }}"

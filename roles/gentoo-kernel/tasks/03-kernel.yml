@@ -52,7 +52,7 @@
       dest: "/etc/kernel/config.d/{{ config.key }}.config"
       owner: root
       group: root
-      mode: 0740
+      mode: 0644
     loop: "{{ kernel_configs | dict2items }}"
     loop_control:
       loop_var: config
@@ -76,7 +76,7 @@
       - rebuild kernel
       - generate zbm
 
-- name: mask gentoo distribution kernel
+- name: mask gentoo distribution kernel and set kernel version
   copy:
     content: |
       >sys-kernel/nahsi-kernel-{{ kernel_version }}
@@ -86,16 +86,6 @@
       sys-kernel/gentoo-kernel-bin
       sys-kernel/vanilla-kernel
     dest: /etc/portage/package.mask/kernel.mask
-
-- name: install nahsi-kernel
-  portage:
-    package: "sys-kernel/nahsi-kernel"
-    state: latest
   notify:
+    - rebuild kernel
     - generate zbm
-
-- name: depclean nahsi-kernel
-  portage:
-    package: "sys-kernel/nahsi-kernel"
-    state: unmerged
-    depclean: yes

@@ -31,7 +31,7 @@ kernel_zfsbootmenu_config:
     DracutConfDir: /etc/zfsbootmenu/dracut.conf.d
   Components:
     ImageDir: /boot/syslinux/zfsbootmenu
-    Versions: 1
+    Versions: 10
     Enabled: true
     syslinux:
       Config: /boot/syslinux/syslinux.cfg
@@ -41,6 +41,9 @@ kernel_zfsbootmenu_config:
 
 kernel_configs:
   01platform: |
+    CONFIG_SENSORS_K10TEMP=y
+    CONFIG_I2C_PIIX4=y
+
     # Arduino ambilight
     CONFIG_USB_SERIAL=y
     CONFIG_USB_SERIAL_CH341=y
@@ -48,6 +51,9 @@ kernel_configs:
     # Video
     CONFIG_DRM=y
     CONFIG_DRM_AMDGPU=y
+    CONFIG_DRM_AMD_DC=n
+    CONFIG_FB_BOOT_VESA_SUPPORT=y
+    CONFIG_FB_VESA=y
 
     # Audio
     CONFIG_SND_HDA_INTEL=y

@@ -31,7 +31,7 @@ kernel_zfsbootmenu_config:
     DracutConfDir: /etc/zfsbootmenu/dracut.conf.d
   Components:
     ImageDir: /boot/syslinux/zfsbootmenu
-    Versions: 10
+    Versions: 2
     Enabled: true
     syslinux:
       Config: /boot/syslinux/syslinux.cfg
@@ -52,8 +52,7 @@ kernel_configs:
     CONFIG_DRM=y
     CONFIG_DRM_AMDGPU=y
     CONFIG_DRM_AMD_DC=n
-    CONFIG_FB_BOOT_VESA_SUPPORT=y
-    CONFIG_FB_VESA=y
+    CONFIG_HSA_AMD=y
 
     # Audio
     CONFIG_SND_HDA_INTEL=y

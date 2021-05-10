@@ -1,3 +1,6 @@
+# If empty will listen on all interfaces
+base_sshd_listen: []
+
 # Only allow users in the following groups to login via SSH
 base_sshd_allow_groups:
   - wheel

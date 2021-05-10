@@ -13,6 +13,7 @@
 - name: Install linux-firmware
   tags: kernel
   include_tasks: 02-firmware.yml
+  when: kernel_firmware | length
 
 - name: Configure and install kernel
   tags: kernel

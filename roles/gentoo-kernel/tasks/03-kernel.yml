@@ -91,3 +91,14 @@
   notify:
     - rebuild kernel
     - generate zbm
+
+- name: install nahsi-kernel
+  portage:
+    package: "=sys-kernel/nahsi-kernel-{{ kernel_version }}"
+    state: present
+
+- name: set kernel version with eselect
+  tags: kernel
+  eselect:
+    module: "kernel"
+    target: "linux-{{ kernel_version }}"

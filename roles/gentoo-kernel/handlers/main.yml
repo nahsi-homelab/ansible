@@ -6,9 +6,7 @@
 
 - name: rebuild kernel
   portage:
-    package:
-      - "@module-rebuild"
-      - "=sys-kernel/nahsi-kernel-{{ kernel_version }}"
+    package: "@module-rebuild"
     noreplace: no
     state: emerged
 

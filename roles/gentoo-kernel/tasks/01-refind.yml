@@ -5,8 +5,6 @@
     path: "/boot/efi/"
     fstype: "vfat"
     state: mounted
-  tags:
-    - notest
 
 - name: create refind directories
   file:
@@ -17,16 +15,16 @@
     - /boot/efi/EFI/Gentoo
     - /boot/efi/EFI/refind
 
-- name: install refind boot manager
+- name: install refind and efibootmgr
   portage:
-    package: sys-boot/refind
-    state: latest
+    package:
+      - "sys-boot/refind"
+      - "sys-boot/efibootmgr"
+    state: present
 
 - name: update refind
   command: "refind-install"
   changed_when: false
-  tags:
-    - notest
 
 - name: copy refind config
   copy:
@@ -42,7 +40,7 @@
 - name: copy Gentoo refind menu config
   copy:
     content: "{{ kernel_refind_menu }}"
-    dest: /boot/efi/EFI/Gentoo/refind_linux.conf
+    dest: /boot/refind_linux.conf
     owner: root
     group: root
     mode: 0640

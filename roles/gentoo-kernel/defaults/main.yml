@@ -5,7 +5,7 @@ kernel_postinst: {}
 
 # https://rodsbooks.com/refind/configfile.html
 kernel_refind_config_base:
-  timeout: "10"
+  timeout: "3"
   shutdown_after_timeout: "false"
   use_nvram: "false"
   screensaver: "300"

@@ -1,4 +1,0 @@
-- name: Converge
-  hosts: all
-  roles:
-    - gentoo-kernel

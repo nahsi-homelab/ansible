@@ -1,0 +1,28 @@
+arch: "amd64"
+bios: "uefi"
+
+base_filesystems:
+  - path: "/tmp"
+    src: "tmpfs"
+    opts: "rw,nosuid,noatime,nodev,size=1G,mode=1777"
+    type: "tmpfs"
+
+base_network: |
+  config_enp2s0="dhcp"
+
+base_network_interfaces:
+  - "enp2s0"
+
+base_dns:
+  name_servers: 1.1.1.1
+
+base_docker_config_overlay:
+  storage-driver: "zfs"
+  storage-opts:
+    - zfs.fsname=main/containers
+
+base_containers_storage: |
+  [storage]
+  driver="zfs"
+  [storage.options.zfs]
+  fsname="main/containers"

@@ -1,0 +1,9 @@
+base_users_base:
+  - username: nahsi
+    groups:
+      - wheel
+      - portage
+      - ansible-managed
+    ssh: https://github.com/nahsi.keys
+base_users_overlay: {}
+base_users: "{{ base_users_base + base_users_overlay | unique }}"

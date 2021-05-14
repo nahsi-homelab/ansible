@@ -1,0 +1,43 @@
+- hosts: "{{ target }}"
+  become: yes
+  become_method: doas
+  pre_tasks:
+    - name: check "distccd_config" variable
+      assert:
+        that:
+          - distccd_config is defined
+          - distccd_config is string
+          - distccd_config | length
+        fail_msg: "Variable 'distccd_config' is not defined or empty"
+        quiet: true
+  tasks:
+    - name: Install distcc
+      portage:
+        package: distcc
+        state: present
+
+    - name: Configure distcc server
+      block:
+      - name: copy distccd config
+        copy:
+          content: "{{ distccd_config }}"
+          dest: /etc/conf.d/distccd
+          owner: root
+          group: root
+          mode: 0644
+        notify: restart distccd
+
+      - name: Enable distccd
+        service:
+          name: distccd
+          enabled: yes
+          runlevel: default
+          use: openrc
+
+  handlers:
+    - name: restart distccd
+      service:
+        name: distccd
+        state: restarted
+        use: openrc
+

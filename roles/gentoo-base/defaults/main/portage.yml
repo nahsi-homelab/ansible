@@ -1,35 +1,50 @@
+base_portage_distcc_cores: 0
 # --jobs=N
 # where N is number of logical cores
 # when using distcc N is a number of local + remote logical cores
-base_portage_jobs: "{{ ansible_processor_cores * ansible_processor_threads_per_core }}"
+base_portage_jobs: >-
+  {{
+    (ansible_processor_cores * ansible_processor_threads_per_core) +
+    base_portage_distcc_cores
+  }}
 # --load-average=X.Y
 # where X.Y=N*0.9 where N is a number of local cores (even with distcc enabled)
-base_portage_la: "{{ base_portage_jobs | float * 0.9 }}"
+base_portage_la: >-
+  {{
+    ansible_processor_cores * ansible_processor_threads_per_core |
+    float * 0.9
+  }}
 
 # https://wiki.gentoo.org/wiki/GENTOO_MIRRORS
 base_portage_mirrors:
-  - https://distfiles.gentoo.org
+  - https://mirror.yandex.ru/gentoo-distfiles/
+  - https://distfiles.gentoo.org/
 
 # https://wiki.gentoo.org/wiki/FEATURES
 base_portage_features: []
   # - parallel-install
   # - candy
 
-base_portage_use: []
-  # - zstd
-  # - -gtk3
-  # - luajit
+base_portage_use_base:
+  - zstd
+  - luajit
+  - dist-kernel
+base_portage_use_overlay: []
+base_portage_use: "{{ base_portage_use_base + base_portage_use_overlay }}"
 
-base_portage_package_use: []
-  # - media-libs/mesa vulkan vaapi
+base_portage_package_use_base:
+  net_misc/openssh: "-pam"
+  sys-devel/gcc: "pgo"
+base_portage_package_use_overlay: {}
+base_portage_package_use: >
+  {{
+    base_portage_package_use_base |
+    combine(base_portage_package_use_overlay, recursive=true)
+  }}
 
 # https://wiki.gentoo.org/wiki//etc/portage/make.conf
 # https://github.com/gentoo/portage/blob/master/cnf/make.conf.example
-base_portage_makeconf: {}
-  # CPU_FLAGS_X86: "sse3 mmx"
-  # ABI_X86: "64 32"
-  # PYTHON_TARGETS: "python2.7 python3.9"
-base_portage_makeconf_default:
+base_portage_makeconf_base:
   CHOST: "x86_64-pc-linux-gnu"
   # -march=native won't work with distcc
   COMMON_FLAGS: "-O2 -march=native"
@@ -57,3 +72,9 @@ base_portage_makeconf_default:
   # This sets the language of build output to English
   LC_MESSAGES: "C"
   USE: "{{ base_portage_use | join(' ') }}"
+base_portage_makeconf_overlay: {}
+base_portage_makeconf: >
+  {{
+    base_portage_makeconf_base |
+    combine(base_portage_makeconf_overlay, recursive=true)
+  }}

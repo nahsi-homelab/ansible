@@ -1,35 +1,30 @@
 - name: Preflight
+  tags: always
   include_tasks: 00-preflight.yml
 
 - name: Configure portage
+  tags: portage
   include_tasks: 01-portage.yml
 
 - name: Configure system
   include_tasks: 02-system.yml
 
-- name: Create users
-  include_tasks: 03-users.yml
-  loop: "{{ users }}"
-  loop_control:
-    loop_var: user
-    label: "{{ user.name }}"
-
-- name: Configure distcc
-  include_tasks: 04-distcc.yml
-  when: '"distcc" in __makeconf.FEATURES or base_distccd is defined'
+- name: Configure containers
+  tags: containers
+  include_tasks: 03-containers.yml
 
 - name: Configure wireguard
-  include_tasks: 05-wireguard.yml
+  tags: wireguard
+  include_tasks: 04-wireguard.yml
   when: base_wireguard_configs is defined
 
 - name: Configure network
-  include_tasks: 06-network.yml
+  include_tasks: 05-network.yml
 
 - name: Configure sshd
-  include_tasks: 07-ssh.yml
+  tags: ssh
+  include_tasks: 06-ssh.yml
 
-- name: Configure containers
-  include_tasks: 08-containers.yml
-
-- name: Add nahsi-overlay
-  include_tasks: 09-nahsi-overlay.yml
+- name: Create users
+  tags: users
+  include_tasks: 07-users.yml

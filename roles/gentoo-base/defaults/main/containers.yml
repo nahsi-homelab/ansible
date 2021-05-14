@@ -1,23 +1,35 @@
-# Podman
-# ----------------------------------------------------------------------------
 # https://github.com/containers/image/blob/master/docs/containers-registries.conf.5.md
-base_podman_registries:
-  search:
-    - docker.io
-    - quay.io
+base_containers_registries: |
+  [registries.search]
+  registries = ["docker.io", "quay.io"]
 
 # https://github.com/containers/image/blob/master/docs/containers-policy.json.5.md
-base_podman_policy:
+base_containers_policy:
   default:
     - type: insecureAcceptAnything
 
 # https://github.com/containers/storage/blob/master/docs/containers-storage.conf.5.md
-base_podman_storage: |
-  [storage.options.zfs]
-  fsname="main/containers"
+base_containers_storage: ""
+
+# https://github.com/containers/common/blob/master/docs/containers.conf.5.md
+base_containers_containers: |
+  [engine]
+  runtime="crun"
 
 # Docker
 # ----------------------------------------------------------------------------
-base_docker_config:
-  storage-opts:
-    - zfs.fsname=main/containers
+base_docker_config_base:
+  default-runtime: "crun"
+  runtimes:
+    crun:
+      path: "/usr/bin/crun"
+  log-driver: "json-file"
+  log-opts:
+    max-size: "32m"
+    max-file: "2"
+base_docker_config_overlay: {}
+base_docker_config: >
+  {{
+    base_docker_config_base |
+    combine(base_docker_config_overlay, recursive=true)
+  }}

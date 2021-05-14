@@ -1,0 +1,23 @@
+- name: create symlinks in /etc/init.d
+  file:
+    src: "/etc/init.d/net.lo"
+    dest: "/etc/init.d/net.{{ item }}"
+    state: link
+  loop: "{{ base_network_interfaces }}"
+
+- name: enable interfaces
+  service:
+    name: "net.{{ item }}"
+    enabled: yes
+    runlevel: default
+    use: openrc
+  loop: "{{ base_network_interfaces }}"
+
+- name: configure interfaces
+  copy:
+    content: "{{ base_network }}"
+    dest: /etc/conf.d/net
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart network

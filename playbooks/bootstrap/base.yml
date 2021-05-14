@@ -1,0 +1,39 @@
+- hosts: "{{ target }}"
+  become: yes
+  become_method: sudo
+  vars:
+    chroot: true
+    ansible_user: root
+    ansible_port: 2222
+  pre_tasks:
+    - include_role:
+        name: gentoo-base
+        tasks_from: 00-preflight.yml
+    - include_role:
+        name: gentoo-kernel
+        tasks_from: 00-preflight.yml
+    - include_role:
+        name: gentoo-syslog
+        tasks_from: 00-preflight.yml
+
+    - name: Install packages required for adding nahsi-overlay
+      portage:
+        package: "{{ item }}"
+      loop:
+        - app-eselect/eselect-repository
+        - dev-vcs/git
+
+    - name: Add nahsi-overlay repo
+      command: |
+        eselect repository add \
+          nahsi-overlay git https://github.com/nahsi/nahsi-overlay.git
+      args:
+        creates: /var/db/repos/nahsi-overlay
+
+    - name: Sync nahsi-overlay repo
+      command: "emaint sync -r nahsi-overlay"
+
+  roles:
+    - gentoo-base
+    - gentoo-kernel
+    - gentoo-syslog

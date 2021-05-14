@@ -1,0 +1,57 @@
+- name: create "ansible-managed" group
+  tags: users
+  group:
+    name: ansible-managed
+    state: present
+    system: yes
+
+- name: add users
+  tags: users
+  user:
+    name: "{{ user.username }}"
+    comment: "{{ user.comment | default('') }}"
+    create_home: "{{ user.create_home | default('yes') }}"
+    system: "{{ user.system | default('no') }}"
+    shell: "{{ user.shell | default('/bin/bash') }}"
+    groups: "{{ user.groups | default(['']) + ['ansible-managed'] }}"
+    append: yes
+  loop: "{{ base_users }}"
+  loop_control:
+    loop_var: user
+    label: "{{ user.username }}"
+
+- name: add ssh keys
+  tags: users
+  authorized_key:
+    user: "{{ user.username }}"
+    key: "{{ user.ssh }}"
+    exclusive: yes
+  loop: "{{ base_users }}"
+  loop_control:
+    loop_var: user
+    label: "{{ user.username }}"
+  when:
+    - user.ssh is defined
+    - user.ssh | length
+
+- name: cleanup users not present in "base_users"
+  tags: users
+  block:
+    - name: get list of users from "ansible-managed" group
+      getent:
+        database: "group"
+        key: "ansible-managed"
+        split: ":"
+
+    - name: ansible magic
+      set_fact:
+        __users: "{{ base_users | json_query('[*].username') }}"
+        __existing_users: "{{ getent_group['ansible-managed'][-1].split(',') }}"
+
+    - name: delete users
+      user:
+        name: "{{ user }}"
+        state: absent
+      loop: "{{ __existing_users | difference(__users) }}"
+      loop_control:
+        loop_var: user

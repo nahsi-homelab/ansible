@@ -1,12 +1,14 @@
 - name: rebuild linux-firmware
-  command: "emerge sys-kernel/linux-firmware"
+  portage:
+    package: "sys-kernel/linux-firmware"
+    noreplace: no
+    state: emerged
 
 - name: rebuild kernel
-  command: "emerge @module-rebuild"
+  portage:
+    package: "@module-rebuild"
+    noreplace: no
+    state: emerged
 
 - name: generate zbm
   command: "generate-zbm --kver {{ kernel_version }}"
-  when: kernel_zfs_on_root
-
-- name: update initramfs
-  command: "emerge --config sys-kernel/gentoo-kernel {{ kernel_version }}"

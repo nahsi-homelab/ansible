@@ -2,13 +2,20 @@
   copy:
     content: "{{ base_timezone }}"
     dest: /etc/timezone
+    owner: root
+    group: root
     mode: 0644
   notify: update timezone
 
 - name: update locales
-  template:
-    src: system/locale.gen.j2
+  copy:
+    content: |
+      {% for locale in base_locales %}
+      {{ locale }}
+      {% endfor %}
     dest: /etc/locale.gen
+    owner: root
+    group: root
     mode: 0644
   notify: update locales
 
@@ -20,15 +27,25 @@
 - meta: flush_handlers
 
 - name: setup hwclock
-  template:
-    src: conf.d/hwclock.j2
+  copy:
+    content: |
+      {% for key, value in base_hwclock.items() %}
+      {{ key }}="{{ value }}"
+      {% endfor %}
     dest: /etc/conf.d/hwclock
+    owner: root
+    group: root
     mode: 0644
 
 - name: copy rc.conf
-  template:
-    src: system/rc.conf.j2
+  copy:
+    content: |
+      {% for key, value in base_openrc.items() %}
+      {{ key }}="{{ value }}"
+      {% endfor %}
     dest: /etc/rc.conf
+    owner: root
+    group: root
     mode: 0644
 
 - name: install openresolv
@@ -37,15 +54,23 @@
     state: present
 
 - name: configure openresolv
-  template:
-    src: system/resolvconf.conf.j2
+  copy:
+    content: |
+      resolv_conf=/etc/resolv.conf
+      {% for key, value in base_dns.items() %}
+      {{ key }}="{{ value }}"
+      {% endfor %}
     dest: /etc/resolvconf.conf
+    owner: root
+    group: root
+    mode: 0644
   notify: run resolvconf
 
 - name: install base packages
   portage:
     package: "{{ item }}"
-  loop: "{{ base_packages_default + base_packages }}"
+    state: present
+  loop: "{{ base_packages }}"
 
 - name: enable cronie
   service:
@@ -65,25 +90,28 @@
 
 - name: add doas rules
   copy:
-    content: "permit nopass :wheel\n"
+    content: >
+      permit nopass :wheel
     dest: /etc/doas.conf
+    owner: root
+    group: root
     mode: 0644
 
 - name: set terminus as default consolefont
   copy:
-    content: "consolefont={{ base_consolefont }}\n"
+    content: >
+      consolefont={{ base_consolefont }}
     dest: /etc/conf.d/consolefont
 
 - name: enable services
   service:
-    name: "{{ service.name }}"
+    name: "{{ item.key }}"
     enabled: yes
-    runlevel: "{{ service.runlevel }}"
+    runlevel: "{{ item.value }}"
     use: openrc
-  loop: "{{ base_services_default + base_services }}"
+  loop: "{{ base_services | dict2items }}"
   loop_control:
-    loop_var: service
-    label: "{{ service.name }}"
+    label: "{{ item.key }}"
 
 - name: mount filesystems
   mount:
@@ -96,5 +124,11 @@
   loop_control:
     loop_var: fs
     label: "{{ fs.path }}"
+
+- name: set swappiness to "1"
+  sysctl:
+    name: vm.swappiness
+    value: "1"
+    state: present
 
 - meta: flush_handlers

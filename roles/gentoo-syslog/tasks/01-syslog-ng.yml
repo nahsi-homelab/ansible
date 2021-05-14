@@ -8,7 +8,9 @@
     src: syslog-ng.conf.j2
     dest: /etc/syslog-ng/syslog-ng.conf
     validate: "syslog-ng --syntax-only --cfgfile %s"
-    mode: 0660
+    owner: root
+    group: root
+    mode: 0640
   notify: reload syslog-ng
 
 - name: enable syslog-ng

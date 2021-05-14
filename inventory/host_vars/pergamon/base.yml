@@ -18,38 +18,14 @@ base_sshd_listen:
   - "192.168.5.2"
   - "127.0.0.1"
 
-base_env:
-  locale: "en_US.UTF-8"
-  editor: "nvim"
-base_gentoo_mirrors:
-  - https://mirror.yandex.ru/gentoo-distfiles/
-  - https://distfiles.gentoo.org/
-
-base_portage_features:
-  - distcc
-  - parallel-install
-
 base_services:
-  - name: "elogind"
-    runlevel: "boot"
-  - name: "alsasound"
-    runlevel: "default"
-
-base_distcc_hosts: |
-  192.168.1.7/16
-
-base_portage_makeconf:
-  COMMON_FLAGS: "-O2 -march=amdfam10 -mtune=amdfam10 -mcx16 -mpopcnt"
-  CPU_FLAGS_X86: "3dnow 3dnowext popcnt mmx mmxext sse sse2 sse3 sse4a"
-  VIDEO_CARDS: "amdgpu radeonsi"
-  LUA_TARGETS: "luajit"
-  LUA_SINGLE_TARGET: "luajit"
-  LLVM_TARGETS: "AMDGPU X86"
+  elogind: "boot"
+  alsasound: "default"
 
 base_wireguard_configs:
-  syria: "{{ lookup('hashi_vault', 'secret/data/wireguard/pergamon:syria validate_certs=no') }}"
-  vpn: "{{ lookup('hashi_vault', 'secret/data/wireguard/pergamon:vpn validate_certs=no') }}"
-  office: "{{ lookup('hashi_vault', 'secret/data/wireguard/pergamon:office validate_certs=no') }}"
+  syria: "{{ lookup('hashi_vault', 'secret/data/wireguard/pergamon:syria') }}"
+  vpn: "{{ lookup('hashi_vault', 'secret/data/wireguard/pergamon:vpn') }}"
+  office: "{{ lookup('hashi_vault', 'secret/data/wireguard/pergamon:office') }}"
 
 base_wireguard_interfaces:
   - "syria"
@@ -61,3 +37,18 @@ base_network: |
 
 base_network_interfaces:
   - "enp2s0"
+
+base_dns:
+  name_servers: 192.168.5.1
+  search_domains: "node.consul service.consul"
+
+base_docker_config_overlay:
+  storage-driver: "zfs"
+  storage-opts:
+    - zfs.fsname=main/containers
+
+base_containers_storage: |
+  [storage]
+  driver="zfs"
+  [storage.options.zfs]
+  fsname="main/containers"

@@ -1,0 +1,35 @@
+# If empty will listen on all interfaces
+base_sshd_listen: []
+
+# Only allow users in the following groups to login via SSH
+base_sshd_allow_groups:
+  - wheel
+# Only allow the following users
+base_sshd_allow_users: []
+
+# Enable only following cryptosystems
+base_sshd_host_keys:
+  - /etc/ssh/ssh_host_rsa_key
+  - /etc/ssh/ssh_host_ed25519_key
+
+# https://wiki.gentoo.org/wiki/Security_Handbook/Securing_services#SSH
+# https://syslink.pl/cipherlist/
+base_sshd_base:
+  Protocol: 2
+  KexAlgorithms: "curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256"
+  Ciphers: "chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr"
+  MACs: "hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,umac-128@openssh.com"
+  PermitRootLogin: "no"
+  PubkeyAuthentication: "yes"
+  # Disable .rhost and normal password authentication.
+  HostbasedAuthentication: "no"
+  PasswordAuthentication: "no"
+  PermitEmptyPasswords: "no"
+  SyslogFacility: "AUTH"
+  LogLevel: "INFO"
+base_sshd_overlay: {}
+base_sshd: >
+  {{
+    base_sshd_base |
+    combine(base_sshd_overlay, recursive=true)
+  }}

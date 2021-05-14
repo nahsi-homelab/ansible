@@ -3,11 +3,9 @@ chroot: false
 # Packages
 # ----------------------------------------------------------------------------
 # List of packages to be installed
-base_packages: []
-  # - app-editors/neovim
-  # - sys-process/htop
-base_packages_default:
+base_packages_base:
   - app-admin/doas
+  - sys-devel/distcc
   - dev-vcs/git
   - sys-process/cronie
   - app-eselect/eselect-repository
@@ -27,7 +25,8 @@ base_packages_default:
   - app-misc/jq
   - net-misc/iperf
   - app-arch/p7zip
-
+base_packages_overlay: []
+base_packages: "{{ base_packages_base + base_packages_overlay | unique }}"
 
 # System
 # ----------------------------------------------------------------------------
@@ -38,33 +37,38 @@ base_filesystems: []
   #   opts: "rw,nosuid,noatime,nodev,size=50%,mode=1777"
   #   type: "tmpfs"
 
-base_consolefont: ter-i16b
+base_consolefont: "ter-i16b"
 
 # Choose timezone from /usr/share/zoneinfo
-base_timezone: Europe/Moscow
+base_timezone: "Europe/Moscow"
 
 # List of locales to generate
 base_locales:
   - "en_US.UTF-8 UTF-8"
 
 # Variables set with eselect
-base_env: {}
-  # locale: "en_US.UTF-8"
-  # editor: "nvim"
+base_env_base:
+  locale: "en_US.UTF-8"
+  editor: "nvim"
+base_env_overlay: {}
+base_env: >
+  {{
+    base_env_base |
+    combine(base_env_overlay, recursive=true)
+  }}
 
 # List of services to enable
-base_services: []
-  # - name: zfs-import
-  #   runlevel: boot
-  # - name: zfs-mount
-  #   runlevel: boot
-base_services_default:
-  - name: consolefont
-    runlevel: boot
+base_services_base:
+  consolefont: boot
+base_services_overlay: {}
+base_services: >
+  {{
+    base_services_base |
+    combine(base_services_overlay, recursive=true)
+  }}
 
 # Hardware clock configuration
-base_hwclock: {}
-base_hwclock_default:
+base_hwclock_base:
   # Is your hardware clock set to local or to UTC?
   # If you dualboot with Windows set to "local"
   clock_local: "utc"
@@ -73,6 +77,12 @@ base_hwclock_default:
   # Set systemtime to current hardware clock durning boot
   clock_hctosys: "YES"
   clock_args: ""
+base_hwclock_overlay: {}
+base_hwclock: >
+  {{
+    base_hwclock_base |
+    combine(base_hwclock_overlay, recursive=true)
+  }}
 
 # Network interfaces configuration
 # /usr/share/doc/netifrc-*/net.example.bz2
@@ -82,51 +92,23 @@ base_hwclock_default:
 # base_network_interfaces:
 #   - "eth0"
 
-base_dns: {}
-#   name_servers: "1.1.1.1"
+base_dns:
+  name_servers: "1.1.1.1"
 
 
 # OpenRC
 # ----------------------------------------------------------------------------
 # https://github.com/OpenRC/openrc/blob/master/etc/rc.conf
 # https://wiki.gentoo.org/wiki/OpenRC
-base_openrc: {}
-base_openrc_default:
+base_openrc_base:
   # Enable logging
   rc_logger: "YES"
   rc_log_path: "/var/log/rc.log"
   # Number of ttys allocated for logins
   rc_tty_number: 2
-
-
-# SSH
-# ----------------------------------------------------------------------------
-# Only allow users in the following groups to login via SSH
-base_sshd_allow_groups:
-  - wheel
-# Only allow the following users
-base_sshd_allow_users: []
-
-# Enable only following cryptosystems
-base_sshd_host_keys:
-  - /etc/ssh/ssh_host_rsa_key
-  - /etc/ssh/ssh_host_ed25519_key
-
-# https://wiki.gentoo.org/wiki/Security_Handbook/Securing_services#SSH
-# https://syslink.pl/cipherlist/
-base_sshd:
-  Protocol: 2
-  KexAlgorithms: "curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256"
-  Ciphers: "chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr"
-  MACs: "hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,umac-128@openssh.com"
-  PermitRootLogin: "no"
-  PubkeyAuthentication: "yes"
-  # Disable .rhost and normal password authentication.
-  HostbasedAuthentication: "no"
-  PasswordAuthentication: "no"
-  PermitEmptyPasswords: "no"
-  SyslogFacility: "AUTH"
-  LogLevel: "INFO"
-
-base_sshd_listen:
-  - "{{ ansible_default_ipv4.address }}"
+base_openrc_overlay: {}
+base_openrc: >
+  {{
+    base_openrc_base |
+    combine(base_openrc_overlay, recursive=true)
+  }}

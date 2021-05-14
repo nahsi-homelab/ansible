@@ -1,11 +1,10 @@
-- name: combine makeconf options
-  set_fact:
-    __makeconf: "{{ base_portage_makeconf_default | combine(base_portage_makeconf, recursive=True) }}"
-
 - name: create portage directories
+  tags: portage
   file:
     dest: "{{ item }}"
     state: directory
+    owner: root
+    group: root
     mode: 0755
   loop:
     - /etc/portage/package.use
@@ -17,18 +16,32 @@
     - /etc/portage/patches
 
 - name: copy make.conf
-  template:
-    src: portage/make.conf.j2
+  tags: portage
+  copy:
+    content: |
+      {% for key, value in base_portage_makeconf.items() %}
+      {{ key }}="{{ value }}"
+      {% endfor %}
     dest: /etc/portage/make.conf
+    owner: root
+    group: root
     mode: 0644
   notify: update use
 
 - name: set packages use flags
+  tags: portage
   copy:
     content: |
-      {% for p in base_portage_package_use %}
-      {{ p }}
+      {% for key, value in base_portage_package_use.items() %}
+      {{ key }} {{ value }}
       {% endfor %}
-    dest: /etc/portage/package.use/ansible.use
+    dest: /etc/portage/package.use/base.use
+    owner: root
+    group: root
     mode: 0644
   notify: update use
+
+- name: install distcc
+  portage:
+    package: sys-devel/distcc
+    state: present

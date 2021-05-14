@@ -1,6 +1,36 @@
-- name: fail when no network interfaces defined
+- name: check "base_network" variable
+  tags: always
   assert:
     that:
       - base_network is defined
-    fail_msg: "Define 'base_network'"
+      - base_network is string
+      - base_network | length
     quiet: true
+
+- name: check "base_network_interfaces" variable
+  tags: always
+  assert:
+    that:
+      - base_network_interfaces is defined
+      - base_network_interfaces is iterable
+      - base_network_interfaces is not string
+      - base_network_interfaces | length
+    quiet: true
+
+- name: check "base_wireguard_configs" variable
+  tags: always
+  assert:
+    that:
+      - base_wireguard_configs is mapping
+      - base_wireguard_configs | length
+    quiet: true
+  when: base_wireguard_configs is defined
+
+- name: check portage "COMMON_FLAGS" when distcc enabled
+  tags: always
+  assert:
+    that:
+      - "'native' not in base_portage_makeconf.COMMON_FLAGS"
+    quiet: true
+    fail_msg: "march=native cannot be used with distcc"
+  when: "'distcc' in base_portage_makeconf.FEATURES"

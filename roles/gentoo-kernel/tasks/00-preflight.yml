@@ -1,4 +1,5 @@
-- name: check 'arch' variable
+- name: check "arch" variable
+  tags: always
   assert:
     that:
       - arch is defined
@@ -6,7 +7,8 @@
       - arch | length
     quiet: true
 
-- name: check 'bios' variable
+- name: check "bios" variable
+  tags: always
   assert:
     that:
       - bios is defined
@@ -14,7 +16,8 @@
       - bios | length
     quiet: true
 
-- name: check 'kernel_version' variable
+- name: check "kernel_version" variable
+  tags: always
   assert:
     that:
       - kernel_version is defined
@@ -22,10 +25,22 @@
       - kernel_version | length
     quiet: true
 
-- name: check 'kernel_boot_device' variable
+- name: check "kernel_boot_device" variable
+  tags: always
   assert:
     that:
       - kernel_boot_device is defined
       - kernel_boot_device is string
       - kernel_boot_device | length
     quiet: true
+
+- name: check "kernel_refind_menu" variable
+  tags: always
+  assert:
+    that:
+      - kernel_refind_menu is defined
+      - kernel_refind_menu is iterable
+      - kennel_refind_menu is not string
+      - kernel_refind_menu | length
+    quiet: true
+  when: bios == "uefi"

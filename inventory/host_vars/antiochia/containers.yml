@@ -1,7 +1,0 @@
-base_podman_storage: |
-  [storage.options.zfs]
-  fsname="hot/containers"
-
-base_docker_config:
-  storage-opts:
-    - zfs.fsname=hot/containers

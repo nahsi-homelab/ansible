@@ -1,0 +1,5 @@
+distccd_config: |
+  DISTCCD_OPTS="--port=3632 --log-level=warning --listen=192.168.1.7"
+  DISTCCD_OPTS="${DISTCCD_OPTS} --allow=192.168.1.0/24 --allow=192.168.5.0/24"
+  DISTCCD_EXEC="/usr/bin/distccd"
+  rc_need="net"

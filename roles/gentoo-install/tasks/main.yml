@@ -1,8 +1,0 @@
-- name: Preflight
-  include_tasks: 00-preflight.yml
-
-- name: Prepare stage3
-  include_tasks: 01-stage3.yml
-
-- name: Configure stage3 in chroot
-  include_tasks: 02-chroot.yml

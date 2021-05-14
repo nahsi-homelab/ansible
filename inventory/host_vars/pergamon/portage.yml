@@ -1,0 +1,77 @@
+base_portage_distcc_cores: 16
+
+base_portage_makeconf_overlay:
+  COMMON_FLAGS: "-O2 -march=amdfam10 -mtune=amdfam10 -mcx16 -mpopcnt"
+  CPU_FLAGS_X86: "3dnow 3dnowext popcnt mmx mmxext sse sse2 sse3 sse4a"
+  VIDEO_CARDS: "amdgpu radeonsi"
+  LUA_TARGETS: "luajit"
+  LUA_SINGLE_TARGET: "luajit"
+  LLVM_TARGETS: "AMDGPU X86"
+  DISTCC_HOSTS: "192.168.1.7/16"
+
+base_portage_features:
+  - distcc
+  - parallel-install
+
+base_packages_overlay:
+  - net-misc/r8168
+  - app-emulation/docker-compose
+  - media-plugins/hyperion
+  - media-sound/beets
+
+base_portage_package_use_overlay:
+  dev-lang/rust: clippy rls rustfmt
+  media-libs/mesa: -classic -gles2
+  media-video/ffmpeg: chromium libdrm x264 x265 webp vpx vorbis theora
+  media-gfx/imagemagick: -X
+  media-fonts/noto: cjk
+  media-plugins/hyperion: -v4l -qt-grabber -zeroconf
+  app-emulation/virtualbox: headless -alsa -qt5 -sdk -udev -opengl -opus
+
+  app-crypt/pinentry: gtk
+  app-crypt/gcr: gtk
+
+  # xorg-server
+  x11-libs/libdrm: video_cards_radeon
+
+  # qutebrowser
+  www-client/qutebrowser: scripts
+  dev-python/PyQt5: declarative printsupport widgets gui network opengl sql multimedia webchannel websockets
+  dev-libs/libpcre2: pcre16
+  sys-libs/zlib: minizip
+  dev-qt/qtmultimedia: widgets
+  dev-qt/qtwebengine: widgets
+  dev-qt/qtwebchannel: qml
+  media-libs/libvpx: svc
+
+  # ansible
+  net-libs/zeromq: drafts
+  dev-lang/python: sqlite
+
+base_portage_use_overlay:
+  - X
+  - elogind
+  - -policykit
+  - dri
+  - drm
+  - icu
+  - xcb
+  - -gtk
+  - -gtk3
+  - -sound
+
+  - alsa
+  - vulkan
+  - vdpau
+  - opengl
+
+  - opus
+  - ogg
+  - vorbis
+  - flac
+  - gif
+  - jpeg
+  - png
+  - webp
+  - aac
+  - dts

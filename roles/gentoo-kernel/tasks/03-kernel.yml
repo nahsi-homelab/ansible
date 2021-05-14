@@ -1,0 +1,104 @@
+- name: create kernel related directories
+  file:
+    dest: "{{ item }}"
+    state: directory
+  loop:
+    - /etc/kernel/config.d/
+    - /etc/kernel/postinst.d/
+
+- name: sync postinstall scripts
+  tags: kernel
+  block:
+  - name: register present scripts
+    find:
+      paths: "/etc/kernel/postinst.d/"
+      recurse: yes
+    register: __postinst_present
+
+  - name: copy scripts
+    copy:
+      content: "{{ script.value }}"
+      dest: "/etc/kernel/postinst.d/{{ script.key }}.sh"
+      owner: root
+      group: root
+      mode: 0740
+    loop: "{{ kernel_postinst | dict2items }}"
+    loop_control:
+      loop_var: script
+      label: "{{ script.key }}"
+    register: __postinst_copied
+
+  - name: ansible magic
+    set_fact:
+      __postinst_present_list: "{{ __postinst_present | json_query('files[*].path') | default([]) }}"
+      __postinst_copied_list: "{{ __postinst_copied | json_query('results[*].dest') | default([]) }}"
+
+  - name: delete scripts
+    file:
+      path: "{{ item }}"
+      state: absent
+    loop: "{{ __postinst_present_list | difference(__postinst_copied_list) }}"
+
+- name: copy kernel overlay configs
+  tags: kernel
+  block:
+  - name: register present configs
+    find:
+      paths: "/etc/kernel/config.d/"
+      recurse: yes
+    register: __configs_present
+
+  - name: copy configs
+    copy:
+      content: "{{ config.value }}"
+      dest: "/etc/kernel/config.d/{{ config.key }}.config"
+      owner: root
+      group: root
+      mode: 0644
+    loop: "{{ kernel_configs | dict2items }}"
+    loop_control:
+      loop_var: config
+      label: "{{ config.key }}"
+    register: __configs_copied
+    notify:
+      - rebuild kernel
+      - generate zbm
+
+  - name: ansible magic
+    set_fact:
+      __configs_present_list: "{{ __configs_present | json_query('files[*].path') | default([]) }}"
+      __configs_copied_list: "{{ __configs_copied | json_query('results[*].dest') | default([]) }}"
+
+  - name: delete configs
+    file:
+      path: "{{ item }}"
+      state: absent
+    loop: "{{ __configs_present_list | difference(__configs_copied_list) }}"
+    notify:
+      - rebuild kernel
+
+- name: mask gentoo distribution kernel and set kernel version
+  tags: kernel
+  copy:
+    content: |
+      >sys-kernel/nahsi-kernel-{{ kernel_version }}
+      >virtual/dist-kernel-{{ kernel_version }}
+      virtual/dist-kernel::gentoo
+      sys-kernel/gentoo-kernel
+      sys-kernel/gentoo-kernel-bin
+      sys-kernel/vanilla-kernel
+    dest: /etc/portage/package.mask/kernel.mask
+  notify:
+    - rebuild kernel
+    - generate zbm
+
+- name: install nahsi-kernel
+  portage:
+    package: "=sys-kernel/nahsi-kernel-{{ kernel_version }}"
+    state: present
+
+- name: set kernel version with eselect
+  tags: kernel
+  eselect:
+    module: "kernel"
+    target: "linux-{{ kernel_version }}"

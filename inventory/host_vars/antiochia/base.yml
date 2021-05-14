@@ -11,60 +11,33 @@ base_filesystems:
     opts: "rw,nosuid,noatime,nodev,size=2G,mode=1777"
     type: "tmpfs"
 
-base_packages:
-  - media-video/ffmpeg
-  - net-p2p/transmission
-
-base_distccd_access:
-  - "--allow=192.168.1.0/24"
-  - "--allow=192.168.5.0/24"
-
-base_distccd:
-  port: 3632
-  log-level: "warning"
-  listen: "192.168.1.7"
-
 base_sshd_listen:
-  - "{{ ansible_default_ipv4.address }}"
-
-base_env:
-  locale: "en_US.UTF-8"
-  editor: "nvim"
-
-base_gentoo_mirrors:
-  - https://mirror.yandex.ru/gentoo-distfiles/
-  - https://distfiles.gentoo.org/
-
-base_portage_features:
-  - parallel-install
-
-base_portage_use:
-  - zstd
-  - luajit
-  - -X
-  - dist-kernel
-
-base_portage_package_use:
-  - net_misc/openssh -pam
-  - sys-devel/gcc pgo
-  - media-video/ffmpeg vpx x264 x265 vorbis opus theora
-
-base_portage_makeconf:
-  COMMON_FLAGS: "-O2 -march=znver2"
-  CPU_FLAGS_X86: "aes avx avx2 f16c fma3 mmx mmxext pclmul popcnt rdrand sha sse sse2 sse3 sse4_1 sse4_2 sse4a ssse3"
-  LUA_TARGETS: "luajit"
-  LUA_SINGLE_TARGET: "luajit"
+  - "192.168.1.7"
 
 base_network: |
   config_enp35s0="192.168.1.7/24"
   routes_enp35s0="default via 192.168.1.1"
-  wireguard_wg0="/etc/wireguard/server.conf"
-  config_wg0="192.168.5.1/24"
 
 base_network_interfaces:
   - "enp35s0"
-  - "wg0"
 
 base_dns:
   name_servers: 127.0.0.1
   search_domains: "node.consul service.consul"
+
+base_wireguard_configs:
+  syria: "{{ lookup('hashi_vault', 'secret/data/wireguard/syria:syria') }}"
+
+base_wireguard_interfaces:
+  - "syria"
+
+base_docker_config_overlay:
+  storage-driver: "zfs"
+  storage-opts:
+    - zfs.fsname=hot/containers
+
+base_containers_storage: |
+  [storage]
+  driver="zfs"
+  [storage.options.zfs]
+  fsname="hot/containers"

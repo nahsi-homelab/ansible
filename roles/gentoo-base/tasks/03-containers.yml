@@ -1,0 +1,80 @@
+- name: install crun OCI runtime
+  tags: containers
+  portage:
+    package: app-emulation/crun
+
+- name: install docker and podman
+  tags: containers
+  portage:
+    package:
+      - app-emulation/docker
+      - app-emulation/podman
+
+- name: create /etc/docker
+  tags: containers
+  file:
+    dest: "/etc/docker"
+    state: directory
+    mode: 0755
+
+- name: configure registries
+  tags: containers
+  copy:
+    content: "{{ base_containers_registries }}"
+    dest: "/etc/containers/registries.conf"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: configure policy
+  tags: containers
+  copy:
+    content: "{{ base_containers_policy | to_nice_json }}"
+    dest: "/etc/containers/policy.json"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: create containers.conf
+  tags: containers
+  copy:
+    content: "{{ base_containers_containers }}"
+    dest: "/etc/containers/containers.conf"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: create storage.conf
+  tags: containers
+  copy:
+    content: "{{ base_containers_storage }}"
+    dest: "/etc/containers/storage.conf"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: enable podman socket api
+  tags: containers
+  service:
+    name: podman
+    enabled: yes
+    runlevel: default
+    use: openrc
+
+- name: configure docker
+  tags: containers
+  copy:
+    content: "{{ base_docker_config | to_nice_json }}"
+    dest: "/etc/docker/daemon.json"
+    owner: root
+    group: root
+    mode: 0600
+  notify: restart docker
+
+- name: enable docker
+  tags: containers
+  service:
+    name: docker
+    enabled: yes
+    runlevel: default
+    use: openrc

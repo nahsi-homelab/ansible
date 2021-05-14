@@ -2,7 +2,6 @@ chroot: false
 
 # default logrotate settings for syslog-ng logs
 # if 'logrotate' is undefined in syslog_destinations
-# man logrotate
 logrotate_syslog_settings:
   - rotate 2
   - weekly
@@ -11,11 +10,10 @@ logrotate_syslog_settings:
   - maxsize 100M
   - dateext
 
-syslog_config_version: 3.30
+syslog_config_version: 3.33
 
 # https://www.syslog-ng.com/technical-documents/doc/syslog-ng-open-source-edition/3.26/administration-guide/60#TOPIC-1431133
-syslog_options: {}
-syslog_options_default:
+syslog_options_base:
   threaded: "yes"
   chain_hostnames: "no"
   use_dns: "no"
@@ -23,12 +21,17 @@ syslog_options_default:
   flush_lines: "0"
   stats_freq: "43200"
   mark_freq: "3600"
+syslog_options_overlay:
+syslog_options: >
+  {{
+    syslog_options_base |
+    combine(syslog_options_overlay, recursive=true)
+  }}
 
 # based on
 # https://wiki.gentoo.org/wiki/Security_Handbook/Logging
 
-syslog_sources: {}
-syslog_sources_default:
+syslog_sources_base:
   # identifier:
   #   - driver: foo_driver
   #     params: foo_params
@@ -47,9 +50,14 @@ syslog_sources_default:
   kernel:
     - driver: file
       params: '"/proc/kmsg"'
+syslog_sources_overlay: {}
+syslog_sources: >
+  {{
+    syslog_sources_base |
+    combine(syslog_sources_overlay, recursive=true)
+  }}
 
-syslog_destinations: {}
-syslog_destinations_default:
+syslog_destinations_base:
   # identifier:
   #   - driver: foo_driver
   #     params: foo_params
@@ -99,9 +107,14 @@ syslog_destinations_default:
   default:
     - driver: file
       params: '"/var/log/all"'
+syslog_destinations_overlay: {}
+syslog_destinations: >
+  {{
+    syslog_destinations_base |
+    combine(syslog_destinations_overlay, recursive=true)
+  }}
 
-syslog_filters: {}
-syslog_filters_default:
+syslog_filters_base:
   # identifier: 'filter'
   # ----
   # filter identifier { filter };
@@ -124,9 +137,14 @@ syslog_filters_default:
   err: 'level(err);'
   failed: 'message("failed");'
   denied: 'message("denied");'
+syslog_filters_overlay: {}
+syslog_filters: >
+  {{
+    syslog_filters_base |
+    combine(syslog_filters_overlay, recursive=true)
+  }}
 
-syslog_logs: []
-syslog_logs_default:
+syslog_logs_base:
   # - source: [ 's_foo', ]
   #   filters: [ 'f_foo', 'f_bar' ]
   #   destinations: [ 'd_foo' ]
@@ -172,3 +190,5 @@ syslog_logs_default:
     destinations: [ 'console' ]
   - sources: [ 'src' ]
     destinations: [ 'default' ]
+syslog_logs_overlay: {}
+syslog_logs: "{{ syslog_logs_base + syslog_logs_overlay | unique }}"

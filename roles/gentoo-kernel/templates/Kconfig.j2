@@ -1,7 +1,0 @@
-#jinja2: trim_blocks: True, lstrip_blocks: True
-# {{ ansible_managed }}
-menu "Local configuration"
-{% for kconfig in kernel_kconfigs %}
-source "/etc/kernel/kconfig.d/{{ kconfig }}"
-{% endfor %}
-endmenu

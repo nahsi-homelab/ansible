@@ -1,16 +1,10 @@
-kernel_version: "5.10.20"
+kernel_version: "5.10.35"
 
 kernel_boot_device: "/dev/disk/by-partlabel/EFI"
 
 kernel_firmware:
   - amd/amd_sev_fam17h_model0xh.sbin
   - amd-ucode/microcode_amd_fam17h.bin
-
-kernel_kconfigs:
-  - AMD
-  - X470D4U
-
-kernel_zfs_on_root: true
 
 kernel_zfsbootmenu_config:
   Global:
@@ -29,3 +23,43 @@ kernel_refind_menu:
     cmd: "root=zfsbootmenu:POOL=hot timeout=10 ro quiet loglevel=0"
   - name: "Boot to menu"
     cmd: "root=zfsbootmenu:POOL=hot timeout=-1 ro quiet loglevel=0"
+
+kernel_configs:
+  01platform: |
+    CONFIG_GPIO_AMDPT=y
+
+    # Sensors
+    CONFIG_SENSORS_AMD_ENERGY=y
+    CONFIG_SENSORS_FAM15H_POWER=y
+
+    # Network
+    CONFIG_NET_VENDOR_INTEL=y
+    CONFIG_IGB=y
+    CONFIG_IGB_HWMON=y
+
+    # DMA
+    CONFIG_DMADEVICES=y
+    CONFIG_INTEL_IOATDMA=y
+
+    # IMPI related
+    CONFIG_RC_CORE=y
+    CONFIG_DRM=y
+    CONFIG_DRM_AST=y
+    CONFIG_MEDIA_CEC_SUPPORT=y
+    CONFIG_DRM_DP_CEC=y
+    CONFIG_USB_NET_DRIVERS=y
+    CONFIG_USB_USBNET=y
+    CONFIG_USB_NET_CDCETHER=y
+
+    # IMPI
+    CONFIG_IPMI_HANDLER=y
+    CONFIG_ACPI_IPMI=y
+    CONFIG_APMI_DEVICE_INTERFACE=y
+    CONFIG_IPMI_SI=y
+    CONFIG_IPMI_SSIF=y
+    CONFIG_IPMI_WATCHDOG=y
+    CONFIG_IPMI_POWEROFF=y
+
+  02firmware: |
+    CONFIG_EXTRA_FIRMWARE_DIR="/lib/firmware"
+    CONFIG_EXTRA_FIRMWARE="{{ kernel_firmware | join(' ') }}"

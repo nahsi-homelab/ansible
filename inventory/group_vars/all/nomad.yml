@@ -1,4 +1,4 @@
-nomad_version: "1.0.2"
+nomad_version: "1.0.4"
 nomad_region: "oikumene"
 
 nomad_config:
@@ -20,3 +20,11 @@ nomad_config:
   log_level: "warn"
   enable_syslog: true
   syslog_facility: "LOCAL5"
+
+  plugin:
+    docker:
+      config:
+        allow_runtimes:
+          - "crun"
+        volumes:
+          enabled: true

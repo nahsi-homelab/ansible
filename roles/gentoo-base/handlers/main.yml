@@ -33,18 +33,10 @@
 
 - name: restart wireguard
   service:
-    name: "net.{{ item }}"
+    name: "wg.{{ item }}"
     state: restarted
     use: openrc
   loop: "{{ base_wireguard_interfaces }}"
-  when:
-    - not chroot
-
-- name: restart distccd
-  service:
-    name: distccd
-    state: restarted
-    use: openrc
   when:
     - not chroot
 

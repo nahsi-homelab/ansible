@@ -39,7 +39,7 @@
     state: directory
     owner: vault-agent
     group: vault-agent
-    mode: "{{ dir.value.mode | default(0750) }}"
+    mode: "{{ dir.value.mode | default(750) }}"
   loop: "{{ vault_agent_dirs | dict2items }}"
   loop_control:
     loop_var: dir

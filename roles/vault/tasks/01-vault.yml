@@ -41,7 +41,7 @@
     state: directory
     owner: vault
     group: "{{ dir.group | default('vault')}}"
-    mode: "{{ dir.value.mode | default(0740) }}"
+    mode: "{{ dir.value.mode | default(740) }}"
   loop: "{{ vault_dirs | dict2items }}"
   loop_control:
     loop_var: dir

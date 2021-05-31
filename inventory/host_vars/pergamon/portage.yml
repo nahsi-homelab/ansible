@@ -18,6 +18,7 @@ base_packages_overlay:
   - app-emulation/docker-compose
   - media-plugins/hyperion
   - media-sound/beets
+  - app-misc/anki
 
 base_portage_package_use_overlay:
   dev-lang/rust: clippy rls rustfmt
@@ -36,7 +37,7 @@ base_portage_package_use_overlay:
 
   # qutebrowser
   www-client/qutebrowser: scripts
-  dev-python/PyQt5: declarative printsupport widgets gui network opengl sql multimedia webchannel websockets dbus
+  dev-python/PyQt5: declarative printsupport widgets gui network opengl sql multimedia webchannel websockets dbus svg
   dev-libs/libpcre2: pcre16
   sys-libs/zlib: minizip
   dev-qt/qtmultimedia: widgets

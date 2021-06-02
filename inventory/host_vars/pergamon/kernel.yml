@@ -56,6 +56,7 @@ kernel_configs:
 
     # Audio
     CONFIG_SND_HDA_INTEL=y
+    CONFIG_SND_USB=y
     CONFIG_SND_USB_AUDIO=y
     CONFIG_SND_HDA_CODEC_REALTEK=y
 

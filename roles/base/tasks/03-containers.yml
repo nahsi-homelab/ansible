@@ -2,6 +2,7 @@
   tags: containers
   portage:
     package: app-emulation/crun
+    state: present
 
 - name: install docker and podman
   tags: containers
@@ -9,33 +10,9 @@
     package:
       - app-emulation/docker
       - app-emulation/podman
+    state: present
 
-- name: create /etc/docker
-  tags: containers
-  file:
-    dest: "/etc/docker"
-    state: directory
-    mode: 0755
-
-- name: configure registries
-  tags: containers
-  copy:
-    content: "{{ base_containers_registries }}"
-    dest: "/etc/containers/registries.conf"
-    owner: root
-    group: root
-    mode: 0644
-
-- name: configure policy
-  tags: containers
-  copy:
-    content: "{{ base_containers_policy | to_nice_json }}"
-    dest: "/etc/containers/policy.json"
-    owner: root
-    group: root
-    mode: 0644
-
-- name: create containers.conf
+- name: configure containers
   tags: containers
   copy:
     content: "{{ base_containers_containers }}"
@@ -44,7 +21,25 @@
     group: root
     mode: 0644
 
-- name: create storage.conf
+- name: configure containers registries
+  tags: containers
+  copy:
+    content: "{{ base_containers_registries }}"
+    dest: "/etc/containers/registries.conf"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: configure containers policy
+  tags: containers
+  copy:
+    content: "{{ base_containers_policy | to_nice_json }}"
+    dest: "/etc/containers/policy.json"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: configure containers storage
   tags: containers
   copy:
     content: "{{ base_containers_storage }}"
@@ -61,10 +56,19 @@
     runlevel: default
     use: openrc
 
+- name: create /etc/docker
+  tags: containers
+  file:
+    dest: "/etc/docker"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
 - name: configure docker
   tags: containers
   copy:
-    content: "{{ base_docker_config | to_nice_json }}"
+    content: "{{ base_containers_docker | to_nice_json }}"
     dest: "/etc/docker/daemon.json"
     owner: root
     group: root

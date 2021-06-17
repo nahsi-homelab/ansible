@@ -1,5 +1,25 @@
 # vim: set foldmethod=marker
 
+# {{{ portage
+- name: check "base_portage_makeconf" variable
+  tags: always
+  assert:
+    that:
+      - base_portage_makeconf is defined
+      - base_portage_makeconf is mapping
+      - base_portage_makeconf | length
+    quiet: true
+
+- name: check "base_portage_package_use" variable
+  tags: always
+  assert:
+    that:
+      - base_portage_package_use is defined
+      - base_portage_package_use is mapping
+      - base_portage_package_use | length
+    quiet: true
+# }}}
+
 # {{{ system
 - name: check "base_timezone" variable
   tags: always
@@ -125,7 +145,54 @@
   when: base_sysctl is defined
 # }}}
 
-# {{{ other
+# {{{ containers
+- name: check "base_containers_registries" variable
+  tags: always
+  assert:
+    that:
+      - base_containers_registries is defined
+      - base_containers_registries is string
+      - base_containers_registries | length
+    quiet: true
+
+- name: check "base_containers_policy" variable
+  tags: always
+  assert:
+    that:
+      - base_containers_policy is defined
+      - base_containers_policy is mapping
+      - base_containers_policy | length
+    quiet: true
+
+- name: check "base_containers_containers" variable
+  tags: always
+  assert:
+    that:
+      - base_containers_containers is defined
+      - base_containers_containers is string
+      - base_containers_containers | length
+    quiet: true
+
+- name: check "base_containers_storage" variable
+  tags: always
+  assert:
+    that:
+      - base_containers_storage is defined
+      - base_containers_storage is string
+      - base_containers_storage | length
+    quiet: true
+
+- name: check "base_containers_docker" variable
+  tags: always
+  assert:
+    that:
+      - base_containers_docker is defined
+      - base_containers_docker is mapping
+      - base_containers_docker | length
+    quiet: true
+# }}}
+
+# {{{ network
 - name: check "base_network" variable
   tags: always
   assert:
@@ -144,24 +211,27 @@
       - base_network_interfaces is not string
       - base_network_interfaces | length
     quiet: true
-
-- name: check "base_wireguard_configs" variable
-  tags: always
-  assert:
-    that:
-      - base_wireguard_configs is mapping
-      - base_wireguard_configs | length
-    quiet: true
-  when: base_wireguard_configs is defined
 # }}}
 
-# {{{ portage
-- name: check portage "COMMON_FLAGS" when distcc enabled
+# {{{ openssh
+- name: check "base_sshd_config" variable
   tags: always
   assert:
     that:
-      - "'native' not in base_portage_makeconf.COMMON_FLAGS"
+      - base_sshd_config is defined
+      - base_sshd_config is string
+      - base_sshd_config | length
     quiet: true
-    fail_msg: "march=native cannot be used with distcc"
-  when: "'distcc' in base_portage_makeconf.FEATURES"
+# }}}
+
+# {{{ users
+- name: check "base_users" variable
+  tags: always
+  assert:
+    that:
+      - base_users is defined
+      - base_users is iterable
+      - base_users is not string
+      - base_users | length
+    quiet: true
 # }}}

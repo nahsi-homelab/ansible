@@ -17,7 +17,7 @@
     append: yes
   loop: "{{ base_users }}"
   loop_control:
-    loop_var: user
+    loop_var: "user"
     label: "{{ user.username }}"
 
 - name: add ssh keys
@@ -54,4 +54,4 @@
         state: absent
       loop: "{{ __existing_users | difference(__users) }}"
       loop_control:
-        loop_var: user
+        loop_var: "user"

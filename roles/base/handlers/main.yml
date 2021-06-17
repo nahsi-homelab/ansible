@@ -26,15 +26,6 @@
   when:
     - not chroot
 
-- name: restart wireguard
-  service:
-    name: "wg.{{ item }}"
-    state: restarted
-    use: openrc
-  loop: "{{ base_wireguard_interfaces }}"
-  when:
-    - not chroot
-
 - name: restart sshd
   service:
     name: sshd

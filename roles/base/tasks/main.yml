@@ -13,18 +13,13 @@
   tags: containers
   include_tasks: 03-containers.yml
 
-- name: Configure wireguard
-  tags: wireguard
-  include_tasks: 04-wireguard.yml
-  when: base_wireguard_configs is defined
-
 - name: Configure network
-  include_tasks: 05-network.yml
+  include_tasks: 04-network.yml
 
 - name: Configure sshd
   tags: ssh
-  include_tasks: 06-ssh.yml
+  include_tasks: 05-ssh.yml
 
 - name: Create users
   tags: users
-  include_tasks: 07-users.yml
+  include_tasks: 06-users.yml

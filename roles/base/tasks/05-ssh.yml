@@ -2,6 +2,7 @@
   tags: ssh
   portage:
     package: net-misc/openssh
+    state: present
 
 - name: generate secure ssh keys
   tags: ssh
@@ -14,14 +15,14 @@
     - command: "-t rsa -b 4096 -o -a 100 -f /etc/ssh/ssh_host_rsa_key -N ''"
       path: "/etc/ssh/ssh_host_rsa_key"
   loop_control:
-    loop_var: key
+    loop_var: "key"
     label: "{{ key.path }}"
 
 - name: create sshd config
   tags: ssh
-  template:
-    src: sshd_config.j2
-    dest: /etc/ssh/sshd_config
+  copy:
+    content: "{{ base_sshd_config }}"
+    dest: "/etc/ssh/sshd_config"
     validate: "sshd -t -f %s"
     owner: root
     group: root

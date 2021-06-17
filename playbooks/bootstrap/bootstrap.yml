@@ -7,7 +7,7 @@
     ansible_port: 2222
   pre_tasks:
     - include_role:
-        name: gentoo-base
+        name: base
         tasks_from: 00-preflight.yml
     - include_role:
         name: gentoo-kernel
@@ -34,6 +34,6 @@
       command: "emaint sync -r nahsi-overlay"
 
   roles:
-    - gentoo-base
+    - base
     - gentoo-kernel
     - gentoo-syslog

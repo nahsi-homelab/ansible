@@ -1,0 +1,69 @@
+- name: create portage directories
+  file:
+    dest: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  loop:
+    - /etc/portage/package.use
+    - /etc/portage/package.mask
+    - /etc/portage/package.accept_keywords
+    - /etc/portage/repos.conf
+    - /etc/portage/savedconfig
+    - /etc/portage/env
+    - /etc/portage/patches
+
+- name: copy make.conf
+  tags: portage
+  copy:
+    content: |
+      {% for key, value in base_portage_makeconf.items() %}
+      {{ key }}={{ value | quote }}
+      {% endfor %}
+    dest: /etc/portage/make.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: update use
+
+- name: register present useflag files
+  tags: portage
+  find:
+    paths: "/etc/portage/package.use/"
+    patterns: ["base-*.use"]
+  register: __files_present
+
+- name: copy useflag files
+  tags: portage
+  copy:
+    content: "{{ file.value }}"
+    dest: "/etc/portage/package.use/base-{{ file.key }}.use"
+    owner: root
+    group: root
+    mode: 0644
+  notify: update use
+  loop: "{{ base_portage_package_use | dict2items }}"
+  loop_control:
+    loop_var: "file"
+    label: "{{ file.key }}"
+  register: __files_copied
+
+- name: ansible magic
+  tags: portage
+  set_fact:
+    __files_present_list: "{{ __files_present | json_query('files[*].path') | default([]) }}"
+    __files_copied_list: "{{ __files_copied | json_query('results[*].dest') | default([]) }}"
+
+- name: delete useflag files
+  tags: portage
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop: "{{ __files_present_list | difference(__files_copied_list) }}"
+  notify: update use
+
+- name: install distcc
+  portage:
+    package: sys-devel/distcc
+    state: present

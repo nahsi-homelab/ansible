@@ -1,0 +1,72 @@
+- hosts: "{{ target }}"
+  become: yes
+  become_method: doas
+  pre_tasks:
+    - name: check "wireguard_configs" variable
+      tags: always
+      assert:
+        that:
+          - wireguard_configs is defined
+          - wireguard_configs is mapping
+          - wireguard_configs | length
+        quiet: true
+
+    - name: check "wireguard_interfaces" variable
+      tags: always
+      assert:
+        that:
+          - wireguard_interfaces is defined
+          - wireguard_interfaces is iterable
+          - wireguard_interfaces is not string
+          - wireguard_interfaces | length
+        quiet: true
+
+  tasks:
+    - name: Install wireguard-tools
+      portage:
+        package: net-vpn/wireguard-tools
+        state: present
+
+    - name: Create wireguard directory
+      file:
+        path: "/etc/wireguard"
+        state: directory
+        owner: root
+        group: root
+        mode: 0700
+
+    - name: Copy wireguard configurations
+      no_log: true
+      copy:
+        content: "{{ config.value }}"
+        dest: "/etc/wireguard/{{ config.key }}.conf"
+        owner: root
+        group: root
+        mode: 0600
+      loop: "{{ wireguard_configs | dict2items }}"
+      loop_control:
+        loop_var: "config"
+        label: "{{ config.key }}"
+      notify: restart wireguard
+
+    - name: Create symlinks in /etc/init.d
+      file:
+        src: "/etc/init.d/wg-quick"
+        dest: "/etc/init.d/wg.{{ item }}"
+        state: link
+      loop: "{{ wireguard_interfaces }}"
+
+    - name: enable wireguard interfaces
+      tags: wireguard
+      service:
+        name: "wg.{{ item }}"
+        enabled: yes
+        runlevel: default
+      loop: "{{ wireguard_interfaces }}"
+
+handlers:
+  - name: restart wireguard
+    service:
+      name: "wg.{{ item }}"
+      state: restarted
+    loop: "{{ wireguard_interfaces }}"

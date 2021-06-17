@@ -8,9 +8,9 @@
 ```
 ansible-playbook stage3.yml -k -e "target=<target> root_password=<pass>"
 ```
-6. Run base playbook:
+6. Run bootstrap playbook:
 ```
-ansible-playbook base.yml -k -e "target=<target>"
+ansible-playbook bootstrap.yml -k -e "target=<target>"
 ```
 
 ## Prepare disks
@@ -38,9 +38,9 @@ main/containers          3.66G   735G       96K  none
 main/system              15.6G   735G       96K  none
 main/system/gentoo       11.3G   735G     11.3G  /
 main/system/swap         4.25G   735G     3.69G  -
-main/user                 145G   735G       96K  none
-main/user/nahsi           145G   735G       96K  none
-main/user/nahsi/home     63.5G   735G     63.5G  /home/nahsi
+main/users                145G   735G       96K  none
+main/users/nahsi          145G   735G       96K  none
+main/users/nahsi/home    63.5G   735G     63.5G  /home/nahsi
 ```
 
 ```

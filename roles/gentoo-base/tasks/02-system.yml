@@ -69,11 +69,12 @@
 
 - name: set env vars with eselect
   eselect:
-    module: "{{ item.key }}"
-    target: "{{ item.value }}"
-  loop: "{{ base_env | dict2items }}"
+    module: "{{ eselect.module }}"
+    target: "{{ eselect.target }}"
+  loop: "{{ base_eselect }}"
   loop_control:
-    label: "{{ item.key }}"
+    loop_var: "eselect"
+    label: "{{ eselect.module }}"
   notify: update env
 
 - name: configure doas

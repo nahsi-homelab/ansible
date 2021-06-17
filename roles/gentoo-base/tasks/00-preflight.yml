@@ -66,11 +66,21 @@
     quiet: true
   when: base_openrc is defined
 
+- name: check "base_doas_conf" variable
+  tags: always
+  assert:
+    that:
+      - base_doas_conf is string
+      - base_doas_conf | length
+    quiet: true
+  when: base_doas_conf is defined
+
 - name: check "base_eselect" variable
   tags: always
   assert:
     that:
-      - base_eselect is mapping
+      - base_eselect is iterable
+      - base_eselect is not string
       - base_eselect | length
     quiet: true
   when: base_eselect is defined

@@ -9,8 +9,10 @@ base_locales:
 
 # Variables to set with eselect
 base_eselect:
-  locale: "en_US.UTF-8"
-  editor: "nvim"
+  - module: locale
+    target: "en_US.UTF-8"
+  - module: editor
+    target: "nvim"
 
 # Services to enable
 base_services:

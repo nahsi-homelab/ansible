@@ -1,0 +1,6 @@
+# core
+ansible
+ansible-lint
+hvac
+netaddr
+jmespath

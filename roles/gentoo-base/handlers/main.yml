@@ -5,22 +5,17 @@
     newuse: yes
     changed_use: yes
 
-- name: update locales
+- name: generate locales
   command: locale-gen --update
 
 - name: update env
   command: env-update
 
-- name: update timezone
+- name: set timezone
   command: emerge --config sys-libs/timezone-data
 
 - name: run resolvconf
   command: resolvconf -u
-
-- name: update hostname
-  service:
-    name: hostname
-    state: restarted
 
 - name: restart network
   service:
@@ -37,14 +32,6 @@
     state: restarted
     use: openrc
   loop: "{{ base_wireguard_interfaces }}"
-  when:
-    - not chroot
-
-- name: restart docker
-  service:
-    name: docker
-    state: restarted
-    use: openrc
   when:
     - not chroot
 

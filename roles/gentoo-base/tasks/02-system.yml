@@ -5,7 +5,7 @@
     owner: root
     group: root
     mode: 0644
-  notify: update timezone
+  notify: set timezone
 
 - name: generate locales
   copy:

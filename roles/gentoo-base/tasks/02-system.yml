@@ -7,17 +7,20 @@
     mode: 0644
   notify: update timezone
 
-- name: update locales
+- name: generate locales
   copy:
-    content: |
-      {% for locale in base_locales %}
-      {{ locale }}
-      {% endfor %}
+    content: "{{ base_locales | join('\n') }}"
     dest: /etc/locale.gen
     owner: root
     group: root
     mode: 0644
-  notify: update locales
+  notify: generate locales
+
+- name: set consolefont
+  copy:
+    content: >
+      consolefont={{ base_consolefont }}
+    dest: /etc/conf.d/consolefont
 
 - name: set hostname
   hostname:
@@ -26,28 +29,6 @@
 
 - meta: flush_handlers
 
-- name: setup hwclock
-  copy:
-    content: |
-      {% for key, value in base_hwclock.items() %}
-      {{ key }}="{{ value }}"
-      {% endfor %}
-    dest: /etc/conf.d/hwclock
-    owner: root
-    group: root
-    mode: 0644
-
-- name: copy rc.conf
-  copy:
-    content: |
-      {% for key, value in base_openrc.items() %}
-      {{ key }}="{{ value }}"
-      {% endfor %}
-    dest: /etc/rc.conf
-    owner: root
-    group: root
-    mode: 0644
-
 - name: install openresolv
   portage:
     package: net-dns/openresolv
@@ -55,11 +36,7 @@
 
 - name: configure openresolv
   copy:
-    content: |
-      resolv_conf=/etc/resolv.conf
-      {% for key, value in base_dns.items() %}
-      {{ key }}="{{ value }}"
-      {% endfor %}
+    content: "{{ base_dns }}"
     dest: /etc/resolvconf.conf
     owner: root
     group: root
@@ -72,12 +49,23 @@
     state: present
   loop: "{{ base_packages }}"
 
-- name: enable cronie
-  service:
-    name: cronie
-    enabled: yes
-    runlevel: default
-    use: openrc
+- name: configure hwclock
+  copy:
+    content: "{{ base_hwclock }}"
+    dest: /etc/conf.d/hwclock
+    owner: root
+    group: root
+    mode: 0644
+  when: base_hwclock is defined
+
+- name: configure openrc
+  copy:
+    content: "{{ base_openrc }}"
+    dest: /etc/rc.conf
+    owner: root
+    group: root
+    mode: 0644
+  when: base_openrc is defined
 
 - name: set env vars with eselect
   eselect:
@@ -88,30 +76,25 @@
     label: "{{ item.key }}"
   notify: update env
 
-- name: add doas rules
+- name: configure doas
   copy:
-    content: >
-      permit nopass :wheel
+    content: "{{ base_doas_conf }}"
     dest: /etc/doas.conf
     owner: root
     group: root
     mode: 0644
 
-- name: set terminus as default consolefont
-  copy:
-    content: >
-      consolefont={{ base_consolefont }}
-    dest: /etc/conf.d/consolefont
-
 - name: enable services
   service:
-    name: "{{ item.key }}"
+    name: "{{ service.name }}"
     enabled: yes
-    runlevel: "{{ item.value }}"
+    runlevel: "{{ service.runlevel }}"
     use: openrc
-  loop: "{{ base_services | dict2items }}"
+  loop: "{{ base_services }}"
   loop_control:
-    label: "{{ item.key }}"
+    loop_var: "service"
+    label: "{{ service.name }}"
+  when: base_services is defined
 
 - name: mount filesystems
   mount:
@@ -122,13 +105,19 @@
     state: mounted
   loop: "{{ base_filesystems }}"
   loop_control:
-    loop_var: fs
+    loop_var: "fs"
     label: "{{ fs.path }}"
+  when: base_filesystems is defined
 
-- name: set swappiness to "1"
+- name: set sysctl entries
   sysctl:
-    name: vm.swappiness
-    value: "1"
+    name: "{{ sysctl.name }}"
+    value: "{{ sysctl.value }}"
     state: present
+  loop: "{{ base_sysctl }}"
+  loop_control:
+    loop_var: "sysctl"
+    label: "{{ sysctl.name }}"
+  when: base_sysctl is defined
 
 - meta: flush_handlers

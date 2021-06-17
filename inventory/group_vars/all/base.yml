@@ -1,0 +1,67 @@
+# /usr/share/zoneinfo
+base_timezone: "Europe/Moscow"
+# /usr/share/consolefonts
+base_consolefont: "ter-i16b"
+
+# List of locales to generate
+base_locales:
+  - "en_US.UTF-8 UTF-8"
+
+# Variables to set with eselect
+base_eselect:
+  locale: "en_US.UTF-8"
+  editor: "nvim"
+
+# Services to enable
+base_services:
+  - name: "consolefont"
+    runlevel: "boot"
+
+base_dns: |
+  resolv_conf=/etc/resolv.conf
+  name_servers="1.1.1.1"
+
+base_hwclock: |
+  # Is your hardware clock set to local or to UTC?
+  # If you dualboot with Windows set to "local"
+  clock_local="utc"
+  # Set the hardware clock to the current systemtime during shutdown
+  clock_systohc="YES"
+  # Set systemtime to current hardware clock durning boot
+  clock_hctosys="YES"
+  clock_args=""
+
+# https://github.com/OpenRC/openrc/blob/master/etc/rc.conf
+# https://wiki.gentoo.org/wiki/OpenRC
+base_openrc:
+  # Enable logging
+  rc_logger="YES"
+  rc_log_path="/var/log/rc.log"
+  # Number of ttys allocated for logins
+  rc_tty_number=2
+
+base_doas_conf: >
+  permit nopass :wheel
+
+base_packages_all:
+  - app-admin/doas
+  - sys-devel/distcc
+  - dev-vcs/git
+  - sys-process/cronie
+  - app-eselect/eselect-repository
+  - sys-fs/dosfstools
+  - media-fonts/terminus-font
+  - net-dns/bind-tools
+  - app-text/tree
+  - sys-fs/ncdu
+  - app-editors/neovim
+  - sys-process/htop
+  - app-shells/bash-completion
+  - app-shells/gentoo-bashcomp
+  - app-portage/flaggie
+  - app-portage/portage-utils
+  - app-misc/nnn
+  - net-firewall/iptables
+  - app-misc/jq
+  - net-misc/iperf
+  - app-arch/p7zip

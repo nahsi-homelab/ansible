@@ -52,3 +52,11 @@ base_containers_storage: |
   driver="zfs"
   [storage.options.zfs]
   fsname="main/containers"
+
+base_packages_pergamon:
+  - net-misc/r8168
+  - app-emulation/docker-compose
+  - media-plugins/hyperion
+  - media-sound/beets
+  - app-misc/anki
+base_packages: "{{ base_packages_all + base_packages_pergamon | unique }}"

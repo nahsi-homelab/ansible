@@ -16,7 +16,6 @@
     that:
       - base_portage_package_use is defined
       - base_portage_package_use is mapping
-      - base_portage_package_use | length
     quiet: true
 # }}}
 
@@ -244,7 +243,7 @@
       - base_syslog_config is defined
       - base_syslog_config is string
       - base_syslog_config | length
-    quiet: trueslog_config
+    quiet: true
 
 - name: check "base_syslog_configs" variable
   tags: always
@@ -252,7 +251,6 @@
     that:
       - base_syslog_configs is defined
       - base_syslog_configs is mapping
-      - base_syslog_configs | length
     quiet: true
 
 - name: check "base_syslog_logrotate" variable
@@ -262,5 +260,5 @@
       - base_syslog_logrotate is defined
       - base_syslog_logrotate is string
       - base_syslog_logrotate | length
-    quiet: trueslog_config
+    quiet: true
 # }}}

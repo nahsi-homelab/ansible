@@ -26,6 +26,14 @@
   when:
     - not chroot
 
+- name: reload syslog
+  service:
+    name: syslog
+    state: reloaded
+    use: openrc
+  when:
+    - not chroot
+
 - name: restart sshd
   service:
     name: sshd
@@ -38,7 +46,6 @@
   service:
     name: podman
     state: restarted
-    runlevel: default
     use: openrc
   when:
     - not chroot
@@ -47,7 +54,6 @@
   service:
     name: docker
     state: restarted
-    runlevel: default
     use: openrc
   when:
     - not chroot

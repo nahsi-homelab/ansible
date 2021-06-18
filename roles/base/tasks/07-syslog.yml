@@ -22,7 +22,7 @@
     owner: root
     group: root
     mode: 0640
-  notify: reload syslog-ng
+  notify: reload syslog
 
 - name: register present syslog configs
   tags: syslog
@@ -39,7 +39,7 @@
     group: root
     mode: 0644
     validate: "syslog-ng --syntax-only --cfgfile %s"
-  notify: reload syslog-ng
+  notify: reload syslog
   loop: "{{ base_syslog_configs | dict2items }}"
   loop_control:
     loop_var: "file"
@@ -58,7 +58,7 @@
     path: "{{ item }}"
     state: absent
   loop: "{{ __files_present_list | difference(__files_copied_list) }}"
-  notify: update use
+  notify: reload syslog
 
 - name: enable syslog-ng
   service:
@@ -73,6 +73,7 @@
     state: present
 
 - name: configure syslog-ng log rotation
+  tags: syslog
   copy:
     content: "{{ base_syslog_logrotate }}"
     dest: "/etc/logrotate.d/syslog-ng"

@@ -23,3 +23,7 @@
 - name: Create users
   tags: users
   include_tasks: 06-users.yml
+
+- name: Configure logging
+  tags: syslog
+  include_tasks: 07-syslog.yml

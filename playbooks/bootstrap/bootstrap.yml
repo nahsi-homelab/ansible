@@ -36,4 +36,3 @@
   roles:
     - base
     - gentoo-kernel
-    - gentoo-syslog

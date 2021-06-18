@@ -235,3 +235,32 @@
       - base_users | length
     quiet: true
 # }}}
+
+# {{{ syslog
+- name: check "base_syslog_config" variable
+  tags: always
+  assert:
+    that:
+      - base_syslog_config is defined
+      - base_syslog_config is string
+      - base_syslog_config | length
+    quiet: trueslog_config
+
+- name: check "base_syslog_configs" variable
+  tags: always
+  assert:
+    that:
+      - base_syslog_configs is defined
+      - base_syslog_configs is mapping
+      - base_syslog_configs | length
+    quiet: true
+
+- name: check "base_syslog_logrotate" variable
+  tags: always
+  assert:
+    that:
+      - base_syslog_logrotate is defined
+      - base_syslog_logrotate is string
+      - base_syslog_logrotate | length
+    quiet: trueslog_config
+# }}}

@@ -1,8 +1,0 @@
-- name: check that every filter ends in ";"
-  assert:
-    that:
-      - item.value[-1] == ";"
-    quiet: true
-  loop: "{{ syslog_filters | dict2items }}"
-  loop_control:
-    label: "{{ item.key }}"

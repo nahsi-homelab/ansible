@@ -1,0 +1,81 @@
+- name: install syslog-ng
+  portage:
+    package: app-admin/syslog-ng
+    state: present
+
+- name: create syslog directories
+  file:
+    dest: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  loop:
+    - /etc/syslog-ng/conf.d
+
+- name: copy syslog-ng config
+  tags: syslog
+  copy:
+    content: "{{ base_syslog_conf }}"
+    dest: "/etc/syslog-ng/syslog-ng.conf"
+    validate: "syslog-ng --syntax-only --cfgfile %s"
+    owner: root
+    group: root
+    mode: 0640
+  notify: reload syslog-ng
+
+- name: register present syslog configs
+  tags: syslog
+  find:
+    paths: "/etc/syslog-ng/conf.d/"
+  register: __files_present
+
+- name: copy useflag files
+  tags: syslog
+  copy:
+    content: "{{ file.value }}"
+    dest: "/etc/syslog-ng/conf.d/{{ file.key }}.conf"
+    owner: root
+    group: root
+    mode: 0644
+    validate: "syslog-ng --syntax-only --cfgfile %s"
+  notify: reload syslog-ng
+  loop: "{{ base_syslog_configs | dict2items }}"
+  loop_control:
+    loop_var: "file"
+    label: "{{ file.key }}"
+  register: __files_copied
+
+- name: ansible magic
+  tags: syslog
+  set_fact:
+    __files_present_list: "{{ __files_present | json_query('files[*].path') | default([]) }}"
+    __files_copied_list: "{{ __files_copied | json_query('results[*].dest') | default([]) }}"
+
+- name: delete syslog configs
+  tags: syslog
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop: "{{ __files_present_list | difference(__files_copied_list) }}"
+  notify: update use
+
+- name: enable syslog-ng
+  service:
+    name: syslog-ng
+    enabled: yes
+    runlevel: default
+    use: openrc
+
+- name: install logrotate
+  portage:
+    package: app-admin/logrotate
+    state: present
+
+- name: configure syslog-ng log rotation
+  copy:
+    content: "{{ base_syslog_logrotate }}"
+    dest: "/etc/logrotate.d/syslog-ng"
+    owner: root
+    group: root
+    mode: 0640

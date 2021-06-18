@@ -1,1 +1,4 @@
 chroot: false
+
+base_portage_package_use: {}
+base_syslog_configs: {}

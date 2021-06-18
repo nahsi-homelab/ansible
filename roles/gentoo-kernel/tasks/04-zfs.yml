@@ -2,8 +2,7 @@
   portage:
     package: sys-kernel/zfsbootmenu
     state: present
-  notify:
-    - generate zbm
+  notify: generate zbm
 
 - name: generate hostid
   command: zgenhostid
@@ -30,5 +29,4 @@
     content: "{{ kernel_zfsbootmenu_config | to_nice_yaml }}"
     dest: "/etc/zfsbootmenu/config.yaml"
     mode: 0644
-  notify:
-    - generate zbm
+  notify: generate zbm

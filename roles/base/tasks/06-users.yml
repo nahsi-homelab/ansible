@@ -3,7 +3,7 @@
   group:
     name: ansible-managed
     state: present
-    system: yes
+    system: true
 
 - name: add users
   tags: users
@@ -11,10 +11,11 @@
     name: "{{ user.username }}"
     comment: "{{ user.comment | default('') }}"
     create_home: "{{ user.create_home | default('yes') }}"
+    password_lock: false
     system: "{{ user.system | default('no') }}"
     shell: "{{ user.shell | default('/bin/bash') }}"
     groups: "{{ user.groups | default(['']) + ['ansible-managed'] }}"
-    append: yes
+    append: true
   loop: "{{ base_users }}"
   loop_control:
     loop_var: "user"

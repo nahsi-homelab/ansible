@@ -28,7 +28,7 @@
 
 - name: reload syslog
   service:
-    name: syslog
+    name: syslog-ng
     state: reloaded
     use: openrc
   when:

@@ -16,7 +16,7 @@
 - name: copy syslog-ng config
   tags: syslog
   copy:
-    content: "{{ base_syslog_conf }}"
+    content: "{{ base_syslog_config }}"
     dest: "/etc/syslog-ng/syslog-ng.conf"
     validate: "syslog-ng --syntax-only --cfgfile %s"
     owner: root

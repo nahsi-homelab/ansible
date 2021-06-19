@@ -4,7 +4,7 @@
     state: directory
     owner: root
     group: root
-    mode: 0750
+    mode: 0755
   loop:
     - /etc/kernel/config.d/
     - /etc/kernel/postinst.d/
@@ -23,7 +23,7 @@
       dest: "/etc/kernel/postinst.d/{{ script.key }}.sh"
       owner: root
       group: root
-      mode: 0740
+      mode: 0744
     loop: "{{ kernel_postinst | dict2items }}"
     loop_control:
       loop_var: "script"
@@ -63,6 +63,7 @@
     register: __configs_copied
     notify:
       - rebuild kernel
+      - rebuild modules
       - generate zbm
 
   - name: ansible magic
@@ -93,6 +94,7 @@
     mode: 0644
   notify:
     - rebuild kernel
+    - rebuild modules
     - generate zbm
 
 - name: install nahsi-kernel

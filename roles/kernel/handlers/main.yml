@@ -6,6 +6,12 @@
 
 - name: rebuild kernel
   portage:
+    package: "@gentoo-kernel"
+    noreplace: false
+    state: latest
+
+- name: rebuild modules
+  portage:
     package: "@module-rebuild"
     noreplace: false
     state: emerged

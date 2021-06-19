@@ -35,4 +35,4 @@
 
   roles:
     - base
-    - gentoo-kernel
+    - kernel

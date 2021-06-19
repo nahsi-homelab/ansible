@@ -2,7 +2,6 @@
   portage:
     package: sys-boot/syslinux
     state: present
-    update: yes
 
 - name: create syslinux directory
   file:
@@ -25,10 +24,13 @@
     src: "/usr/share/syslinux/{{ module }}"
     dest: "/boot/syslinux/{{ module }}"
     remote_src: yes
+    owner: root
+    group: root
+    mode: 0644
   loop:
     - memdisk
     - menu.c32
     - libcom32.c32
     - libutil.c32
   loop_control:
-    loop_var: module
+    loop_var: "module"

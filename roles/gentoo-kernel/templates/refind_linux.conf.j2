@@ -1,5 +1,0 @@
-#jinja2: trim_blocks: True, lstrip_blocks: True
-# {{ ansible_managed }}
-{% for __menu in kernel_refind_menu %}
-"{{ __menu.name }}" "{{ __menu.cmd }}"
-{% endfor %}

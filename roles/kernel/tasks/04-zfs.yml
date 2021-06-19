@@ -12,7 +12,7 @@
 - name: enable zfs services
   service:
     name: "{{ service.name }}"
-    enabled: yes
+    enabled: true
     runlevel: "{{ service.runlevel }}"
     use: openrc
   loop:
@@ -21,12 +21,14 @@
     - name: zfs-mount
       runlevel: boot
   loop_control:
-    loop_var: service
+    loop_var: "service"
     label: "{{ service.name }}"
 
 - name: copy zfsbootmenu config
   copy:
     content: "{{ kernel_zfsbootmenu_config | to_nice_yaml }}"
     dest: "/etc/zfsbootmenu/config.yaml"
+    owner: root
+    group: root
     mode: 0644
   notify: generate zbm

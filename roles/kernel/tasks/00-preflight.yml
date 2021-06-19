@@ -39,8 +39,17 @@
   assert:
     that:
       - kernel_refind_menu is defined
-      - kernel_refind_menu is iterable
-      - kennel_refind_menu is not string
+      - kernel_refind_menu is string
       - kernel_refind_menu | length
+    quiet: true
+  when: bios == "uefi"
+
+- name: check "kernel_refind_config" variable
+  tags: always
+  assert:
+    that:
+      - kernel_refind_config is defined
+      - kernel_refind_config is string
+      - kernel_refind_config | length
     quiet: true
   when: bios == "uefi"

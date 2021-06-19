@@ -2,21 +2,26 @@
   file:
     dest: "/etc/portage/savedconfig/sys-kernel"
     state: directory
+    owner: root
+    group: root
+    mode: 0755
 
 - name: create linux-firmware savedconfig
   tags: kernel
   copy:
-    content: |
-      {% for blob in kernel_firmware %}
-      {{ blob }}
-      {% endfor %}
+    content: "{{ kernel_firmware | join('\n') }}"
     dest: "/etc/portage/savedconfig/sys-kernel/linux-firmware"
-  notify:
-    - rebuild linux-firmware
+    owner: root
+    group: root
+    mode: 0644
+  notify: rebuild linux-firmware
 
 - name: enable savedconfigs for linux-firmware
   copy:
     content: "sys-kernel/linux-firmware savedconfig"
     dest: "/etc/portage/package.use/firmware.use"
+    owner: root
+    group: root
+    mode: 0644
 
 - meta: flush_handlers

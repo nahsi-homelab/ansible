@@ -10,6 +10,9 @@
   file:
     dest: "{{ item }}"
     state: directory
+    owner: root
+    group: root
+    mode: 0750
   loop:
     - /boot/efi/EFI
     - /boot/efi/EFI/Gentoo
@@ -18,8 +21,8 @@
 - name: install refind and efibootmgr
   portage:
     package:
-      - "sys-boot/refind"
-      - "sys-boot/efibootmgr"
+      - sys-boot/refind
+      - sys-boot/efibootmgr
     state: present
 
 - name: update refind
@@ -28,11 +31,8 @@
 
 - name: copy refind config
   copy:
-    content: |
-      {% for key, value in kernel_refind_config.items() %}
-      {{ key }} {{ value }}
-      {% endfor %}
-    dest: /boot/efi/EFI/refind/refind.conf
+    content: "{{ kernel_refind_config }}"
+    dest: "/boot/efi/EFI/refind/refind.conf"
     owner: root
     group: root
     mode: 0640

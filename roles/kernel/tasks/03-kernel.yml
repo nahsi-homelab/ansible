@@ -2,6 +2,9 @@
   file:
     dest: "{{ item }}"
     state: directory
+    owner: root
+    group: root
+    mode: 0750
   loop:
     - /etc/kernel/config.d/
     - /etc/kernel/postinst.d/
@@ -12,7 +15,6 @@
   - name: register present scripts
     find:
       paths: "/etc/kernel/postinst.d/"
-      recurse: yes
     register: __postinst_present
 
   - name: copy scripts
@@ -24,7 +26,7 @@
       mode: 0740
     loop: "{{ kernel_postinst | dict2items }}"
     loop_control:
-      loop_var: script
+      loop_var: "script"
       label: "{{ script.key }}"
     register: __postinst_copied
 
@@ -45,7 +47,6 @@
   - name: register present configs
     find:
       paths: "/etc/kernel/config.d/"
-      recurse: yes
     register: __configs_present
 
   - name: copy configs
@@ -57,7 +58,7 @@
       mode: 0644
     loop: "{{ kernel_configs | dict2items }}"
     loop_control:
-      loop_var: config
+      loop_var: "config"
       label: "{{ config.key }}"
     register: __configs_copied
     notify:
@@ -74,8 +75,7 @@
       path: "{{ item }}"
       state: absent
     loop: "{{ __configs_present_list | difference(__configs_copied_list) }}"
-    notify:
-      - rebuild kernel
+    notify: rebuild kernel
 
 - name: mask gentoo distribution kernel and set kernel version
   tags: kernel
@@ -88,6 +88,9 @@
       sys-kernel/gentoo-kernel-bin
       sys-kernel/vanilla-kernel
     dest: /etc/portage/package.mask/kernel.mask
+    owner: root
+    group: root
+    mode: 0644
   notify:
     - rebuild kernel
     - generate zbm

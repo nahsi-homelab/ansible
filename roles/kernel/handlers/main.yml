@@ -1,13 +1,13 @@
 - name: rebuild linux-firmware
   portage:
     package: "sys-kernel/linux-firmware"
-    noreplace: no
+    noreplace: false
     state: emerged
 
 - name: rebuild kernel
   portage:
     package: "@module-rebuild"
-    noreplace: no
+    noreplace: false
     state: emerged
 
 - name: generate zbm

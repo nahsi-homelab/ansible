@@ -1,5 +1,13 @@
 # vim: set foldmethod=marker
 
+- name: check "dc" variable
+  assert:
+    that:
+      - dc is defined
+      - dc is string
+      - dc | length
+    quiet: true
+
 # {{{ portage
 - name: check "base_portage_makeconf" variable
   tags: always
@@ -220,6 +228,15 @@
       - base_sshd_config is defined
       - base_sshd_config is string
       - base_sshd_config | length
+    quiet: true
+
+- name: check "base_sshd_openrc_config" variable
+  tags: always
+  assert:
+    that:
+      - base_sshd_openrc_config is defined
+      - base_sshd_openrc_config is string
+      - base_sshd_openrc_config | length
     quiet: true
 # }}}
 

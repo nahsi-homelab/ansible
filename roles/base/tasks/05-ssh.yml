@@ -40,10 +40,7 @@
 - name: add /etc/conf.d/sshd
   tags: ssh
   copy:
-    content: |
-      SSHD_CONFDIR="${RC_PREFIX%/}/etc/ssh"
-      SSHD_OPTS=""
-      rc_need="net"
+    content: "{{ base_sshd_openrc_config }}"
     dest: /etc/conf.d/sshd
     owner: root
     group: root

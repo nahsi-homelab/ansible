@@ -6,7 +6,7 @@
 
 - name: rebuild kernel
   portage:
-    package: "@gentoo-kernel"
+    package: "sys-kernel/nahsi-kernel"
     noreplace: false
     state: latest
 

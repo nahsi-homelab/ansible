@@ -7,6 +7,7 @@
   include_tasks: 01-portage.yml
 
 - name: Configure system
+  tags: system
   include_tasks: 02-system.yml
 
 - name: Configure containers

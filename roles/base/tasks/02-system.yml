@@ -1,4 +1,5 @@
 - name: set timezone
+  tags: system
   copy:
     content: "{{ base_timezone }}"
     dest: /etc/timezone
@@ -8,6 +9,7 @@
   notify: set timezone
 
 - name: generate locales
+  tags: system
   copy:
     content: "{{ base_locales | join('\n') }}"
     dest: /etc/locale.gen
@@ -17,17 +19,20 @@
   notify: generate locales
 
 - name: set consolefont
+  tags: system
   copy:
     content: >
       consolefont={{ base_consolefont }}
     dest: /etc/conf.d/consolefont
 
 - name: set hostname
+  tags: system
   hostname:
     name: "{{ inventory_hostname }}"
     use: openrc
 
 - name: configure /etc/hosts
+  tags: system
   copy:
     dest: "/etc/hosts"
     content: |
@@ -45,6 +50,7 @@
     state: present
 
 - name: configure openresolv
+  tags: system
   copy:
     content: "{{ base_dns }}"
     dest: /etc/resolvconf.conf
@@ -60,6 +66,7 @@
   loop: "{{ base_packages }}"
 
 - name: configure hwclock
+  tags: system
   copy:
     content: "{{ base_hwclock }}"
     dest: /etc/conf.d/hwclock
@@ -69,6 +76,7 @@
   when: base_hwclock is defined
 
 - name: configure openrc
+  tags: system
   copy:
     content: "{{ base_openrc }}"
     dest: /etc/rc.conf
@@ -78,6 +86,7 @@
   when: base_openrc is defined
 
 - name: set env vars with eselect
+  tags: system
   eselect:
     module: "{{ eselect.module }}"
     target: "{{ eselect.target }}"
@@ -88,6 +97,7 @@
   notify: update env
 
 - name: configure doas
+  tags: system
   copy:
     content: "{{ base_doas_conf }}"
     dest: /etc/doas.conf
@@ -96,6 +106,7 @@
     mode: 0644
 
 - name: enable services
+  tags: system
   service:
     name: "{{ service.name }}"
     enabled: yes
@@ -108,6 +119,7 @@
   when: base_services is defined
 
 - name: mount filesystems
+  tags: system
   mount:
     src: "{{ fs.src }}"
     opts: "{{ fs.opts }}"
@@ -121,6 +133,7 @@
   when: base_filesystems is defined
 
 - name: set sysctl entries
+  tags: system
   sysctl:
     name: "{{ sysctl.name }}"
     value: "{{ sysctl.value }}"

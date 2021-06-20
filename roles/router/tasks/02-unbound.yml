@@ -10,7 +10,7 @@
     state: directory
     owner: root
     group: unbound
-    mode: 0750
+    mode: 0770
 
 - name: copy unbound config
   tags: dns
@@ -21,7 +21,7 @@
     group: unbound
     mode: 0640
     validate: "unbound-checkconf %s"
-  notify: reload unbound
+  notify: restart unbound
 
 - name: register present unbound configs
   tags: dns
@@ -39,7 +39,7 @@
     group: unbound
     mode: 0640
     validate: "unbound-checkconf %s"
-  notify: reload unbound
+  notify: restart unbound
   loop: "{{ router_unbound_configs | dict2items }}"
   loop_control:
     loop_var: "file"
@@ -58,7 +58,7 @@
     path: "{{ item }}"
     state: absent
   loop: "{{ __files_present_list | difference(__files_copied_list) }}"
-  notify: reload unbound
+  notify: restart unbound
 
 - name: enable unbound
   service:

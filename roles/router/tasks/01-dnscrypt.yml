@@ -10,7 +10,7 @@
     state: directory
     owner: root
     group: dnscrypt-proxy
-    mode: 0640
+    mode: 0770
 
 - name: copy dnscrypt config
   tags: dns

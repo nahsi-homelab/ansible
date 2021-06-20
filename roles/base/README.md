@@ -7,6 +7,7 @@
 * `portage` - configure make.conf and update useflags
 * `system` - set misc system settings
 * `containers` - configure portage and docker
+* `wireguard` - configure wireguard
 * `network` - configure network
 * `ssh` - configure openssh
 * `users` - create users

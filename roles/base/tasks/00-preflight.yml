@@ -199,6 +199,27 @@
     quiet: true
 # }}}
 
+# {{{ wireguard
+- name: check "base_wireguard_configs" variable
+  tags: always
+  assert:
+    that:
+      - base_wireguard_configs is mapping
+      - base_wireguard_configs | length
+    quiet: true
+  when: base_wireguard_configs is defined
+
+- name: check "base_wireguard_interfaces" variable
+  tags: always
+  assert:
+    that:
+      - base_wireguard_interfaces is iterable
+      - base_wireguard_interfaces is not string
+      - base_wireguard_interfaces | length
+    quiet: true
+  when: base_wireguard_interfaces is defined
+# }}}
+
 # {{{ network
 - name: check "base_network" variable
   tags: always

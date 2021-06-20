@@ -29,6 +29,18 @@
     - not chroot
     - item.start | default(true)
 
+- name: restart wireguard
+  service:
+    name: "wg.{{ item.name }}"
+    state: restarted
+    use: openrc
+  loop: "{{ base_wireguard_interfaces }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when:
+    - not chroot
+    - item.start | default(true)
+
 - name: reload syslog
   service:
     name: syslog-ng

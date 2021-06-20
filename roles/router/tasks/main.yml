@@ -8,3 +8,10 @@
 - name: Configure unbound
   tags: dns
   include_tasks: 02-unbound.yml
+
+- name: Configure hostapd
+  include_tasks: 03-hostapd.yml
+  when: router_hostapd_config is defined
+
+- name: Configure dhcp
+  include_tasks: 04-dhcp.yml

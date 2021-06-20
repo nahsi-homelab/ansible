@@ -35,3 +35,40 @@
       - router_dnscrypt_openrc_config | length
     quiet: true
 # }}}
+
+# {{{ hostapd
+- name: check "router_hostapd_config" variable
+  assert:
+    that:
+      - router_hostapd_config is string
+      - router_hostapd_config | length
+    quiet: true
+  when: router_hostapd_config is defined
+
+- name: check "router_hostapd_openrc_config" variable
+  assert:
+    that:
+      - router_hostapd_openrc_config is defined
+      - router_hostapd_openrc_config is string
+      - router_hostapd_openrc_config | length
+    quiet: true
+  when: router_hostapd_config is defined
+# }}}
+
+# {{{ dnsmasq
+- name: check "router_dnsmasq_config" variable
+  assert:
+    that:
+      - router_dnsmasq_config is defined
+      - router_dnsmasq_config is string
+      - router_dnsmasq_config | length
+    quiet: true
+
+- name: check "router_dnsmasq_openrc_config" variable
+  assert:
+    that:
+      - router_dnsmasq_openrc_config is defined
+      - router_dnsmasq_openrc_config is string
+      - router_dnsmasq_openrc_config | length
+    quiet: true
+# }}}

@@ -1,0 +1,29 @@
+- name: install hostapd
+  portage:
+    package: net-wireless/hostapd
+    state: present
+
+- name: copy hostapd config
+  copy:
+    content: "{{ router_hostapd_config }}"
+    dest: "/etc/hostapd/hostapd.conf"
+    owner: root
+    group: root
+    mode: 0600
+  notify: restart hostapd
+
+- name: copy hostapd openrc config
+  copy:
+    content: "{{ router_hostapd_openrc_config }}"
+    dest: "/etc/conf.d/hostapd"
+    owner: root
+    group: root
+    mode: 0660
+  notify: restart hostapd
+
+- name: enable hostapd
+  service:
+    name: hostapd
+    enabled: true
+    runlevel: default
+    use: openrc

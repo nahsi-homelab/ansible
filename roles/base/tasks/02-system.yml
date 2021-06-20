@@ -27,6 +27,16 @@
     name: "{{ inventory_hostname }}"
     use: openrc
 
+- name: configure /etc/hosts
+  copy:
+    dest: "/etc/hosts"
+    content: |
+      127.0.0.1 {{ inventory_hostname }}.{{ dc }} {{ inventory_hostname }} localhost
+      ::1       {{ inventory_hostname }}.{{ dc }} {{ inventory_hostname }} localhost
+    owner: root
+    group: root
+    mode: 0644
+
 - meta: flush_handlers
 
 - name: install openresolv

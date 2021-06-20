@@ -2,3 +2,8 @@ chroot: false
 
 base_portage_package_use: {}
 base_syslog_configs: {}
+
+base_sshd_openrc_config: |
+  SSHD_CONFDIR="${RC_PREFIX%/}/etc/ssh"
+  SSHD_OPTS=""
+  rc_need="net"

@@ -1,19 +1,29 @@
 - name: create symlinks in /etc/init.d
+  tags: network
   file:
     src: "/etc/init.d/net.lo"
-    dest: "/etc/init.d/net.{{ item }}"
+    dest: "/etc/init.d/net.{{ interface.name }}"
     state: link
   loop: "{{ base_network_interfaces }}"
+  loop_control:
+    loop_var: "interface"
+    label: "{{ interface.name }}"
 
 - name: enable interfaces
+  tags: network
   service:
-    name: "net.{{ item }}"
-    enabled: yes
+    name: "net.{{ interface.name }}"
+    enabled: "{{ interface.enable | default(true) }}"
     runlevel: default
     use: openrc
   loop: "{{ base_network_interfaces }}"
+  loop_control:
+    loop_var: "interface"
+    label: "{{ interface.name }}"
 
-- name: configure interfaces
+- name: configure network
+  tags: network
+  no_log: true
   copy:
     content: "{{ base_network }}"
     dest: /etc/conf.d/net

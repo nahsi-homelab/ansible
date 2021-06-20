@@ -14,6 +14,7 @@
   include_tasks: 03-containers.yml
 
 - name: Configure network
+  tags: network
   include_tasks: 04-network.yml
 
 - name: Configure sshd

@@ -19,12 +19,15 @@
 
 - name: restart network
   service:
-    name: "net.{{ item }}"
+    name: "net.{{ item.name }}"
     state: restarted
     use: openrc
   loop: "{{ base_network_interfaces }}"
+  loop_control:
+    label: "{{ item.name }}"
   when:
     - not chroot
+    - item.start | default(true)
 
 - name: reload syslog
   service:

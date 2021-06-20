@@ -1,0 +1,68 @@
+- name: install unbound
+  portage:
+    package: net-dns/unbound
+    state: present
+  notify: restart unbound
+
+- name: create unbound config directory
+  file:
+    path: "/etc/unbound/conf.d"
+    state: directory
+    owner: root
+    group: unbound
+    mode: 0750
+
+- name: copy unbound config
+  tags: dns
+  copy:
+    content: "{{ router_unbound_config }}"
+    dest: "/etc/unbound/unbound.conf"
+    owner: root
+    group: unbound
+    mode: 0640
+    validate: "unbound-checkconf %s"
+  notify: reload unbound
+
+- name: register present unbound configs
+  tags: dns
+  find:
+    paths: "/etc/unbound/conf.d/"
+    patterns: ["*.conf"]
+  register: __files_present
+
+- name: copy unbound configs
+  tags: dns
+  copy:
+    content: "{{ file.value }}"
+    dest: "/etc/unbound/conf.d/{{ file.key }}.conf"
+    owner: root
+    group: unbound
+    mode: 0640
+    validate: "unbound-checkconf %s"
+  notify: reload unbound
+  loop: "{{ router_unbound_configs | dict2items }}"
+  loop_control:
+    loop_var: "file"
+    label: "{{ file.key }}"
+  register: __files_copied
+
+- name: ansible magic
+  tags: dns
+  set_fact:
+    __files_present_list: "{{ __files_present | json_query('files[*].path') | default([]) }}"
+    __files_copied_list: "{{ __files_copied | json_query('results[*].dest') | default([]) }}"
+
+- name: delete unbound configs
+  tags: dns
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop: "{{ __files_present_list | difference(__files_copied_list) }}"
+  notify: reload unbound
+
+- name: enable unbound
+  service:
+    name: unbound
+    enabled: true
+    runlevel: default
+    use: openrc

@@ -1,0 +1,41 @@
+- name: install dnscrypt
+  portage:
+    package: net-dns/dnscrypt-proxy
+    state: present
+  notify: restart unbound
+
+- name: create dnscrypt directory
+  file:
+    path: "/etc/dnscrypt-proxy"
+    state: directory
+    owner: root
+    group: dnscrypt-proxy
+    mode: 0640
+
+- name: copy dnscrypt config
+  tags: dns
+  copy:
+    content: "{{ router_dnscrypt_config }}"
+    dest: "/etc/dnscrypt-proxy/dnscrypt-proxy.toml"
+    validate: "dnscrypt-proxy -check -config %s"
+    owner: root
+    group: dnscrypt-proxy
+    mode: 0640
+  notify: restart dnscrypt
+
+- name: copy dnscrypt openrc config
+  tags: dns
+  copy:
+    content: "{{ router_dnscrypt_openrc_config }}"
+    dest: "/etc/conf.d/dnscrypt-proxy"
+    owner: root
+    group: root
+    mode: 0660
+  notify: restart dnscrypt
+
+- name: enable dnscrypt
+  service:
+    name: dnscrypt-proxy
+    enabled: true
+    runlevel: default
+    use: openrc

@@ -1,0 +1,37 @@
+# vim: set foldmethod=marker
+
+# {{{ unbound
+- name: check "router_unbound_config" variable
+  assert:
+    that:
+      - router_unbound_config is defined
+      - router_unbound_config is string
+      - router_unbound_config | length
+    quiet: true
+
+- name: check "router_unbound_configs" variable
+  assert:
+    that:
+      - router_unbound_configs is defined
+      - router_unbound_configs is mapping
+      - router_unbound_configs | length
+    quiet: true
+# }}}
+
+# {{{ dnscrypt-proxy
+- name: check "router_dnscrypt_config" variable
+  assert:
+    that:
+      - router_dnscrypt_config is defined
+      - router_dnscrypt_config is string
+      - router_dnscrypt_config | length
+    quiet: true
+
+- name: check "router_dnscrypt_openrc_config" variable
+  assert:
+    that:
+      - router_dnscrypt_openrc_config is defined
+      - router_dnscrypt_openrc_config is string
+      - router_dnscrypt_openrc_config | length
+    quiet: true
+# }}}

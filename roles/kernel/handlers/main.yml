@@ -8,7 +8,7 @@
   portage:
     package: "sys-kernel/nahsi-kernel"
     noreplace: false
-    state: latest
+    state: emerged
 
 - name: rebuild modules
   portage:

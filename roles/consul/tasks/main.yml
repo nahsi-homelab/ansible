@@ -1,5 +1,22 @@
 - name: Preflight
+  tags: always
   include_tasks: 00-preflight.yml
 
 - name: Install and configure Consul
+  tags: configuration
   include_tasks: 01-consul.yml
+
+- name: Add services
+  tags: services
+  include_tasks: 02-services.yml
+
+- name: Add configs
+  tags: configs
+  include_tasks: 03-configs.yml
+
+- name: Add scripts
+  tags: scripts
+  include_tasks: 04-scripts.yml
+
+- name: Postflight
+  include_tasks: 99-postflight.yml

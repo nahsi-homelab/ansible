@@ -1,15 +1,71 @@
-- name: check 'consul_datacenter' variable
-  assert:
-    that:
-      - consul_datacenter is defined
-      - consul_datacenter is string
-      - consul_datacenter | length
-    quiet: true
-
-- name: check 'consul_version' variable
+- name: check "consul_version" variable
+  tags: always
   assert:
     that:
       - consul_version is defined
       - consul_version is string
       - consul_version | length
     quiet: true
+
+- name: check "consul_config" variable
+  tags: always
+  assert:
+    that:
+      - consul_config is defined
+      - consul_config is mapping
+      - consul_config | length
+    quiet: true
+
+- name: check "consul_service" variable
+  tags: always
+  assert:
+    that:
+      - consul_service is defined
+      - consul_service is string
+      - consul_service | length
+    quiet: true
+
+- name: check "consul_services" variable
+  tags: always
+  assert:
+    that:
+      - consul_services is defined
+      - consul_services is mapping
+    quiet: true
+
+- name: check "consul_configs" variable
+  tags: always
+  assert:
+    that:
+      - consul_configs is defined
+      - consul_configs is mapping
+    quiet: true
+
+- name: check "consul_scripts" variable
+  tags: always
+  assert:
+    that:
+      - consul_scripts is defined
+      - consul_scripts is mapping
+    quiet: true
+
+- name: check "consul_download_url" variable
+  tags: always
+  assert:
+    that:
+      - consul_download_url is defined
+      - consul_download_url is string
+      - consul_download_url | length
+    quiet: true
+
+- name: check if "{{ consul_download_url }}" is online
+  become: false
+  run_once: true
+  delegate_to: localhost
+  uri:
+    url: "{{ consul_download_url }}"
+    status_code: 200
+  register: _result
+  retries: "3"
+  delay: "5"
+  until: _result.status == 200

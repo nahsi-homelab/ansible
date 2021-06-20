@@ -1,32 +1,31 @@
 # consul
 
-## Description
-Install and configure [Consul](https://www.consul.io).
+>This role installs and configures [Consul](https://www.consul.io).
 
-### Role Variables
-See [defaults/main.yml](defaults/main.yml) for details and examples.
+## Role Variables
 
-| name | type | description |
-| ---- | ---- | ----------- |
-| consul_config| map | consul confgiration |
-| consul_bootstrap_config | bootstrap parameters |
-| consul_dirs | map | consul directories to create |
-| consul_dir | string | main consul dir, used in `consul_dirs` |
-| consul_version | string | |
-| consul_datacenter | string | |
+| variable              | description                                         |
+|-----------------------|-----------------------------------------------------|
+| `consul_version`      | consul version to use                               |
+| `consul_config`       | main consul configuration                           |
+| `consul_service`      | consul unitfile                                     |
+| `consul_services`     | map of services to register via json                |
+| `consul_configs`      | map of consul override configs                      |
+| `consul_scripts`      | map of scripts                                      |
+| `consul_dirs_overlay` | map of directories to create combined with defaults |
 
-`consul_config` and `consul_dirs` are two level variables, i.e. there are:
+See [defaults/](defaults/) for details and examples.
 
-* `consul_config_base` - variable with default Consul configuration parameters
-* `consul_config_overlay` - empty variable with parameters to be defined in Ansible inventory
-* `consul_config` - variable containing all above variables merged in order
+## Tags
+* `configuration` - update consul unitfile and main config
+* `services` - sync consul services
+* `configs` - sync consul configs
+* `scripts` - sync consul scripts
 
-`consul_config` can be specified at any level (group_vars or host_vars) to
-override defailt configuration parameters instead of merging.
-
-### External Resources
+## External Resources
 - https://www.consul.io/docs/install/ports.html
 - https://www.consul.io/docs/agent/options
+- https://learn.hashicorp.com/tutorials/consul/dns-forwarding#dnsmasq-setup
 
-### Author
-Anatoly Laskaris
+## Author
+* **Anatoly Laskaris** - [nahsi](https://github.com/nahsi)

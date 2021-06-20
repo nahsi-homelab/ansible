@@ -1,0 +1,33 @@
+- name: register present scripts
+  tags: scripts
+  find:
+    paths: "{{ consul_dirs.scripts.path }}"
+    recurse: true
+  register: __scripts_present
+
+- name: copy scripts
+  tags: scripts
+  copy:
+    content: "{{ script.value }}"
+    dest: "{{ consul_dirs.scripts.path }}/{{ script.key }}.sh"
+    owner: consul
+    group: consul
+    mode: 0754
+  loop: "{{ consul_scripts | dict2items }}"
+  loop_control:
+    loop_var: "script"
+    label: "{{ script.key }}"
+  register: __scripts_copied
+
+- name: get scripts paths
+  tags: scripts
+  set_fact:
+    __scripts_present_list: "{{ __scripts_present | json_query('files[*].path') | default([]) }}"
+    __scripts_copied_list: "{{ __scripts_copied | json_query('results[*].dest') | default([]) }}"
+
+- name: delete scripts
+  tags: scripts
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop: "{{ __scripts_present_list | difference(__scripts_copied_list) }}"

@@ -1,67 +1,25 @@
-# Overwrite this variable at group_vars level for consul servers.
-consul_bootstrap_config:
-  # client config
-  server: false
-  # DNS forward for consul domain must be working in order for agent to join
-  retry_join: ["consul.domain.internal"]
+consul_download_url: "https://releases.hashicorp.com"
 
-  # server config
-  # server: true
-  # bootstrap_expect: 3
-
-consul_config_base:
-  # This flag controls the datacenter in which the agent is running.
-  datacenter: "{{ consul_datacenter }}"
-
-  # Directory to store state.
-  data_dir: "{{ consul_dirs.data.path }}"
-
-  # Use syslog to store logs.
-  enable_syslog: true
-  # "trace", "debug", "info", "warn", "err"
-  log_level: "warn"
-  syslog_facility: "LOCAL5"
-
-  # The address that should be bound to for internal cluster communications.
-  # https://www.consul.io/docs/agent/options.html#bind_addr
-  bind_addr: "{{ ansible_default_ipv4.address }}"
-
-  # Addresses to bind to. Defaults to 'client_addr'
-  # https://www.consul.io/docs/agent/options.html#addresses
-  # addresses:
-  #   dns: "{{ consul_config.client_addr }}"
-  #   http: "{{ consul_config.client_addr }}"
-  #   https: "{{ consul_config.client_addr }}"
-  #   grpc: "{{ consul_config.client_addr }}"
-
-  # Enable scripts in checks when they are defined in the local configuration
-  # files.
-  enable_local_script_checks: true
-
-  telemetry:
-    disable_compat_1.9: true
-    prometheus_retention_time: "30s"
-
-
-consul_config_overlay: {}
-consul_config: >
-  {{
-    consul_config_base |
-    combine(consul_config_overlay, recursive=true)
-  }}
+consul_services: {}
+consul_configs: {}
+consul_scripts: {}
 
 consul_dir: "/opt/consul"
 consul_dirs_base:
   main:
     path: "{{ consul_dir }}"
   configs:
-    path: "{{ consul_dir }}/conf.d"
+    path: "{{ consul_dir }}/config.d"
+  services:
+    path: "{{ consul_dir }}/service.d"
   certs:
     path: "{{ consul_dir }}/certs"
   scripts:
-    path: "{{ consul_dir }}/scripts"
+    path: "{{ consul_dir }}/script.d"
+  logs:
+    path: "/var/log/consul"
   data:
-    path: "{{ consul_dir }}/data"
+    path: "/var/lib/consul"
     mode: "u=rwX,g=rX,o="
 consul_dirs_overlay: {}
 consul_dirs: >
@@ -69,3 +27,28 @@ consul_dirs: >
     consul_dirs_base |
     combine(consul_dirs_overlay, recursive=true)
   }}
+
+consul_service: |
+  #!/sbin/openrc-run
+
+  description="HashiCorp Consul"
+  extra_started_commands="reload"
+  group="${RC_SVCNAME}"
+  user="${RC_SVCNAME}"
+  pidfile="/run/${RC_SVCNAME}.pid"
+  rc_ulimit="-n 65536"
+
+  command="/usr/bin/${RC_SVCNAME}"
+  command_args="agent -config-file {{ consul_dir }}/consul.json -config-dir={{ consul_dirs.configs.path }}"
+  command_background="true"
+  start_stop_daemon_args="--user ${user} --group ${group}"
+
+  depend() {
+      need net
+  }
+
+  reload() {
+      ebegin "Reloading consul"
+      ${command} reload
+      eend $?
+  }

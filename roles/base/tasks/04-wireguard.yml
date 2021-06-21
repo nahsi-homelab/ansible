@@ -4,14 +4,15 @@
     package: net-vpn/wireguard-tools
     state: present
 
-- name: register present wireguard symlinks
+- name: register present wireguard links
   tags: wireguard
   find:
     paths: "/etc/init.d/"
-    patterns: ["wg.*"]
+    patterns: "wg.*"
+    file_type: link
   register: __links_present
 
-- name: create symlinks in /etc/init.d
+- name: create wireguard links
   tags: wireguard
   file:
     src: "/etc/init.d/wg-quick"
@@ -69,7 +70,7 @@
   tags: wireguard
   find:
     paths: "/etc/wireguard/"
-    patterns: ["*.conf"]
+    patterns: "*.conf"
   register: __files_present
 
 - name: copy wireguard configurations

@@ -27,6 +27,7 @@ zpool create -o ashift=12 \
     -O normalization=formD \
     -O compression=zstd-3 \
     -O dnodesize=auto \
+    -R /mnt/gentoo \
     main /dev/disk/by-id/id
 ```
 
@@ -41,6 +42,14 @@ main/system/swap         4.25G   735G     3.69G  -
 main/users                145G   735G       96K  none
 main/users/nahsi          145G   735G       96K  none
 main/users/nahsi/home    63.5G   735G     63.5G  /home/nahsi
+```
+
+[ZFS swap](https://github.com/zfsonlinux/pkg-zfs/wiki/HOWTO-use-a-zvol-as-a-swap-device)
+```
+zfs create -V 4G -b $(getconf PAGESIZE) -o compression=zle \
+      -o logbias=throughput -o sync=standard \
+      -o primarycache=metadata -o secondarycache=none \
+      main/system/swap
 ```
 
 ```

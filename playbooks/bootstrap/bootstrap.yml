@@ -10,10 +10,7 @@
         name: base
         tasks_from: 00-preflight.yml
     - include_role:
-        name: gentoo-kernel
-        tasks_from: 00-preflight.yml
-    - include_role:
-        name: gentoo-syslog
+        name: kernel
         tasks_from: 00-preflight.yml
 
     - name: Install packages required for adding nahsi-overlay

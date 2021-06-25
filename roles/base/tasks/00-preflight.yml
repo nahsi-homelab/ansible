@@ -52,10 +52,10 @@
   tags: always
   assert:
     that:
-      - base_dns is defined
       - base_dns is string
       - base_dns | length
     quiet: true
+  when: base_dns is defined
 
 - name: check "base_hosts" variable
   assert:

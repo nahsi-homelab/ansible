@@ -56,6 +56,7 @@
     group: root
     mode: 0644
   notify: run resolvconf
+  when: base_dns is defined
 
 - name: install base packages
   portage:

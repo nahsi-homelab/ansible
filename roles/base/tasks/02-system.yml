@@ -35,9 +35,7 @@
   tags: system
   copy:
     dest: "/etc/hosts"
-    content: |
-      127.0.0.1 {{ inventory_hostname }}.{{ dc }} {{ inventory_hostname }} localhost
-      ::1       {{ inventory_hostname }}.{{ dc }} {{ inventory_hostname }} localhost
+    content: "{{ base_hosts }}"
     owner: root
     group: root
     mode: 0644

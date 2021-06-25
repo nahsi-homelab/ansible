@@ -1,13 +1,5 @@
 # vim: set foldmethod=marker
 
-- name: check "dc" variable
-  assert:
-    that:
-      - dc is defined
-      - dc is string
-      - dc | length
-    quiet: true
-
 # {{{ portage
 - name: check "base_portage_makeconf" variable
   tags: always
@@ -64,6 +56,15 @@
       - base_dns is string
       - base_dns | length
     quiet: true
+
+- name: check "base_hosts" variable
+  assert:
+    that:
+      - base_hosts is defined
+      - base_hosts is string
+      - base_hosts | length
+    quiet: true
+
 
 - name: check "base_packages" variable
   tags: always

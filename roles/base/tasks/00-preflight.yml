@@ -216,7 +216,6 @@
     that:
       - base_wireguard_interfaces is iterable
       - base_wireguard_interfaces is not string
-      - base_wireguard_interfaces | length
     quiet: true
   when: base_wireguard_interfaces is defined
 # }}}

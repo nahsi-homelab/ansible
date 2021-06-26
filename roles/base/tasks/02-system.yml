@@ -1,3 +1,29 @@
+- name: mount filesystems
+  tags: system
+  mount:
+    src: "{{ fs.src }}"
+    opts: "{{ fs.opts }}"
+    path: "{{ fs.path }}"
+    fstype: "{{ fs.type }}"
+    state: mounted
+  loop: "{{ base_filesystems }}"
+  loop_control:
+    loop_var: "fs"
+    label: "{{ fs.path }}"
+  when: base_filesystems is defined
+
+- name: set sysctl entries
+  tags: system
+  sysctl:
+    name: "{{ sysctl.name }}"
+    value: "{{ sysctl.value }}"
+    state: present
+  loop: "{{ base_sysctl }}"
+  loop_control:
+    loop_var: "sysctl"
+    label: "{{ sysctl.name }}"
+  when: base_sysctl is defined
+
 - name: set timezone
   tags: system
   copy:
@@ -116,31 +142,5 @@
     loop_var: "service"
     label: "{{ service.name }}"
   when: base_services is defined
-
-- name: mount filesystems
-  tags: system
-  mount:
-    src: "{{ fs.src }}"
-    opts: "{{ fs.opts }}"
-    path: "{{ fs.path }}"
-    fstype: "{{ fs.type }}"
-    state: mounted
-  loop: "{{ base_filesystems }}"
-  loop_control:
-    loop_var: "fs"
-    label: "{{ fs.path }}"
-  when: base_filesystems is defined
-
-- name: set sysctl entries
-  tags: system
-  sysctl:
-    name: "{{ sysctl.name }}"
-    value: "{{ sysctl.value }}"
-    state: present
-  loop: "{{ base_sysctl }}"
-  loop_control:
-    loop_var: "sysctl"
-    label: "{{ sysctl.name }}"
-  when: base_sysctl is defined
 
 - meta: flush_handlers

@@ -48,14 +48,6 @@
     group: root
     mode: 0644
 
-- name: enable podman socket api
-  tags: containers
-  service:
-    name: podman
-    enabled: yes
-    runlevel: default
-    use: openrc
-
 - name: create /etc/docker
   tags: containers
   file:

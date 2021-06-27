@@ -1,0 +1,20 @@
+- name: Preflight
+  tags: always
+  include_tasks: 00-preflight.yml
+
+- name: Install hashi
+  tags: hashi
+  include_tasks: 01-hashi.yml
+  loop: "{{ station_hashi }}"
+
+- name: Install suckless
+  tags: suckless
+  include_tasks: 02-suckless.yml
+  loop:
+    - media-gfx/sxiv
+    - x11-terms/st
+    - x11-misc/dmenu
+
+- name: Install packages
+  tags: packages
+  include_tasks: 03-packages.yml

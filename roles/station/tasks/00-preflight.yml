@@ -1,0 +1,19 @@
+- name: check "station_hashi" variable
+  tags: always
+  assert:
+    that:
+      - station_hashi is defined
+      - station_hashi is iterrable
+      - station_hashi is not string
+      - station_hashi | length
+    quiet: true
+
+- name: check "station_packages" variable
+  tags: always
+  assert:
+    that:
+      - station_packages is iterrable
+      - station_packages is not string
+      - station_packages | length
+    quiet: true
+  when: station_packages is defined

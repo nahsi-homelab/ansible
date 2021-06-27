@@ -1,0 +1,107 @@
+- name: install packages
+  tags: packages
+  portage:
+    package: "{{ item }}"
+    state: present
+  loop: "{{ station_packages }}"
+
+- name: install awesome-wm and dependencies
+  portage:
+    package: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+      - x11-base/xorg-server
+      - x11-apps/xrandr
+      - x11-wm/awesome
+
+- name: install alsa and apulse
+  portage:
+    package: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+      - media-sound/alsa-utils
+      - media-sound/apulse
+
+- name: install gnupg and pass
+  portage:
+    package: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+      - app-crypt/gnupg
+      - app-crypt/pinentry
+      - app-admin/pass
+
+- name: install mpv and ffmpeg
+  portage:
+    package: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+      - media-video/ffmpeg
+      - media-video/mpv
+      - media-video/mediainfo
+
+- name: install tools and other packages
+  portage:
+    package: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+      - x11-terms/kitty
+      - app-misc/tmux
+      - app-misc/smug
+      - x11-misc/redshift
+      - x11-misc/rofi
+      - sys-apps/bat
+      - app-misc/task
+      - x11-misc/picom
+      - media-gfx/maim
+      - x11-themes/papirus-icon-theme
+
+- name: install fonts
+  portage:
+    package: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+      - media-fonts/fira-sans
+      - media-fonts/fira-mono
+      - media-fonts/fira-code
+      - media-fonts/noto
+      - media-fonts/noto-emoji
+      - media-fonts/roboto
+
+- name: install qutebrowser
+  portage:
+    package: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+      - www-client/qutebrowser
+      - dev-python/tldextract  # for qute-pass
+
+- name: install python packages
+  portage:
+    package: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+      - app-admin/ansible
+      - app-admin/ansible-lint
+      - app-admin/ansible-modules-hashivault
+      - dev-python/hvac
+      - dev-python/virtualenv
+      - dev-python/pip
+      - dev-python/jmespath
+      - app-emulation/docker-compose
+
+- name: install packages
+  tags: packages
+  portage:
+    package: "{{ item }}"
+    state: present
+  loop: "{{ station_packages }}"
+  when: station_packages is defined

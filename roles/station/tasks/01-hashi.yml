@@ -1,9 +1,11 @@
 - name: set facts
+  tags: hashi
   set_fact:
-    __name: "{{ item.value.name | default(item.key) }}"
-    __version: "{{ item.value.version }}"
+    __name: "{{ item.name }}"
+    __version: "{{ item.version }}"
 
-- name: download {{ item.key }} to localhost
+- name: download {{ item.name }} to localhost
+  tags: hashi
   become: false
   run_once: true
   delegate_to: localhost
@@ -16,7 +18,8 @@
   retries: 5
   delay: 2
 
-- name: create {{ item.key }} archive directory
+- name: create {{ item.name }} archive directory
+  tags: hashi
   become: false
   run_once: true
   delegate_to: localhost
@@ -25,7 +28,8 @@
     state: directory
     mode: 0755
 
-- name: unpack {{ item.key }}
+- name: unpack {{ item.name }}
+  tags: hashi
   become: false
   run_once: true
   delegate_to: localhost
@@ -33,7 +37,8 @@
     src: "/tmp/{{ __archive }}"
     dest: "{{ __archive_dir }}"
 
-- name: propagate {{ item.key }} binary
+- name: propagate {{ item.name }} binary
+  tags: hashi
   copy:
     src: "{{ __archive_dir }}/{{ __name }}"
     dest: "/usr/local/bin/{{ __name }}"

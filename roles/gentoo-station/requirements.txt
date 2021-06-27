@@ -1,9 +1,0 @@
-ansible
-ansible-lint
-pytest
-pytest-testinfra
-podman
-molecule
-molecule[lint]
-molecule[podman]
-jmespath

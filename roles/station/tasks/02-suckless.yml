@@ -1,4 +1,5 @@
-- name: enable 'savedconfig' useflag for suckless
+- name: enable "savedconfig" useflag for suckless
+  tags: suckless
   copy:
     content: |
       media-gfx/sxiv savedconfig
@@ -8,22 +9,30 @@
     mode: 0644
 
 - name: create {{ item }} savedconfig directory
+  tags: suckless
   file:
     path: "/etc/portage/savedconfig/{{ item | dirname }}"
     state: directory
     mode: 0755
 
 - name: copy {{ item }} config
+  tags: suckless
   copy:
     src: "files/suckless/{{ item | basename }}"
     dest: "/etc/portage/savedconfig/{{ item }}"
     mode: 0644
   register: __config
 
-- name: reemerge {{ item }}  # noqa 503
-  command: "emerge {{ item }}"
+- name: rebuild {{ item }}
+  tags: suckless
+  portage:
+    name: "{{ item }}"
+    noreplace: false
+    state: emerged
   when: __config.changed
 
 - name: install {{ item }}
+  tags: suckless
   portage:
     package: "{{ item }}"
+    state: present

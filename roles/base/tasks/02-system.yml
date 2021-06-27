@@ -51,6 +51,28 @@
       consolefont={{ base_consolefont }}
     dest: /etc/conf.d/consolefont
 
+- name: enable consolefint
+  tags: system
+  service:
+    name: "consolefont"
+    enabled: yes
+    runlevel: "boot"
+    use: openrc
+
+- name: install ntpd
+  tags: system
+  portage:
+    package: net-misc/openntpd
+    state: present
+
+- name: enable ntpd
+  tags: system
+  service:
+    name: "ntpd"
+    enabled: yes
+    runlevel: "boot"
+    use: openrc
+
 - name: set hostname
   tags: system
   hostname:

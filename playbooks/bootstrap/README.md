@@ -44,17 +44,30 @@ main/users/nahsi          145G   735G       96K  none
 main/users/nahsi/home    63.5G   735G     63.5G  /home/nahsi
 ```
 
+#### Set default bootfs
+```
+zpool set bootfs=main/system/gentoo main
+zfs set canmount=noauto main/system/gentoo
+```
+
+#### Set kernel CMD
+```
+zfs set org.zfsbootmenu:commandline="ro quiet loglevel=0" main/system/gentoo
+```
+
+#### Encrypted home
+```
+zfs create -o encryption=on -o keyformat=passphrase main/users/nahsi/home
+```
+
+#### ZFS dataset as swap
+
 [ZFS swap](https://github.com/zfsonlinux/pkg-zfs/wiki/HOWTO-use-a-zvol-as-a-swap-device)
 ```
 zfs create -V 4G -b $(getconf PAGESIZE) -o compression=zle \
       -o logbias=throughput -o sync=standard \
       -o primarycache=metadata -o secondarycache=none \
       main/system/swap
-```
-
-```
-zpool set bootfs=main/system/gentoo main
-zfs set canmount=noauto main/system/gentoo
 ```
 
 ### UEFI

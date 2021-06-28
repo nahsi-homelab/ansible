@@ -22,6 +22,11 @@
   tags: network
   include_tasks: 05-network.yml
 
+- name: Configure wireless network
+  tags: network
+  include_tasks: 05-wireless.yml
+  when: base_iwd is defined
+
 - name: Configure sshd
   tags: ssh
   include_tasks: 06-ssh.yml

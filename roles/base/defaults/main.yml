@@ -3,6 +3,9 @@ chroot: false
 base_portage_package_use: {}
 base_syslog_configs: {}
 base_wireguard_interfaces: []
+base_network_interfaces: []
+
+base_network: ""
 
 base_sshd_openrc_config: |
   SSHD_CONFDIR="${RC_PREFIX%/}/etc/ssh"

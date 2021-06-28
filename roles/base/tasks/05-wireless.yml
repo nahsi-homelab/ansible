@@ -1,0 +1,32 @@
+- name: enable standalone useflag for iwd
+  tags: network
+  copy:
+    content: "net-wireless/iwd standalone"
+    dest: "/etc/portage/package.use/iwd.use"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: install iwd
+  tags: network
+  portage:
+    package: net-wireless/iwd
+    state: present
+
+- name: configure iwd
+  tags: network
+  copy:
+    content: "{{ base_iwd }}"
+    dest: /etc/iwd/main.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart iwd
+
+- name: enable iwd
+  tags: network
+  service:
+    name: iwd
+    enabled: yes
+    runlevel: default
+    use: openrc

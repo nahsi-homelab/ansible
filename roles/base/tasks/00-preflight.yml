@@ -227,8 +227,16 @@
     that:
       - base_network is defined
       - base_network is string
-      - base_network | length
     quiet: true
+
+- name: check "base_iwd" variable
+  tags: always
+  assert:
+    that:
+      - base_iwd is string
+      - base_iwd | length
+    quiet: true
+  when: base_iwd is defined
 
 - name: check "base_network_interfaces" variable
   tags: always
@@ -237,7 +245,6 @@
       - base_network_interfaces is defined
       - base_network_interfaces is iterable
       - base_network_interfaces is not string
-      - base_network_interfaces | length
     quiet: true
 # }}}
 

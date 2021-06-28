@@ -6,6 +6,8 @@
   tags: hashi
   include_tasks: 01-hashi.yml
   loop: "{{ station_hashi }}"
+  loop_control:
+    label: "{{ item.name }}"
 
 - name: Install suckless
   tags: suckless

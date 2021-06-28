@@ -1,9 +1,35 @@
-- name: install packages
+- name: set useflags
   tags: packages
-  portage:
-    package: "{{ item }}"
-    state: present
-  loop: "{{ station_packages }}"
+  copy:
+    content: "{{ station_useflags }}"
+    dest: "/etc/portage/package.use/station-default.use"
+    owner: root
+    group: root
+    mode: 0644
+  notify: update use
+  vars:
+    station_useflags: |
+      media-video/ffmpeg chromium libdrm x264 x265 webp vpx vorbis theora
+      media-gfx/imagemagick -X
+      media-fonts/noto cjk
+
+      # gnupg
+      app-crypt/pinentry gtk
+      app-crypt/gcr gtk
+
+      # ansible
+      net-libs/zeromq drafts
+      dev-lang/python sqlite
+
+      # qutebrowser
+      www-client/qutebrowser scripts
+      dev-python/PyQt5 declarative printsupport widgets gui network opengl sql multimedia webchannel websockets dbus svg
+      dev-libs/libpcre2 pcre16
+      sys-libs/zlib minizip
+      dev-qt/qtmultimedia widgets
+      dev-qt/qtwebengine widgets
+      dev-qt/qtwebchannel qml
+      media-libs/libvpx svc
 
 - name: install awesome-wm and dependencies
   portage:

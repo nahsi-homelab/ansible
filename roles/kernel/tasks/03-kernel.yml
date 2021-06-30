@@ -102,6 +102,11 @@
     package: "=sys-kernel/nahsi-kernel-{{ kernel_version }}"
     state: present
 
+- name: remove old nahsi-kernel
+  portage:
+    package: "<sys-kernel/nahsi-kernel-{{ kernel_version }}"
+    state: absent
+
 - name: set kernel version with eselect
   tags: kernel
   eselect:

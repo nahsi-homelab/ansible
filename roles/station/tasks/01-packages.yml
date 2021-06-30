@@ -12,6 +12,7 @@
       media-video/ffmpeg chromium libdrm x264 x265 webp vpx vorbis theora
       media-gfx/imagemagick -X
       media-fonts/noto cjk
+      app-emulation/virtualbox headless -alsa -qt5 -sdk -udev -opengl -opus
 
       # gnupg
       app-crypt/pinentry gtk
@@ -70,6 +71,15 @@
       - media-video/mpv
       - media-video/mediainfo
 
+- name: install virtualization packages
+  portage:
+    package: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+      - app-emulation/virtualbox
+      - app-emulation/docker-compose
+
 - name: install tools and other packages
   portage:
     package: "{{ packages }}"
@@ -122,7 +132,6 @@
       - dev-python/virtualenv
       - dev-python/pip
       - dev-python/jmespath
-      - app-emulation/docker-compose
 
 - name: install packages
   tags: packages

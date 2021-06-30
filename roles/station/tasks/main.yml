@@ -2,12 +2,9 @@
   tags: always
   include_tasks: 00-preflight.yml
 
-- name: Install hashi
-  tags: hashi
-  include_tasks: 01-hashi.yml
-  loop: "{{ station_hashi }}"
-  loop_control:
-    label: "{{ item.name }}"
+- name: Install packages
+  tags: packages
+  include_tasks: 01-packages.yml
 
 - name: Install suckless
   tags: suckless
@@ -17,6 +14,10 @@
     - x11-terms/st
     - x11-misc/dmenu
 
-- name: Install packages
-  tags: packages
-  include_tasks: 03-packages.yml
+- name: Install hashi
+  tags: hashi
+  include_tasks: 03-hashi.yml
+  loop: "{{ station_hashi }}"
+  loop_control:
+    label: "{{ item.name }}"
+

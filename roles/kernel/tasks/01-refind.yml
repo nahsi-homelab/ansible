@@ -40,7 +40,7 @@
 - name: copy Gentoo refind menu config
   copy:
     content: "{{ kernel_refind_menu }}"
-    dest: /boot/refind_linux.conf
+    dest: /boot/efi/EFI/Gentoo/refind_linux.conf
     owner: root
     group: root
     mode: 0640

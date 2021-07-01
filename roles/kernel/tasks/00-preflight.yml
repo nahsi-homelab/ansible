@@ -53,3 +53,36 @@
       - kernel_refind_config | length
     quiet: true
   when: bios == "uefi"
+
+- name: check "kernel_zfsbootmenu_config" variable
+  tags: always
+  assert:
+    that:
+      - kernel_zfsbootmenu_config is defined
+      - kernel_zfsbootmenu_config is mapping
+      - kernel_zfsbootmenu_config | length
+    quiet: true
+
+- name: check "kernel_configs" variable
+  tags: always
+  assert:
+    that:
+      - kernel_configs is defined
+      - kernel_configs is mapping
+    quiet: true
+
+- name: check "kernel_postinst" variable
+  tags: always
+  assert:
+    that:
+      - kernel_postinst is defined
+      - kernel_postinst is mapping
+    quiet: true
+
+- name: check "kernel_dracut_configs" variable
+  tags: always
+  assert:
+    that:
+      - kernel_dracut_configs is defined
+      - kernel_dracut_configs is mapping
+    quiet: true

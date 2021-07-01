@@ -32,3 +32,35 @@
     group: root
     mode: 0644
   notify: generate zbm
+
+- name: copy dracut overlay configs
+  block:
+  - name: register present configs
+    find:
+      paths: "/etc/zfsbootmenu/dracut.conf.d/"
+      patterns: ["kernel-*.conf"]
+    register: __configs_present
+
+  - name: copy configs
+    copy:
+      content: "{{ config.value }}"
+      dest: "/etc/zfsbootmenu/dracut.conf.d/kernel-{{ config.key }}.conf"
+      owner: root
+      group: root
+      mode: 0644
+    loop: "{{ kernel_dracut_configs | dict2items }}"
+    loop_control:
+      loop_var: "config"
+      label: "{{ config.key }}"
+    register: __configs_copied
+
+  - name: ansible magic
+    set_fact:
+      __configs_present_list: "{{ __configs_present | json_query('files[*].path') | default([]) }}"
+      __configs_copied_list: "{{ __configs_copied | json_query('results[*].dest') | default([]) }}"
+
+  - name: delete configs
+    file:
+      path: "{{ item }}"
+      state: absent
+    loop: "{{ __configs_present_list | difference(__configs_copied_list) }}"

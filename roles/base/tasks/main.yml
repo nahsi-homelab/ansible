@@ -38,3 +38,7 @@
 - name: Configure logging
   tags: syslog
   include_tasks: 08-syslog.yml
+
+- name: Configure udev
+  tags: udev
+  include_tasks: 09-udev.yml

@@ -1,0 +1,33 @@
+- name: copy udev rules
+  tags: udev
+  block:
+  - name: register present rules
+    find:
+      paths: "/etc/udev/rules.d/"
+    register: __rules_present
+
+  - name: copy rules
+    copy:
+      content: "{{ rule.value }}"
+      dest: "/etc/udev/rules.d/{{ rule.key }}.rules"
+      owner: root
+      group: root
+      mode: 0644
+    loop: "{{ base_udev_rules | dict2items }}"
+    loop_control:
+      loop_var: "rule"
+      label: "{{ rule.key }}"
+    register: __rules_copied
+    notify: reload udev rules
+
+  - name: ansible magic
+    set_fact:
+      __rules_present_list: "{{ __rules_present | json_query('files[*].path') | default([]) }}"
+      __rules_copied_list: "{{ __rules_copied | json_query('results[*].dest') | default([]) }}"
+
+  - name: delete rules
+    file:
+      path: "{{ item }}"
+      state: absent
+    loop: "{{ __rules_present_list | difference(__rules_copied_list) }}"
+    notify: reload udev rules

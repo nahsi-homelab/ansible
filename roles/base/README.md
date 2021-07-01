@@ -11,6 +11,8 @@
 * `network` - configure network
 * `ssh` - configure openssh
 * `users` - create users
+* `syslog` - configure syslog
+* `udev` - configure udev rules
 
 ## Credits
 To [Jakub Jirutka](https://github.com/jirutka) for `eselect` Ansible [module](https://github.com/gentoo-ansible/role-base/blob/master/library/eselect]).

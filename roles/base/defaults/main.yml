@@ -4,6 +4,7 @@ base_portage_package_use: {}
 base_syslog_configs: {}
 base_wireguard_interfaces: []
 base_network_interfaces: []
+base_udev_rules: {}
 
 base_network: ""
 

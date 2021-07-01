@@ -17,6 +17,11 @@
 - name: run resolvconf
   command: resolvconf -u
 
+- name: reload udev rules
+  command: udevadm control --reload-rules
+  when:
+    - not chroot
+
 - name: restart network
   service:
     name: "net.{{ item.name }}"

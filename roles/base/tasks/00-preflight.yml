@@ -307,3 +307,13 @@
       - base_syslog_logrotate | length
     quiet: true
 # }}}
+
+# {{{ udev
+- name: check "base_udev_rules" variable
+  tags: always
+  assert:
+    that:
+      - base_udev_rules is defined
+      - base_udev_rules is mapping
+    quiet: true
+# }}}

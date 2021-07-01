@@ -42,6 +42,13 @@
       - x11-apps/xrandr
       - x11-wm/awesome
 
+- name: enable elogind
+  service:
+    name: "elogind"
+    enabled: yes
+    runlevel: "boot"
+    use: openrc
+
 - name: install alsa and apulse
   portage:
     package: "{{ packages }}"
@@ -50,6 +57,13 @@
     packages:
       - media-sound/alsa-utils
       - media-sound/apulse
+
+- name: enable alsasound
+  service:
+    name: "alsasound"
+    enabled: yes
+    runlevel: "default"
+    use: openrc
 
 - name: install gnupg and pass
   portage:
@@ -95,6 +109,7 @@
       - app-misc/task
       - x11-misc/picom
       - media-gfx/maim
+      - app-misc/anki
       - x11-themes/papirus-icon-theme
 
 - name: install fonts

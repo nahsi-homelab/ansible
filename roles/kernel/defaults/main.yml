@@ -1,6 +1,7 @@
 kernel_firmware: []
 kernel_postinst: {}
 kernel_configs: {}
+kernel_module_configs: {}
 kernel_dracut_configs: {}
 
 # kernel_boot_device: "/dev/disk/by-partlabel/EFI"

@@ -13,6 +13,7 @@
       media-gfx/imagemagick -X
       media-fonts/noto cjk
       app-emulation/virtualbox headless -alsa -qt5 -sdk -udev -opengl -opus
+      app-emulation/qemu spice
 
       # gnupg
       app-crypt/pinentry gtk
@@ -41,6 +42,7 @@
       - x11-base/xorg-server
       - x11-apps/xrandr
       - x11-wm/awesome
+      - x11-libs/lain
 
 - name: enable elogind
   service:
@@ -92,6 +94,7 @@
   vars:
     packages:
       - app-emulation/virtualbox
+      - app-emulation/qemu
       - app-emulation/docker-compose
 
 - name: install tools and other packages

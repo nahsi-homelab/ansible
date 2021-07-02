@@ -17,3 +17,13 @@
       - station_packages | length
     quiet: true
   when: station_packages is defined
+
+- name: check "station_xorg_configs" variable
+  tags: always
+  assert:
+    that:
+      - station_xorg_configs is defined
+      - station_xorg_configs is mapping
+    quiet: true
+
+

@@ -21,3 +21,6 @@
   loop_control:
     label: "{{ item.name }}"
 
+- name: Configure xorg
+  tags: xorg
+  include_tasks: 04-xorg.yml

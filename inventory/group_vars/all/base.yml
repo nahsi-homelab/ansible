@@ -3,6 +3,10 @@ base_timezone: "Europe/Moscow"
 # /usr/share/consolefonts
 base_consolefont: "ter-i16b"
 
+base_hosts: |
+  127.0.0.1 {{ inventory_hostname }}.{{ dc }} {{ inventory_hostname }} localhost
+  ::1       {{ inventory_hostname }}.{{ dc }} {{ inventory_hostname }} localhost
+
 # List of locales to generate
 base_locales:
   - "en_US.UTF-8 UTF-8"
@@ -13,15 +17,6 @@ base_eselect:
     target: "en_US.UTF-8"
   - module: editor
     target: "nvim"
-
-# Services to enable
-base_services:
-  - name: "consolefont"
-    runlevel: "boot"
-
-base_dns: |
-  resolv_conf=/etc/resolv.conf
-  name_servers="1.1.1.1"
 
 base_hwclock: |
   # Is your hardware clock set to local or to UTC?
@@ -35,7 +30,7 @@ base_hwclock: |
 
 # https://github.com/OpenRC/openrc/blob/master/etc/rc.conf
 # https://wiki.gentoo.org/wiki/OpenRC
-base_openrc:
+base_openrc: |
   # Enable logging
   rc_logger="YES"
   rc_log_path="/var/log/rc.log"
@@ -52,18 +47,62 @@ base_packages_all:
   - sys-process/cronie
   - app-eselect/eselect-repository
   - sys-fs/dosfstools
+  - net-firewall/iptables
+  - app-arch/p7zip
   - media-fonts/terminus-font
-  - net-dns/bind-tools
-  - app-text/tree
-  - sys-fs/ncdu
-  - app-editors/neovim
-  - sys-process/htop
   - app-shells/bash-completion
   - app-shells/gentoo-bashcomp
-  - app-portage/flaggie
+  - sys-apps/lm-sensors
+  - sys-power/cpupower
+
   - app-portage/portage-utils
-  - app-misc/nnn
-  - net-firewall/iptables
-  - app-misc/jq
+  - app-portage/flaggie
+  - app-portage/cpuid2cpuflags
+  - app-portage/repoman
+
+  - sys-apps/usbutils
+  - sys-apps/lshw
+  - net-dns/bind-tools
+  - net-analyzer/traceroute
   - net-misc/iperf
-  - app-arch/p7zip
+
+  - app-editors/neovim
+  - app-text/tree
+  - sys-process/htop
+  - sys-fs/ncdu
+  - app-misc/nnn
+  - app-misc/jq
+  - app-admin/pwgen
+base_packages: "{{ base_packages_all }}"
+
+base_sshd_config: |
+  Protocol 2
+  KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256
+  Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
+  MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,umac-128@openssh.com
+  PermitRootLogin no
+  PubkeyAuthentication yes
+  HostbasedAuthentication no
+  PasswordAuthentication no
+  PermitEmptyPasswords no
+  SyslogFacility AUTH
+  LogLevel INFO
+  AllowGroups wheel
+  HostKey /etc/ssh/ssh_host_rsa_key
+  HostKey /etc/ssh/ssh_host_ed25519_key
+  {% if base_sshd_listen is defined %}
+  {% for addr in base_sshd_listen %}
+  ListenAddress {{ addr }}
+  {% endfor %}
+  {% endif %}
+
+  Subsystem sftp internal-sftp
+
+base_users:
+  - username: nahsi
+    groups:
+      - wheel
+      - portage
+      - docker
+    ssh: https://github.com/nahsi.keys
+    password: "bd7465fc49ba157a92c751e33c3de9030a5d303e917daeab49cd76ba8f1409abe573286925f1127fea19932c1292867d4eaead98aacbb0969a83a8f75fbe7181"

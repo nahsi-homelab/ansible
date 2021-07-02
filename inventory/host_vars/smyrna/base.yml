@@ -1,5 +1,4 @@
-arch: "amd64"
-bios: "uefi"
+base_consolefont: "ter-i24b"
 
 base_filesystems:
   - path: "/tmp"
@@ -7,22 +6,107 @@ base_filesystems:
     opts: "rw,nosuid,noatime,nodev,size=1G,mode=1777"
     type: "tmpfs"
 
-base_network: |
-  config_enp2s0="dhcp"
+base_sysctl:
+  - name: net.ipv4.ip_forward
+    value: 1
+  - name: net.ipv4.conf.default.rp_filter
+    value: 1
 
-base_network_interfaces:
-  - "enp2s0"
+base_dns: |
+  resolv_conf="/etc/resolv.conf"
+  name_servers="127.0.0.1"
+  search_domains="node.consul service.consul"
 
-base_dns:
-  name_servers: 1.1.1.1
-
-base_docker_config_overlay:
+base_containers_docker:
+  default-runtime: "crun"
+  runtimes:
+    crun:
+      path: "/usr/bin/crun"
   storage-driver: "zfs"
   storage-opts:
     - zfs.fsname=main/containers
+  log-driver: "json-file"
+  log-opts:
+    max-size: "32m"
+    max-file: "2"
 
 base_containers_storage: |
   [storage]
   driver="zfs"
+  runroot="/run/containers/storage"
+  graphroot="/var/lib/containers/storage"
   [storage.options.zfs]
   fsname="main/containers"
+
+base_sshd_openrc_config: |
+  SSHD_CONFDIR="${RC_PREFIX%/}/etc/ssh"
+  SSHD_OPTS=""
+  rc_need="net.enp2s0"
+
+base_packages_smyrna:
+  - net-dialup/ppp
+  - net-wireless/iw
+base_packages: "{{ base_packages_all + base_packages_smyrna | unique }}"
+
+base_wireguard_configs:
+  syria: "{{ lookup('hashi_vault', 'secret/data/wireguard/smyrna:syria') }}"
+
+base_wireguard_interfaces:
+  - name: "syria"
+
+base_network_interfaces:
+  - name: "enp2s0"
+    start: false
+    enable: false
+  - name: "enp3s0"
+    start: false
+    enable: false
+  - name: "wlo2"
+    start: false
+  - name: "ppp0"
+  - name: "br0"
+
+base_network: |
+  # pppoe
+  config_enp3s0=null
+  config_ppp0="ppp"
+  link_ppp0="enp3s0"
+  plugins_ppp0="pppoe"
+  pppd_ppp0="
+    noauth
+    defaultroute
+    mru 1492
+    mtu 1492
+    lcp-echo-interval 15 lcp-echo-failure 3
+    noaccomp noccp nobsdcomp nodeflate nopcomp novj novjccomp"
+
+  username_ppp0={{ lookup('hashi_vault', 'secret/data/ISP/asia:username') }}
+  password_ppp0={{ lookup('hashi_vault', 'secret/data/ISP/asia:password') }}
+
+  rc_net_ppp0_need="net.enp3s0"
+
+  # a workaround for 'WARNING: net.ppp0 has started, but is inactive'
+  preup() {
+    if [ "${IFACE}" == "ppp0" ]; then
+      trap 'mark_service_started' EXIT
+    fi
+    return 0
+  }
+
+  # lan
+  config_enp2s0=null
+
+  # wifi
+  modules_wl02="!iwconfig !wpa_supplicant !iw"
+  config_wl02=null
+
+  # bridge
+  bridge_br0="enp2s0"
+  config_br0="192.168.200.1/24"
+  rc_net_br0_need="net.enp2s0"
+  bridge_forward_delay_br0=0
+  bridge_hello_time_br0=1000
+
+  rc_net_enp2s0_provide="!net"
+  rc_net_enp3s0_provide="!net"
+  rc_net_wlo2_provide="!net"

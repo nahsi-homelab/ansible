@@ -1,0 +1,3 @@
+arch: "amd64"
+bios: "uefi"
+main_ip: "192.168.200.1"

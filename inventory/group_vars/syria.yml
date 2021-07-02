@@ -1,0 +1,50 @@
+dc: "syria"
+
+consul_datacenter: "syria"
+
+base_dns: |
+  resolv_conf="/etc/resolv.conf"
+  name_servers="192.168.1.7"
+  search_domains="node.consul service.consul"
+
+consul_config_all:
+  datacenter: "{{ consul_datacenter }}"
+  encrypt: "{{ lookup('hashi_vault', 'secret/data/gossip:consul') }}"
+
+  data_dir: "/var/lib/consul/"
+
+  enable_syslog: true
+  # "trace", "debug", "info", "warn", "err"
+  log_level: "warn"
+  syslog_facility: "LOCAL5"
+
+  rejoin_after_leave: true
+
+  bind_addr: "{{ main_ip }}"
+
+  enable_local_script_checks: true
+
+  dns_config:
+    soa:
+      min_ttl: 60
+
+  addresses:
+    http: 0.0.0.0
+    https: 0.0.0.0
+
+  ports:
+    http: 8500
+    https: 8501
+    grpc: 8502
+
+  verify_incoming_rpc: false
+  verify_outgoing: false
+  verify_server_hostname: false
+  ca_file: "/opt/consul/certs/ca.pem"
+  cert_file: "/opt/consul/certs/cert.pem"
+  key_file: "/opt/consul/certs/key.pem"
+
+  server: false
+  retry_join: "{{ consul_servers }}"
+  retry_join_wan: "{{ consul_all_servers }}"
+consul_config: "{{ consul_config_all }}"

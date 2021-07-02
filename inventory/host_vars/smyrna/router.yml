@@ -1,0 +1,51 @@
+router_unbound_configs:
+  smyrna: |
+    server:
+      interface: 192.168.200.1@53
+      interface: 127.0.0.1@53
+      access-control: 192.168.200.0/24 allow
+
+  consul: |
+    server:
+      private-domain: "consul"
+      domain-insecure: "consul"
+
+    stub-zone:
+      name: "consul"
+      stub-addr: 127.0.0.1@8600
+
+router_dnsmasq_config: |
+  interface=br0
+  dhcp-range=br0,192.168.200.100,192.168.200.250,75h
+  dhcp-option=3,192.168.200.1
+  dhcp-option=6,192.168.200.1
+
+router_dnsmasq_openrc_config: |
+  DNSMASQ_OPTS="--user=dnsmasq --group=dnsmasq --port=0"
+
+router_hostapd_config: |
+  interface=wlo2
+  driver=nl80211
+  bridge=br0
+
+  hw_mode=g
+  channel=13
+  country_code=RU
+  ieee80211n=1
+  ieee80211ac=1
+  wmm_enabled=1
+  ht_capab=[HT40][LDPC][TX-STBC][RX-STBC1][DSSS_CCK-40]
+
+  ssid=asia
+  auth_algs=1
+  wpa=2
+  wpa_key_mgmt=WPA-PSK
+  rsn_pairwise=CCMP
+  wpa_passphrase={{ lookup('hashi_vault', 'secret/data/wifi/asia:pass') }}
+
+  logger_syslog=-1
+  logger_syslog_level=2
+
+router_hostapd_openrc_config: |
+  INTERFACES="wlo2"
+  CONFIGS="/etc/hostapd/hostapd.conf"

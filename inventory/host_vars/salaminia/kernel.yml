@@ -1,0 +1,152 @@
+kernel_boot_device: "/dev/disk/by-uuid/67E3-17ED"
+
+kernel_zfsbootmenu_config:
+  Global:
+    ManageImages: true
+    BootMountPoint: /boot/efi
+    DracutConfDir: /etc/zfsbootmenu/dracut.conf.d
+  Components:
+    ImageDir: /boot/efi/EFI/gentoo
+    Versions: 1 # this will keep two versions, possibly a bug
+    Enabled: true
+
+kernel_refind_menu: |
+  "Boot default" "rd.vconsole.font=ter-i24b root=zfsbootmenu:POOL=main timeout=10 ro quiet loglevel=0"
+  "Boot to menu" "rd.vconsole.font=ter-i24b root=zfsbootmenu:POOL=main timeout=-1 ro quiet loglevel=0"
+
+kernel_refind_config: |
+  timeout "5"
+  shutdown_after_timeout "false"
+  use_nvram "false"
+  screensaver "300"
+  use_graphics_for "linux"
+  showtools "shell, memtest, apple_recovery, shutdown, reboot, about"
+  scan_all_linux_kernels "true"
+  fold_linux_kernels "true"
+  include themes/rEFInd-minimal/theme.conf
+
+kernel_firmware:
+  - brcm/brcmfmac43602-pcie.bin
+
+kernel_module_configs:
+  applespi: |
+    options applespi fnremap=1
+
+kernel_configs:
+  01platform: |
+    CONFIG_MBROADWELL=y
+
+    CONFIG_HZ_300=y
+    CONFIG_HZ=300
+
+    CONFIG_INTEL_TURBO_MAX_3=y
+
+    CONFIG_SPI=y
+    CONFIG_SPI_PXA2XX=m
+
+    CONFIG_INPUT_MOUSE=y
+    CONFIG_MOUSE_BCM5974=m
+
+    CONFIG_INPUT_KEYBOARD=y
+    CONFIG_KEYBOARD_APPLESPI=m
+
+    CONFIG_MFD_INTEL_LPSS_PCI=m
+    CONFIG_LPC_ICH=m
+    CONFIG_I2C_I801=y
+    CONFIG_SENSORS_CORETEMP=y
+    CONFIG_INT340X_THERMAL=y
+    CONFIG_INTEL_POWERCLAMP=y
+    CONFIG_INTEL_RAPL=m
+    CONFIG_INTEL_PCH_THERMAL=y
+    CONFIG_X86_PKG_TEMP_THERMAL=y
+    CONFIG_APPLE_PROPERTIES=y
+    CONFIG_BACKLIGHT_APPLE=y
+    CONFIG_HID_APPLE=m
+    CONFIG_SENSORS_APPLESMC=y
+    CONFIG_APPLE_GMUX=m
+    CONFIG_ACPI_ALS=y
+    CONFIG_INPUT_LEDS=y
+    CONFIG_MAC_EMUMOUSEBTN=y
+
+    CONFIG_DMADEVICES=y
+    CONFIG_DW_DMAC=y
+    CONFIG_DW_DMAC_PCI=y
+
+    CONFIG_FB_SYS_IMAGEBLIT=y
+    CONFIG_FB_SYS_FOPS=y
+    CONFIG_FB_SYS_COPYAREA=y
+    CONFIG_FB_SYS_FILLRECT=y
+
+    CONFIG_MMC=y
+    CONFIG_MMC_SDHCI=m
+    CONFIG_MMC_SDHCI_PCI=m
+
+    CONFIG_USB_BDC_PCI=m
+    CONFIG_USB_ROLE_SWITCH=y
+    CONFIG_USB_ROLES_INTEL_XHCI=y
+
+    CONFIG_HOTPLUG_PCI=y
+    CONFIG_HOTPLUG_PCI_ACPI=y
+
+    CONFIG_INTEL_MEI=m
+    CONFIG_INTEL_MEI_ME=m
+
+  02bluetooth: |
+    CONFIG_BT=y
+    CONFIG_BT_HCIBTUSB=y
+    CONFIG_BT_HCIBTUSB_BCM=y
+    CONFIG_BT_HIDP=y
+    CONFIG_BT_INTEL=y
+    CONFIG_BT_BCM=y
+    CONFIG_BT_RFCOMM=y
+    CONFIG_BT_BNEP=y
+    CONFIG_BT_RTL=y
+    CONFIG_UHID=y
+
+  03net: |
+    CONFIG_WIRELESS=y
+    CONFIG_CFG80211=m
+    CONFIG_MAC80211=m
+    CONFIG_RFKILL=y
+    CONFIG_WLAN=y
+    CONFIG_WLAN_VENDOR_BROADCOM=y
+    CONFIG_BRCMFMAC=m
+    CONFIG_BRCMFMAC_PCIE=y
+
+  04video: |
+    CONFIG_DRM=y
+    CONFIG_DRM_KMS_HELPER=y
+    CONFIG_DRM_I915=y
+
+    CONFIG_DRM_I915_GVT=y
+    CONFIG_DRM_I915_GVT_KVMGT=y
+    CONFIG_VFIO=y
+    CONFIG_VFIO_MDEV=y
+    CONFIG_VFIO_MDEV_DEVICE=y
+
+  05sound: |
+    CONFIG_SND_HWDEP=m
+    CONFIG_SND_HDA_GENERIC=m
+    CONFIG_SND_COMPRESS_OFFLOAD=m
+    CONFIG_SND_DMAENGINE_PCM=m
+    CONFIG_SND_HDA_CODEC_HDMI=m
+    CONFIG_SND_HDA_CODEC_CIRRUS=m
+
+    # SoundWire
+    # CONFIG_SOUNDWIRE is not set
+    # CONFIG_SOUNDWIRE_GENERIC_ALLOCATION is not set
+    # CONFIG_SOUNDWIRE_INTEL is not set
+    # CONFIG_SOUNDWIRE_CADENCE is not set
+
+  06usb_net: |
+    CONFIG_USB_NET_DRIVERS=y
+    CONFIG_USB_USBNET=y
+    CONFIG_USB_NET_AX88179_178A=m
+
+  99firmware: |
+    CONFIG_EXTRA_FIRMWARE_DIR="/lib/firmware"
+    CONFIG_EXTRA_FIRMWARE="{{ kernel_firmware | join(' ') }}"
+
+kernel_dracut_configs:
+  xhci_teardown:
+    zfsbootmenu_teardown+=" /usr/share/examples/zfsbootmenu/xhci-teardown.sh "

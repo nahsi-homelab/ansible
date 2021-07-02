@@ -1,0 +1,58 @@
+base_consolefont: "ter-i24b"
+
+base_hosts: |
+  127.0.0.1 {{ inventory_hostname }} localhost
+  ::1       {{ inventory_hostname }} localhost
+
+base_filesystems:
+  - path: "/tmp"
+    src: "tmpfs"
+    opts: "rw,nosuid,noatime,nodev,size=2G,mode=1777"
+    type: "tmpfs"
+
+base_sysctl:
+  - name: vm.swappiness
+    value: 1
+
+base_packages_salaminia:
+  - app-laptop/mbpfan
+  - sys-power/thermald
+base_packages: "{{ base_packages_all + base_packages_salaminia | unique }}"
+
+base_services:
+  - name: "mbpfan"
+    runlevel: "default"
+  - name: "thermald"
+    runlevel: "default"
+
+base_iwd: |
+  [General]
+  EnableNetworkConfiguration=true
+  [Network]
+  RoutePriorityOffset=200
+  NameResolvingService=resolvconf
+
+base_containers_docker:
+  default-runtime: "crun"
+  runtimes:
+    crun:
+      path: "/usr/bin/crun"
+  storage-driver: "zfs"
+  storage-opts:
+    - zfs.fsname=main/containers
+  log-driver: "json-file"
+  log-opts:
+    max-size: "32m"
+    max-file: "2"
+
+base_containers_storage: |
+  [storage]
+  driver="zfs"
+  runroot="/run/containers/storage"
+  graphroot="/var/lib/containers/storage"
+  [storage.options.zfs]
+  fsname="main/containers"
+
+base_udev_rules:
+  10_disable_bluetooth: |
+    SUBSYSTEM=="rfkill", ATTR{type}=="bluetooth", ATTR{state}="0"

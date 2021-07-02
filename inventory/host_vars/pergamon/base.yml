@@ -1,6 +1,3 @@
-arch: "amd64"
-bios: "legacy"
-
 base_consolefont: "ter-i24b"
 
 base_filesystems:
@@ -13,14 +10,46 @@ base_filesystems:
     opts: "rw,nosuid,noatime,nodev,size=2G,mode=1777"
     type: "tmpfs"
 
+base_sysctl:
+  - name: vm.swappiness
+    value: 1
+
 base_sshd_listen:
-  - "192.168.50.10"
+  - "192.168.200.10"
   - "192.168.5.2"
   - "127.0.0.1"
 
-base_services:
-  elogind: "boot"
-  alsasound: "default"
+base_network: |
+  config_enp2s0="192.168.200.10/24"
+  routes_enp2s0="default via 192.168.200.1"
+
+base_network_interfaces:
+  - name: "enp2s0"
+
+base_containers_docker:
+  default-runtime: "crun"
+  runtimes:
+    crun:
+      path: "/usr/bin/crun"
+  storage-driver: "zfs"
+  storage-opts:
+    - zfs.fsname=main/containers
+  log-driver: "json-file"
+  log-opts:
+    max-size: "32m"
+    max-file: "2"
+
+base_containers_storage: |
+  [storage]
+  driver="zfs"
+  runroot="/run/containers/storage"
+  graphroot="/var/lib/containers/storage"
+  [storage.options.zfs]
+  fsname="main/containers"
+
+base_packages_pergamon:
+  - net-misc/r8168
+base_packages: "{{ base_packages_all + base_packages_pergamon | unique }}"
 
 base_wireguard_configs:
   syria: "{{ lookup('hashi_vault', 'secret/data/wireguard/pergamon:syria') }}"
@@ -28,35 +57,12 @@ base_wireguard_configs:
   office: "{{ lookup('hashi_vault', 'secret/data/wireguard/pergamon:office') }}"
 
 base_wireguard_interfaces:
-  - "syria"
-  - "vpn"
-
-base_network: |
-  config_enp2s0="192.168.50.10/24"
-  routes_enp2s0="default via 192.168.50.1"
-
-base_network_interfaces:
-  - "enp2s0"
-
-base_dns:
-  name_servers: 192.168.5.1
-  search_domains: "node.consul service.consul"
-
-base_docker_config_overlay:
-  storage-driver: "zfs"
-  storage-opts:
-    - zfs.fsname=main/containers
-
-base_containers_storage: |
-  [storage]
-  driver="zfs"
-  [storage.options.zfs]
-  fsname="main/containers"
-
-base_packages_pergamon:
-  - net-misc/r8168
-  - app-emulation/docker-compose
-  - media-plugins/hyperion
-  - media-sound/beets
-  - app-misc/anki
-base_packages: "{{ base_packages_all + base_packages_pergamon | unique }}"
+  - name: "syria"
+    enable: false
+    start: false
+  - name: "vpn"
+    enable: false
+    start: false
+  - name: "office"
+    enable: false
+    start: false

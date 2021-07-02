@@ -1,5 +1,3 @@
-kernel_version: "5.10.35"
-
 kernel_boot_device: "/dev/disk/by-partlabel/EFI"
 
 kernel_firmware:
@@ -18,14 +16,14 @@ kernel_zfsbootmenu_config:
   Kernel:
     CommandLine: ro quiet loglevel=0
 
-kernel_refind_menu:
-  - name: "Boot default"
-    cmd: "root=zfsbootmenu:POOL=hot timeout=10 ro quiet loglevel=0"
-  - name: "Boot to menu"
-    cmd: "root=zfsbootmenu:POOL=hot timeout=-1 ro quiet loglevel=0"
+kernel_refind_menu: |
+  "Boot default" "root=zfsbootmenu:POOL=hot timeout=10 ro quiet loglevel=0"
+  "Boot to menu" "root=zfsbootmenu:POOL=hot timeout=-1 ro quiet loglevel=0"
 
 kernel_configs:
   01platform: |
+    CONFIG_MZEN2=y
+
     CONFIG_GPIO_AMDPT=y
 
     # Sensors

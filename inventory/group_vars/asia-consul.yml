@@ -1,0 +1,16 @@
+consul_servers:
+  - 192.168.200.1
+
+consul_config_server:
+  server: true
+  bootstrap_expect: 1
+
+  ui_config:
+    enabled: true
+  client_addr: "0.0.0.0"
+
+consul_config: >
+  {{
+    consul_config_all |
+    combine(consul_config_server, recursive=true)
+  }}

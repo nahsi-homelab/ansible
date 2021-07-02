@@ -1,12 +1,13 @@
 base_portage_makeconf_pergamon:
-  COMMON_FLAGS: "-O2 -march=amdfam10 -mtune=amdfam10 -mcx16 -mpopcnt"
-  CPU_FLAGS_X86: "3dnow 3dnowext popcnt mmx mmxext sse sse2 sse3 sse4a"
-  VIDEO_CARDS: "amdgpu radeonsi"
+  COMMON_FLAGS: "-O2 -march=broadwell -mtune=broadwell -pipe"
+  CPU_FLAGS_X86: "aes avx avx2 f16c fma3 mmx mmxext pclmul popcnt sse sse2 sse3 sse4_1 sse4_2 ssse3 rdrand"
+  VIDEO_CARDS: "intel i965 iris"
   LUA_TARGETS: "luajit"
   LUA_SINGLE_TARGET: "luajit"
-  LLVM_TARGETS: "AMDGPU X86"
+  LLVM_TARGETS: "X86"
   DISTCC_HOSTS: "antiochia.node.syria.consul/16"
   FEATURES: "parallel-install distcc"
+  INPUT_DEVICES: "synaptics evdev"
 base_portage_makeconf: >
   {{
     base_portage_makeconf_all |
@@ -18,16 +19,7 @@ base_portage_package_use:
     net_misc/openssh -pam
     sys-devel/gcc pgo
     dev-lang/rust clippy rls rustfmt
-    media-libs/mesa -classic -gles2
-
-  desktop: |
-    media-plugins/hyperion -v4l -qt-grabber -zeroconf
-
-    # xorg-server
-    x11-libs/libdrm video_cards_radeon
-
-    # tor-launcher
-    app-crypt/gpgme python
+    media-libs/mesa -gles2
 
 base_portage_use:
   - zstd
@@ -46,7 +38,7 @@ base_portage_use:
   - alsa
 
   - vulkan
-  - vdpau
+  # - vaapi
   - opengl
 
   - opus

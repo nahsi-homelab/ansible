@@ -1,2 +1,5 @@
-consul_version: "1.9.4"
-consul_datacenter: "syria"
+consul_version: "1.9.6"
+
+consul_all_servers:
+  - 192.168.1.7
+  - 192.168.200.1

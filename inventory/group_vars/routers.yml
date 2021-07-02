@@ -1,33 +1,107 @@
-dns_unbound_forward_zone:
-  - name: "."
-    forward-addr:
-      - 127.0.0.1@5053 # dnscrypt
+router_unbound_config: |
+  server:
+    use-syslog: yes
+    verbosity: 1
+    num-threads: 2
+    do-daemonize: yes
+    access-control: 0.0.0.0/0 refuse
+    access-control: 127.0.0.0/8 allow
+    do-ip4: yes
+    do-ip6: no
+    do-udp: yes
+    do-tcp: yes
+    hide-identity: yes
+    hide-version: yes
+    cache-min-ttl: 3600
+    cache-max-ttl: 86400
+    prefetch: yes
+    prefetch-key: yes
+    edns-buffer-size: 1232
+    msg-cache-slabs: 4
+    rrset-cache-slabs: 4
+    infra-cache-slabs: 4
+    key-cache-slabs: 4
+    private-address: 0.0.0.0/8
+    private-address: 10.0.0.0/8
+    private-address: 172.16.0.0/12
+    private-address: 192.168.0.0/16
+    private-address: 169.254.0.0/16
+    qname-minimisation: no
+    do-not-query-localhost: no
+    include: /etc/unbound/conf.d/*.conf
 
-dns_unbound_stub_zone:
-  - name: "consul"
-    stub-addr:
-      - 127.0.0.1@8600
+  forward-zone:
+    name: "."
+    forward-addr: 127.0.0.1@5053
 
-dns_unbound_server:
-  interface:
-    - 0.0.0.0@53
-  access-control:
-    - "0.0.0.0/0 refuse"
-    - "127.0.0.0/8 allow"
-    - "192.168.1.0/24 allow"
-    - "192.168.5.0/24 allow"
-    - "172.17.0.0/16 allow"
-    - "10.88.0.0/16 allow"
-  do-not-query-localhost: "no"
-  domain-insecure: "consul"
-  # workaround for a bug in consul
-  # https://github.com/hashicorp/consul/issues/6579
-  qname-minimisation: "no"
-  private-domain:
-    - "consul"
+router_dnscrypt_config: |
+  listen_addresses = ["127.0.0.1:5053"]
 
-dns_dnscrypt_routes:
-  - server_name: "*"
-    via:
-      - anon-dnscrypt.one
-      - anon-cs-nl
+  log_level = 4
+  use_syslog = true
+  max_clients = 10
+  timeout = 500
+  keepalive = 30
+  ipv4_servers = true
+  ipv6_servers = false
+  dnscrypt_servers = true
+  doh_servers = false
+  require_dnssec = true
+  require_nolog = true
+  require_nofilter = true
+  force_tcp = false
+  lb_strategy = "random"
+  lb_estimator = false
+  ignore_system_dns = true
+  netprobe_timeout = 60
+  netprobe_address = "9.9.9.9:53"
+  block_ipv6 = true
+  block_unqualified = true
+  block_undelegated = true
+  reject_ttl = 600
+  cache = false
+
+  [anonymized_dns]
+  routes = [
+    { server_name = "*", via = ["anon-dnscrypt.one", "anon-cs-nl"] }
+  ]
+  skip_incompatible = true
+
+  [sources]
+    [sources."public-resolvers"]
+    urls = [
+      "https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v2/public-resolvers.md",
+      "https://download.dnscrypt.info/resolvers-list/v2/public-resolvers.md"
+    ]
+    cache_file = "/var/cache/dnscrypt-proxy/public-resolvers.md"
+    minisign_key = "RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3"
+    prefix = ""
+    [sources."relays"]
+    urls = [
+      "https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v2/relays.md",
+      "https://download.dnscrypt.info/resolvers-list/v2/relays.md"
+    ]
+    cache_file = "/var/cache/dnscrypt-proxy/relays.md"
+    minisign_key = "RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3"
+    refresh_delay = 72
+    prefix = ""
+
+  [broken_implementations]
+  fragments_blocked = [
+    "cisco",
+    "cisco-ipv6",
+    "cisco-familyshield",
+    "cisco-familyshield-ipv6",
+    "quad9-dnscrypt-ip4-filter-alt",
+    "quad9-dnscrypt-ip4-filter-pri",
+    "quad9-dnscrypt-ip4-nofilter-alt",
+    "quad9-dnscrypt-ip4-nofilter-pri",
+    "quad9-dnscrypt-ip6-filter-alt",
+    "quad9-dnscrypt-ip6-filter-pri",
+    "quad9-dnscrypt-ip6-nofilter-alt",
+    "quad9-dnscrypt-ip6-nofilter-pri",
+    "cleanbrowsing-adult",
+    "cleanbrowsing-family-ipv6",
+    "cleanbrowsing-family",
+    "cleanbrowsing-security"
+  ]

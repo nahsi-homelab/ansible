@@ -21,9 +21,10 @@ base_network: |
 base_network_interfaces:
   - "enp35s0"
 
-base_dns:
-  name_servers: 127.0.0.1
-  search_domains: "node.consul service.consul"
+base_dns: |
+  resolv_conf="/etc/resolv.conf"
+  name_servers="127.0.0.1"
+  search_domains="node.consul service.consul"
 
 base_wireguard_configs:
   syria: "{{ lookup('hashi_vault', 'secret/data/wireguard/syria:syria') }}"

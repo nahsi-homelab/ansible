@@ -1,10 +1,33 @@
 [all]
 antiochia
 pergamon
+salaminia
 smyrna
 
-[routers]
+[asia]
+pergamon
+smyrna
+
+[syria]
 antiochia
 
 [hashi]
+antiochia
+
+[workstations]
+pergamon
+salaminia
+
+[routers]
+antiochia
+smyrna
+
+[consul:children]
+asia-consul
+syria-consul
+
+[asia-consul]
+smyrna
+
+[syria-consul]
 antiochia

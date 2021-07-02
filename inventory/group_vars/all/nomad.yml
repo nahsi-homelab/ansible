@@ -3,7 +3,7 @@ nomad_region: "oikumene"
 
 nomad_config:
   region: "{{ nomad_region }}"
-  datacenter: "syria"
+  datacenter: "{{ dc }}"
   data_dir: "{{ nomad_dirs.data.path }}"
   plugin_dir: "{{ nomad_dirs.plugins.path }}"
 

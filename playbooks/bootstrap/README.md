@@ -23,13 +23,15 @@ zpool create -o ashift=12 \
     -O xattr=sa \
     -O relatime=on \
     -O acltype=posix \
-    -O canmount=off \
+    -O mountpoint=off
     -O normalization=formD \
     -O compression=zstd-3 \
     -O dnodesize=auto \
     -R /mnt/gentoo \
     main /dev/disk/by-id/id
 ```
+
+[zstd compression](https://github.com/openzfs/zfs/pull/10278)
 
 #### Example dataset layout
 ```

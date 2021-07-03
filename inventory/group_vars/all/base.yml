@@ -54,6 +54,7 @@ base_packages_all:
   - app-shells/gentoo-bashcomp
   - sys-apps/lm-sensors
   - sys-power/cpupower
+  - sys-apps/gptfdisk
 
   - app-portage/portage-utils
   - app-portage/flaggie

@@ -33,6 +33,9 @@
       dev-qt/qtwebchannel qml
       media-libs/libvpx svc
 
+      # xdg-utils
+      app-text/xmlto text
+
 - name: install awesome-wm and dependencies
   portage:
     package: "{{ packages }}"
@@ -40,7 +43,6 @@
   vars:
     packages:
       - x11-base/xorg-server
-      - x11-apps/xrandr
       - x11-wm/awesome
       - x11-libs/lain
 
@@ -114,6 +116,8 @@
       - media-gfx/maim
       - app-misc/anki
       - x11-themes/papirus-icon-theme
+      - x11-apps/xrandr
+      - x11-misc/xdg-utils
 
 - name: install fonts
   portage:

@@ -37,6 +37,7 @@
       app-text/xmlto text
 
 - name: install awesome-wm and dependencies
+  tags: packages
   portage:
     package: "{{ packages }}"
     state: present
@@ -47,6 +48,7 @@
       - x11-libs/lain
 
 - name: enable elogind
+  tags: packages
   service:
     name: "elogind"
     enabled: yes
@@ -54,6 +56,7 @@
     use: openrc
 
 - name: install alsa and apulse
+  tags: packages
   portage:
     package: "{{ packages }}"
     state: present
@@ -63,6 +66,7 @@
       - media-sound/apulse
 
 - name: enable alsasound
+  tags: packages
   service:
     name: "alsasound"
     enabled: yes
@@ -70,6 +74,7 @@
     use: openrc
 
 - name: install gnupg and pass
+  tags: packages
   portage:
     package: "{{ packages }}"
     state: present
@@ -80,6 +85,7 @@
       - app-admin/pass
 
 - name: install mpv and ffmpeg
+  tags: packages
   portage:
     package: "{{ packages }}"
     state: present
@@ -90,6 +96,7 @@
       - media-video/mediainfo
 
 - name: install virtualization packages
+  tags: packages
   portage:
     package: "{{ packages }}"
     state: present
@@ -100,6 +107,7 @@
       - app-emulation/docker-compose
 
 - name: install tools and other packages
+  tags: packages
   portage:
     package: "{{ packages }}"
     state: present
@@ -118,8 +126,11 @@
       - x11-themes/papirus-icon-theme
       - x11-apps/xrandr
       - x11-misc/xdg-utils
+      - app-admin/chezmoi
+      - net-misc/youtube-dl
 
 - name: install fonts
+  tags: packages
   portage:
     package: "{{ packages }}"
     state: present
@@ -133,6 +144,7 @@
       - media-fonts/roboto
 
 - name: install qutebrowser
+  tags: packages
   portage:
     package: "{{ packages }}"
     state: present
@@ -142,6 +154,7 @@
       - dev-python/tldextract  # for qute-pass
 
 - name: install python packages
+  tags: packages
   portage:
     package: "{{ packages }}"
     state: present

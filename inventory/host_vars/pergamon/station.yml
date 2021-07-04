@@ -15,3 +15,7 @@ station_xorg_configs:
       Option "VariableRefresh" "true"
       Option "TearFree" "true"
     EndSection
+
+station_packages:
+  - media-sound/alsa-utils
+  - media-sound/apulse

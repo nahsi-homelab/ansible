@@ -36,9 +36,9 @@ base_portage_use:
   - -gtk3
   - -sound
   - alsa
+  - pulseaudio
 
   - vulkan
-  # - vaapi
   - opengl
 
   - opus

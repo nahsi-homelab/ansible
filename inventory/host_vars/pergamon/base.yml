@@ -14,6 +14,10 @@ base_sysctl:
   - name: vm.swappiness
     value: 1
 
+base_services:
+  - name: "alsasound"
+    runlevel: "default"
+
 base_sshd_listen:
   - "192.168.200.10"
   - "192.168.5.2"

@@ -15,6 +15,11 @@
       app-emulation/virtualbox headless -alsa -qt5 -sdk -udev -opengl -opus
       app-emulation/qemu spice
 
+      # jellyfin shim
+      media-video/mpv libmpv
+      dev-lang/python tk
+      media-tv/jellyfin-mpv-shim shaders systray
+
       # gnupg
       app-crypt/pinentry gtk
       app-crypt/gcr gtk
@@ -55,24 +60,6 @@
     runlevel: "boot"
     use: openrc
 
-- name: install alsa and apulse
-  tags: packages
-  portage:
-    package: "{{ packages }}"
-    state: present
-  vars:
-    packages:
-      - media-sound/alsa-utils
-      - media-sound/apulse
-
-- name: enable alsasound
-  tags: packages
-  service:
-    name: "alsasound"
-    enabled: yes
-    runlevel: "default"
-    use: openrc
-
 - name: install gnupg and pass
   tags: packages
   portage:
@@ -94,6 +81,7 @@
       - media-video/ffmpeg
       - media-video/mpv
       - media-video/mediainfo
+      - media-tv/jellyfin-mpv-shim
 
 - name: install virtualization packages
   tags: packages

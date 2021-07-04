@@ -14,11 +14,7 @@
       media-fonts/noto cjk
       app-emulation/virtualbox headless -alsa -qt5 -sdk -udev -opengl -opus
       app-emulation/qemu spice
-
-      # jellyfin shim
-      media-video/mpv libmpv
-      dev-lang/python tk
-      media-tv/jellyfin-mpv-shim shaders systray
+      media-tv/jellyfin-mpv-shim shaders
 
       # gnupg
       app-crypt/pinentry gtk

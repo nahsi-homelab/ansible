@@ -40,6 +40,7 @@ base_portage_use:
 
   - vulkan
   - opengl
+  - vaapi
 
   - opus
   - ogg

@@ -55,6 +55,7 @@ base_packages_all:
   - sys-apps/lm-sensors
   - sys-power/cpupower
   - sys-apps/gptfdisk
+  - app-misc/ca-certificats
 
   - app-portage/portage-utils
   - app-portage/flaggie

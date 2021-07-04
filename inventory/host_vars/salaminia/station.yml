@@ -6,3 +6,21 @@ station_xorg_configs:
       Option "XkbLayout" "us,ru"
       Option "XkbOptions" "grp:caps_toggle,compose:ralt"
     EndSection
+
+  40_touchpad: |
+    Section "InputClass"
+      MatchIsTouchpad "on"
+      Identifier      "evdev touchpad catchall"
+      Driver          "synaptics"
+      # 1 = left, 2 = right, 3 = middle
+      # Option          "TapButton1" "1"
+      # Option          "TapButton2" "3"
+      # Option          "TapButton3" "2"
+      # Palm detection
+      Option          "PalmDetect" "1"
+      # Horizontal scrolling
+      Option "HorizTwoFingerScroll" "1"
+
+      Option "VertScrollDelta" "-110"
+      Option "HorizScrollDelta" "-110"
+    EndSection

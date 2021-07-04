@@ -6,12 +6,3 @@ station_xorg_configs:
       Option "XkbLayout" "us,ru"
       Option "XkbOptions" "grp:caps_toggle,compose:ralt"
     EndSection
-
-  20_amd: |
-    Section "Device"
-      Identifier "AMD"
-      Driver "amdgpu"
-      Option "DRI" "3"
-      Option "VariableRefresh" "true"
-      Option "TearFree" "true"
-    EndSection

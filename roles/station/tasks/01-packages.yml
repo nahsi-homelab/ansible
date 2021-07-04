@@ -112,6 +112,7 @@
       - x11-misc/xdg-utils
       - app-admin/chezmoi
       - net-misc/youtube-dl
+      - x11-misc/unclutter
 
 - name: install fonts
   tags: packages

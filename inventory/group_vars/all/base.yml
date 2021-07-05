@@ -69,6 +69,7 @@ base_packages_all:
   - net-misc/iperf
 
   - app-editors/neovim
+  - dev-python/pynvim
   - app-text/tree
   - sys-process/htop
   - sys-fs/ncdu

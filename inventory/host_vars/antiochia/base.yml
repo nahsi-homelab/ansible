@@ -11,15 +11,12 @@ base_filesystems:
     opts: "rw,nosuid,noatime,nodev,size=2G,mode=1777"
     type: "tmpfs"
 
-base_sshd_listen:
-  - "192.168.1.7"
-
 base_network: |
-  config_enp35s0="192.168.1.7/24"
-  routes_enp35s0="default via 192.168.1.1"
+  config_enp35s0="192.168.100.10/24"
+  routes_enp35s0="default via 192.168.100.1"
 
 base_network_interfaces:
-  - "enp35s0"
+  - name: "enp35s0"
 
 base_dns: |
   resolv_conf="/etc/resolv.conf"
@@ -30,15 +27,25 @@ base_wireguard_configs:
   syria: "{{ lookup('hashi_vault', 'secret/data/wireguard/syria:syria') }}"
 
 base_wireguard_interfaces:
-  - "syria"
+  - name: "syria"
 
-base_docker_config_overlay:
+base_containers_docker:
+  default-runtime: "crun"
+  runtimes:
+    crun:
+      path: "/usr/bin/crun"
   storage-driver: "zfs"
   storage-opts:
     - zfs.fsname=hot/containers
+  log-driver: "json-file"
+  log-opts:
+    max-size: "32m"
+    max-file: "2"
 
 base_containers_storage: |
   [storage]
   driver="zfs"
+  runroot="/run/containers/storage"
+  graphroot="/var/lib/containers/storage"
   [storage.options.zfs]
   fsname="hot/containers"

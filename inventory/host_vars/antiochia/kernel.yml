@@ -13,8 +13,6 @@ kernel_zfsbootmenu_config:
     ImageDir: /boot/efi/EFI/gentoo
     Versions: 1 # this will keep two versions, possibly a bug
     Enabled: true
-  Kernel:
-    CommandLine: ro quiet loglevel=0
 
 kernel_refind_menu: |
   "Boot default" "root=zfsbootmenu:POOL=hot timeout=10 ro quiet loglevel=0"
@@ -24,40 +22,39 @@ kernel_configs:
   01platform: |
     CONFIG_MZEN2=y
 
-    CONFIG_GPIO_AMDPT=y
-
-    # Sensors
     CONFIG_SENSORS_AMD_ENERGY=y
     CONFIG_SENSORS_FAM15H_POWER=y
+    CONFIG_SENSORS_CORETEMP=y
 
-    # Network
+    CONFIG_DMADEVICES=y
+    CONFIG_INTEL_IOATDMA=y
+
+  02network: |
     CONFIG_NET_VENDOR_INTEL=y
     CONFIG_IGB=y
     CONFIG_IGB_HWMON=y
 
-    # DMA
-    CONFIG_DMADEVICES=y
-    CONFIG_INTEL_IOATDMA=y
-
-    # IMPI related
+  03ipmi: |
     CONFIG_RC_CORE=y
+
     CONFIG_DRM=y
     CONFIG_DRM_AST=y
-    CONFIG_MEDIA_CEC_SUPPORT=y
     CONFIG_DRM_DP_CEC=y
+
+    CONFIG_MEDIA_CEC_SUPPORT=y
+
     CONFIG_USB_NET_DRIVERS=y
     CONFIG_USB_USBNET=y
     CONFIG_USB_NET_CDCETHER=y
 
-    # IMPI
-    CONFIG_IPMI_HANDLER=y
     CONFIG_ACPI_IPMI=y
-    CONFIG_APMI_DEVICE_INTERFACE=y
+    CONFIG_IPMI_DEVICE_INTERFACE=y
+    CONFIG_IPMI_HANDLER=y
     CONFIG_IPMI_SI=y
     CONFIG_IPMI_SSIF=y
     CONFIG_IPMI_WATCHDOG=y
     CONFIG_IPMI_POWEROFF=y
 
-  02firmware: |
+  99firmware: |
     CONFIG_EXTRA_FIRMWARE_DIR="/lib/firmware"
     CONFIG_EXTRA_FIRMWARE="{{ kernel_firmware | join(' ') }}"

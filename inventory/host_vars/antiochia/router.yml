@@ -1,4 +1,11 @@
 router_unbound_configs:
+  antiochia: |
+    server:
+      interface: "{{ main_ip }}:@53"
+      interface: 127.0.0.1@53
+      access-control: 192.168.1.0/24 allow
+      access-control: 192.168.100.0/24 allow
+
   consul: |
     server:
       private-domain: "consul"
@@ -7,9 +14,3 @@ router_unbound_configs:
     stub-zone:
       name: "consul"
       stub-addr: 127.0.0.1@8600
-
-  antiochia: |
-    server:
-      interface: 0.0.0.0@53
-      access-control: 192.168.1.0/24 allow
-      access-control: 192.168.5.0/24 allow

@@ -1,4 +1,17 @@
 station_xorg_configs:
+  20_monitor: |
+    Section "Monitor"
+      Identifier "HDMI-2"
+      Option "PreferredMode" "2560x1440"
+      Option "LeftOf" "eDP-1"
+    EndSection
+
+    Section "Monitor"
+      Identifier "eDP-1"
+      Option "PreferredMode" "2560x1600"
+      Option "RightOf" "HDMI-2"
+    EndSection
+
   30_keyboard: |
     Section "InputClass"
       Identifier "keyboard-all"

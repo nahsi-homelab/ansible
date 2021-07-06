@@ -17,6 +17,7 @@ base_sysctl:
 base_packages_salaminia:
   - app-laptop/mbpfan
   - sys-power/thermald
+  - x11-misc/autorandr
 base_packages: "{{ base_packages_all + base_packages_salaminia | unique }}"
 
 base_services:
@@ -58,3 +59,5 @@ base_udev_rules:
     SUBSYSTEM=="rfkill", ATTR{type}=="bluetooth", ATTR{state}="0"
   20_vdio: |
     SUBSYSTEM=="vfio", OWNER="root", GROUP="kvm", MODE="0660"
+  30_autorandr: |
+    ACTION=="change", SUBSYSTEM=="drm", RUN+="/usr/bin/autorandr --batch --change --default default"

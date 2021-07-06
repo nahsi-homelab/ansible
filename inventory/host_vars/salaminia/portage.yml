@@ -8,6 +8,7 @@ base_portage_makeconf_pergamon:
   DISTCC_HOSTS: "antiochia.node.syria.consul/16"
   FEATURES: "parallel-install distcc"
   INPUT_DEVICES: "synaptics evdev"
+  ACCEPT_LICENSE: "* -@EULA google-chrome"
 base_portage_makeconf: >
   {{
     base_portage_makeconf_all |
@@ -37,6 +38,7 @@ base_portage_use:
   - -sound
   - alsa
   - pulseaudio
+  - cups
 
   - vulkan
   - opengl

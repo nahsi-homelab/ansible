@@ -23,7 +23,7 @@ base_portage_package_use:
     media-libs/mesa -gles2
 
   qemu: |
-    app-emulation -libvirt -vnc
+    app-emulation/virt-viewer -libvirt -vnc
     net-misc/spice-gtk gtk3 lz4
 
 base_portage_use:

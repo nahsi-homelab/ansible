@@ -56,3 +56,5 @@ base_containers_storage: |
 base_udev_rules:
   10_disable_bluetooth: |
     SUBSYSTEM=="rfkill", ATTR{type}=="bluetooth", ATTR{state}="0"
+  20_vdio: |
+    SUBSYSTEM=="vfio", OWNER="root", GROUP="kvm", MODE="0660"

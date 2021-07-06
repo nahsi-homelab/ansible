@@ -24,3 +24,6 @@ station_xorg_configs:
       Option "VertScrollDelta" "-110"
       Option "HorizScrollDelta" "-110"
     EndSection
+
+station_packages:
+  - app-emulation/virt-viewer

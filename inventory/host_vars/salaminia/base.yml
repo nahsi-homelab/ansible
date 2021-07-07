@@ -1,9 +1,5 @@
 base_consolefont: "ter-i24b"
 
-base_hosts: |
-  127.0.0.1 {{ inventory_hostname }} localhost
-  ::1       {{ inventory_hostname }} localhost
-
 base_filesystems:
   - path: "/tmp"
     src: "tmpfs"
@@ -27,6 +23,14 @@ base_services:
     runlevel: "default"
   - name: "thermald"
     runlevel: "default"
+
+base_wireguard_configs:
+  office: "{{ lookup('hashi_vault', 'secret/data/wireguard/salaminia:office') }}"
+
+base_wireguard_interfaces:
+  - name: "office"
+    enable: false
+    start: false
 
 base_iwd: |
   [General]

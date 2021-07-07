@@ -25,10 +25,14 @@ base_services:
     runlevel: "default"
 
 base_wireguard_configs:
+  vpn: "{{ lookup('hashi_vault', 'secret/data/wireguard/salaminia:vpn') }}"
   office: "{{ lookup('hashi_vault', 'secret/data/wireguard/salaminia:office') }}"
 
 base_wireguard_interfaces:
   - name: "office"
+    enable: false
+    start: false
+  - name: "vpn"
     enable: false
     start: false
 

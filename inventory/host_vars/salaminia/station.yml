@@ -41,3 +41,8 @@ station_xorg_configs:
 station_packages:
   - app-emulation/virt-viewer
   - x11-misc/cbatticon
+
+  # work
+  - net-im/telegram-desktop-bin
+  - net-im/slack
+  - net-im/zoom

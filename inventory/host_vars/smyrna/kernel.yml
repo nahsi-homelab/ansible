@@ -23,6 +23,9 @@ kernel_configs:
   01platform: |
     CONFIG_MGOLDMONT=y
 
+    CONFIG_HZ_300=y
+    CONFIG_HZ=300
+
     CONFIG_PINCTRL_GEMINILAKE=y
     CONFIG_MISC_RTSX_USB=y
 

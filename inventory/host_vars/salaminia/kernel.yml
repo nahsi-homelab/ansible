@@ -32,6 +32,12 @@ kernel_module_configs:
   applespi: |
     options applespi fnremap=1
 
+  audio_powersave: |
+    options snd_hda_intel power_save=1
+
+  wifi_powersave: |
+    options iwlwifi power_save=1 uapsd_disable=0
+
 kernel_configs:
   01platform: |
     CONFIG_MBROADWELL=y
@@ -128,7 +134,6 @@ kernel_configs:
     CONFIG_SND_HDA_GENERIC=m
     CONFIG_SND_COMPRESS_OFFLOAD=m
     CONFIG_SND_DMAENGINE_PCM=m
-    CONFIG_SND_HDA_CODEC_HDMI=m
     CONFIG_SND_HDA_CODEC_CIRRUS=m
 
     # SoundWire

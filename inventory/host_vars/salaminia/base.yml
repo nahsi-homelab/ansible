@@ -13,6 +13,8 @@ base_filesystems:
 base_sysctl:
   - name: vm.swappiness
     value: 1
+  - name: vm.dirty_writeback_centisecs
+    value: 1500
 
 base_packages_salaminia:
   - app-laptop/mbpfan
@@ -57,7 +59,21 @@ base_containers_storage: |
 base_udev_rules:
   10_disable_bluetooth: |
     SUBSYSTEM=="rfkill", ATTR{type}=="bluetooth", ATTR{state}="0"
-  20_vdio: |
+
+  10_wifi_powersave: |
+    ACTION=="add", SUBSYSTEM=="net", KERNEL=="wl*", RUN+="/usr/bin/iwctl dev $name set power_save on"
+
+  10_pci_pm: |
+    SUBSYSTEM=="pci", ATTR{power/control}="auto"
+
+  10_usb_autosuspend: |
+    ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="auto"
+
+  10_sata_autosuspend: |
+    ACTION=="add", SUBSYSTEM=="scsi_host", KERNEL=="host*", ATTR{link_power_management_policy}="med_power_with_dipm"
+
+  20_vfio: |
     SUBSYSTEM=="vfio", OWNER="root", GROUP="kvm", MODE="0660"
+
   30_autorandr: |
     ACTION=="change", SUBSYSTEM=="drm", RUN+="/usr/bin/autorandr --batch --change --default default"

@@ -13,7 +13,7 @@
       media-gfx/imagemagick -X
       media-fonts/noto cjk
       app-emulation/virtualbox headless -alsa -qt5 -sdk -udev -opengl -opus
-      app-emulation/qemu spice
+      app-emulation/qemu spice gtk
       media-tv/jellyfin-mpv-shim shaders
 
       # theme

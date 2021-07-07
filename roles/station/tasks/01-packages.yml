@@ -120,6 +120,7 @@
       - x11-misc/qt5ct
       - x11-themes/papirus-icon-theme
       - x11-themes/arc-theme
+      - x11-themes/adwaita-qt
 
 - name: install fonts
   tags: packages
@@ -144,6 +145,17 @@
     packages:
       - www-client/qutebrowser
       - dev-python/tldextract  # for qute-pass
+
+- name: install messengers
+  tags: packages
+  portage:
+    package: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+      - net-im/telegram-desktop-bin
+      - net-im/slack
+      - net-im/zoom
 
 - name: install python packages
   tags: packages

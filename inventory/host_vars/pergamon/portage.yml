@@ -29,6 +29,9 @@ base_portage_package_use:
     # tor-launcher
     app-crypt/gpgme python
 
+    # messengers
+    app-text/ghostscript-gpl cups
+
 base_portage_use:
   - zstd
   - luajit

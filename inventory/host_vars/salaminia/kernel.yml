@@ -29,8 +29,8 @@ kernel_firmware:
   - brcm/brcmfmac43602-pcie.bin
 
 kernel_module_configs:
-  applespi: |
-    options applespi fnremap=1
+  hid_apple: |
+    options hid_apple swap_fn_leftctrl swap_opt_cmd
 
   audio_powersave: |
     options snd_hda_intel power_save=1

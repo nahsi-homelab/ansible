@@ -40,3 +40,4 @@ station_xorg_configs:
 
 station_packages:
   - app-emulation/virt-viewer
+  - x11-misc/cbatticon

@@ -30,7 +30,7 @@ kernel_firmware:
 
 kernel_module_configs:
   hid_apple: |
-    options hid_apple swap_fn_leftctrl swap_opt_cmd
+    options hid_apple swap_fn_leftctrl=1 swap_opt_cmd=1
 
   audio_powersave: |
     options snd_hda_intel power_save=1

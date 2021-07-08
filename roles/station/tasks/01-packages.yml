@@ -43,6 +43,7 @@
       dev-qt/qtwebengine widgets
       dev-qt/qtwebchannel qml
       media-libs/libvpx svc
+      dev-libs/nss utils # certutil
 
       # xdg-utils
       app-text/xmlto text

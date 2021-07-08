@@ -15,6 +15,7 @@ station_hashi:
 base_packages_desktop:
   - www-client/qutebrowser
   - dev-python/tldextract
+  - www-client/chromium
 
   - net-im/telegram-desktop-bin
   - net-im/slack

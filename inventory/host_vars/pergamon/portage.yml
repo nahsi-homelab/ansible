@@ -47,8 +47,11 @@ base_portage_use:
   - -gtk3
   - -sound
   - alsa
+  - pipewire
+  - screencast
 
   - vulkan
+  - vaapi
   - vdpau
   - opengl
 
@@ -60,5 +63,4 @@ base_portage_use:
   - jpeg
   - png
   - webp
-  - aac
   - dts

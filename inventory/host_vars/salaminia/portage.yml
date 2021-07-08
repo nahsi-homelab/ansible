@@ -32,6 +32,7 @@ base_portage_use:
   - dist-kernel
   - X
   - elogind
+  - cups
   - -policykit
   - dri
   - drm
@@ -40,9 +41,10 @@ base_portage_use:
   - -gtk
   - -gtk3
   - -sound
-  - alsa
+  - -alsa
   - pulseaudio
-  - cups
+  - pipewire
+  - screencast
 
   - vulkan
   - opengl
@@ -56,5 +58,4 @@ base_portage_use:
   - jpeg
   - png
   - webp
-  - aac
   - dts

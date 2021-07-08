@@ -82,6 +82,5 @@ base_udev_rules:
 
   20_vfio: |
     SUBSYSTEM=="vfio", OWNER="root", GROUP="kvm", MODE="0660"
-
   30_autorandr: |
     ACTION=="change", SUBSYSTEM=="drm", RUN+="/usr/bin/autorandr --batch --change --default default"

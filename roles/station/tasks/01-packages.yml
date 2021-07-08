@@ -12,9 +12,15 @@
       media-video/ffmpeg chromium libdrm x264 x265 webp vpx vorbis theora
       media-gfx/imagemagick -X
       media-fonts/noto cjk
-      app-emulation/virtualbox headless -alsa -qt5 -sdk -udev -opengl -opus
+
+      media-video/pipewire pipewire-alsa extra
+
+      app-emulation/virtualbox -* headless python_single_target_python3_9
       app-emulation/qemu spice gtk
+
+      # jellyfin mpv shim
       media-tv/jellyfin-mpv-shim shaders
+      media-video/mpv libmpv
 
       # theme
       dev-qt/qtgui dbus
@@ -40,6 +46,15 @@
 
       # xdg-utils
       app-text/xmlto text
+
+- name: install pipewire
+  tags: packages
+  portage:
+    package: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+      - media-video/pipewire
 
 - name: install awesome-wm and dependencies
   tags: packages
@@ -121,6 +136,7 @@
       - x11-themes/papirus-icon-theme
       - x11-themes/arc-theme
       - x11-themes/adwaita-qt
+      - media-video/pipewire
 
 - name: install fonts
   tags: packages

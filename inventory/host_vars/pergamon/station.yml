@@ -19,9 +19,6 @@ station_xorg_configs:
   10_monitor: |
     Section "Monitor"
       Identifier "DisplayPort-0"
+      Modeline "2560x1440_144"  583.60  2560 2568 2600 2720  1440 1465 1473 1490 +hsync +vsync
       Option "PreferredMode" "2560x1440_144"
     EndSection
-
-station_packages:
-  - media-sound/alsa-utils
-  - media-sound/apulse

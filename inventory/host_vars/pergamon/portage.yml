@@ -13,24 +13,27 @@ base_portage_makeconf: >
     combine(base_portage_makeconf_pergamon, recursive=true)
   }}
 
-base_portage_package_use:
+base_portage_package_use_pergamon:
   system: |
     net_misc/openssh -pam
     sys-devel/gcc pgo
     dev-lang/rust clippy rls rustfmt
     media-libs/mesa -classic -gles2
 
-  desktop: |
+  pergamon: |
     media-plugins/hyperion -v4l -qt-grabber -zeroconf
 
     # xorg-server
     x11-libs/libdrm video_cards_radeon
 
-    # tor-launcher
-    app-crypt/gpgme python
-
     # messengers
     app-text/ghostscript-gpl cups
+
+base_portage_package_use: >
+  {{
+    base_portage_package_use_pergamon |
+    combine(base_portage_package_use_desktop, recursive=true)
+  }}
 
 base_portage_use:
   - zstd
@@ -48,7 +51,6 @@ base_portage_use:
   - -sound
   - alsa
   - pipewire
-  - screencast
 
   - vulkan
   - vaapi

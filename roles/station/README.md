@@ -4,7 +4,6 @@
 > This role configures Gentoo workstation
 
 ## Tags
-* `packages` - install and configure packages
 * `suckless` - install and configure suckless
 * `xorg` - copy xorg configs
 * `hashi` - install HashiCorp tools

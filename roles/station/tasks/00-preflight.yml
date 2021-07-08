@@ -8,16 +8,6 @@
       - station_hashi | length
     quiet: true
 
-- name: check "station_packages" variable
-  tags: always
-  assert:
-    that:
-      - station_packages is iterable
-      - station_packages is not string
-      - station_packages | length
-    quiet: true
-  when: station_packages is defined
-
 - name: check "station_xorg_configs" variable
   tags: always
   assert:
@@ -25,5 +15,3 @@
       - station_xorg_configs is defined
       - station_xorg_configs is mapping
     quiet: true
-
-

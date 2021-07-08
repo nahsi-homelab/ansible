@@ -16,12 +16,19 @@ base_packages_salaminia:
   - app-laptop/mbpfan
   - sys-power/thermald
   - x11-misc/autorandr
-base_packages: "{{ base_packages_all + base_packages_salaminia | unique }}"
+base_packages: >
+  {{
+    base_packages_all +
+    base_packages_salaminia +
+    base_packages_desktop | unique
+  }}
 
 base_services:
   - name: "mbpfan"
     runlevel: "default"
   - name: "thermald"
+    runlevel: "default"
+  - name: "elogind"
     runlevel: "default"
 
 base_wireguard_configs:

@@ -15,7 +15,7 @@
     - /etc/portage/patches
 
 - name: copy make.conf
-  tags: portage
+  tags: [ portage, packages ]
   copy:
     content: |
       {% for key, value in base_portage_makeconf.items() %}
@@ -28,14 +28,14 @@
   notify: update use
 
 - name: register present useflag files
-  tags: portage
+  tags: [ portage, packages ]
   find:
     paths: "/etc/portage/package.use/"
     patterns: ["base-*.use"]
   register: __files_present
 
 - name: copy useflag files
-  tags: portage
+  tags: [ portage, packages ]
   copy:
     content: "{{ file.value }}"
     dest: "/etc/portage/package.use/base-{{ file.key }}.use"
@@ -50,13 +50,13 @@
   register: __files_copied
 
 - name: ansible magic
-  tags: portage
+  tags: [ portage, packages ]
   set_fact:
     __files_present_list: "{{ __files_present | json_query('files[*].path') | default([]) }}"
     __files_copied_list: "{{ __files_copied | json_query('results[*].dest') | default([]) }}"
 
 - name: delete useflag files
-  tags: portage
+  tags: [ portage, packages ]
   file:
     path: "{{ item }}"
     state: absent

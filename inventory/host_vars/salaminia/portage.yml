@@ -15,16 +15,18 @@ base_portage_makeconf: >
     combine(base_portage_makeconf_pergamon, recursive=true)
   }}
 
-base_portage_package_use:
+base_portage_package_use_salaminia:
   system: |
     net_misc/openssh -pam
     sys-devel/gcc pgo
     dev-lang/rust clippy rls rustfmt
     media-libs/mesa -gles2
 
-  qemu: |
-    app-emulation/virt-viewer -libvirt -vnc
-    net-misc/spice-gtk gtk3 lz4
+base_portage_package_use: >
+  {{
+    base_portage_package_use_salaminia |
+    combine(base_portage_package_use_desktop, recursive=true)
+  }}
 
 base_portage_use:
   - zstd
@@ -43,7 +45,6 @@ base_portage_use:
   - -sound
   - alsa
   - pipewire
-  - screencast
 
   - vulkan
   - opengl

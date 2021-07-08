@@ -107,6 +107,7 @@
   when: base_dns is defined
 
 - name: install base packages
+  tags: packages
   portage:
     package: "{{ item }}"
     state: present

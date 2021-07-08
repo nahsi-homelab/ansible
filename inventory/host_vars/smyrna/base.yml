@@ -43,6 +43,10 @@ base_sshd_openrc_config: |
   SSHD_OPTS=""
   rc_need="net.enp2s0"
 
+base_services:
+  - name: "docker"
+    runlevel: "default"
+
 base_packages_smyrna:
   - net-dialup/ppp
   - net-wireless/iw

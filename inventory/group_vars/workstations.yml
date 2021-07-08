@@ -11,3 +11,117 @@ station_hashi:
     version: "1.7.3"
   - name: vagrant
     version: "2.2.16"
+
+base_packages_desktop:
+  - www-client/qutebrowser
+  - dev-python/tldextract
+
+  - net-im/telegram-desktop-bin
+  - net-im/slack
+  - net-im/zoom
+
+  - app-admin/ansible
+  - app-admin/ansible-lint
+  - app-admin/ansible-modules-hashivault
+  - dev-python/hvac
+  - dev-python/virtualenv
+  - dev-python/pip
+  - dev-python/jmespath
+
+  - x11-wm/awesome
+  - x11-libs/lain
+  - media-video/pipewire
+  - x11-apps/xrandr
+
+  - app-crypt/gnupg
+  - app-crypt/pinentry
+  - app-admin/pass
+
+  - media-video/ffmpeg
+  - media-video/mpv
+  - media-video/mediainfo
+  - media-tv/jellyfin-mpv-shim
+
+  - app-emulation/virtualbox
+  - app-emulation/qemu
+  - app-emulation/docker-compose
+
+  - app-admin/chezmoi
+  - x11-terms/kitty
+  - app-misc/tmux
+  - app-misc/smug
+  - sys-apps/bat
+  - app-misc/task
+  - net-misc/youtube-dl
+
+  - x11-misc/redshift
+  - x11-misc/unclutter
+  - x11-misc/rofi
+  - app-misc/anki
+  - x11-misc/xdg-utils
+
+  - x11-misc/picom
+  - media-gfx/maim
+
+  - sys-apps/ripgrep
+  - apps-shell/fzf
+
+  - x11-themes/papirus-icon-theme
+  - x11-themes/arc-theme
+  - x11-themes/adwaita-qt
+  - x11-misc/qt5ct
+  - dev-qt/qtstyleplugins
+
+  - media-fonts/fira-sans
+  - media-fonts/fira-mono
+  - media-fonts/fira-code
+  - media-fonts/noto
+  - media-fonts/noto-emoji
+  - media-fonts/roboto
+
+base_portage_package_use_desktop:
+  desktop: |
+    media-video/ffmpeg chromium libdrm x264 x265 webp vpx vorbis theora
+    media-gfx/imagemagick -X
+    media-fonts/noto cjk
+    media-video/pipewire pipewire-alsa extra
+
+    # chromium
+    www-client/chromium widevine official -suid -js-type-check
+    net-libs/nodejs inspector
+
+    # emulation
+    app-emulation/virtualbox -* headless python_single_target_python3_9
+    app-emulation/qemu spice gtk
+    app-emulation/virt-viewer -libvirt -vnc
+    net-misc/spice-gtk gtk3 lz4
+
+    # jellyfin mpv shim
+    media-tv/jellyfin-mpv-shim shaders
+    media-video/mpv libmpv
+
+    # theme
+    dev-qt/qtgui dbus
+    x11-themes/arc-theme gtk3
+
+    # gnupg
+    app-crypt/pinentry gtk
+    app-crypt/gcr gtk
+
+    # ansible
+    net-libs/zeromq drafts
+    dev-lang/python sqlite
+
+    # qutebrowser
+    www-client/qutebrowser scripts
+    dev-python/PyQt5 declarative printsupport widgets gui network opengl sql multimedia webchannel websockets dbus svg
+    dev-libs/libpcre2 pcre16
+    sys-libs/zlib minizip
+    dev-qt/qtmultimedia widgets
+    dev-qt/qtwebengine widgets
+    dev-qt/qtwebchannel qml
+    media-libs/libvpx svc
+    dev-libs/nss utils # certutil
+
+    # xdg-utils
+    app-text/xmlto text

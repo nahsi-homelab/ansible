@@ -3,11 +3,11 @@
   include_tasks: 00-preflight.yml
 
 - name: Configure portage
-  tags: portage
+  tags: [ portage, packages ]
   include_tasks: 01-portage.yml
 
 - name: Configure system
-  tags: system
+  tags: [ system, packages ]
   include_tasks: 02-system.yml
 
 - name: Configure containers

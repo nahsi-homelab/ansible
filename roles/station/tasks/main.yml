@@ -2,13 +2,9 @@
   tags: always
   include_tasks: 00-preflight.yml
 
-- name: Install packages
-  tags: packages
-  include_tasks: 01-packages.yml
-
 - name: Install suckless
   tags: suckless
-  include_tasks: 02-suckless.yml
+  include_tasks: 01-suckless.yml
   loop:
     - media-gfx/sxiv
     - x11-terms/st
@@ -16,11 +12,11 @@
 
 - name: Install hashi
   tags: hashi
-  include_tasks: 03-hashi.yml
+  include_tasks: 02-hashi.yml
   loop: "{{ station_hashi }}"
   loop_control:
     label: "{{ item.name }}"
 
 - name: Configure xorg
   tags: xorg
-  include_tasks: 04-xorg.yml
+  include_tasks: 03-xorg.yml

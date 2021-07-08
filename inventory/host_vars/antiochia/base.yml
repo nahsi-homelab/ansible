@@ -49,3 +49,7 @@ base_containers_storage: |
   graphroot="/var/lib/containers/storage"
   [storage.options.zfs]
   fsname="hot/containers"
+
+base_services:
+  - name: "docker"
+    runlevel: "default"

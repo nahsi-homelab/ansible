@@ -65,12 +65,3 @@
     owner: root
     group: root
     mode: 0600
-  notify: restart docker
-
-- name: enable docker
-  tags: containers
-  service:
-    name: docker
-    enabled: yes
-    runlevel: default
-    use: openrc

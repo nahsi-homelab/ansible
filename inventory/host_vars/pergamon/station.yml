@@ -16,6 +16,12 @@ station_xorg_configs:
       Option "TearFree" "true"
     EndSection
 
+  10_monitor: |
+    Section "Monitor"
+      Identifier "DisplayPort-0"
+      Option "PreferredMode" "2560x1440_144"
+    EndSection
+
 station_packages:
   - media-sound/alsa-utils
   - media-sound/apulse

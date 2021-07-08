@@ -41,6 +41,10 @@ kernel_zfsbootmenu_config:
     Kernel:
       CommandLine: ro quiet loglevel=0
 
+kernel_module_configs:
+  audio_powersave: |
+    options snd_hda_intel power_save=1
+
 kernel_configs:
   01platform: |
     CONFIG_SENSORS_K10TEMP=y

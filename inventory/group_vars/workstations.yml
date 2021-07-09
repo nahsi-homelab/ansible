@@ -65,7 +65,7 @@ base_packages_desktop:
   - media-gfx/maim
 
   - sys-apps/ripgrep
-  - apps-shell/fzf
+  - app-shells/fzf
 
   - x11-themes/papirus-icon-theme
   - x11-themes/arc-theme

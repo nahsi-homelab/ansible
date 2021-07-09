@@ -21,6 +21,7 @@ base_packages_desktop:
   - net-im/slack
   - net-im/zoom
 
+  - dev-python/wheel
   - app-admin/ansible
   - app-admin/ansible-lint
   - app-admin/ansible-modules-hashivault

@@ -86,6 +86,7 @@ base_portage_package_use_desktop:
     media-gfx/imagemagick -X
     media-fonts/noto cjk
     media-video/pipewire pipewire-alsa extra
+    media-libs/freetype harfbuzz
 
     # chromium
     www-client/chromium widevine official -suid -js-type-check

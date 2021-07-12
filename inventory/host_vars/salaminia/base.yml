@@ -82,12 +82,14 @@ base_udev_rules:
     SUBSYSTEM=="pci", ATTR{power/control}="auto"
 
   10_usb_autosuspend: |
-    ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="auto"
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="2717", ATTR{idProduct}=="5001", GOTO="power_usb_rules_end"
+    ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="auto" LABEL="power_usb_rules_end"
 
   10_sata_autosuspend: |
     ACTION=="add", SUBSYSTEM=="scsi_host", KERNEL=="host*", ATTR{link_power_management_policy}="med_power_with_dipm"
 
   20_vfio: |
     SUBSYSTEM=="vfio", OWNER="root", GROUP="kvm", MODE="0660"
+
   30_autorandr: |
     ACTION=="change", SUBSYSTEM=="drm", RUN+="/usr/bin/autorandr --batch --change --default default"

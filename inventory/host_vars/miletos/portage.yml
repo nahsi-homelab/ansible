@@ -15,7 +15,7 @@ base_portage_makeconf: >
     combine(base_portage_makeconf_pergamon, recursive=true)
   }}
 
-base_portage_package_use_salaminia:
+base_portage_package_use_miletos:
   system: |
     net_misc/openssh -pam
     sys-devel/gcc pgo
@@ -24,7 +24,7 @@ base_portage_package_use_salaminia:
 
 base_portage_package_use: >
   {{
-    base_portage_package_use_salaminia |
+    base_portage_package_use_miletos |
     combine(base_portage_package_use_desktop, recursive=true)
   }}
 

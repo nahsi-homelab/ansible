@@ -1,12 +1,12 @@
 [all]
 antiochia
 pergamon
-salaminia
+miletos
 smyrna
 
 [asia]
 pergamon
-salaminia
+miletos
 smyrna
 
 [syria]
@@ -17,7 +17,7 @@ antiochia
 
 [workstations]
 pergamon
-salaminia
+miletos
 
 [routers]
 antiochia

@@ -12,14 +12,14 @@ base_sysctl:
   - name: vm.dirty_writeback_centisecs
     value: 1500
 
-base_packages_salaminia:
+base_packages_miletos:
   - app-laptop/mbpfan
   - sys-power/thermald
   - x11-misc/autorandr
 base_packages: >
   {{
     base_packages_all +
-    base_packages_salaminia +
+    base_packages_miletos +
     base_packages_desktop | unique
   }}
 
@@ -32,8 +32,8 @@ base_services:
     runlevel: "default"
 
 base_wireguard_configs:
-  vpn: "{{ lookup('hashi_vault', 'secret/data/wireguard/salaminia:vpn') }}"
-  office: "{{ lookup('hashi_vault', 'secret/data/wireguard/salaminia:office') }}"
+  vpn: "{{ lookup('hashi_vault', 'secret/data/wireguard/miletos:vpn') }}"
+  office: "{{ lookup('hashi_vault', 'secret/data/wireguard/miletos:office') }}"
 
 base_wireguard_interfaces:
   - name: "office"

@@ -55,6 +55,7 @@ base_packages_desktop:
   - sys-apps/bat
   - app-misc/task
   - net-misc/youtube-dl
+  - app-portage/pfl
 
   - x11-misc/redshift
   - x11-misc/unclutter
@@ -88,6 +89,7 @@ base_portage_package_use_desktop:
     media-fonts/noto cjk
     media-video/pipewire pipewire-alsa extra
     media-libs/freetype harfbuzz
+    sys-apps/util-linux caps # for pfl
 
     # chromium
     www-client/chromium widevine official -suid -js-type-check

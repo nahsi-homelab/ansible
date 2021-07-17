@@ -56,6 +56,7 @@ base_packages_desktop:
   - app-misc/task
   - net-misc/youtube-dl
   - app-portage/pfl
+  - net-irc/tiny
 
   - x11-misc/redshift
   - x11-misc/unclutter
@@ -84,6 +85,9 @@ base_packages_desktop:
 
   - app-text/zathura-pdf-mupdf
   - app-text/zathura-djvu
+
+  - dev-util/cargo-ebuild
+  - dev-util/cargo-license
 
 base_portage_package_use_desktop:
   desktop: |

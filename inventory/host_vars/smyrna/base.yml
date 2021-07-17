@@ -101,8 +101,8 @@ base_network: |
   config_enp2s0=null
 
   # wifi
-  modules_wl02="!iwconfig !wpa_supplicant !iw"
-  config_wl02=null
+  modules_wlo2="!iwconfig !wpa_supplicant !iw"
+  config_wlo2=null
 
   # bridge
   bridge_br0="enp2s0"

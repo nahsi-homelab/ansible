@@ -10,12 +10,12 @@ base_portage_makeconf: >
     combine(base_portage_makeconf_antiochia, recursive=true)
   }}
 
-
 base_portage_use:
   - zstd
   - luajit
   - dist-kernel
   - -X
+  - -introspection
 
 base_portage_package_use:
   system: |

@@ -82,6 +82,9 @@ base_packages_desktop:
   - media-fonts/noto-emoji
   - media-fonts/roboto
 
+  - app-text/zathura-pdf-mupdf
+  - app-text/zathura-djvu
+
 base_portage_package_use_desktop:
   desktop: |
     media-video/ffmpeg chromium libdrm x264 x265 webp vpx vorbis theora

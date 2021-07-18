@@ -1,5 +1,5 @@
 base_portage_makeconf_pergamon:
-  COMMON_FLAGS: "-O2 -march=amdfam10 -mtune=amdfam10 -mcx16 -mpopcnt"
+  COMMON_FLAGS: "-O2 -march=amdfam10 -mcx16 -mpopcnt"
   CPU_FLAGS_X86: "3dnow 3dnowext popcnt mmx mmxext sse sse2 sse3 sse4a"
   VIDEO_CARDS: "amdgpu radeonsi"
   INPUT_DEVICES: "evdev"

@@ -21,7 +21,7 @@ kernel_firmware:
 
 kernel_configs:
   01platform: |
-    CONFIG_MGOLDMONT=y
+    CONFIG_MGOLDMONTPLUS=y
 
     CONFIG_HZ_300=y
     CONFIG_HZ=300

@@ -83,6 +83,11 @@ base_packages_desktop:
   - media-fonts/noto-emoji
   - media-fonts/roboto
 
+  - games-util/steam-launcher
+  - media-fonts/steamfonts
+  - media-fonts/font-bitstream-100dpi
+  - sys-apps/lsb-release
+
   - app-text/zathura-pdf-mupdf
   - app-text/zathura-djvu
 
@@ -137,3 +142,34 @@ base_portage_package_use_desktop:
 
     # xdg-utils
     app-text/xmlto text
+
+  steam: |
+    x11-libs/libX11 abi_x86_32
+    x11-libs/libXau abi_x86_32
+    x11-libs/libxcb abi_x86_32
+    x11-libs/libXdmcp abi_x86_32
+    x11-base/xcb-proto abi_x86_32
+    virtual/opengl abi_x86_32
+    media-libs/mesa abi_x86_32
+    dev-libs/expat abi_x86_32
+    media-libs/libglvnd abi_x86_32
+    sys-libs/zlib abi_x86_32
+    x11-libs/libva abi_x86_32
+    x11-libs/libvdpau abi_x86_32
+    x11-libs/libdrm abi_x86_32
+    x11-libs/libxshmfence abi_x86_32
+    x11-libs/libXext abi_x86_32
+    x11-libs/libXxf86vm abi_x86_32
+    x11-libs/libXfixes abi_x86_32
+    x11-libs/libpciaccess abi_x86_32
+    app-arch/zstd abi_x86_32
+    sys-devel/llvm abi_x86_32
+    x11-libs/libXrandr abi_x86_32
+    x11-libs/libXrender abi_x86_32
+    dev-libs/libffi abi_x86_32
+    sys-libs/ncurses abi_x86_32
+    x11-libs/libva-vdpau-driver abi_x86_32
+    x11-libs/libva-intel-driver abi_x86_32
+    virtual/libelf abi_x86_32
+    dev-libs/elfutils abi_x86_32
+    app-arch/bzip2 abi_x86_32

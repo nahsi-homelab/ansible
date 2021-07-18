@@ -1,7 +1,8 @@
 station_xorg_configs:
   30_keyboard: |
     Section "InputClass"
-      Identifier "keyboard-all"
+      Identifier "keyboard defaults"
+      MatchIsKeyboard "on"
       Driver "evdev"
       Option "XkbLayout" "us,ru"
       Option "XkbOptions" "grp:caps_toggle,compose:ralt"

@@ -2,6 +2,7 @@ base_portage_makeconf_pergamon:
   COMMON_FLAGS: "-O2 -march=amdfam10 -mtune=amdfam10 -mcx16 -mpopcnt"
   CPU_FLAGS_X86: "3dnow 3dnowext popcnt mmx mmxext sse sse2 sse3 sse4a"
   VIDEO_CARDS: "amdgpu radeonsi"
+  INPUT_DEVICES: "evdev"
   LUA_TARGETS: "luajit"
   LUA_SINGLE_TARGET: "luajit"
   LLVM_TARGETS: "AMDGPU X86"

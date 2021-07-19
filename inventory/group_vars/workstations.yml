@@ -17,7 +17,7 @@ base_packages_desktop:
   - dev-python/tldextract
   - www-client/chromium
 
-  - net-im/telegram-desktop-bin
+  - net-im/telegram-desktop
   - net-im/slack
   - net-im/zoom
 
@@ -102,6 +102,7 @@ base_portage_package_use_desktop:
     media-video/pipewire pipewire-alsa extra
     media-libs/freetype harfbuzz
     sys-apps/util-linux caps # for pfl
+    app-text/hunspell l10n_en l10n_ru
 
     # chromium
     www-client/chromium widevine official -suid -js-type-check

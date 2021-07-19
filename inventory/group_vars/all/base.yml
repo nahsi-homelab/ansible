@@ -60,6 +60,7 @@ base_packages_all:
   - app-portage/portage-utils
   - app-portage/flaggie
   - app-portage/cpuid2cpuflags
+  - app-misc/resolve-march-native
   - app-portage/repoman
 
   - sys-apps/usbutils

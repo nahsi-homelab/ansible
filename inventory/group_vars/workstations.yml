@@ -31,6 +31,7 @@ base_packages_desktop:
   - dev-python/jmespath
 
   - dev-go/gopls
+  - app-admin/terraform-ls
 
   - x11-wm/awesome
   - x11-libs/lain

@@ -30,6 +30,8 @@ base_packages_desktop:
   - dev-python/pip
   - dev-python/jmespath
 
+  - dev-go/gopls
+
   - x11-wm/awesome
   - x11-libs/lain
   - media-video/pipewire

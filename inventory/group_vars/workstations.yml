@@ -84,6 +84,8 @@ base_packages_desktop:
   - media-fonts/noto
   - media-fonts/noto-emoji
   - media-fonts/roboto
+  - media-fonts/fontawesome
+  - media-fonts/nerd-fonts
 
   - games-util/steam-launcher
   - media-fonts/steamfonts
@@ -100,11 +102,13 @@ base_portage_package_use_desktop:
   desktop: |
     media-video/ffmpeg chromium libdrm x264 x265 webp vpx vorbis theora
     media-gfx/imagemagick -X
-    media-fonts/noto cjk
     media-video/pipewire pipewire-alsa extra
     media-libs/freetype harfbuzz
     sys-apps/util-linux caps # for pfl
     app-text/hunspell l10n_en l10n_ru
+
+    media-fonts/noto cjk
+    media-fonts/nerd-fonts firacode
 
     # chromium
     www-client/chromium widevine official -suid -js-type-check

@@ -30,9 +30,6 @@ base_packages_desktop:
   - dev-python/pip
   - dev-python/jmespath
 
-  - dev-go/gopls
-  - app-admin/terraform-ls
-
   - x11-wm/awesome
   - x11-libs/lain
   - media-video/pipewire
@@ -99,6 +96,13 @@ base_packages_desktop:
 
   - dev-util/cargo-ebuild
   - dev-util/cargo-license
+
+  # language servers 
+  - dev-go/gopls
+  - app-admin/terraform-ls
+
+  # for nvim plugins
+  - app-misc/code-minimap
 
 base_portage_package_use_desktop:
   desktop: |

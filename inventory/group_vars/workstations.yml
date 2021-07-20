@@ -71,6 +71,7 @@ base_packages_desktop:
 
   - sys-apps/ripgrep
   - app-shells/fzf
+  - sys-apps/fd
 
   - x11-themes/papirus-icon-theme
   - x11-themes/arc-theme

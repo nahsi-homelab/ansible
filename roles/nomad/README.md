@@ -1,35 +1,21 @@
-# HashiCorp Nomad
+# nomad
 
-## Description
-Installs and configures HashiCorp [Nomad](https://www.nomadproject.io/).
-
-## Requirements
-```sh
-pip install hvac ansible-modules-hashivault
-```
+>This role installs and configures [nomad](https://www.nomadproject.io).
 
 ## Role Variables
-See [defaults/main.yml](defaults/main.yml) for details and examples.
 
-| name | type | description |
-| ---- | ---- | ----------- |
-| `nomad_config` | map | Nomad server confgiration |
-| `nomad_client_config` | map | Nomad client confgiration |
-| `nomad_vault_config` | map | Nomad Vault integration confgiration |
-| `nomad_vault_init` | bool | when set to true will create/update Vault token |
-| `nomad_dirs` | map | Nomad directories to create |
-| `nomad_dir` | string | main Nomad dir, used in `nomad_dirs` |
-| `nomad_version` | string | |
-| `nomad_podman_version` | string | podman plugin version |
+| variable             | description                                         |
+|----------------------|-----------------------------------------------------|
+| `nomad_version`      | nomad version to use                                |
+| `nomad_config`       | main nomad configuration                            |
+| `nomad_service`      | nomad unitfile                                      |
+| `nomad_configs`      | map of nomad override configs                       |
+| `nomad_dirs_overlay` | map of directories to create combined with defaults |
 
-## Examples
-Deploy Nomad server with Vault integration:
-```ssh
-ansible-playbook site.yml -e "target=nomad-server role=nomad nomad_vault_init=true"
-```
+See [defaults/](defaults/) for details and examples.
 
-### External Resources
-- https://www.nomadproject.io/docs/configuration
+## Tags
+* `configuration` - update nomad unitfile and config
 
-### Author
-Anatoly Laskaris
+## Author
+* **Anatoly Laskaris** - [nahsi](https://github.com/nahsi)

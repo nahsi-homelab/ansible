@@ -1,14 +1,14 @@
 - name: Preflight
+  tags: always
   include_tasks: 00-preflight.yml
 
 - name: Install and configure Nomad
+  tags: configuration
   include_tasks: 01-nomad.yml
 
-- name: Integrate with Vault
-  include_tasks: 02-vault.yml
+- name: Add configs
+  tags: configuration
+  include_tasks: 02-configs.yml
 
-- name: Install Nomad plugins
-  include_tasks: 03-plugins.yml
-
-- name: Install cni plugins
-  include_tasks: 04-cni.yml
+- name: Postflight
+  include_tasks: 99-postflight.yml

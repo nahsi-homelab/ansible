@@ -1,0 +1,61 @@
+# nomad_config:
+#   # Region in which Nomad is running.
+#   # https://www.nomadproject.io/docs/configuration#region
+#   region: "global"
+
+#   # Datacenter in which Nomad is running.
+#   datacenter: "dev"
+
+#   # Directory to store state.
+#   data_dir: "{{ nomad_dirs.data.path }}"
+
+#   # Directory with nomad plugins.
+#   plugin_dir: "{{ nomad_dirs.plugins.path }}"
+
+#   # Bind all services (http, rpc, serf) to interface.
+#   bind_addr: "0.0.0.0"
+
+#   # Bind services to interfaces.
+#   addresses:
+#     http: "0.0.0.0"
+#     rpc: "0.0.0.0"
+#     serf: "0.0.0.0"
+
+#   ports:
+#     http: 4646
+#     rpc: 4647
+#     serf: 4648
+
+#   # Use syslog to store logs.
+#   enable_syslog: true
+#   "trace", "debug", "info", "warn", "err"
+#   log_level: "warn"
+#   syslog_facility: "LOCAL5"
+
+#   # https://www.nomadproject.io/docs/configuration/consul
+#   # If consul agent is running locally there is no need to fill 'consul' stanza
+#   consul:
+#     enabled: true
+#     address: "https://consul.service.consul:8500"
+
+#   # https://www.nomadproject.io/docs/configuration/vault
+#   # vault:
+#     enabled: true
+#     address: "https://vault.service.consul:8200"
+
+#   # https://www.nomadproject.io/docs/configuration/client
+#   client:
+#     enabled: true
+#     server_join:
+#       retry_join: [ "1.1.1.1", "2.2.2.2" ]
+#       retry_max: 3
+#       retry_interval: "15s"
+#     meta:
+#       key: "value"
+#       foo: "bar"
+#       gpu: true
+
+# nomad_configs:
+#   # Override nomad log level
+#   log_level:
+#     log_level: "info"

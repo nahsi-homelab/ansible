@@ -1,14 +1,11 @@
-- name: daemon reload
-  systemd:
-    name: nomad
-    daemon_reload: yes
-
 - name: restart nomad
   service:
     name: nomad
     state: restarted
+    use: openrc
 
 - name: reload nomad
   service:
     name: nomad
-    state: restarted
+    state: reloaded
+    use: openrc

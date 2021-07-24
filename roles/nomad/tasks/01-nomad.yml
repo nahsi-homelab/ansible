@@ -11,13 +11,29 @@
   retries: 5
   delay: 2
 
+- name: create nomad system group
+  group:
+    name: nomad
+    system: true
+    state: present
+
+- name: create nomad system user
+  user:
+    name: nomad
+    system: true
+    shell: "/sbin/nologin"
+    group: nomad
+    create_home: false
+    home: "{{ nomad_dir }}"
+    state: present
+
 - name: create nomad directories
   file:
     path: "{{ dir.value.path }}"
     state: directory
-    owner: root
-    group: "{{ dir.group | default('root')}}"
-    mode: "{{ dir.value.mode | default(0740) }}"
+    owner: nomad
+    group: "{{ dir.group | default('nomad') }}"
+    mode: "{{ dir.value.mode | default(755) }}"
   loop: "{{ nomad_dirs | dict2items }}"
   loop_control:
     loop_var: dir
@@ -25,6 +41,7 @@
 
 - name: create nomad archive directory
   become: false
+  run_once: true
   delegate_to: localhost
   file:
     path: "{{ __archive_dir }}"
@@ -33,6 +50,7 @@
 
 - name: unpack nomad
   become: false
+  run_once: true
   delegate_to: localhost
   unarchive:
     src: "/tmp/{{ __archive }}"
@@ -41,66 +59,33 @@
 - name: propagate nomad binary
   copy:
     src: "{{ __archive_dir }}/nomad"
-    dest: "/usr/local/bin/nomad"
+    dest: "/usr/bin/nomad"
     owner: root
     group: root
     mode: 0555
-  notify:
-    - restart nomad
+  notify: restart nomad
 
 - name: create nomad unitfile
-  template:
-    src: nomad.service.j2
-    dest: "/usr/lib/systemd/system/nomad.service"
+  tags: configuration
+  copy:
+    content: "{{ nomad_service }}"
+    dest: "/etc/systemd/system/nomad.service"
     owner: root
     group: root
     mode: 0640
-  when: ansible_service_mgr == "systemd"
-  notify:
-    - daemon reload
-    - restart nomad
-
-- name: create nomad initfile
-  template:
-    src: nomad.initd.j2
-    dest: "/etc/init.d/nomad"
-    owner: root
-    group: root
-    mode: 0740
-  when: ansible_service_mgr == "openrc"
-  notify:
-    - restart nomad
+  notify: restart nomad
 
 - name: create nomad configuration
+  tags: configuration
   copy:
-    content: "{{ nomad_config | to_nice_json(indent=2) }}"
-    dest: "{{ nomad_dirs.configs.path }}/nomad.json"
-    owner: root
-    group: root
+    content: "{{ nomad_config | to_nice_json }}"
+    dest: "{{ nomad_dir }}/nomad.json"
+    owner: nomad
+    group: nomad
     mode: 0640
-  notify: restart nomad
-
-- name: create nomad agent configuration
-  copy:
-    content: "{{ nomad_client_config | to_nice_json(indent=2) }}"
-    dest: "{{ nomad_dirs.configs.path }}/client.json"
-    owner: root
-    group: root
-    mode: 0640
-  when: nomad_client_config | length
-  notify: restart nomad
-
-- name: create nomad server configuration
-  copy:
-    content: "{{ nomad_server_config | to_nice_json(indent=2) }}"
-    dest: "{{ nomad_dirs.configs.path }}/server.json"
-    owner: root
-    group: root
-    mode: 0640
-  when: nomad_server_config | length
   notify: restart nomad
 
 - name: enable nomad
   service:
     name: nomad
-    enabled: yes
+    enabled: true

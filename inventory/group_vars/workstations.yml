@@ -103,6 +103,7 @@ base_packages_desktop:
 
   # for nvim plugins
   - app-misc/code-minimap
+  - app-misc/glow
 
 base_portage_package_use_desktop:
   desktop: |

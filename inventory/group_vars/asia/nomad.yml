@@ -22,7 +22,7 @@ nomad_config:
     enabled: true
     servers:
       - "nomad.service.asia.consul:4647"
-    network_interface: "br0"
+    network_interface: "enp2s0"
 
   consul:
     address: "consul.service.asia.consul:8500"

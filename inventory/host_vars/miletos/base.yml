@@ -30,6 +30,8 @@ base_services:
     runlevel: "default"
   - name: "elogind"
     runlevel: "default"
+  - name: "alsasound"
+    runlevel: "default"
 
 base_wireguard_configs:
   vpn: "{{ lookup('hashi_vault', 'secret/data/wireguard/miletos:vpn') }}"

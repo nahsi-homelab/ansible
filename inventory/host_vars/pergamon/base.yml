@@ -59,6 +59,8 @@ base_packages: >
 base_services:
   - name: "elogind"
     runlevel: "default"
+  - name: "alsasound"
+    runlevel: "default"
   - name: "docker"
     runlevel: "default"
 

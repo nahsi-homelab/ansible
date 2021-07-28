@@ -69,10 +69,10 @@
   tags: configuration
   copy:
     content: "{{ nomad_service }}"
-    dest: "/etc/systemd/system/nomad.service"
+    dest: "/etc/init.d/nomad"
     owner: root
     group: root
-    mode: 0640
+    mode: 0755
   notify: restart nomad
 
 - name: create nomad configuration

@@ -21,28 +21,28 @@ nomad_dirs: >
   }}
 
 nomad_service: |
-#!/sbin/openrc-run
+  #!/sbin/openrc-run
 
-description="HashiCorp Nomad"
-user="root"
-group="root"
-pidfile="/run/nomad.pid"
+  description="HashiCorp Nomad"
+  user="root"
+  group="root"
+  pidfile="/run/nomad.pid"
 
-extra_started_commands="reload"
+  extra_started_commands="reload"
 
-command="/usr/local/bin/${RC_SVCNAME}"
-command_args="agent -config={{ nomad_dir }}/nomad.json -config={{ nomad_dirs.configs.path }}"
-command_background="true"
-stopsig=SIGINT
+  command="/usr/bin/${RC_SVCNAME}"
+  command_args="agent -config={{ nomad_dir }}/nomad.json -config={{ nomad_dirs.configs.path }}"
+  command_background="true"
+  stopsig=SIGINT
 
-start_stop_daemon_args="--user ${user} --group ${group}"
+  start_stop_daemon_args="--user ${user} --group ${group}"
 
-depend() {
-    need net
-}
+  depend() {
+      need net
+  }
 
-reload() {
-    ebegin "Reloading nomad"
-    start-stop-daemon --signal HUP --pidfile "${pidfile}"
-    eend $?
-}
+  reload() {
+      ebegin "Reloading nomad"
+      start-stop-daemon --signal HUP --pidfile "${pidfile}"
+      eend $?
+  }

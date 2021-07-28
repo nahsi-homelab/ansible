@@ -60,15 +60,12 @@ base_wireguard_interfaces:
 
 base_network_interfaces:
   - name: "enp2s0"
-    start: false
-    enable: false
   - name: "enp3s0"
     start: false
     enable: false
   - name: "wlo2"
     start: false
   - name: "ppp0"
-  - name: "br0"
 
 base_network: |
   # pppoe
@@ -98,19 +95,4 @@ base_network: |
   }
 
   # lan
-  config_enp2s0=null
-
-  # wifi
-  modules_wlo2="!iwconfig !wpa_supplicant !iw"
-  config_wlo2=null
-
-  # bridge
-  bridge_br0="enp2s0"
-  config_br0="192.168.200.1/24"
-  rc_net_br0_need="net.enp2s0"
-  bridge_forward_delay_br0=0
-  bridge_hello_time_br0=1000
-
-  rc_net_enp2s0_provide="!net"
-  rc_net_enp3s0_provide="!net"
-  rc_net_wlo2_provide="!net"
+  config_enp2s0="192.168.200.1/24"

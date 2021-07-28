@@ -26,3 +26,10 @@ nomad_config:
 
   consul:
     address: "consul.service.asia.consul:8500"
+
+  plugin:
+    docker:
+      config:
+        endpoint: "unix:///var/run/docker.sock"
+        volumes:
+          enabled: true

@@ -15,8 +15,8 @@ router_unbound_configs:
       stub-addr: 127.0.0.1@8600
 
 router_dnsmasq_config: |
-  interface=br0
-  dhcp-range=br0,192.168.200.100,192.168.200.250,75h
+  interface=enp2s0
+  dhcp-range=enp2s0,192.168.200.100,192.168.200.250,75h
   dhcp-option=3,192.168.200.1
   dhcp-option=6,192.168.200.1
 

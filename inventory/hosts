@@ -12,9 +12,6 @@ smyrna
 [syria]
 antiochia
 
-[hashi]
-antiochia
-
 [workstations]
 pergamon
 miletos
@@ -23,12 +20,14 @@ miletos
 antiochia
 smyrna
 
-[consul:children]
-asia-consul
-syria-consul
+[hashi]
+antiochia
 
-[asia-consul]
+[consul-asia]
 smyrna
 
-[syria-consul]
+[consul-syria]
 antiochia
+
+[nomad-asia]
+smyrna

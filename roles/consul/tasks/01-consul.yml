@@ -83,7 +83,7 @@
     owner: consul
     group: consul
     mode: 0640
-    validate: "consul validate -config-format=json %s"
+    # validate: "consul validate -config-format=json %s"
   notify: restart consul
 
 - name: enable consul

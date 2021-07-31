@@ -1,0 +1,14 @@
+consul_config_server:
+  server: true
+  bootstrap_expect: 1
+
+  ui_config:
+    enabled: true
+
+  client_addr: "127.0.0.1 {{ consul_private_address }}"
+
+consul_config: >
+  {{
+    consul_config_all |
+    combine(consul_config_server, recursive=true)
+  }}

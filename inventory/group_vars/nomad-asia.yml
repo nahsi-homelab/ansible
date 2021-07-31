@@ -1,0 +1,16 @@
+nomad_config_server:
+  server:
+    enabled: true
+    bootstrap_expect: 1
+    raft_protocol: 3
+
+    encrypt: "{{ lookup('hashi_vault', 'secret/data/gossip/asia:nomad') }}"
+
+    default_scheduler_config:
+      memory_oversubscription_enabled: true
+
+nomad_config: >
+  {{
+    nomad_config_all |
+    combine(nomad_config_server, recursive=true)
+  }}

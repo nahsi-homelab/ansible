@@ -9,6 +9,3 @@
 - name: Add configs
   tags: configuration
   include_tasks: 02-configs.yml
-
-- name: Postflight
-  include_tasks: 99-postflight.yml

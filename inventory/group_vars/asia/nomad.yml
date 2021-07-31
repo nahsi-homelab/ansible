@@ -18,6 +18,8 @@ nomad_config_all:
   client:
     enabled: true
     network_interface: "{{ nomad_private_interface }}"
+    servers:
+      - "nomad.service.syria.consul:4647"
 
   consul:
     address: "127.0.0.1:8500"

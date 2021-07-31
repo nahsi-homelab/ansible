@@ -3,6 +3,9 @@ nomad_config_server:
     enabled: true
     bootstrap_expect: 1
 
+    retry_join:
+      - 192.168.100.10
+
     encrypt: "{{ lookup('hashi_vault', 'secret/data/gossip:nomad') }}"
 
     default_scheduler_config:

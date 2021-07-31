@@ -1,12 +1,15 @@
-nomad_version: "1.1.2"
+nomad_version: "1.1.3"
+
+nomad_private_address: !unsafe '{{ GetPrivateInterfaces | include "network" "192.168.200.0/24" | attr "address" }}'
+nomad_private_interface: !unsafe '{{ GetPrivateInterfaces | include "network" "192.168.200.0/24" | attr "name" }}'
 
 nomad_config_all:
   region: "oikumene"
   datacenter: "asia"
 
-  data_dir: "{{ nomad_dirs.data.path }}"
+  data_dir: "/var/lib/nomad"
 
-  bind_addr: "{{ main_ip }}"
+  bind_addr: "{{ nomad_private_address }}"
 
   log_level: "warn"
   enable_syslog: true
@@ -14,10 +17,10 @@ nomad_config_all:
 
   client:
     enabled: true
-    network_interface: "enp2s0"
+    network_interface: "{{ nomad_private_interface }}"
 
   consul:
-    enabled: true
+    address: "127.0.0.1:8500"
 
   plugin:
     docker:
@@ -25,4 +28,5 @@ nomad_config_all:
         endpoint: "unix:///var/run/docker.sock"
         volumes:
           enabled: true
+
 nomad_config: "{{ nomad_config_all }}"

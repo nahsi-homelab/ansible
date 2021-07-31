@@ -1,6 +1,6 @@
 nomad_version: "1.1.2"
 
-nomad_config:
+nomad_config_all:
   region: "oikumene"
   datacenter: "asia"
 
@@ -12,20 +12,12 @@ nomad_config:
   enable_syslog: true
   syslog_facility: "LOCAL5"
 
-  server:
-    enabled: true
-    bootstrap_expect: 1
-    encrypt: "{{ lookup('hashi_vault', 'secret-v1/gossip:nomad') }}"
-    raft_protocol: 3
-
   client:
     enabled: true
-    servers:
-      - "nomad.service.asia.consul:4647"
     network_interface: "enp2s0"
 
   consul:
-    address: "consul.service.asia.consul:8500"
+    enabled: true
 
   plugin:
     docker:
@@ -33,3 +25,4 @@ nomad_config:
         endpoint: "unix:///var/run/docker.sock"
         volumes:
           enabled: true
+nomad_config: "{{ nomad_config_all }}"

@@ -1,3 +1,10 @@
+consul_version: "1.9.8"
+
+consul_servers:
+  - 192.168.200.1
+
+consul_private_address: !unsafe '{{ GetPrivateInterfaces | include "network" "192.168.200.0/24" | attr "address" }}'
+
 consul_config_all:
   datacenter: "asia"
   encrypt: "{{ lookup('hashi_vault', 'secret/data/gossip:consul') }}"
@@ -11,15 +18,12 @@ consul_config_all:
 
   rejoin_after_leave: true
 
-  bind_addr: "{{ main_ip }}"
+  bind_addr: "{{ consul_private_address }}"
 
   enable_local_script_checks: true
 
-  dns_config:
-    soa:
-      min_ttl: 60
-
   server: false
   retry_join: "{{ consul_servers }}"
-  retry_join_wan: "{{ consul_all_servers }}"
+  retry_join_wan: "{{ consul_wan_servers }}"
+
 consul_config: "{{ consul_config_all }}"

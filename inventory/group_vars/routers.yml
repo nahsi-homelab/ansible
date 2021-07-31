@@ -14,6 +14,7 @@ router_unbound_config: |
     hide-version: yes
     cache-min-ttl: 3600
     cache-max-ttl: 86400
+    cache-max-negative-ttl: 0
     prefetch: yes
     prefetch-key: yes
     edns-buffer-size: 1232

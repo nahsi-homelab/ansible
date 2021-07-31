@@ -25,23 +25,6 @@
     __links_present_list: "{{ __links_present | json_query('files[*].path') | default([]) }}"
     __links_created_list: "{{ __links_created | json_query('results[*].dest') | default([]) }}"
 
-- name: disable network interfaces
-  tags: network
-  service:
-    name: "{{ item | basename }}"
-    enabled: false
-    state: stopped
-    runlevel: default
-    use: openrc
-  loop: "{{ __links_present_list | difference(__links_created_list) }}"
-
-- name: delete network links
-  tags: network
-  file:
-    path: "{{ item }}"
-    state: absent
-  loop: "{{ __links_present_list | difference(__links_created_list) }}"
-
 - name: enable network interfaces
   tags: network
   service:
@@ -64,3 +47,22 @@
     group: root
     mode: 0644
   notify: restart network
+
+- meta: flush_handlers
+
+- name: disable network interfaces
+  tags: network
+  service:
+    name: "{{ item | basename }}"
+    enabled: false
+    state: stopped
+    runlevel: default
+    use: openrc
+  loop: "{{ __links_present_list | difference(__links_created_list) }}"
+
+- name: delete network links
+  tags: network
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop: "{{ __links_present_list | difference(__links_created_list) }}"

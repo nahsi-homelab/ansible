@@ -1,7 +1,7 @@
 router_unbound_configs:
   antiochia: |
     server:
-      interface: "{{ main_ip }}:@53"
+      interface: 192.168.100.10@53
       interface: 127.0.0.1@53
       access-control: 192.168.1.0/24 allow
       access-control: 192.168.100.0/24 allow
@@ -14,3 +14,12 @@ router_unbound_configs:
     stub-zone:
       name: "consul"
       stub-addr: 127.0.0.1@8600
+
+router_dnsmasq_config: |
+  interface=enp35s0
+  dhcp-range=enp35s0,192.168.100.100,192.168.100.250,75h
+  dhcp-option=3,192.168.100.10
+  dhcp-option=6,192.168.100.10
+
+router_dnsmasq_openrc_config: |
+  DNSMASQ_OPTS="--user=dnsmasq --group=dnsmasq --port=0"

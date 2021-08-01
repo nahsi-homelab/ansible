@@ -14,14 +14,20 @@ base_sysctl:
   - name: vm.swappiness
     value: 1
 
-base_sshd_listen:
-  - "192.168.200.10"
-  - "192.168.5.2"
-  - "127.0.0.1"
-
 base_network: |
-  config_enp2s0="192.168.200.10/24"
-  routes_enp2s0="default via 192.168.200.1"
+  config_enp2s0="null"
+  
+  vlans_enp2s0="10 30"
+
+  config_enp2s0_10="192.168.210.10/24"
+  routes_enp2s0_10="default via 192.168.210.1"
+
+  config_enp2s0_30="192.168.230.10/24"
+
+base_dns: |
+  resolv_conf="/etc/resolv.conf"
+  name_servers="192.168.210.1"
+  search_domains="node.consul service.consul"
 
 base_network_interfaces:
   - name: "enp2s0"

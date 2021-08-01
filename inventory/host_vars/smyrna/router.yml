@@ -1,9 +1,13 @@
 router_unbound_configs:
   smyrna: |
     server:
-      interface: 192.168.200.1@53
+      interface: 192.168.210.1@53
+      interface: 192.168.230.1@53
+      interface: 192.168.250.1@53
       interface: 127.0.0.1@53
-      access-control: 192.168.200.0/24 allow
+      access-control: 192.168.210.0/24 allow
+      access-control: 192.168.230.0/24 allow
+      access-control: 192.168.250.0/24 allow
 
   consul: |
     server:
@@ -15,10 +19,20 @@ router_unbound_configs:
       stub-addr: 127.0.0.1@8600
 
 router_dnsmasq_config: |
-  interface=enp2s0
-  dhcp-range=enp2s0,192.168.200.100,192.168.200.250,75h
-  dhcp-option=3,192.168.200.1
-  dhcp-option=6,192.168.200.1
+  interface=enp2s0.10
+  dhcp-range=vlan10,192.168.210.200,192.168.210.250,75h
+  dhcp-option=vlan10,3,192.168.210.1
+  dhcp-option=vlan10,6,192.168.210.1
+
+  interface=enp2s0.30
+  dhcp-range=vlan30,192.168.230.200,192.168.230.250,75h
+  dhcp-option=vlan30,3,192.168.230.1
+  dhcp-option=vlan30,6,192.168.230.1
+
+  interface=enp2s0.50
+  dhcp-range=vlan50,192.168.250.200,192.168.250.250,75h
+  dhcp-option=vlan50,3,192.168.250.1
+  dhcp-option=vlan50,6,192.168.250.1
 
 router_dnsmasq_openrc_config: |
   DNSMASQ_OPTS="--user=dnsmasq --group=dnsmasq --port=0"

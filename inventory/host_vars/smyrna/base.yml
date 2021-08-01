@@ -63,8 +63,6 @@ base_network_interfaces:
   - name: "enp3s0"
     start: false
     enable: false
-  - name: "wlo2"
-    start: false
   - name: "ppp0"
 
 base_network: |
@@ -95,4 +93,9 @@ base_network: |
   }
 
   # lan
-  config_enp2s0="192.168.200.1/24"
+  config_enp2s0="null"
+
+  vlans_enp2s0="10 30 50"
+  config_enp2s0_10="192.168.210.1/24"
+  config_enp2s0_30="192.168.230.1/24"
+  config_enp2s0_50="192.168.250.1/24"

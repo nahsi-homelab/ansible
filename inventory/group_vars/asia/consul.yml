@@ -1,9 +1,9 @@
 consul_version: "1.9.8"
 
 consul_servers:
-  - 192.168.200.1
+  - 192.168.210.1
 
-consul_private_address: !unsafe '{{ GetPrivateInterfaces | include "network" "192.168.200.0/24" | attr "address" }}'
+consul_private_address: !unsafe '{{ GetPrivateInterfaces | include "network" "192.168.210.0/24" | attr "address" }}'
 
 consul_config_all:
   datacenter: "asia"

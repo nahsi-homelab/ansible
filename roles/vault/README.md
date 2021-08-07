@@ -1,20 +1,22 @@
-# HashiCorp Vault
+# vault
 
-## Description
-Installs and configures HashiCorp [Vault](https://www.vaultproject.io).
+>This role installs and configures [Vault](https://www.vaultproject.io).
 
-### Role Variables
-See [defaults/main.yml](defaults/main.yml) for details and examples.
+## Role Variables
 
-| name | type | description |
-| ---- | ---- | ----------- |
-| vault_config| map | vault confgiration |
-| vault_dirs | map | vault directories to create |
-| vault_dir | string | main vault dir, used in `vault_dirs` |
-| vault_version | string | |
+| variable              | description                                         |
+|-----------------------|-----------------------------------------------------|
+| `vault_version`      | vault version to use                               |
+| `vault_config`       | main vault configuration                           |
+| `vault_service`      | vault unitfile                                     |
+| `vault_configs`      | map of vault override configs                      |
+| `vault_dirs_overlay` | map of directories to create combined with defaults |
 
-### External Resources
-- https://www.vaultproject.io/docs/configuration
+See [defaults/](defaults/) for details and examples.
 
-### Author
-Anatoly Laskaris
+## Tags
+* `configuration` - update Vault unitfile and main config
+* `configs` - sync Vault configs
+
+## Author
+* **Anatoly Laskaris** - [nahsi](https://github.com/nahsi)

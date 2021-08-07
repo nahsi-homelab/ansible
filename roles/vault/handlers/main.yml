@@ -1,9 +1,11 @@
-- name: daemon reload
-  systemd:
-    name: vault
-    daemon_reload: yes
-
 - name: restart vault
   service:
     name: vault
     state: restarted
+    use: openrc
+
+- name: reload vault
+  service:
+    name: vault
+    state: reloaded
+    use: openrc

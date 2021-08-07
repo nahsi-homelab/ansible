@@ -1,7 +1,55 @@
-- name: check 'vault_version' variable
+- name: check "vault_version" variable
+  tags: always
   assert:
     that:
       - vault_version is defined
       - vault_version is string
       - vault_version | length
     quiet: true
+
+- name: check "vault_config" variable
+  tags: always
+  assert:
+    that:
+      - vault_config is defined
+      - vault_config is mapping
+      - vault_config | length
+    quiet: true
+
+- name: check "vault_service" variable
+  tags: always
+  assert:
+    that:
+      - vault_service is defined
+      - vault_service is string
+      - vault_service | length
+    quiet: true
+
+- name: check "vault_configs" variable
+  tags: always
+  assert:
+    that:
+      - vault_configs is defined
+      - vault_configs is mapping
+    quiet: true
+
+- name: check "vault_download_url" variable
+  tags: always
+  assert:
+    that:
+      - vault_download_url is defined
+      - vault_download_url is string
+      - vault_download_url | length
+    quiet: true
+
+- name: check if "{{ vault_download_url }}" is online
+  become: false
+  run_once: true
+  delegate_to: localhost
+  uri:
+    url: "{{ vault_download_url }}"
+    status_code: 200
+  register: _result
+  retries: "3"
+  delay: "5"
+  until: _result.status == 200

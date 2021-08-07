@@ -1,37 +1,45 @@
-vault_config_base:
-  disable_mlock: true
+vault_download_url: "https://releases.hashicorp.com"
 
-  listener:
-    tcp:
-      address: "127.0.0.1:8200"
-      tls_disable: true
+vault_configs: {}
 
-  storage:
-    file:
-      path: "{{ vault_dirs.data.path }}"
-
-vault_config_overlay: {}
-vault_config: >
-  {{
-    vault_config_base |
-    combine(vault_config_overlay, recursive=true)
-  }}
-
-# Main vault directory.
 vault_dir: "/opt/vault"
 vault_dirs_base:
   main:
     path: "{{ vault_dir }}"
   configs:
-    path: "{{ vault_dir }}/conf.d"
-  data:
-    path: "{{ vault_dir }}/data"
-    mode: "u=rwX,g=rX,o="
+    path: "{{ vault_dir }}/config.d"
   certs:
     path: "{{ vault_dir }}/certs"
+  data:
+    path: "/var/lib/vault"
+    mode: "u=rwX,g=rX,o="
 vault_dirs_overlay: {}
 vault_dirs: >
   {{
     vault_dirs_base |
     combine(vault_dirs_overlay, recursive=true)
   }}
+
+vault_service: |
+  #!/sbin/openrc-run
+
+  description="HashiCorp Vault"
+  extra_started_commands="reload"
+  group="${RC_SVCNAME}"
+  user="${RC_SVCNAME}"
+  pidfile="/run/${RC_SVCNAME}.pid"
+
+  command="/usr/bin/${RC_SVCNAME}"
+  command_args="server -config={{ vault_dir }}/vault.json -config={{ vault_dirs.configs.path }}"
+  command_background="true"
+  start_stop_daemon_args="--user ${user} --group ${group}"
+
+  depend() {
+      need net
+  }
+
+  reload() {
+      ebegin "Reloading vault"
+      ${command} reload
+      eend $?
+  }

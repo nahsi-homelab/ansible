@@ -11,12 +11,6 @@
   retries: 5
   delay: 2
 
-- name: create hashi system group
-  group:
-    name: hashi
-    system: true
-    state: present
-
 - name: create vault system group
   group:
     name: vault
@@ -29,8 +23,6 @@
     system: true
     shell: "/sbin/nologin"
     group: vault
-    groups:
-      - hashi
     create_home: false
     home: "{{ vault_dir }}"
     state: present
@@ -40,8 +32,8 @@
     path: "{{ dir.value.path }}"
     state: directory
     owner: vault
-    group: "{{ dir.group | default('vault')}}"
-    mode: "{{ dir.value.mode | default(740) }}"
+    group: "{{ dir.group | default('vault') }}"
+    mode: "{{ dir.value.mode | default(755) }}"
   loop: "{{ vault_dirs | dict2items }}"
   loop_control:
     loop_var: dir
@@ -49,6 +41,7 @@
 
 - name: create vault archive directory
   become: false
+  run_once: true
   delegate_to: localhost
   file:
     path: "{{ __archive_dir }}"
@@ -57,6 +50,7 @@
 
 - name: unpack vault
   become: false
+  run_once: true
   delegate_to: localhost
   unarchive:
     src: "/tmp/{{ __archive }}"
@@ -65,53 +59,33 @@
 - name: propagate vault binary
   copy:
     src: "{{ __archive_dir }}/vault"
-    dest: "/usr/local/bin/vault"
+    dest: "/usr/bin/vault"
     owner: root
     group: root
     mode: 0555
-  notify:
-    - restart vault
-
-- name: add vault mlock capability
-  capabilities:
-    path: "/usr/local/bin/vault"
-    capability: cap_ipc_lock=ep
-  ignore_errors: true
+  notify: restart vault
 
 - name: create vault unitfile
-  template:
-    src: vault.service.j2
-    dest: "/usr/lib/systemd/system/vault.service"
-    owner: root
-    group: root
-    mode: 0640
-  when: ansible_service_mgr == "systemd"
-  notify:
-    - daemon reload
-    - restart vault
-
-- name: create vault initfile
-  template:
-    src: vault.initd.j2
+  tags: configuration
+  copy:
+    content: "{{ vault_service }}"
     dest: "/etc/init.d/vault"
     owner: root
     group: root
-    mode: 0740
-  when: ansible_service_mgr == "openrc"
-  notify:
-    - restart vault
+    mode: 0755
+  notify: restart vault
 
 - name: create vault configuration
+  tags: configuration
   copy:
-    content: "{{ vault_config | to_nice_json(indent=2) }}"
-    dest: "{{ vault_dirs.configs.path }}/vault.json"
+    content: "{{ vault_config | to_nice_json }}"
+    dest: "{{ vault_dir }}/vault.json"
     owner: vault
     group: vault
     mode: 0640
-    # validate: "vault validate %s"
   notify: restart vault
 
 - name: enable vault
   service:
     name: vault
-    enabled: yes
+    enabled: true

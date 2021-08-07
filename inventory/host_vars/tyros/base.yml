@@ -1,0 +1,56 @@
+base_consolefont: "ter-i24b"
+
+base_filesystems:
+  - path: "/tmp"
+    src: "tmpfs"
+    opts: "rw,nosuid,noatime,nodev,size=1G,mode=1777"
+    type: "tmpfs"
+
+base_sysctl:
+  - name: net.ipv4.ip_forward
+    value: 1
+  - name: net.ipv4.conf.default.rp_filter
+    value: 1
+
+base_containers_docker:
+  default-runtime: "crun"
+  runtimes:
+    crun:
+      path: "/usr/bin/crun"
+  storage-driver: "zfs"
+  storage-opts:
+    - zfs.fsname=main/containers
+  log-driver: "json-file"
+  log-opts:
+    max-size: "32m"
+    max-file: "2"
+
+base_containers_storage: |
+  [storage]
+  driver="zfs"
+  runroot="/run/containers/storage"
+  graphroot="/var/lib/containers/storage"
+  [storage.options.zfs]
+  fsname="main/containers"
+
+base_sshd_openrc_config: |
+  SSHD_CONFDIR="${RC_PREFIX%/}/etc/ssh"
+  SSHD_OPTS=""
+  rc_need="net.enp2s0"
+
+base_services:
+  - name: "docker"
+    runlevel: "default"
+
+base_packages_tyros:
+  - net-dialup/ppp
+base_packages: "{{ base_packages_all + base_packages_tyros | unique }}"
+
+base_network_interfaces:
+  - name: "enp2s0"
+  - name: "enp3s0"
+    start: false
+    enable: false
+  - name: "ppp0"
+    start: false
+    enable: false

@@ -19,7 +19,6 @@
     quiet: true
 # }}}
 
-# {{{ system
 - name: check "base_timezone" variable
   tags: always
   assert:
@@ -64,7 +63,6 @@
       - base_hosts is string
       - base_hosts | length
     quiet: true
-
 
 - name: check "base_packages" variable
   tags: always
@@ -151,9 +149,7 @@
       - base_sysctl | length
     quiet: true
   when: base_sysctl is defined
-# }}}
 
-# {{{ containers
 - name: check "base_containers_registries" variable
   tags: always
   assert:
@@ -198,9 +194,7 @@
       - base_containers_docker is mapping
       - base_containers_docker | length
     quiet: true
-# }}}
 
-# {{{ wireguard
 - name: check "base_wireguard_configs" variable
   tags: always
   assert:
@@ -218,9 +212,7 @@
       - base_wireguard_interfaces is not string
     quiet: true
   when: base_wireguard_interfaces is defined
-# }}}
 
-# {{{ network
 - name: check "base_network" variable
   tags: always
   assert:
@@ -246,9 +238,7 @@
       - base_network_interfaces is iterable
       - base_network_interfaces is not string
     quiet: true
-# }}}
 
-# {{{ openssh
 - name: check "base_sshd_config" variable
   tags: always
   assert:
@@ -266,9 +256,7 @@
       - base_sshd_openrc_config is string
       - base_sshd_openrc_config | length
     quiet: true
-# }}}
 
-# {{{ users
 - name: check "base_users" variable
   tags: always
   assert:
@@ -278,9 +266,7 @@
       - base_users is not string
       - base_users | length
     quiet: true
-# }}}
 
-# {{{ syslog
 - name: check "base_syslog_config" variable
   tags: always
   assert:
@@ -306,9 +292,7 @@
       - base_syslog_logrotate is string
       - base_syslog_logrotate | length
     quiet: true
-# }}}
 
-# {{{ udev
 - name: check "base_udev_rules" variable
   tags: always
   assert:
@@ -316,4 +300,3 @@
       - base_udev_rules is defined
       - base_udev_rules is mapping
     quiet: true
-# }}}

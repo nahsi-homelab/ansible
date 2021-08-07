@@ -88,8 +88,6 @@
     group: root
     mode: 0644
 
-- meta: flush_handlers
-
 - name: install openresolv
   portage:
     package: net-dns/openresolv
@@ -105,6 +103,8 @@
     mode: 0644
   notify: run resolvconf
   when: base_dns is defined
+
+- meta: flush_handlers
 
 - name: install base packages
   tags: packages

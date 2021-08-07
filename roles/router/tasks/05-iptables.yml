@@ -1,0 +1,14 @@
+- name: save iptables rules to a file
+  copy:
+    content: "{{ router_iptables }}"
+    dest: "/etc/iptables.rules"
+    owner: root
+    group: root
+    mode: 0600
+
+- name: restore firewall state from a file
+  iptables_state:
+    state: restored
+    path: "/etc/iptables.rules"
+  async: "{{ ansible_timeout }}"
+  poll: 0

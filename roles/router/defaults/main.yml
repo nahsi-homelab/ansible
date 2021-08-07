@@ -3,3 +3,8 @@ router_dnscrypt_openrc_config: |
   DNSCRYPT_PROXY_OPTS="-config /etc/dnscrypt-proxy/dnscrypt-proxy.toml"
   DNSCRYPT_PROXY_USER="dnscrypt-proxy"
   DNSCRYPT_PROXY_GROUP="dnscrypt-proxy"
+
+router_iptables: |
+  :INPUT ACCEPT
+  :FORWARD ACCEPT
+  :OUTPUT ACCEPT

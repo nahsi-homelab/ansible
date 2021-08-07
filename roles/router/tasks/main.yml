@@ -15,3 +15,6 @@
 
 - name: Configure dhcp
   include_tasks: 04-dhcp.yml
+
+- name: Configure iptables
+  include_tasks: 05-iptables.yml

@@ -1,30 +1,33 @@
-nomad_version: "1.0.4"
-nomad_region: "oikumene"
+nomad_version: "1.1.3"
 
-nomad_config:
-  region: "{{ nomad_region }}"
+nomad_config_all:
+  region: "oikumene"
   datacenter: "{{ dc }}"
-  data_dir: "{{ nomad_dirs.data.path }}"
-  plugin_dir: "{{ nomad_dirs.plugins.path }}"
 
-  addresses:
-    http: "0.0.0.0"
-    rpc: "0.0.0.0"
-    serf: "0.0.0.0"
+  data_dir: "/var/lib/nomad"
 
-  ports:
-    http: 4646
-    rpc: 4647
-    serf: 4648
+  bind_addr: "{{ gotmpl_private_address }}"
 
   log_level: "warn"
   enable_syslog: true
   syslog_facility: "LOCAL5"
 
+  client:
+    enabled: true
+    network_interface: "{{ gotmpl_private_interface }}"
+    servers:
+      - "nomad.service.consul:4647"
+
+  consul:
+    address: "127.0.0.1:8500"
+
   plugin:
     docker:
       config:
+        endpoint: "unix:///var/run/docker.sock"
         allow_runtimes:
           - "crun"
         volumes:
           enabled: true
+
+nomad_config: "{{ nomad_config_all }}"

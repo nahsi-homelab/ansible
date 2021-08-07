@@ -46,6 +46,8 @@ base_sshd_openrc_config: |
 base_services:
   - name: "docker"
     runlevel: "default"
+  - name: "iptables"
+    runlevel: "default"
 
 base_packages_smyrna:
   - net-dialup/ppp

@@ -1,0 +1,17 @@
+vault_version: "1.8.1"
+vault_config:
+  ui: true
+
+  disable_mlock: true
+
+  api_addr: "http://{{ private_ip }}:8200"
+
+  listener:
+    tcp:
+      tls_disable: true
+      address: "{{ private_ip }}:8200"
+      # address: "{{ gotmpl_private_address }}:8200"
+
+  storage:
+    consul:
+      address: "http://localhost:8500"

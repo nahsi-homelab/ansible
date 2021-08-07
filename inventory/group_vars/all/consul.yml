@@ -1,3 +1,29 @@
-consul_wan_servers:
-  - 192.168.100.10
-  - 192.168.210.1
+consul_version: "1.9.8"
+consul_servers:
+  - 192.168.130.10
+  - 192.168.130.1
+  - 192.168.230.1
+
+consul_config_all:
+  datacenter: "oikumene"
+  encrypt: "{{ lookup('hashi_vault', 'secret/data/gossip:consul') }}"
+
+  data_dir: "/var/lib/consul/"
+
+  enable_syslog: true
+  # "trace", "debug", "info", "warn", "err"
+  log_level: "warn"
+  syslog_facility: "LOCAL5"
+
+  rejoin_after_leave: true
+
+  bind_addr: "{{ gotmpl_private_address }}"
+  addresses:
+    http: "127.0.0.1 {{ gotmpl_private_address }}"
+
+  enable_local_script_checks: true
+
+  server: false
+  retry_join: "{{ consul_servers }}"
+
+consul_config: "{{ consul_config_all }}"

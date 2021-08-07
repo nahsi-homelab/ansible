@@ -52,10 +52,6 @@ base_iwd: |
   RoutePriorityOffset=200
   NameResolvingService=resolvconf
 
-base_dns: |
-  resolv_conf="/etc/resolv.conf"
-  search_domains="node.consul service.consul"
-
 base_containers_docker:
   default-runtime: "crun"
   runtimes:

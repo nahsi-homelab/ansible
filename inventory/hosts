@@ -18,17 +18,20 @@ pergamon
 miletos
 
 [routers]
-antiochia
+tyros
 smyrna
 
-[hashi]
+[consul]
 antiochia
-
-[consul-asia]
+tyros
 smyrna
-
-[consul-syria]
-antiochia
 
 [nomad]
 antiochia
+tyros
+smyrna
+
+[vault]
+antiochia
+tyros
+smyrna

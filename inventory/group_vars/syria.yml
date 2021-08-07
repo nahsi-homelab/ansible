@@ -1,0 +1,9 @@
+dc: "syria"
+
+base_dns: |
+  resolv_conf="/etc/resolv.conf"
+  name_servers="192.168.130.1"
+  search_domains="node.consul service.consul"
+
+gotmpl_private_address: !unsafe '{{ GetPrivateInterfaces | include "network" "192.168.130.0/24" | attr "address" }}'
+gotmpl_private_interface: !unsafe '{{ GetPrivateInterfaces | include "network" "192.168.130.0/24" | attr "name" }}'

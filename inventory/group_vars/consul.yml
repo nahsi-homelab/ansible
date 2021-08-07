@@ -1,11 +1,9 @@
 consul_config_server:
   server: true
-  bootstrap_expect: 1
+  bootstrap_expect: 3
 
   ui_config:
     enabled: true
-
-  client_addr: "127.0.0.1 {{ consul_private_address }}"
 
 consul_config: >
   {{

@@ -38,13 +38,26 @@ base_sshd_openrc_config: |
   SSHD_OPTS=""
   rc_need="net.enp2s0"
 
+base_dns: |
+  resolv_conf="/etc/resolv.conf"
+  name_servers="127.0.0.1"
+  search_domains="node.consul service.consul"
+
 base_services:
   - name: "docker"
+    runlevel: "default"
+  - name: "iptables"
     runlevel: "default"
 
 base_packages_tyros:
   - net-dialup/ppp
 base_packages: "{{ base_packages_all + base_packages_tyros | unique }}"
+
+base_wireguard_configs:
+  syria: "{{ lookup('hashi_vault', 'secret/data/wireguard/tyros:syria') }}"
+
+base_wireguard_interfaces:
+  - name: "syria"
 
 base_network_interfaces:
   - name: "enp2s0"
@@ -52,5 +65,41 @@ base_network_interfaces:
     start: false
     enable: false
   - name: "ppp0"
-    start: false
-    enable: false
+
+base_network: |
+  # pppoe
+  config_enp3s0=null
+  vlans_enp3s0="3005"
+  config_enp3s0_3005=null
+
+  config_ppp0="ppp"
+  link_ppp0="enp3s0.3005"
+  plugins_ppp0="pppoe"
+  pppd_ppp0="
+    noauth
+    defaultroute
+    mru 1492
+    mtu 1492
+    lcp-echo-interval 15 lcp-echo-failure 3
+    noaccomp noccp nobsdcomp nodeflate nopcomp novj novjccomp"
+
+  username_ppp0={{ lookup('hashi_vault', 'secret/data/ISP/syria:username') }}
+  password_ppp0={{ lookup('hashi_vault', 'secret/data/ISP/syria:password') }}
+
+  rc_net_ppp0_need="net.enp3s0"
+
+  # a workaround for 'WARNING: net.ppp0 has started, but is inactive'
+  preup() {
+    if [ "${IFACE}" == "ppp0" ]; then
+      trap 'mark_service_started' EXIT
+    fi
+    return 0
+  }
+
+  # lan
+  config_enp2s0=null
+
+  vlans_enp2s0="10 30 50"
+  config_enp2s0_10="192.168.110.1/24"
+  config_enp2s0_30="192.168.130.1/24"
+  config_enp2s0_50="192.168.150.1/24"

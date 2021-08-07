@@ -7,7 +7,7 @@
     mode: 0600
 
 - name: restore firewall state from a file
-  iptables_state:
+  community.general.iptables_state:
     state: restored
     path: "/etc/iptables.rules"
   async: "{{ ansible_timeout }}"

@@ -36,3 +36,5 @@ router_dnsmasq_config: |
 
 router_dnsmasq_openrc_config: |
   DNSMASQ_OPTS="--user=dnsmasq --group=dnsmasq --port=0"
+
+router_iptables: "{{ iptables.smyrna }}"

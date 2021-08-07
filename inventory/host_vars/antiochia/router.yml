@@ -2,8 +2,10 @@ router_unbound_configs:
   antiochia: |
     server:
       interface: 192.168.100.10@53
+      interface: 172.17.0.1@53
       interface: 127.0.0.1@53
       access-control: 192.168.1.0/24 allow
+      access-control: 172.17.0.0/24 allow
       access-control: 192.168.100.0/24 allow
 
   consul: |

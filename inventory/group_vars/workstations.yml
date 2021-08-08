@@ -187,3 +187,9 @@ base_portage_package_use_desktop:
     virtual/libelf abi_x86_32
     dev-libs/elfutils abi_x86_32
     app-arch/bzip2 abi_x86_32
+
+base_portage_package_use:
+  {{
+    base_portage_package_use_desktop |
+    combine(base_portage_package_use_all, recursive=true)
+  }}

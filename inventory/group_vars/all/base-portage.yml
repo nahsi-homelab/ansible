@@ -1,3 +1,12 @@
+base_portage_package_use_all:
+  common: |
+    sys-devel/gcc pgo
+    dev-lang/rust clippy rls rustfmt
+    net_misc/openssh -pam
+    net-analyzer/tcpdump -samba -smi
+
+base_portage_package_use: "{{ base_portage_package_use }}"
+
 base_portage_distcc_cores: 16
 # --jobs=N
 # where N is number of logical cores

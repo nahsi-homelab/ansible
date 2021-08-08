@@ -17,8 +17,3 @@ base_portage_use:
   - dist-kernel
   - -X
   - -introspection
-
-base_portage_package_use:
-  system: |
-    net_misc/openssh -pam
-    sys-devel/gcc pgo

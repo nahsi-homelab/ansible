@@ -67,6 +67,7 @@ base_packages_all:
   - sys-apps/lshw
   - net-dns/bind-tools
   - net-analyzer/traceroute
+  - net-analyzer/tcpdump
   - net-analyzer/arp-scan
   - net-misc/iperf
 

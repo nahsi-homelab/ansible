@@ -1,0 +1,18 @@
+- hosts: "{{ target }}"
+  become: yes
+  become_method: doas
+  tasks:
+    - name: Sync repositories and update world
+      throttle: 1
+      portage:
+        package: "@world"
+        state: latest
+        sync: true
+        deep: true
+        newuse: true
+        changed_use: true
+        keepgoing: true
+
+    - name: Remove unneeded packages
+      portage:
+        depclean: true

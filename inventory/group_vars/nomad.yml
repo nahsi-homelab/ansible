@@ -2,11 +2,11 @@ nomad_config_server:
   server:
     enabled: true
     bootstrap_expect: 3
-
-    retry_join:
-      - 192.168.130.10
-      - 192.168.130.1
-      - 192.168.230.1
+    server_join:
+      retry_join:
+        - 192.168.130.10
+        - 192.168.130.1
+        - 192.168.230.1
 
     encrypt: "{{ lookup('hashi_vault', 'secret/data/gossip:nomad') }}"
 

@@ -17,6 +17,8 @@ base_packages_desktop:
   - dev-python/tldextract
   - www-client/chromium
 
+  - net-analyzer/wireshark
+
   - net-im/telegram-desktop
   - net-im/slack
   - net-im/zoom

@@ -5,7 +5,7 @@ base_portage_package_use_all:
     net_misc/openssh -pam
     net-analyzer/tcpdump -samba -smi
 
-base_portage_package_use: "{{ base_portage_package_use }}"
+base_portage_package_use: "{{ base_portage_package_use_all }}"
 
 base_portage_distcc_cores: 16
 # --jobs=N

@@ -17,6 +17,7 @@ router_unbound_configs:
     stub-zone:
       name: "consul"
       stub-addr: 127.0.0.1@8600
+      stub-no-cache: yes
 
 router_dnsmasq_config: |
   interface=enp2s0.10

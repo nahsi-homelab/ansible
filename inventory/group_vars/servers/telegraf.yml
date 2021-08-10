@@ -35,8 +35,11 @@ telegraf_configs:
     [[inputs.cpu]]
     [[inputs.mem]]
     [[inputs.swap]]
-    [[inputs.disk]]
-      ignore_fs = ["tmpfs", "devtmpfs", "devfs", "iso9660", "overlay", "aufs", "squashfs"]
     [[inputs.kernel]]
     [[inputs.kernel_vmstat]]
     [[inputs.processes]]
+
+    [[inputs.disk]]
+      ignore_fs = ["tmpfs", "devtmpfs", "devfs", "iso9660", "overlay", "aufs", "squashfs"]
+      [inputs.disk.tagdrop]
+      path = ["/var/lib/docker/zfs/graph/*"]

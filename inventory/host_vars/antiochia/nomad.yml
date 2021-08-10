@@ -1,21 +1,6 @@
-nomad_client_config:
-  vault:
-    enabled: true
-    address: "https://vault.service.consul:8200"
-
-  tls:
-    http: true
-    rpc: true
-
-    verify_server_hostname: true
-
-    ca_file: "/opt/nomad/certs/client_ca.pem"
-    cert_file: "/opt/nomad/certs/client_cert.pem"
-    key_file: "/opt/nomad/certs/client_key.pem"
-
-  client:
-    enabled: true
-    servers: ["nomad.service.consul:4647"]
-
-    meta:
-      storage: true
+nomad_configs:
+  prometheus_volume:
+    client:
+      host_volume:
+        - prometheus:
+            path: "/var/lib/prometheus"

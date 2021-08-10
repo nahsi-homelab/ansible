@@ -4,6 +4,7 @@ pergamon
 miletos
 smyrna
 
+
 [asia]
 pergamon
 miletos
@@ -13,13 +14,20 @@ smyrna
 antiochia
 tyros
 
+
 [workstations]
 pergamon
 miletos
 
+[servers]
+antiochia
+smyrna
+tyros
+
 [routers]
 tyros
 smyrna
+
 
 [consul]
 antiochia

@@ -39,7 +39,7 @@ consul_service: |
   rc_ulimit="-n 65536"
 
   command="/usr/bin/${RC_SVCNAME}"
-  command_args="agent -config-file {{ consul_dir }}/consul.json -config-dir={{ consul_dirs.configs.path }}"
+  command_args="agent -config-file {{ consul_dir }}/consul.json -config-dir={{ consul_dirs.configs.path }} -config-dir={{ consul_dirs.services.path }}"
   command_background="true"
   start_stop_daemon_args="--user ${user} --group ${group}"
 

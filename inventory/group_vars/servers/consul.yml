@@ -1,4 +1,4 @@
-consul_services_servers:
+consul_services:
   telegraf:
     service:
       id: "telegraf"
@@ -10,9 +10,3 @@ consul_services_servers:
         http: "http://localhost:9270"
         interval: "20s"
         timeout: "2s"
-
-consul_services: >
-  {{
-    consul_services_all |
-    combine(consul_services_servers, recursive=true)
-  }}

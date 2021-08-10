@@ -4,6 +4,8 @@ consul_servers:
   - 192.168.130.1
   - 192.168.230.1
 
+gotmpl_docker: !unsafe '{{ GetInterfaceIP "docker0" }}'
+
 consul_config_all:
   datacenter: "oikumene"
   encrypt: "{{ lookup('hashi_vault', 'secret/data/gossip:consul') }}"
@@ -19,7 +21,7 @@ consul_config_all:
 
   bind_addr: "{{ gotmpl_private_address }}"
   addresses:
-    http: "127.0.0.1 {{ gotmpl_private_address }}"
+    http: "127.0.0.1 {{ gotmpl_private_address }} {{ gotmpl_docker }}"
 
   enable_local_script_checks: true
 

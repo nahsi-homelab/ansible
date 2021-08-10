@@ -13,6 +13,7 @@
 * `users` - create users
 * `syslog` - configure syslog
 * `udev` - configure udev rules
+* `zfs` - configure zfs datasets
 
 ## Credits
 To [Jakub Jirutka](https://github.com/jirutka) for `eselect` Ansible [module](https://github.com/gentoo-ansible/role-base/blob/master/library/eselect]).

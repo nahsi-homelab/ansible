@@ -1,0 +1,10 @@
+base_zfs_datasets:
+  - name: "hot/data/prometheus"
+    properties:
+      atime: "off"
+      recordsize: "32K"
+      compression: "lz4"
+      mountpoint: "/var/lib/prometheus"
+    owner: "1000"
+    group: "1000"
+    mode: "0750"

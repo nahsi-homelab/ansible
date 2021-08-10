@@ -300,3 +300,12 @@
       - base_udev_rules is defined
       - base_udev_rules is mapping
     quiet: true
+
+- name: check "base_zfs_dataset" variable
+  tags: always
+  assert:
+    that:
+      - base_zfs_dataset is mapping
+      - base_zfs_dataset is not string
+    quiet: true
+  when: base_zfs_dataset is defined

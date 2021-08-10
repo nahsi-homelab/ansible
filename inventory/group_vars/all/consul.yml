@@ -25,6 +25,11 @@ consul_config_all:
 
   enable_local_script_checks: true
 
+  telemetry:
+    disable_compat_1.9: true
+    disable_hostname: true
+    prometheus_retention_time: "30s"
+
   server: false
   retry_join: "{{ consul_servers }}"
 

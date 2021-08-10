@@ -1,30 +1,28 @@
-# Telegraf
+# telegraf
 
-## Description
-Installs and configures Telegraf - metrics collection agent.
+>This role installs and configures telegraf.
 
-### Role Variables
-See [defaults/main.yml](defaults/main.yml) for details and examples.
+## Role Variables
 
-| name | type | description |
-| ---- | ---- | ----------- |
-| telegraf_agent_config | string | agent configuration |
-| telegraf_configs | map | plugins configuration |
-| telegraf_version | string | |
-| telegraf_checksum | string | |
+| variable                | description                                    |
+|-------------------------|------------------------------------------------|
+| `telegraf_version`      | telegaf version to use                         |
+| `telegraf_checksum`     | telegaf checksum archive (see github releases) |
+| `telegraf_download_url` | where to look for binaries and such            |
+| `telegraf_config`       | main telegraf configuration                    |
+| `telegraf_service`      | telegraf unit file                             |
+| `telegraf_configs`      | map of telegraf "plugins" configs              |
+| `telegraf_scripts`      | map of scripts                                 |
+| `telegraf_dirs_overlay` | map of directories to create                   |
 
-### How to use
-1. Install `python3-virtualenv`
-2. Create python virtual environment with
-```sh
-python3 -m virtualenv ~/.homelab/ansible/telegraf
-source ~/.homelab/ansible/telegraf/bin/activate
-pip install -r requirements.txt
-```
-3. Run the role
+See [defaults/](defaults/) for details and examples.
 
-### External Resources
+## Tags
+* `configs` - manage config files
+* `scripts` - manage exec scripts
+
+## External Resources
 - https://github.com/influxdata/telegraf
 
-### Author
-Anatoly Laskaris
+## Author
+* **Anatoly Laskaris** - [nahsi](https://github.com/nahsi)

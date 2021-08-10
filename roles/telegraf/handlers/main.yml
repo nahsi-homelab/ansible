@@ -1,9 +1,11 @@
-- name: daemon reload
-  systemd:
-    name: telegraf
-    daemon_reload: yes
-
 - name: restart telegraf
   service:
     name: telegraf
     state: restarted
+    use: openrc
+
+- name: reload telegraf
+  service:
+    name: telegraf
+    state: reloaded
+    use: openrc

@@ -1,0 +1,30 @@
+#telegraf_version: "1.18.2"
+#telegraf_checksum: "9a01d0351b3bafd94ada8278f191271242cd12122c22b4ec44fdc55ae062fc4a"
+
+#telegraf_config: |
+#  [agent]
+#    interval = "25s"
+#    round_interval = true
+#    metric_batch_size = 3000
+#    metric_buffer_limit =  50000
+#    collection_jitter = "5s"
+#    flush_interval = "30s"
+#    flush_jitter = "0s"
+#    precision = ""
+#    omit_hostname = true
+
+#  [[inputs.internal]]
+#    ## If true, collect telegraf memory stats.
+#    collect_memstats = true
+
+#telegraf_configs:
+#  example: |
+#    [[inputs.exec]]
+#      commands = [ "{{ telegraf_dirs.scripts.path }}/example.sh" ]
+#      timeout = "5s"
+#      data_format = "prometheus"
+
+#telegraf_scripts:
+#  example: |
+#    #! /usr/bin/env bash
+#    echo 'test_metric{foo="bar"} 1'

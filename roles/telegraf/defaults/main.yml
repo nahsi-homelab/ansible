@@ -1,8 +1,41 @@
+telegraf_download_url: "https://dl.influxdata.com"
+
+telegraf_configs: {}
+telegraf_scripts: {}
+
 telegraf_dir: "/opt/telegraf"
-telegraf_dirs:
+telegraf_dirs_base:
   main:
     path: "{{ telegraf_dir }}"
   configs:
-    path: "{{ telegraf_dir }}/conf.d"
+    path: "{{ telegraf_dir }}/config.d"
   scripts:
-    path: "{{ telegraf_dir }}/scripts"
+    path: "{{ telegraf_dir }}/script.d"
+telegraf_dirs_overlay: {}
+telegraf_dirs: >
+  {{
+    telegraf_dirs_base |
+    combine(telegraf_dirs_overlay, recursive=true)
+  }}
+
+telegraf_service: |
+  #!/sbin/openrc-run
+
+  description="Telegraf - metrics collection agent"
+  extra_started_commands="reload"
+
+  group="${RC_SVCNAME}"
+  user="${RC_SVCNAME}"
+
+  pidfile="/run/${RC_SVCNAME}.pid"
+
+  command="/usr/bin/${RC_SVCNAME}"
+  command_args="-config {{ telegraf_dir }}/telegraf.conf -config-directory={{ telegraf_dirs.configs.path }}"
+  command_background="true"
+  start_stop_daemon_args="--user ${user} --group ${group}"
+
+  reload() {
+      ebegin "Reloading telegraf"
+      start-stop-daemon --signal HUP --pidfile "${PIDFILE}"
+      eend $?
+  }

@@ -1,3 +1,3 @@
 __archive: "telegraf-{{ telegraf_version }}_linux_amd64.tar.gz"
-__archive_url: "https://dl.influxdata.com/telegraf/releases/{{ __archive }}"
+__archive_url: "{{ telegraf_download_url }}/telegraf/releases/{{ __archive }}"
 __archive_dir: "/tmp/{{ __archive | splitext | first }}"

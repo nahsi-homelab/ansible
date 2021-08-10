@@ -1,0 +1,36 @@
+- name: register present configs
+  tags: configs
+  find:
+    paths: "{{ telegraf_dirs.configs.path }}"
+    recurse: true
+  register: __configs_present
+
+- name: copy configs
+  tags: configs
+  copy:
+    content: "{{ config.value }}"
+    dest: "{{ telegraf_dirs.configs.path }}/{{ config.key }}.conf"
+    owner: telegraf
+    group: telegraf
+    mode: 0640
+    validate: "telegraf -logfile=/dev/null -test -config {{ telegraf_dir }}/telegraf.conf --config %s"
+  notify: restart telegraf
+  loop: "{{ telegraf_configs | dict2items }}"
+  loop_control:
+    loop_var: "config"
+    label: "{{ config.key }}"
+  register: __configs_copied
+
+- name: get configs paths
+  tags: configs
+  set_fact:
+    __configs_present_list: "{{ __configs_present | json_query('files[*].path') | d([]) }}"
+    __configs_copied_list: "{{ __configs_copied | json_query('results[*].dest') | d([]) }}"
+
+- name: delete configs
+  tags: configs
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop: "{{ __configs_present_list | difference(__configs_copied_list) }}"
+  notify: restart telegraf

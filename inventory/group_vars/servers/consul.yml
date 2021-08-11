@@ -4,6 +4,7 @@ consul_services:
       id: "telegraf"
       name: "telegraf"
       port: 9271
+      tags: ["dc={{ dc }}"]
       check:
         id: "telegraf-health"
         name: "telegraf"

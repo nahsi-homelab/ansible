@@ -1,6 +1,8 @@
 nomad_configs:
-  prometheus_volume:
+  volumes:
     client:
       host_volume:
         - prometheus:
             path: "/var/lib/prometheus"
+        - grafana:
+            path: "/var/lib/grafana"

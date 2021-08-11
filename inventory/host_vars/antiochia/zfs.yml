@@ -5,6 +5,14 @@ base_zfs_datasets:
       recordsize: "32K"
       compression: "lz4"
       mountpoint: "/var/lib/prometheus"
-    owner: "1000"
-    group: "1000"
+    owner: "nobody"
+    group: "nobody"
+    mode: "0750"
+
+  - name: "hot/data/grafana"
+    properties:
+      atime: "off"
+      mountpoint: "/var/lib/grafana"
+    owner: "nobody"
+    group: "nobody"
     mode: "0750"

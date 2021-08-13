@@ -43,3 +43,15 @@ telegraf_configs:
       ignore_fs = ["tmpfs", "devtmpfs", "devfs", "iso9660", "overlay", "aufs", "squashfs"]
       [inputs.disk.tagdrop]
       path = ["/var/lib/docker/zfs/graph/*"]
+
+  docker: |
+    [[inputs.docker]]
+      endpoint = "unix:///var/run/docker.sock"
+      gather_services = false
+      source_tag = false
+      perdevice = false
+      total = true
+      total_include = ["cpu", "blkio", "network"]
+
+      # docker_label_include = []
+      docker_label_exclude = ["*"]

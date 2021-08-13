@@ -23,6 +23,9 @@
     system: true
     shell: "/sbin/nologin"
     group: telegraf
+    groups: 
+      - docker
+    append: true
     create_home: false
     home: "{{ telegraf_dir }}"
     state: present

@@ -1,5 +1,6 @@
 - hosts: "{{ target }}"
-  become: yes
+  serial: "{{ serial | d('100%') }}"
+  become: true
   become_method: doas
   vars_files: secrets.yml
   roles:

@@ -30,4 +30,8 @@ nomad_config_all:
         volumes:
           enabled: true
 
+    raw_exec:
+      config:
+        enabled: true
+
 nomad_config: "{{ nomad_config_all }}"

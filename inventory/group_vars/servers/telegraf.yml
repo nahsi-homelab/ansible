@@ -1,57 +1,4 @@
-telegraf_version: "1.19.2"
-telegraf_checksum: "96f837ef9bf227a1b782f266da1ff8d64a3d5077f70205c58fedb0555f4674df"
-
-telegraf_config: |
-  [agent]
-    interval = "15s"
-    round_interval = true
-    metric_batch_size = 10000
-    metric_buffer_limit = 100000
-    collection_jitter = "1s"
-    flush_interval = "15s"
-    flush_jitter = "0s"
-    precision = ""
-    logtarget = "stdeer"
-    ## Override default hostname, if empty use os.Hostname()
-    hostname = ""
-    ## If set to true, do no set the "host" tag in the telegraf agent.
-    omit_hostname = true
-
-  [[inputs.internal]]
-
-telegraf_configs:
-  output: |
-    [[outputs.prometheus_client]]
-      listen = "{{ private_ip }}:9271"
-      metric_version = 2
-      path = "/metrics"
-      expiration_interval = "30s"
-
-    [[outputs.health]]
-      service_address = "http://127.0.0.1:9270"
-
-  system: |
-    [[inputs.system]]
-    [[inputs.cpu]]
-    [[inputs.mem]]
-    [[inputs.swap]]
-    [[inputs.kernel]]
-    [[inputs.kernel_vmstat]]
-    [[inputs.processes]]
-
-    [[inputs.net]]
-      interfaces = ["eth*", "enp*", "ppp*", "syria"]
-    [[inputs.netstat]]
-
-    [[inputs.disk]]
-      ignore_fs = ["tmpfs", "devtmpfs", "devfs", "iso9660", "overlay", "aufs", "squashfs"]
-      [inputs.disk.tagdrop]
-      path = ["/var/lib/docker/zfs/graph/*"]
-
-    [[inputs.diskio]]
-      [inputs.diskio.tagdrop]
-      device = ["*/containers/*"]
-
+telegraf_configs_servers:
   docker: |
     [[inputs.docker]]
       endpoint = "unix:///var/run/docker.sock"
@@ -63,3 +10,17 @@ telegraf_configs:
 
       # docker_label_include = []
       docker_label_exclude = ["*"]
+
+  zfs: |
+    [[inputs.zfs]]
+    [[inputs.execd]]
+      command = ["/usr/libexec/zfs/zpool_influxdb", "--execd"]
+      signal = "STDIN"
+      restart_delay = "10s"
+      data_format = "influx"
+
+telegraf_configs: >
+  {{
+    telegraf_configs_servers |
+    combine(telegraf_configs_all, recursive=true)
+  }}

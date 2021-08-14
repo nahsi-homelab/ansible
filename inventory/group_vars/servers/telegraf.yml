@@ -48,6 +48,10 @@ telegraf_configs:
       [inputs.disk.tagdrop]
       path = ["/var/lib/docker/zfs/graph/*"]
 
+    [[inputs.diskio]]
+      [inputs.diskio.tagdrop]
+      device = ["*/containers/*"]
+
   docker: |
     [[inputs.docker]]
       endpoint = "unix:///var/run/docker.sock"

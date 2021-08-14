@@ -132,6 +132,7 @@
   portage:
     package: "=sys-kernel/nahsi-kernel-{{ kernel_version }}"
     state: present
+    sync: true
   notify:
     - rebuild modules
     - generate zbm

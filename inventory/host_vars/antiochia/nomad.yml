@@ -6,3 +6,11 @@ nomad_configs:
             path: "/var/lib/prometheus"
         - grafana:
             path: "/var/lib/grafana"
+        - unifi:
+            path: "/var/lib/unifi"
+        - transmission:
+            path: "/var/lib/transmission"
+        - jellyfin:
+            path: "/var/lib/jellyfin/config"
+        - jellyfin-cache:
+            path: "/var/lib/jellyfin/cache"

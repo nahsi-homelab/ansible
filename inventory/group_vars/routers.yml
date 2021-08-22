@@ -38,8 +38,10 @@ router_unbound_config: |
 router_dnscrypt_config: |
   listen_addresses = ["127.0.0.1:5053"]
 
-  log_level = 4
-  use_syslog = true
+  log_level = 2
+  use_syslog = false
+  log_file = "/var/log/dnscrypt-proxy/dnscrypt-proxy.log"
+  log_file_latest = true
   max_clients = 10
   timeout = 500
   keepalive = 30
@@ -71,16 +73,16 @@ router_dnscrypt_config: |
   [sources]
     [sources."public-resolvers"]
     urls = [
-      "https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v2/public-resolvers.md",
-      "https://download.dnscrypt.info/resolvers-list/v2/public-resolvers.md"
+      "https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v3/public-resolvers.md",
+      "https://download.dnscrypt.info/resolvers-list/v3/public-resolvers.md"
     ]
     cache_file = "/var/cache/dnscrypt-proxy/public-resolvers.md"
     minisign_key = "RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3"
     prefix = ""
     [sources."relays"]
     urls = [
-      "https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v2/relays.md",
-      "https://download.dnscrypt.info/resolvers-list/v2/relays.md"
+      "https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v3/relays.md",
+      "https://download.dnscrypt.info/resolvers-list/v3/relays.md"
     ]
     cache_file = "/var/cache/dnscrypt-proxy/relays.md"
     minisign_key = "RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3"

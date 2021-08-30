@@ -45,6 +45,7 @@ base_packages_desktop:
   - media-video/mpv
   - media-video/mediainfo
   - media-tv/jellyfin-mpv-shim
+  - media-sound/spotify
 
   - app-emulation/virtualbox
   - sys-fs/fuse:0 # error loading libfuse.so.2
@@ -160,6 +161,8 @@ base_portage_package_use_desktop:
 
     # xdg-utils
     app-text/xmlto text
+
+    media-sound/spotify systray
 
   steam: |
     x11-libs/libX11 abi_x86_32

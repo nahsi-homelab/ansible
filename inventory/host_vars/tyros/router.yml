@@ -17,6 +17,9 @@ router_unbound_configs:
     stub-zone:
       name: "consul"
       stub-addr: 127.0.0.1@8600
+      stub-addr: 192.168.130.1@8600
+      stub-addr: 192.168.130.10@8600
+      stub-addr: 192.168.230.1@8600
       stub-no-cache: yes
 
 router_dnsmasq_config: |

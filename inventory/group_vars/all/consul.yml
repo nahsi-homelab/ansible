@@ -22,6 +22,7 @@ consul_config_all:
   bind_addr: "{{ gotmpl_private_address }}"
   addresses:
     http: "127.0.0.1 {{ gotmpl_private_address }} {{ gotmpl_docker }}"
+    dns: "127.0.0.1 {{ gotmpl_private_address }}"
 
   enable_local_script_checks: true
 

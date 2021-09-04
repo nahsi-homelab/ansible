@@ -1,0 +1,56 @@
+- name: check "arch" variable
+  tags: always
+  assert:
+    that:
+      - arch is defined
+      - arch is string
+      - arch | length
+    quiet: true
+
+- name: check "promtail_version" variable
+  tags: always
+  assert:
+    that:
+      - promtail_version is defined
+      - promtail_version is string
+      - promtail_version | length
+    quiet: true
+
+- name: check "promtail_config" variable
+  tags: always
+  assert:
+    that:
+      - promtail_config is defined
+      - promtail_config is mapping
+      - promtail_config | length
+    quiet: true
+
+- name: check "promtail_service" variable
+  tags: always
+  assert:
+    that:
+      - promtail_service is defined
+      - promtail_service is string
+      - promtail_service | length
+    quiet: true
+
+- name: check "promtail_download_url" variable
+  tags: always
+  assert:
+    that:
+      - promtail_download_url is defined
+      - promtail_download_url is string
+      - promtail_download_url | length
+    quiet: true
+
+- name: check if "{{ promtail_download_url }}" is online
+  become: false
+  run_once: true
+  delegate_to: localhost
+  uri:
+    url: "{{ promtail_download_url }}"
+    status_code: 200
+  register: _result
+  retries: 3
+  delay: 5
+  until: _result.status == 200

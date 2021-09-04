@@ -1,0 +1,4 @@
+__archive: "promtail-linux-{{ arch }}.zip"
+__archive_url: "{{ promtail_download_url }}/download/v{{ promtail_version }}/{{ __archive }}"
+__archive_checksum: "{{ promtail_download_url }}/download/v{{ promtail_version }}/SHA256SUMS"
+__archive_dir: "/tmp/{{ __archive | splitext | first }}"

@@ -1,0 +1,32 @@
+promtail_version: "2.3.0"
+promtail_config:
+  server:
+    http_listen_port: 9380
+    http_listen_address: "{{ private_ip }}"
+    grpc_listen_port: 0
+    log_level: info
+
+  positions:
+    filename: "{{ promtail_dir }}/positions.yml"
+
+  clients:
+    - external_labels:
+        dc: "{{ dc }}"
+        host: "{{ inventory_hostname }}"
+      url: "http://loki.service.consul/loki/api/v1/push"
+
+  scrape_configs:
+  - job_name: syslog
+    syslog:
+      listen_address: localhost:1514
+      idle_timeout: 3600s
+      use_incoming_timestamp: true
+    relabel_configs:
+      - source_labels: ["__syslog_message_hostname"]
+        target_label: "host"
+      - source_labels: ["__syslog_message_severity"]
+        target_label: "level"
+      - source_labels: ["__syslog_message_app_name"]
+        target_label: "app"
+      - source_labels: ["__syslog_message_facility"]
+        target_label: "facility"

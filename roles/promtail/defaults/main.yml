@@ -1,0 +1,34 @@
+promtail_download_url: "https://github.com/grafana/loki/releases"
+
+promtail_configs: {}
+
+promtail_dir: "/opt/promtail"
+promtail_dirs_base:
+  main:
+    path: "{{ promtail_dir }}"
+promtail_dirs_overlay: {}
+promtail_dirs: >
+  {{
+    promtail_dirs_base |
+    combine(promtail_dirs_overlay, recursive=true)
+  }}
+
+promtail_service: |
+  #!/sbin/openrc-run
+
+  description="Promtail - log collection agent"
+  extra_started_commands="reload"
+
+  group="${RC_SVCNAME}"
+  user="${RC_SVCNAME}"
+
+  supervisor="supervise-daemon"
+  pidfile="/run/${RC_SVCNAME}.pid"
+  command="/usr/bin/${RC_SVCNAME}"
+  command_args="-config.file={{ promtail_dir }}/promtail.yml"
+
+  reload() {
+      ebegin "Reloading promtail"
+      ${supervisor} ${RC_SVCNAME} --signal HUP --pidfile "${PIDFILE}"
+      eend $?
+  }

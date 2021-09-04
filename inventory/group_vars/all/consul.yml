@@ -1,4 +1,4 @@
-consul_version: "1.9.8"
+consul_version: "1.9.9"
 consul_servers:
   - 192.168.130.10
   - 192.168.130.1

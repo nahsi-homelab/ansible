@@ -31,17 +31,19 @@ consul_dirs: >
 consul_service: |
   #!/sbin/openrc-run
 
-  description="HashiCorp Consul"
-  extra_started_commands="reload"
+  description="HashiCorp Consul - service mesh"
+
   group="${RC_SVCNAME}"
   user="${RC_SVCNAME}"
-  pidfile="/run/${RC_SVCNAME}.pid"
+
   rc_ulimit="-n 65536"
 
+  supervisor="supervise-daemon"
+  pidfile="/run/${RC_SVCNAME}.pid"
   command="/usr/bin/${RC_SVCNAME}"
   command_args="agent -config-file {{ consul_dir }}/consul.json -config-dir={{ consul_dirs.configs.path }} -config-dir={{ consul_dirs.services.path }}"
   command_background="true"
-  start_stop_daemon_args="--user ${user} --group ${group}"
+  extra_started_commands="reload"
 
   depend() {
       need net

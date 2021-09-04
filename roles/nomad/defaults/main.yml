@@ -23,19 +23,18 @@ nomad_dirs: >
 nomad_service: |
   #!/sbin/openrc-run
 
-  description="HashiCorp Nomad"
+  description="HashiCorp Nomad - workload orchestrator"
+
   user="root"
   group="root"
-  pidfile="/run/nomad.pid"
 
-  extra_started_commands="reload"
-
+  supervisor="supervise-daemon"
+  pidfile="/run/${RC_SVCNAME}.pid"
   command="/usr/bin/${RC_SVCNAME}"
   command_args="agent -config={{ nomad_dir }}/nomad.json -config={{ nomad_dirs.configs.path }}"
   command_background="true"
   stopsig=SIGINT
-
-  start_stop_daemon_args="--user ${user} --group ${group}"
+  extra_started_commands="reload"
 
   depend() {
       need net
@@ -43,6 +42,6 @@ nomad_service: |
 
   reload() {
       ebegin "Reloading nomad"
-      start-stop-daemon --signal HUP --pidfile "${pidfile}"
+      ${supervisor} ${RC_SVCNAME} --signal HUP --pidfile "${PIDFILE}"
       eend $?
   }

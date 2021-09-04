@@ -23,16 +23,17 @@ vault_dirs: >
 vault_service: |
   #!/sbin/openrc-run
 
-  description="HashiCorp Vault"
-  extra_started_commands="reload"
+  description="HashiCorp Vault - secret management"
+
   group="${RC_SVCNAME}"
   user="${RC_SVCNAME}"
-  pidfile="/run/${RC_SVCNAME}.pid"
 
+  supervisor="supervise-daemon"
+  pidfile="/run/${RC_SVCNAME}.pid"
   command="/usr/bin/${RC_SVCNAME}"
   command_args="server -config={{ vault_dir }}/vault.json -config={{ vault_dirs.configs.path }}"
   command_background="true"
-  start_stop_daemon_args="--user ${user} --group ${group}"
+  extra_started_commands="reload"
 
   depend() {
       need net
@@ -40,6 +41,6 @@ vault_service: |
 
   reload() {
       ebegin "Reloading vault"
-      ${command} reload
+      ${supervisor} ${RC_SVCNAME} --signal HUP --pidfile "${PIDFILE}"
       eend $?
   }

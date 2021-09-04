@@ -1,16 +1,16 @@
 station_hashi:
   - name: terraform
-    version: "1.0.1"
+    version: "1.0.6"
   - name: nomad
-    version: "1.1.2"
+    version: "1.1.4"
   - name: consul
-    version: "1.10.0"
+    version: "1.10.2"
   - name: vault
-    version: "1.7.3"
+    version: "1.8.2"
   - name: packer
-    version: "1.7.3"
+    version: "1.7.4"
   - name: vagrant
-    version: "2.2.16"
+    version: "2.2.18"
 
 base_packages_desktop:
   - www-client/qutebrowser

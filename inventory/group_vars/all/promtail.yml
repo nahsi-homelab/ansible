@@ -2,7 +2,7 @@ promtail_version: "2.3.0"
 promtail_config:
   server:
     http_listen_port: 9380
-    http_listen_address: "{{ private_ip }}"
+    http_listen_address: "0.0.0.0"
     grpc_listen_port: 0
 
   positions:
@@ -15,17 +15,17 @@ promtail_config:
         host: "{{ inventory_hostname }}"
 
   scrape_configs:
-  - job_name: "syslog"
-    syslog:
-      listen_address: "127.0.0.1:1514"
-      idle_timeout: "3600s"
-      use_incoming_timestamp: true
-    relabel_configs:
-      - source_labels: ["__syslog_message_hostname"]
-        target_label: "host"
-      - source_labels: ["__syslog_message_severity"]
-        target_label: "level"
-      - source_labels: ["__syslog_message_app_name"]
-        target_label: "app"
-      - source_labels: ["__syslog_message_facility"]
-        target_label: "facility"
+    - job_name: "syslog"
+      syslog:
+        listen_address: "127.0.0.1:1514"
+        idle_timeout: "3600s"
+        use_incoming_timestamp: true
+      relabel_configs:
+        - source_labels: ["__syslog_message_hostname"]
+          target_label: "host"
+        - source_labels: ["__syslog_message_severity"]
+          target_label: "level"
+        - source_labels: ["__syslog_message_app_name"]
+          target_label: "app"
+        - source_labels: ["__syslog_message_facility"]
+          target_label: "facility"

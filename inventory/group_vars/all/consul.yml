@@ -47,3 +47,15 @@ consul_services:
         http: "http://localhost:9270"
         interval: "20s"
         timeout: "2s"
+
+  promtail:
+    service:
+      id: "promtail"
+      name: "promtail"
+      port: 9380
+      check:
+        id: "promtail-health"
+        name: "promtail"
+        http: "http://localhost:9380/ready"
+        interval: "20s"
+        timeout: "2s"

@@ -9,6 +9,14 @@ base_zfs_datasets:
     group: "nobody"
     mode: "0750"
 
+  - name: "hot/data/loki"
+    properties:
+      atime: "off"
+      mountpoint: "/var/lib/loki"
+    owner: "nobody"
+    group: "nobody"
+    mode: "0750"
+
   - name: "hot/data/grafana"
     properties:
       atime: "off"

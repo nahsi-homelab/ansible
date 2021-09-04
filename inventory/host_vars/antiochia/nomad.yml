@@ -4,6 +4,8 @@ nomad_configs:
       host_volume:
         - prometheus:
             path: "/var/lib/prometheus"
+        - loki:
+            path: "/var/lib/loki"
         - grafana:
             path: "/var/lib/grafana"
         - unifi:

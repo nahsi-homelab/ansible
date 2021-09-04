@@ -30,7 +30,7 @@
     paths: "/etc/syslog-ng/conf.d/"
   register: __files_present
 
-- name: copy useflag files
+- name: copy syslog configs
   tags: syslog
   copy:
     content: "{{ file.value }}"
@@ -38,7 +38,6 @@
     owner: root
     group: root
     mode: 0644
-    validate: "syslog-ng --syntax-only --cfgfile %s"
   notify: reload syslog
   loop: "{{ base_syslog_configs | dict2items }}"
   loop_control:

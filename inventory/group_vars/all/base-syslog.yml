@@ -1,63 +1,63 @@
 base_syslog_config: |
-  @version: 3.32
+  config-version: "3.33"
   @include "/etc/syslog-ng/conf.d/*.conf"
 
   options {
-      threaded(yes);
-      chain_hostnames(no);
-      use_dns(no);
-      dns_cache(no);
-      flush_lines(0);
-      stats_freq(43200);
-      mark_freq(3600);
+    threaded(yes);
+    chain_hostnames(no);
+    use_dns(no);
+    dns_cache(no);
+    flush_lines(0);
+    stats_freq(43200);
+    mark_freq(3600);
   };
 
   source src {
-      unix-stream("/dev/log" max-connections(256));
-      internal();
+    unix-stream("/dev/log" max-connections(256));
+    internal();
   };
   source kernel {
-      file("/proc/kmsg");
+    file("/proc/kmsg");
   };
 
   destination syslog {
-      file("/var/log/syslog.log");
+    file("/var/log/syslog.log");
   };
   destination authlog {
-      file("/var/log/auth.log");
+    file("/var/log/auth.log");
   };
   destination cron {
-      file("/var/log/cron.log");
+    file("/var/log/cron.log");
   };
   destination daemon {
-      file("/var/log/daemon.log");
+    file("/var/log/daemon.log");
   };
   destination kern {
-      file("/var/log/kern.log");
+    file("/var/log/kern.log");
   };
   destination lpr {
-      file("/var/log/lpr.log");
+    file("/var/log/lpr.log");
   };
   destination user {
-      file("/var/log/user.log");
+    file("/var/log/user.log");
   };
   destination mail {
-      file("/var/log/mail.log");
+    file("/var/log/mail.log");
   };
   destination news {
-      file("/var/log/news.log");
+    file("/var/log/news.log");
   };
   destination debug {
-      file("/var/log/debug");
+    file("/var/log/debug");
   };
   destination messages {
-      file("/var/log/messages");
+    file("/var/log/messages");
   };
   destination console {
-      usertty("root");
+    usertty("root");
   };
   destination default {
-      file("/var/log/all");
+    file("/var/log/all");
   };
 
   filter authpriv { facility(auth, authpriv); };
@@ -80,64 +80,76 @@ base_syslog_config: |
   filter denied { message("denied"); };
 
   log {
-      source(src);
-      filter(authpriv);
-      destination(authlog);
+    source(src);
+    filter(authpriv);
+    destination(authlog);
   };
   log {
-      source(src);
-      filter(syslog);
-      destination(syslog);
+    source(src);
+    filter(syslog);
+    destination(syslog);
   };
   log {
-      source(src);
-      filter(cron);
-      destination(cron);
+    source(src);
+    filter(cron);
+    destination(cron);
   };
   log {
-      source(src);
-      filter(daemon);
-      destination(daemon);
+    source(src);
+    filter(daemon);
+    destination(daemon);
   };
   log {
+    source(kernel);
+    filter(kern);
+    destination(kern);
+  };
+  log {
+    source(src);
+    filter(lpr);
+    destination(lpr);
+  };
+  log {
+    source(src);
+    filter(mail);
+    destination(mail);
+  };
+  log {
+    source(src);
+    filter(user);
+    destination(user);
+  };
+  log {
+    source(src);
+    filter(debug);
+    destination(debug);
+  };
+  log {
+    source(src);
+    filter(messages);
+    destination(messages);
+  };
+  log {
+    source(src);
+    filter(emergency);
+    destination(console);
+  };
+  log {
+    source(src);
+    destination(default);
+  };
+
+base_syslog_configs: 
+  promtail: |
+    destination loki {
+      syslog("localhost" transport("tcp") port(1514));
+    };
+
+    log {
+      source(src);
       source(kernel);
-      filter(kern);
-      destination(kern);
-  };
-  log {
-      source(src);
-      filter(lpr);
-      destination(lpr);
-  };
-  log {
-      source(src);
-      filter(mail);
-      destination(mail);
-  };
-  log {
-      source(src);
-      filter(user);
-      destination(user);
-  };
-  log {
-      source(src);
-      filter(debug);
-      destination(debug);
-  };
-  log {
-      source(src);
-      filter(messages);
-      destination(messages);
-  };
-  log {
-      source(src);
-      filter(emergency);
-      destination(console);
-  };
-  log {
-      source(src);
-      destination(default);
-  };
+      destination(loki);
+    };
 
 base_syslog_logrotate: |
   "/var/log/syslog.log" {

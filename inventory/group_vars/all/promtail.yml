@@ -13,7 +13,7 @@ promtail_config:
     - external_labels:
         dc: "{{ dc }}"
         host: "{{ inventory_hostname }}"
-      url: "http://loki.service.consul/loki/api/v1/push"
+      url: "http://loki.service.consul:3100/loki/api/v1/push"
 
   scrape_configs:
   - job_name: syslog

@@ -6,6 +6,8 @@ vault_config:
 
   api_addr: "http://{{ private_ip }}:8200"
 
+  log_level: "info"
+
   listener:
     tcp:
       tls_disable: true

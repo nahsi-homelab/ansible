@@ -14,7 +14,7 @@ consul_config_all:
 
   enable_syslog: true
   # "trace", "debug", "info", "warn", "err"
-  log_level: "warn"
+  log_level: "info"
   syslog_facility: "LOCAL5"
 
   rejoin_after_leave: true

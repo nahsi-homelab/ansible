@@ -8,7 +8,7 @@ nomad_config_all:
 
   bind_addr: "{{ gotmpl_private_address }}"
 
-  log_level: "warn"
+  log_level: "info"
   enable_syslog: true
   syslog_facility: "LOCAL5"
 

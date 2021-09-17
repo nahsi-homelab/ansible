@@ -30,6 +30,18 @@ telegraf_configs_all:
     [[outputs.health]]
       service_address = "http://127.0.0.1:9270"
 
+  docker: |
+    [[inputs.docker]]
+      endpoint = "unix:///var/run/docker.sock"
+      gather_services = false
+      source_tag = false
+      perdevice = false
+      total = true
+      total_include = ["cpu", "blkio", "network"]
+
+      # docker_label_include = []
+      docker_label_exclude = ["*"]
+
   system: |
     [[inputs.system]]
     [[inputs.cpu]]
@@ -51,5 +63,14 @@ telegraf_configs_all:
     [[inputs.diskio]]
       [inputs.diskio.tagdrop]
       device = ["*/containers/*"]
+
+  zfs: |
+    [[inputs.zfs]]
+      kstatMetrics = ["arcstats", "zil"]
+    [[inputs.execd]]
+      command = ["/usr/libexec/zfs/zpool_influxdb", "--execd"]
+      signal = "STDIN"
+      restart_delay = "10s"
+      data_format = "influx"
 
 telegraf_configs: "{{ telegraf_configs_all }}"

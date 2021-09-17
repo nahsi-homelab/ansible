@@ -32,6 +32,8 @@ base_services:
     runlevel: "default"
   - name: "alsasound"
     runlevel: "default"
+  - name: "docker"
+    runlevel: "default"
 
 base_wireguard_configs:
   vpn: "{{ lookup('hashi_vault', 'secret/data/wireguard/miletos:vpn') }}"

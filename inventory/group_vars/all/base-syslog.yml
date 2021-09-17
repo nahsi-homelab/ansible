@@ -284,3 +284,27 @@ base_syslog_logrotate: |
       /etc/init.d/syslog-ng reload > /dev/null 2>&1 || true
       endscript
   }
+  "/var/log/daemon.log" {
+      rotate 2
+      weekly
+      missingok
+      notifempty
+      maxsize 100M
+      dateext
+  }
+  "/var/log/emerge.log" {
+      rotate 2
+      weekly
+      missingok
+      notifempty
+      maxsize 100M
+      dateext
+  }
+  "/var/log/emerge-fetch.log" {
+      rotate 2
+      weekly
+      missingok
+      notifempty
+      maxsize 100M
+      dateext
+  }

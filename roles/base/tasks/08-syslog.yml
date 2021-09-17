@@ -71,7 +71,7 @@
     package: app-admin/logrotate
     state: present
 
-- name: configure syslog-ng log rotation
+- name: configure log rotation
   tags: syslog
   copy:
     content: "{{ base_syslog_logrotate }}"

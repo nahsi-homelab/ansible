@@ -29,3 +29,25 @@ promtail_config:
           target_label: "app"
         - source_labels: ["__syslog_message_facility"]
           target_label: "facility"
+
+    - job_name: "emerge"
+      static_configs:
+        - labels:
+            __path__: "/var/log/emerge.log"
+            app: "emerge"
+      pipeline_stages:
+        - regex:
+             expression: "^(?P<time>\\d+):.*"
+        - timestamp:
+            source: "time"
+            format: "Unix"
+
+    - job_name: "docker"
+      static_configs:
+        - labels:
+            __path__: "/var/log/docker.log"
+            app: "docker"
+      pipeline_stages:
+        - timestamp:
+            source: "time"
+            format: "RFC3339"

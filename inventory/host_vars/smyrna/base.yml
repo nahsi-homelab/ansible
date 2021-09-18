@@ -12,11 +12,6 @@ base_sysctl:
   - name: net.ipv4.conf.default.rp_filter
     value: 1
 
-base_dns: |
-  resolv_conf="/etc/resolv.conf"
-  name_servers="127.0.0.1"
-  search_domains="node.consul service.consul"
-
 base_containers_docker:
   default-runtime: "crun"
   runtimes:

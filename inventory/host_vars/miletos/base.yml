@@ -23,6 +23,10 @@ base_packages: >
     base_packages_desktop | unique
   }}
 
+base_dns: |
+  resolv_conf="/etc/resolv.conf"
+  search_domains="node.consul service.consul"
+
 base_services:
   - name: "mbpfan"
     runlevel: "default"

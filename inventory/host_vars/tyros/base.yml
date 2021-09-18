@@ -38,11 +38,6 @@ base_sshd_openrc_config: |
   SSHD_OPTS=""
   rc_need="net.enp2s0"
 
-base_dns: |
-  resolv_conf="/etc/resolv.conf"
-  name_servers="127.0.0.1"
-  search_domains="node.consul service.consul"
-
 base_services:
   - name: "docker"
     runlevel: "default"

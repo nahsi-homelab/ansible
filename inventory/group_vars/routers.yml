@@ -6,6 +6,7 @@ router_unbound_config: |
     do-daemonize: yes
     access-control: 0.0.0.0/0 refuse
     access-control: 127.0.0.0/8 allow
+    access-control: 172.17.0.0/16 allow
     do-ip4: yes
     do-ip6: no
     do-udp: yes

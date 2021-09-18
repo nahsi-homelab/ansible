@@ -25,6 +25,7 @@
     group: telegraf
     groups: 
       - docker
+      - disk
     append: true
     create_home: false
     home: "{{ telegraf_dir }}"

@@ -52,8 +52,6 @@ base_packages_all:
   - media-fonts/terminus-font
   - app-shells/bash-completion
   - app-shells/gentoo-bashcomp
-  - sys-apps/lm-sensors
-  - sys-power/cpupower
   - sys-apps/gptfdisk
   - app-misc/ca-certificates
 
@@ -70,6 +68,10 @@ base_packages_all:
   - net-analyzer/tcpdump
   - net-analyzer/arp-scan
   - net-misc/iperf
+
+  - sys-power/cpupower
+  - sys-apps/lm-sensors
+  - sys-apps/smartmontools
 
   - app-editors/neovim
   - dev-python/pynvim

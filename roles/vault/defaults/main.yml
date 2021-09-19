@@ -13,6 +13,8 @@ vault_dirs_base:
   data:
     path: "/var/lib/vault"
     mode: "u=rwX,g=rX,o="
+  log:
+    path: "/var/log/vault"
 vault_dirs_overlay: {}
 vault_dirs: >
   {{
@@ -34,6 +36,9 @@ vault_service: |
   command_args="server -config={{ vault_dir }}/vault.json -config={{ vault_dirs.configs.path }}"
   command_background="true"
   extra_started_commands="reload"
+
+  output_log="{{ vault_dirs.log.path }}/vault.log"
+  error_log="{{ vault_dirs.log.path }}/vault.log"
 
   depend() {
       need net

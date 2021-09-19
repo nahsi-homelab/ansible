@@ -42,6 +42,22 @@ promtail_config:
             source: "time"
             format: "Unix"
 
+    - job_name: "vault"
+      static_configs:
+        - labels:
+            __path__: "/var/log/vault/vault.log"
+            app: "vault"
+      pipeline_stages:
+        - multiline:
+            firstline: "^.+ \\[.+\\]"
+        - regex:
+            expression: "^(?P<time>.+) \\[(?P<level>.)\\] (?P<message>(?s:.*))$"
+        - labels:
+            level:
+        - timestamp:
+            source: "time"
+            format: "RFC3339Nano"
+
     - job_name: "docker"
       static_configs:
         - labels:

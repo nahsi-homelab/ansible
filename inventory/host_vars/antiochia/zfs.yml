@@ -22,8 +22,8 @@ base_zfs_datasets:
       atime: "off"
       compression: "zstd"
       mountpoint: "/var/lib/postgres"
-    owner: "nobody"
-    group: "nobody"
+    owner: "70"
+    group: "70"
     mode: "0750"
 
   - name: "hot/data/grafana"

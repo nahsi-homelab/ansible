@@ -8,6 +8,8 @@ nomad_configs:
             path: "/var/lib/loki"
         - postgres:
             path: "/var/lib/postgres"
+        - linkding:
+            path: "/var/lib/linkding"
         - grafana:
             path: "/var/lib/grafana"
         - unifi:

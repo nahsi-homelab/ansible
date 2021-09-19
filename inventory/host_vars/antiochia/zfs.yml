@@ -26,6 +26,13 @@ base_zfs_datasets:
     group: "70"
     mode: "0750"
 
+  - name: "hot/data/linkding"
+    properties:
+      atime: "off"
+      compression: "zstd"
+      mountpoint: "/var/lib/linkding"
+    mode: "0750"
+
   - name: "hot/data/grafana"
     properties:
       atime: "off"

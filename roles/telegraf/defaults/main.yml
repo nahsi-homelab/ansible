@@ -11,6 +11,8 @@ telegraf_dirs_base:
     path: "{{ telegraf_dir }}/config.d"
   scripts:
     path: "{{ telegraf_dir }}/script.d"
+  logs:
+    path: "/var/log/telegraf"
 telegraf_dirs_overlay: {}
 telegraf_dirs: >
   {{

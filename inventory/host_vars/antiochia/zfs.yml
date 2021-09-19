@@ -2,8 +2,7 @@ base_zfs_datasets:
   - name: "hot/data/prometheus"
     properties:
       atime: "off"
-      recordsize: "32K"
-      compression: "lz4"
+      compression: "zstd"
       mountpoint: "/var/lib/prometheus"
     owner: "nobody"
     group: "nobody"
@@ -12,7 +11,17 @@ base_zfs_datasets:
   - name: "hot/data/loki"
     properties:
       atime: "off"
+      compression: "zstd"
       mountpoint: "/var/lib/loki"
+    owner: "nobody"
+    group: "nobody"
+    mode: "0750"
+
+  - name: "hot/data/postgres"
+    properties:
+      atime: "off"
+      compression: "zstd"
+      mountpoint: "/var/lib/postgres"
     owner: "nobody"
     group: "nobody"
     mode: "0750"

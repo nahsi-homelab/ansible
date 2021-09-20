@@ -16,4 +16,4 @@ vault_config:
 
   storage:
     consul:
-      address: "http://localhost:8500"
+      address: "http://consul.service.consul:8500"

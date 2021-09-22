@@ -1,5 +1,5 @@
-telegraf_version: "1.19.3"
-telegraf_checksum: "b410420c6ff4ffc4e31b3b9d5043412597c2f5c84c988a7ba13987037357f8a9"
+telegraf_version: "1.20.0"
+telegraf_checksum: "778c4bc1de88a42abf7b9d74c24e80a5f2b0a64ac1e3aa7b4014525d34910f01"
 
 telegraf_config: |
   [agent]

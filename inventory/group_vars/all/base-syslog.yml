@@ -139,18 +139,6 @@ base_syslog_config: |
     destination(default);
   };
 
-base_syslog_configs: 
-  promtail: |
-    destination loki {
-      syslog("localhost" transport("tcp") port(1514));
-    };
-
-    log {
-      source(src);
-      source(kernel);
-      destination(loki);
-    };
-
 base_syslog_logrotate: |
   "/var/log/syslog.log" {
       rotate 2

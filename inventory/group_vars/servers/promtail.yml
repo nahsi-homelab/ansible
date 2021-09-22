@@ -2,7 +2,7 @@ promtail_version: "2.3.0"
 promtail_config:
   server:
     http_listen_port: 9380
-    http_listen_address: "0.0.0.0"
+    http_listen_address: "{{ private_ip }}"
     grpc_listen_port: 0
 
   positions:

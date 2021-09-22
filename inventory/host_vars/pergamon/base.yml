@@ -23,6 +23,7 @@ base_network_interfaces:
 
 base_packages_pergamon:
   - net-misc/r8168
+  - media-sound/spotify
 base_packages: >
   {{
     base_packages_all +

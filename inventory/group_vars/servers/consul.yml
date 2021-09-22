@@ -19,10 +19,10 @@ consul_config_all:
 
   rejoin_after_leave: true
 
-  bind_addr: "{{ gotmpl_private_address }}"
+  bind_addr: "{{ private_ip }}"
   addresses:
-    http: "127.0.0.1 {{ gotmpl_private_address }} {{ gotmpl_docker }}"
-    dns: "127.0.0.1 {{ gotmpl_private_address }}"
+    http: "127.0.0.1 {{ private_ip }} {{ gotmpl_docker }}"
+    dns: "127.0.0.1 {{ private_ip }}"
 
   enable_local_script_checks: true
 
@@ -57,6 +57,6 @@ consul_services:
       check:
         id: "promtail-health"
         name: "promtail"
-        http: "http://localhost:9380/ready"
+        http: "http://{{ private_ip }}:9380/ready"
         interval: "20s"
         timeout: "2s"

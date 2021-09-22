@@ -52,6 +52,8 @@ base_wireguard_interfaces:
     enable: false
     start: false
   - name: "syria"
+    enable: false
+    start: false
 
 base_iwd: |
   [General]

@@ -20,3 +20,9 @@ nomad_configs:
             path: "/var/lib/jellyfin/config"
         - jellyfin-cache:
             path: "/var/lib/jellyfin/cache"
+
+nomad_config: >
+  {{
+    nomad_config_agent |
+    combine(nomad_config_server, recursive=true)
+  }}

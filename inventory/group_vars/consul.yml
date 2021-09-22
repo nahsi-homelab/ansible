@@ -4,9 +4,3 @@ consul_config_server:
 
   ui_config:
     enabled: true
-
-consul_config: >
-  {{
-    consul_config_all |
-    combine(consul_config_server, recursive=true)
-  }}

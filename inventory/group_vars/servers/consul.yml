@@ -6,7 +6,7 @@ consul_servers:
 
 gotmpl_docker: !unsafe '{{ GetInterfaceIP "docker0" }}'
 
-consul_config_all:
+consul_config_agent:
   datacenter: "oikumene"
   encrypt: "{{ lookup('hashi_vault', 'secret/data/gossip:consul') }}"
 
@@ -19,10 +19,10 @@ consul_config_all:
 
   rejoin_after_leave: true
 
-  bind_addr: "{{ private_ip }}"
+  bind_addr: "{{ gotmpl_private_address }}"
   addresses:
-    http: "127.0.0.1 {{ private_ip }} {{ gotmpl_docker }}"
-    dns: "127.0.0.1 {{ private_ip }}"
+    http: "127.0.0.1 {{ gotmpl_private_address }} {{ gotmpl_docker }}"
+    dns: "127.0.0.1 {{ gotmpl_private_address }}"
 
   enable_local_script_checks: true
 
@@ -34,7 +34,7 @@ consul_config_all:
   server: false
   retry_join: "{{ consul_servers }}"
 
-consul_config: "{{ consul_config_all }}"
+consul_config: "{{ consul_config_agent }}"
 
 consul_services:
   telegraf:

@@ -5,3 +5,9 @@ nomad_configs:
         - public:
             interface: "ppp0"
             reserved_ports: "443"
+
+nomad_config: >
+  {{
+    nomad_config_agent |
+    combine(nomad_config_server, recursive=true)
+  }}

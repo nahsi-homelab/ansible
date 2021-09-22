@@ -12,27 +12,6 @@ base_sysctl:
   - name: net.ipv4.conf.default.rp_filter
     value: 1
 
-base_containers_docker:
-  default-runtime: "crun"
-  runtimes:
-    crun:
-      path: "/usr/bin/crun"
-  storage-driver: "zfs"
-  storage-opts:
-    - zfs.fsname=main/containers
-  log-driver: "json-file"
-  log-opts:
-    max-size: "32m"
-    max-file: "2"
-
-base_containers_storage: |
-  [storage]
-  driver="zfs"
-  runroot="/run/containers/storage"
-  graphroot="/var/lib/containers/storage"
-  [storage.options.zfs]
-  fsname="main/containers"
-
 base_sshd_openrc_config: |
   SSHD_CONFDIR="${RC_PREFIX%/}/etc/ssh"
   SSHD_OPTS=""

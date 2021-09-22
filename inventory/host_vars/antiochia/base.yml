@@ -1,6 +1,3 @@
-arch: "amd64"
-bios: "uefi"
-
 base_filesystems:
   - path: "/var/tmp"
     src: "tmpfs"
@@ -17,27 +14,6 @@ base_network: |
 
 base_network_interfaces:
   - name: "enp35s0"
-
-base_containers_docker:
-  default-runtime: "crun"
-  runtimes:
-    crun:
-      path: "/usr/bin/crun"
-  storage-driver: "zfs"
-  storage-opts:
-    - zfs.fsname=hot/containers
-  log-driver: "json-file"
-  log-opts:
-    max-size: "32m"
-    max-file: "2"
-
-base_containers_storage: |
-  [storage]
-  driver="zfs"
-  runroot="/run/containers/storage"
-  graphroot="/var/lib/containers/storage"
-  [storage.options.zfs]
-  fsname="hot/containers"
 
 base_services:
   - name: "docker"

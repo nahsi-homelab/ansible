@@ -42,6 +42,7 @@ base_services:
 base_wireguard_configs:
   vpn: "{{ lookup('hashi_vault', 'secret/data/wireguard/miletos:vpn') }}"
   office: "{{ lookup('hashi_vault', 'secret/data/wireguard/miletos:office') }}"
+  syria: "{{ lookup('hashi_vault', 'secret/data/wireguard/miletos:syria') }}"
 
 base_wireguard_interfaces:
   - name: "office"
@@ -50,6 +51,7 @@ base_wireguard_interfaces:
   - name: "vpn"
     enable: false
     start: false
+  - name: "syria"
 
 base_iwd: |
   [General]
@@ -57,27 +59,6 @@ base_iwd: |
   [Network]
   RoutePriorityOffset=200
   NameResolvingService=resolvconf
-
-base_containers_docker:
-  default-runtime: "crun"
-  runtimes:
-    crun:
-      path: "/usr/bin/crun"
-  storage-driver: "zfs"
-  storage-opts:
-    - zfs.fsname=main/containers
-  log-driver: "json-file"
-  log-opts:
-    max-size: "32m"
-    max-file: "2"
-
-base_containers_storage: |
-  [storage]
-  driver="zfs"
-  runroot="/run/containers/storage"
-  graphroot="/var/lib/containers/storage"
-  [storage.options.zfs]
-  fsname="main/containers"
 
 base_udev_rules:
   10_disable_bluetooth: |

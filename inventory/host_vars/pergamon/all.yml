@@ -3,6 +3,8 @@ bios: "legacy"
 
 private_ip: "192.168.230.10"
 
+zfs_main_pool: "main"
+
 distccd_config: |
   DISTCCD_OPTS="--port=3632 --log-level=warning --listen=192.168.210.10"
   DISTCCD_OPTS="${DISTCCD_OPTS} --allow=192.168.210.0/24"

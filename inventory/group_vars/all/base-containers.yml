@@ -16,11 +16,24 @@ base_containers_containers: |
   [engine]
   runtime="crun"
 
+base_containers_storage: |
+  [storage]
+  driver="zfs"
+  runroot="/run/containers/storage"
+  graphroot="/var/lib/containers/storage"
+  [storage.options.zfs]
+  fsname="{{ zfs_main_pool }}/containers"
+
 base_containers_docker:
+  # experimental: true
+  # metrics-addr: "{{ private_ip }}:9323"
   default-runtime: "crun"
   runtimes:
     crun:
       path: "/usr/bin/crun"
+  storage-driver: "zfs"
+  storage-opts:
+    - zfs.fsname={{ zfs_main_pool }}/containers
   log-driver: "json-file"
   log-opts:
     max-size: "32m"

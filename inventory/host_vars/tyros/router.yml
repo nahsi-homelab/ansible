@@ -8,6 +8,7 @@ router_unbound_configs:
       access-control: 192.168.110.0/24 allow
       access-control: 192.168.130.0/24 allow
       access-control: 192.168.150.0/24 allow
+      access-control: 192.168.5.0/24 allow
 
   consul: |
     server:

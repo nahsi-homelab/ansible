@@ -1,0 +1,43 @@
+base_zfs_datasets:
+  - name: "main"
+    properties:
+      compression: "zstd"
+      relatime: "on"
+      acltype: "posix"
+      xattr: "sa"
+      dnodesize: "auto"
+      mountpoint: "none"
+      canmount: "off"
+      normalization: "formD"
+
+  - name: "main/system/gentoo"
+    properties:
+      canmount: "noauto"
+      mountpoint: "/"
+      org.zfsbootmenu:commandline: "ro quiet loglevel=0 amdgpu.dc=0"
+      org.zfsbootmenu:kernel: "5.10"
+    owner: "root"
+    group: "root"
+    mode: "0755"
+
+  - name: "main/containers"
+    properties:
+      mountpoint: "/var/lib/docker"
+    owner: "root"
+    group: "root"
+    mode: "0700"
+
+  - name: "main/users/nahsi/home"
+    properties:
+      mountpoint: "/home/nahsi"
+    owner: "nahsi"
+    group: "nahsi"
+    mode: "0755"
+
+  - name: "main/users/nahsi/music"
+    properties:
+      mountpoint: "/home/nahsi/media/music"
+      recordsize: "1M"
+    owner: "nahsi"
+    group: "nahsi"
+    mode: "0755"

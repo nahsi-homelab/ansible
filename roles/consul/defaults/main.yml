@@ -47,7 +47,6 @@ consul_service: |
 
   depend() {
       need net
-      need docker
   }
 
   reload() {

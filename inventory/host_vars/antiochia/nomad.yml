@@ -10,6 +10,8 @@ nomad_configs:
             path: "/var/lib/postgres"
         - linkding:
             path: "/var/lib/linkding"
+        - podgrab:
+            path: "/var/lib/podgrab"
         - grafana:
             path: "/var/lib/grafana"
         - unifi:

@@ -73,12 +73,14 @@ base_packages_all:
   - sys-apps/lm-sensors
   - sys-apps/smartmontools
 
-  - app-editors/neovim
-  - dev-python/pynvim
-  - app-text/tree
+  - sys-process/iotop-c
   - sys-process/htop
   - sys-process/lsof
   - sys-fs/ncdu
+
+  - app-editors/neovim
+  - dev-python/pynvim
+  - app-text/tree
   - app-misc/nnn
   - app-misc/jq
   - app-admin/pwgen

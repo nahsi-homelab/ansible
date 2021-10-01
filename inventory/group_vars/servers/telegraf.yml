@@ -85,5 +85,6 @@ telegraf_configs_all:
 
   smart: |
     [[inputs.smart]]
+      attributes = true
 
 telegraf_configs: "{{ telegraf_configs_all }}"

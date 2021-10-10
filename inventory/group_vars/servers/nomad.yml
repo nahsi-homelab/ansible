@@ -21,6 +21,10 @@ nomad_config_agent:
   consul:
     address: "127.0.0.1:8500"
 
+  vault:
+    enabled: true
+    address: "http://vault.service.consul:8200"
+
   plugin:
     docker:
       config:

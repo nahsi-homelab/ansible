@@ -19,7 +19,7 @@ base_sshd_openrc_config: |
 
 base_services:
   - name: "docker"
-    runlevel: "default"
+    runlevel: "boot"
   - name: "iptables"
     runlevel: "default"
 

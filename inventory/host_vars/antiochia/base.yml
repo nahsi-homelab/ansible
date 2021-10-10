@@ -17,4 +17,4 @@ base_network_interfaces:
 
 base_services:
   - name: "docker"
-    runlevel: "default"
+    runlevel: "boot"

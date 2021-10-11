@@ -33,3 +33,11 @@ base_zfs_datasets:
     owner: "nahsi"
     group: "nahsi"
     mode: "0755"
+
+  - name: "main/data/redpanda"
+    properties:
+      atime: "off"
+      mountpoint: "/var/lib/redpanda"
+    owner: "nobody"
+    group: "nobody"
+    mode: "0700"

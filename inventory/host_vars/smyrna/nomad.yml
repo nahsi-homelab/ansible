@@ -1,3 +1,15 @@
+nomad_configs:
+  volumes:
+    client:
+      host_volume:
+        - redpanda-2:
+            path: "/var/lib/redpanda"
+
+  meta:
+    client:
+      meta:
+        redpanda_node_id: 2
+
 nomad_config: >
   {{
     nomad_config_agent |

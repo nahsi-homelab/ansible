@@ -6,6 +6,17 @@ nomad_configs:
             interface: "ppp0"
             reserved_ports: "443"
 
+  volumes:
+    client:
+      host_volume:
+        - redpanda-3:
+            path: "/var/lib/redpanda"
+
+  meta:
+    client:
+      meta:
+        redpanda_node_id: 3
+
 nomad_config: >
   {{
     nomad_config_agent |

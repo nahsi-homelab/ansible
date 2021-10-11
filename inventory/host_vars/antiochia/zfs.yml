@@ -73,3 +73,11 @@ base_zfs_datasets:
     owner: "1000"
     group: "1000"
     mode: "0750"
+
+  - name: "hot/data/redpanda"
+    properties:
+      atime: "off"
+      mountpoint: "/var/lib/redpanda"
+    owner: "nobody"
+    group: "nobody"
+    mode: "0700"

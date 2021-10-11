@@ -22,7 +22,7 @@ nomad_configs:
             path: "/var/lib/jellyfin/config"
         - jellyfin-cache:
             path: "/var/lib/jellyfin/cache"
-        - redpanda-1:
+        - redpanda:
             path: "/var/lib/redpanda"
 
   meta:

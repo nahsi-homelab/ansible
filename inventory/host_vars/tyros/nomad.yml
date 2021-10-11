@@ -9,7 +9,7 @@ nomad_configs:
   volumes:
     client:
       host_volume:
-        - redpanda-3:
+        - redpanda:
             path: "/var/lib/redpanda"
 
   meta:

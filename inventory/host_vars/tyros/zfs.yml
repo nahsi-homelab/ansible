@@ -38,6 +38,6 @@ base_zfs_datasets:
     properties:
       atime: "off"
       mountpoint: "/var/lib/redpanda"
-    owner: "nobody"
-    group: "nobody"
+    owner: "101"
+    group: "101"
     mode: "0700"

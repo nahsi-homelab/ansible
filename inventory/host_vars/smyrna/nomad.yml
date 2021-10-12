@@ -9,6 +9,7 @@ nomad_configs:
     client:
       meta:
         redpanda_node_id: 2
+        redpanda_root: "redpanda-1.service.consul:33145"
 
 nomad_config: >
   {{

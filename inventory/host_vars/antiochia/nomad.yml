@@ -29,6 +29,7 @@ nomad_configs:
     client:
       meta:
         redpanda_node_id: 1
+        redpanda_root: ""
 
 nomad_config: >
   {{

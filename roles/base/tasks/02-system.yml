@@ -166,11 +166,11 @@
     label: "{{ service.name }}"
   when: base_services is defined
 
-- name: create zfs datasets
+- name: manage zfs dataset
   tags: zfs
   zfs:
     name: "{{ dataset.name }}"
-    state: present
+    state: "{{ dataset.state | d('present') }}"
     extra_zfs_properties: "{{ dataset.properties }}"
   loop: "{{ base_zfs_datasets }}"
   loop_control:
@@ -182,7 +182,7 @@
   tags: zfs
   file:
     path: "{{ dataset.properties.mountpoint }}"
-    state: directory
+    state: "{{ dataset.state | d('directory') }}"
     owner: "{{ dataset.owner | d('root') }}"
     group: "{{ dataset.group | d('root') }}"
     mode: "{{ dataset.mode | d('0755') }}"

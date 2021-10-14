@@ -29,6 +29,7 @@ base_packages_desktop:
   # japanese input
   - app-i18n/mozc
   - app-i18n/fcitx
+  - app-i18n/fcitx-qt5
   - app-i18n/fcitx-configtool
 
   - dev-python/wheel

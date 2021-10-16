@@ -54,6 +54,7 @@ consul_services:
       id: "promtail"
       name: "promtail"
       port: 9380
+      tags: ["service=system"]
       check:
         id: "promtail-health"
         name: "promtail"

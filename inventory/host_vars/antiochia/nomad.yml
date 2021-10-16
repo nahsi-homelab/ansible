@@ -24,12 +24,16 @@ nomad_configs:
             path: "/var/lib/jellyfin/cache"
         - redpanda:
             path: "/var/lib/redpanda"
+        - zookeeper:
+            path: "/var/lib/zookeeper"
 
   meta:
     client:
       meta:
         redpanda_node_id: 1
         redpanda_root: ""
+
+        zoo_node_id: 1
 
 nomad_config: >
   {{

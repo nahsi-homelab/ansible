@@ -11,12 +11,16 @@ nomad_configs:
       host_volume:
         - redpanda:
             path: "/var/lib/redpanda"
+        - zookeeper:
+            path: "/var/lib/zookeeper"
 
   meta:
     client:
       meta:
         redpanda_node_id: 3
         redpanda_root: "redpanda-1.service.consul:33145"
+
+        zoo_node_id: 3
 
 nomad_config: >
   {{

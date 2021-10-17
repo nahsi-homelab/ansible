@@ -8,6 +8,8 @@ nomad_configs:
             path: "/var/lib/zookeeper"
         - kafka:
             path: "/var/lib/kafka"
+        - postgres:
+            path: "/var/lib/postgres"
 
   meta:
     client:

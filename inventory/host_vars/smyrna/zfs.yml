@@ -57,3 +57,11 @@ base_zfs_datasets:
     owner: "1001"
     group: "1001"
     mode: "0700"
+
+  - name: "main/data/kafka"
+    properties:
+      atime: "off"
+      mountpoint: "/var/lib/kafka"
+    owner: "1001"
+    group: "1001"
+    mode: "0700"

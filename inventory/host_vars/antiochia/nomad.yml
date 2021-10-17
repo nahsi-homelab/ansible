@@ -26,14 +26,16 @@ nomad_configs:
             path: "/var/lib/redpanda"
         - zookeeper:
             path: "/var/lib/zookeeper"
+        - kafka:
+            path: "/var/lib/kafka"
 
   meta:
     client:
       meta:
+        zoo_node_id: 1
+        kafka_node_id: 1
         redpanda_node_id: 1
         redpanda_root: ""
-
-        zoo_node_id: 1
 
 nomad_config: >
   {{

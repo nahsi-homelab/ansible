@@ -86,14 +86,14 @@ base_zfs_datasets:
     properties:
       atime: "off"
       mountpoint: "/var/lib/zookeeper/data"
-    owner: "nobody"
-    group: "nobody"
+    owner: "1001"
+    group: "1001"
     mode: "0700"
 
   - name: "hot/data/zookeeper/datalog"
     properties:
       atime: "off"
       mountpoint: "/var/lib/zookeeper/datalog"
-    owner: "nobody"
-    group: "nobody"
+    owner: "1001"
+    group: "1001"
     mode: "0700"

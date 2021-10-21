@@ -70,6 +70,7 @@ base_packages_desktop:
   - net-misc/youtube-dl
   - app-portage/pfl
   - net-irc/tiny
+  - app-benchmarks/hyperfine
 
   - x11-misc/redshift
   - x11-misc/unclutter

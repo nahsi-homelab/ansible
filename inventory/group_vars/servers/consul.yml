@@ -23,9 +23,11 @@ consul_config_agent:
   addresses:
     http: "127.0.0.1 {{ gotmpl_private_address }} {{ gotmpl_docker }}"
     dns: "127.0.0.1 {{ gotmpl_private_address }}"
-    grpc: "{{ gotmpl_private_address }}"
   ports:
     grpc: 8502
+
+  connect:
+    enabled: true
 
   enable_local_script_checks: true
 

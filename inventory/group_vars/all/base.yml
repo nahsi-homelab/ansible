@@ -55,6 +55,8 @@ base_packages_all:
   - sys-apps/gptfdisk
   - app-misc/ca-certificates
 
+  - net-proxy/envoy-bin
+
   - app-portage/portage-utils
   - app-portage/flaggie
   - app-portage/cpuid2cpuflags

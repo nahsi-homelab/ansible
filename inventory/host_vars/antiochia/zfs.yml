@@ -1,5 +1,5 @@
 base_zfs_datasets:
-  - name: "hot/data/prometheus"
+  - name: "cold/data/prometheus"
     properties:
       atime: "off"
       compression: "zstd"
@@ -8,7 +8,7 @@ base_zfs_datasets:
     group: "nobody"
     mode: "0750"
 
-  - name: "hot/data/loki"
+  - name: "cold/data/loki"
     properties:
       atime: "off"
       compression: "zstd"

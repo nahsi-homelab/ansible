@@ -19,4 +19,5 @@
   include_tasks: 04-scripts.yml
 
 - name: Postflight
+  tags: always
   include_tasks: 99-postflight.yml

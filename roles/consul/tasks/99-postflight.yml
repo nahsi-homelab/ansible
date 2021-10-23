@@ -1,6 +1,8 @@
 - meta: flush_handlers
+  tags: always
 
 - name: check consul health
+  tags: always
   uri:
     url: "http://127.0.0.1:{{ consul_config.ports.http | d('8500') }}/v1/operator/autopilot/health"
     status_code: 200

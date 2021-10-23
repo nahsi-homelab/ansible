@@ -49,6 +49,8 @@ consul_services:
       id: "telegraf"
       name: "telegraf"
       port: 9271
+      meta:
+        external-source: "consul"
       check:
         id: "telegraf-health"
         name: "telegraf"
@@ -62,6 +64,8 @@ consul_services:
       name: "promtail"
       port: 9380
       tags: ["service=system"]
+      meta:
+        external-source: "consul"
       check:
         id: "promtail-health"
         name: "promtail"

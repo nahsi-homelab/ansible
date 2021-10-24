@@ -26,6 +26,8 @@ base_packages_desktop:
   - net-im/slack
   - net-im/zoom
 
+  - www-apps/hugo
+
   # japanese input
   - app-i18n/mozc
   - app-i18n/fcitx

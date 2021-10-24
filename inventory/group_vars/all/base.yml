@@ -70,6 +70,7 @@ base_packages_all:
   - net-analyzer/tcpdump
   - net-analyzer/arp-scan
   - net-misc/iperf
+  - net-analyzer/openbsd-netcat
 
   - sys-power/cpupower
   - sys-apps/lm-sensors

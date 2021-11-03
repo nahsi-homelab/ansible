@@ -55,6 +55,8 @@ base_packages_all:
   - sys-apps/gptfdisk
   - app-misc/ca-certificates
 
+  - dev-python/docker-py
+
   - net-proxy/envoy-bin
 
   - app-portage/portage-utils

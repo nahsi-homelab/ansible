@@ -65,3 +65,12 @@
     owner: root
     group: root
     mode: 0600
+  notify: restart docker
+
+- name: install docker loki plugin
+  tags: containers
+  community.docker.docker_plugin:
+    plugin_name: grafana/loki-docker-driver
+    alias: loki
+    state: enable
+  notify: restart docker

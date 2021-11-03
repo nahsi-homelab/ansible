@@ -69,3 +69,11 @@
     use: openrc
   when:
     - not chroot
+
+- name: restart docker
+  service:
+    name: docker
+    state: restarted
+    use: openrc
+  when:
+    - not chroot

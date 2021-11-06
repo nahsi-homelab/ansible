@@ -54,6 +54,7 @@ base_packages_all:
   - app-shells/gentoo-bashcomp
   - sys-apps/gptfdisk
   - app-misc/ca-certificates
+  - net-proxy/shadowsocks-libev
 
   - dev-python/docker-py
 

@@ -78,6 +78,7 @@ base_packages_all:
   - sys-power/cpupower
   - sys-apps/lm-sensors
   - sys-apps/smartmontools
+  - sys-power/apcupsd
 
   - sys-process/iotop-c
   - sys-process/htop

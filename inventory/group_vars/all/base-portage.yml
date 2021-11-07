@@ -4,6 +4,7 @@ base_portage_package_use_all:
     dev-lang/rust clippy rls rustfmt
     net_misc/openssh -pam
     net-analyzer/tcpdump -samba -smi
+    sys-apps/util-linux tty-helpers
 
 base_portage_package_use: "{{ base_portage_package_use_all }}"
 

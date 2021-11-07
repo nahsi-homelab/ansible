@@ -1,0 +1,2 @@
+base_packages_servers:
+  - sys-power/apcupsd

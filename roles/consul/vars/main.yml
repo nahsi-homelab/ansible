@@ -1,4 +1,4 @@
-__archive: "consul_{{ consul_version }}_linux_amd64.zip"
-__archive_url: "{{ consul_download_url }}/consul/{{ consul_version }}/{{ __archive }}"
-__archive_checksum: "{{ consul_download_url }}/consul/{{ consul_version }}/consul_{{ consul_version }}_SHA256SUMS"
-__archive_dir: "/tmp/{{ __archive | splitext | first }}"
+_archive: "consul_{{ consul_version }}_linux_amd64.zip"
+_archive_url: "{{ consul_download_url }}/consul/{{ consul_version }}/{{ _archive }}"
+_archive_checksum: "{{ consul_download_url }}/consul/{{ consul_version }}/consul_{{ consul_version }}_SHA256SUMS"
+_archive_dir: "/tmp/{{ _archive | splitext | first }}"

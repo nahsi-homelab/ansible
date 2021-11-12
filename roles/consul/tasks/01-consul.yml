@@ -3,11 +3,11 @@
   run_once: true
   delegate_to: localhost
   get_url:
-    url: "{{ __archive_url }}"
-    dest: "/tmp/{{ __archive }}"
-    checksum: "sha256:{{ __archive_checksum }}"
-  register: __download_archive
-  until: __download_archive is succeeded
+    url: "{{ _archive_url }}"
+    dest: "/tmp/{{ _archive }}"
+    checksum: "sha256:{{ _archive_checksum }}"
+  register: _download_archive
+  until: _download_archive is succeeded
   retries: 5
   delay: 2
 
@@ -24,14 +24,14 @@
     shell: "/sbin/nologin"
     group: consul
     create_home: false
-    home: "{{ consul_dir }}"
+    home: "{{ consul_dirs.main.path }}"
     state: present
 
 - name: create consul directories
   file:
     path: "{{ dir.value.path }}"
     state: directory
-    owner: consul
+    owner: "{{ dir.group | default('consul') }}"
     group: "{{ dir.group | default('consul') }}"
     mode: "{{ dir.value.mode | default(755) }}"
   loop: "{{ consul_dirs | dict2items }}"
@@ -44,7 +44,7 @@
   run_once: true
   delegate_to: localhost
   file:
-    path: "{{ __archive_dir }}"
+    path: "{{ _archive_dir }}"
     state: directory
     mode: 0755
 
@@ -53,12 +53,12 @@
   run_once: true
   delegate_to: localhost
   unarchive:
-    src: "/tmp/{{ __archive }}"
-    dest: "{{ __archive_dir }}"
+    src: "/tmp/{{ _archive }}"
+    dest: "{{ _archive_dir }}"
 
 - name: propagate consul binary
   copy:
-    src: "{{ __archive_dir }}/consul"
+    src: "{{ _archive_dir }}/consul"
     dest: "/usr/bin/consul"
     owner: root
     group: root
@@ -66,7 +66,7 @@
   notify: restart consul
 
 - name: create consul unitfile
-  tags: configuration
+  tags: config
   copy:
     content: "{{ consul_service }}"
     dest: "/etc/init.d/consul"
@@ -75,13 +75,13 @@
     mode: 0755
   notify: restart consul
 
-- name: create consul configuration
-  tags: configuration
+- name: create consul config
+  tags: config
   copy:
     content: "{{ consul_config | to_nice_json }}"
     dest: "{{ consul_dir }}/consul.json"
-    owner: consul
-    group: consul
+    owner: "{{ consul_user | default('consul') }}"
+    group: "{{ consul_group | default('consul') }}"
     mode: 0640
     validate: "consul validate -config-format=json %s"
   notify: restart consul

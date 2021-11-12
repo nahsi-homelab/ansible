@@ -1,17 +1,17 @@
 - name: register present configs
-  tags: configs
+  tags: config
   find:
     paths: "{{ consul_dirs.configs.path }}"
     recurse: true
-  register: __configs_present
+  register: _configs_present
 
 - name: copy configs
-  tags: configs
+  tags: config
   copy:
     content: "{{ config.value | to_nice_json }}"
     dest: "{{ consul_dirs.configs.path }}/{{ config.key }}.json"
-    owner: consul
-    group: consul
+    owner: "{{ consul_user | default('consul') }}"
+    group: "{{ consul_group | default('consul') }}"
     mode: 0640
     validate: "consul validate -config-format=json {{ consul_dir }}/consul.json %s"
   notify: restart consul
@@ -19,18 +19,15 @@
   loop_control:
     loop_var: "config"
     label: "{{ config.key }}"
-  register: __configs_copied
-
-- name: get configs paths
-  tags: configs
-  set_fact:
-    __configs_present_list: "{{ __configs_present | json_query('files[*].path') | default([]) }}"
-    __configs_copied_list: "{{ __configs_copied | json_query('results[*].dest') | default([]) }}"
+  register: _configs_copied
 
 - name: delete configs
-  tags: configs
+  tags: config
+  vars:
+    _present: "{{ _configs_present | json_query('files[*].path') | default([]) }}"
+    _copied: "{{ _configs_copied | json_query('results[*].dest') | default([]) }}"
   file:
     path: "{{ item }}"
     state: absent
-  loop: "{{ __configs_present_list | difference(__configs_copied_list) }}"
+  loop: "{{ _present | difference(_copied) }}"
   notify: restart consul

@@ -7,6 +7,15 @@
       - consul_version | length
     quiet: true
 
+- name: check "consul_dirs" variable
+  tags: always
+  assert:
+    that:
+      - consul_dirs is defined
+      - consul_dirs is mapping
+      - consul_dirs | length
+    quiet: true
+
 - name: check "consul_config" variable
   tags: always
   assert:

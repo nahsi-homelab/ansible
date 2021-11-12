@@ -3,13 +3,13 @@
 #   # DNS forward for consul domain must be working in order for agent to join
 #   retry_join: "{{ consul_servers }}"
 #
-#   # This flag controls the datacenter in which the agent is running.
+#   # This flag controls the datacenter in which the agent is running
 #   datacenter: "dc1"
 
-#   # Directory to store state.
+#   # Directory to store state
 #   data_dir: "{{ consul_dirs.data.path }}"
 
-#   # Use syslog to store logs.
+#   # Use syslog to store logs
 #   enable_syslog: false
 #   # "trace", "debug", "info", "warn", "err"
 #   log_level: "warn"
@@ -19,33 +19,30 @@
 #   # When provided, Consul will ignore a previous leave and attempt to rejoin the cluster when starting
 #   rejoin_after_leave: true
 
-#   # Was in previous consul config. Not sure why we need this
-#   session_ttl_min: "5s"
-
-#   # The address that should be bound to for internal cluster communications.
+#   # The address that should be bound to for internal cluster communications
 #   # https://www.consul.io/docs/agent/options.html#bind_addr
-#   bind_addr: "{{ main_ip }}"
+#   bind_addr: !unsafe '{{ GetPrivateInterfaces | include "network" "192.168.1.0/24" | attr "address" }}'
 
 #   # Addresses to bind to. Defaults to 'client_addr'
 #   # https://www.consul.io/docs/agent/options.html#addresses
-#   ddresses:
-#    dns: "{{ consul_config.client_addr }}"
-#    http: "{{ consul_config.client_addr }}"
-#    https: "{{ consul_config.client_addr }}"
-#    grpc: "{{ consul_config.client_addr }}"
+#   addresses:
+#    dns: "!unsafe '{{ GetInterfaceIP "docker0" }}' 127.0.0.1"
+#    http: "0.0.0.0"
+#    https: "0.0.0.0"
+#    grpc: "127.0.0.1"
 
 #   # Bind ports
 #   ports:
 #     dns: 8600
 #     http: 8500
-#     # https: 8501
-#     # grpc: 8502
+#     https: 8501
+#     grpc: 8502
 #     serf_lan: 8301
-#     # serf_wan: 8302
+#     serf_wan: 8302
 #     server: 8300
 
 #  # Enable scripts in checks when they are defined in the local configuration
-#  # files.
+#  # files
 #  enable_local_script_checks: true
 
 #  telemetry:
@@ -53,6 +50,7 @@
 #    disable_compat_1.9: true
 #    # Enable Prometheus endpoint
 #    prometheus_retention_time: "60s"
+#    disable_hostname: true
 
 # consul_services:
 #   telegraf:
@@ -68,10 +66,13 @@
 #         timeout: "3s"
 #
 # consul_configs:
-#   meta:
+#   config_name:
 #     some_option: true
 #
+#   other_config_name:
+#     other_option: true
+#
 # consul_scripts:
-#   example: |
+#   script_name: |
 #     #!/bin/bash
 #     echo example

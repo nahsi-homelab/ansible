@@ -3,15 +3,15 @@
   find:
     paths: "{{ consul_dirs.services.path }}"
     recurse: true
-  register: __services_present
+  register: _services_present
 
 - name: copy services
   tags: services
   copy:
     content: "{{ service.value | to_nice_json }}"
     dest: "{{ consul_dirs.services.path }}/{{ service.key }}.json"
-    owner: consul
-    group: consul
+    owner: "{{ consul_user | default('consul') }}"
+    group: "{{ consul_group | default('consul') }}"
     mode: 0640
     validate: "consul validate -config-format=json {{ consul_dir }}/consul.json %s"
   notify: reload consul
@@ -19,18 +19,15 @@
   loop_control:
     loop_var: "service"
     label: "{{ service.key }}"
-  register: __services_copied
-
-- name: get services paths
-  tags: services
-  set_fact:
-    __services_present_list: "{{ __services_present | json_query('files[*].path') | default([]) }}"
-    __services_copied_list: "{{ __services_copied | json_query('results[*].dest') | default([]) }}"
+  register: _services_copied
 
 - name: delete services
   tags: services
+  vars:
+    _present: "{{ _services_present | json_query('files[*].path') | default([]) }}"
+    _copied: "{{ _services_copied | json_query('results[*].dest') | default([]) }}"
   file:
     path: "{{ item }}"
     state: absent
-  loop: "{{ __services_present_list | difference(__services_copied_list) }}"
+  loop: "{{ _present | difference(_copied) }}"
   notify: reload consul

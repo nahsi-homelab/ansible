@@ -5,7 +5,7 @@ consul_configs: {}
 consul_scripts: {}
 
 consul_dir: "/opt/consul"
-consul_dirs_base:
+consul_dirs:
   main:
     path: "{{ consul_dir }}"
   configs:
@@ -14,6 +14,7 @@ consul_dirs_base:
     path: "{{ consul_dir }}/service.d"
   certs:
     path: "{{ consul_dir }}/certs"
+    mode: "u=rwX,g=rX,o="
   scripts:
     path: "{{ consul_dir }}/script.d"
   logs:
@@ -21,12 +22,6 @@ consul_dirs_base:
   data:
     path: "/var/lib/consul"
     mode: "u=rwX,g=rX,o="
-consul_dirs_overlay: {}
-consul_dirs: >
-  {{
-    consul_dirs_base |
-    combine(consul_dirs_overlay, recursive=true)
-  }}
 
 consul_service: |
   #!/sbin/openrc-run

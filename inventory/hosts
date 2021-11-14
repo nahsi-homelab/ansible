@@ -1,9 +1,10 @@
 [all]
-antiochia
 pergamon
 miletos
 smyrna
-
+tyros
+palmyra
+antiochia
 
 [asia]
 pergamon
@@ -13,6 +14,7 @@ smyrna
 [syria]
 antiochia
 tyros
+palmyra
 
 
 [workstations]
@@ -24,6 +26,7 @@ antiochia
 smyrna
 tyros
 pergamon
+palmyra
 
 [routers]
 tyros

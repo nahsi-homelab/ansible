@@ -1,0 +1,34 @@
+base_consolefont: "ter-i24b"
+
+base_filesystems:
+  - path: "/var/tmp"
+    src: "tmpfs"
+    opts: "rw,nosuid,noatime,nodev,size=75%,mode=1777"
+    type: "tmpfs"
+  - path: "/tmp"
+    src: "tmpfs"
+    opts: "rw,nosuid,noatime,nodev,size=2G,mode=1777"
+    type: "tmpfs"
+
+base_sysctl:
+  - name: vm.swappiness
+    value: 1
+
+base_network: |
+  config_enp2s0="192.168.130.20/24"
+  routes_enp2s0="default via 192.168.130.1"
+
+base_network_interfaces:
+  - name: "enp2s0"
+
+base_packages_palmyra:
+  - net-misc/r8168
+base_packages: >
+  {{
+    base_packages_all +
+    base_packages_palmyra | unique
+  }}
+
+base_services:
+  - name: "docker"
+    runlevel: "boot"

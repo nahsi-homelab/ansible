@@ -1,0 +1,38 @@
+kernel_boot_device: "/dev/disk/by-uuid/21c81eb4-4509-4c87-9e4e-f0a391e7e2ee"
+
+kernel_firmware:
+  - amd-ucode/microcode_amd.bin
+  - rtl_nic/rtl8168e-2.fw
+
+kernel_zfsbootmenu_config:
+  Global:
+    ManageImages: true
+    BootMountPoint: /boot/syslinux
+    DracutConfDir: /etc/zfsbootmenu/dracut.conf.d
+  Components:
+    ImageDir: /boot/syslinux/zfsbootmenu
+    Versions: 2
+    Enabled: true
+    syslinux:
+      Config: /boot/syslinux/syslinux.cfg
+      Enabled: true
+    Kernel:
+      CommandLine: ro quiet loglevel=0
+
+kernel_configs:
+  01platform: |
+    CONFIG_SENSORS_K10TEMP=y
+    CONFIG_SENSORS_CORETEMP=y
+    CONFIG_I2C_PIIX4=y
+
+    CONFIG_MBK10=y
+
+  02video: |
+    CONFIG_DRM=y
+    CONFIG_DRM_AMDGPU=y
+    CONFIG_DRM_AMD_DC=n
+    CONFIG_HSA_AMD=y
+
+  99firmware: |
+    CONFIG_EXTRA_FIRMWARE_DIR="/lib/firmware"
+    CONFIG_EXTRA_FIRMWARE="{{ kernel_firmware | join(' ') }}"

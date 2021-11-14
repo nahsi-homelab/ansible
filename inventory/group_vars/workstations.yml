@@ -124,11 +124,13 @@ base_packages_desktop:
 base_portage_package_use_desktop:
   desktop: |
     media-video/ffmpeg chromium libdrm x264 x265 webp vpx vorbis theora
-    media-gfx/imagemagick -X
+    media-gfx/imagemagick -X tiff
+    virtual/imagemagick-tools tiff
     media-video/pipewire pipewire-alsa extra
     media-libs/freetype harfbuzz
     sys-apps/util-linux caps # for pfl
     app-text/hunspell l10n_en l10n_ru
+    media-video/wireplumber lua_single_target_lua5-4
 
     media-fonts/noto cjk
     media-fonts/nerd-fonts firacode
@@ -160,7 +162,7 @@ base_portage_package_use_desktop:
     dev-lang/python sqlite
 
     # qutebrowser
-    www-client/qutebrowser scripts
+    www-client/qutebrowser scripts widevine
     dev-python/PyQt5 declarative printsupport widgets gui network opengl sql multimedia webchannel websockets dbus svg
     dev-libs/libpcre2 pcre16
     sys-libs/zlib minizip

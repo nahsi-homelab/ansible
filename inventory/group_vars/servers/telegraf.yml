@@ -60,6 +60,7 @@ telegraf_configs_all:
     [[inputs.kernel]]
     [[inputs.kernel_vmstat]]
     [[inputs.processes]]
+    [[inputs.sensors]]
 
     [[inputs.net]]
       interfaces = ["eth*", "enp*", "ppp*", "syria"]

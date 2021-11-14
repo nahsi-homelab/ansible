@@ -19,7 +19,6 @@ base_packages_desktop:
 
   - net-analyzer/wireshark
 
-  - dev-python/psycopg:2
   - dev-db/pg_activity
 
   - net-im/telegram-desktop

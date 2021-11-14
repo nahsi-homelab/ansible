@@ -65,6 +65,7 @@ base_packages_all:
   - app-portage/cpuid2cpuflags
   - app-misc/resolve-march-native
   - app-portage/repoman
+  - app-portage/genlop
 
   - sys-apps/usbutils
   - sys-apps/lshw

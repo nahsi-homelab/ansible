@@ -1,5 +1,5 @@
 arch: "amd64"
-bios: "legacy"
+bios: "uefi"
 
 private_ip: "192.168.230.10"
 
@@ -10,8 +10,3 @@ distccd_config: |
   DISTCCD_OPTS="${DISTCCD_OPTS} --allow=192.168.210.0/24"
   DISTCCD_EXEC="/usr/bin/distccd"
   rc_need="net"
-
-station_packages:
-  - media-plugins/hyperion
-  - media-sound/beets
-  - app-emulation/virtualbox

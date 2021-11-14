@@ -1,14 +1,13 @@
 base_portage_makeconf_pergamon:
-  COMMON_FLAGS: "-O2 -march=amdfam10 -mcx16 -mpopcnt"
-  RUSTFLAGS: "-C target-cpu=amdfam10"
-  CPU_FLAGS_X86: "3dnow 3dnowext popcnt mmx mmxext sse sse2 sse3 sse4a"
+  COMMON_FLAGS: "-O2 -march=znver3"
+  RUSTFLAGS: "-C target-cpu=znver3"
+  CPU_FLAGS_X86: "aes avx avx2 f16c fma3 mmx mmxext pclmul popcnt rdrand sha sse sse2 sse3 sse4_1 sse4_2 sse4a ssse3"
   VIDEO_CARDS: "amdgpu radeonsi"
   INPUT_DEVICES: "evdev"
   LUA_TARGETS: "luajit"
   LUA_SINGLE_TARGET: "luajit"
   LLVM_TARGETS: "AMDGPU X86"
-  DISTCC_HOSTS: "antiochia.node.consul/16"
-  FEATURES: "parallel-install distcc"
+  FEATURES: "parallel-install"
 base_portage_makeconf: >
   {{
     base_portage_makeconf_all |

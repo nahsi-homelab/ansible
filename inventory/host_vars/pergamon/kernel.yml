@@ -1,8 +1,21 @@
-kernel_boot_device: "/dev/disk/by-uuid/21c81eb4-4509-4c87-9e4e-f0a391e7e2ee"
+kernel_boot_device: "/dev/disk/by-uuid/50C7-C33B"
+
+kernel_refind_menu: |
+  "Boot default" "rd.vconsole.font=ter-i24b root=zfsbootmenu:POOL=main timeout=10 ro quiet loglevel=0"
+  "Boot to menu" "rd.vconsole.font=ter-i24b root=zfsbootmenu:POOL=main timeout=-1 ro quiet loglevel=0"
+
+kernel_refind_config: |
+  timeout "5"
+  shutdown_after_timeout "false"
+  use_nvram "false"
+  screensaver "300"
+  use_graphics_for "linux"
+  showtools "shell, memtest, apple_recovery, shutdown, reboot, about"
+  scan_all_linux_kernels "true"
+  fold_linux_kernels "true"
+  # include themes/rEFInd-minimal/theme.conf
 
 kernel_firmware:
-  - amd-ucode/microcode_amd.bin
-
   - amdgpu/polaris11_ce.bin
   - amdgpu/polaris11_ce_2.bin
   - amdgpu/polaris11_k_smc.bin
@@ -24,22 +37,15 @@ kernel_firmware:
   - amdgpu/polaris11_vce.bin
   - amdgpu/polaris11_uvd.bin
 
-  - rtl_nic/rtl8168e-2.fw
-
 kernel_zfsbootmenu_config:
   Global:
     ManageImages: true
-    BootMountPoint: /boot/syslinux
+    BootMountPoint: /boot/efi
     DracutConfDir: /etc/zfsbootmenu/dracut.conf.d
   Components:
-    ImageDir: /boot/syslinux/zfsbootmenu
-    Versions: 2
+    ImageDir: /boot/efi/EFI/gentoo
+    Versions: 1 # this will keep two versions, possibly a bug
     Enabled: true
-    syslinux:
-      Config: /boot/syslinux/syslinux.cfg
-      Enabled: true
-    Kernel:
-      CommandLine: ro quiet loglevel=0
 
 kernel_module_configs:
   audio_powersave: |
@@ -47,14 +53,17 @@ kernel_module_configs:
 
 kernel_configs:
   01platform: |
-    CONFIG_SENSORS_K10TEMP=y
-    CONFIG_SENSORS_CORETEMP=y
-    CONFIG_I2C_PIIX4=y
+    CONFIG_MZEN3=y
 
-    CONFIG_MBK10=y
+    CONFIG_SENSORS_AMD_ENERGY=y
+    CONFIG_SENSORS_K10TEMP=y
+    CONFIG_SENSORS_FAM15H_POWER=y
+    CONFIG_SENSORS_CORETEMP=y
 
   02video: |
     CONFIG_DRM=y
+    CONFIG_DRM_KMS_HELPER=y
+    CONFIG_DRM_TTM_HELPER=y
     CONFIG_DRM_AMDGPU=y
     CONFIG_DRM_AMD_DC=n
     CONFIG_HSA_AMD=y
@@ -69,6 +78,33 @@ kernel_configs:
     CONFIG_USB_SERIAL=y
     CONFIG_USB_SERIAL_CH341=y
 
+  05network: |
+    CONFIG_WIRELESS=y
+    CONFIG_CFG80211=m
+    CONFIG_MAC80211=m
+    CONFIG_RFKILL=y
+    CONFIG_WLAN=y
+    CONFIG_WLAN_VENDOR_INTEL=y
+    CONFIG_IWLWIFI=m
+    CONFIG_IWLMVM=m
+    CONFIG_NET_VENDOR_INTEL=y
+    CONFIG_IGB=y
+    CONFIG_IGB_HWMON=y
+
+  06bluetooth: |
+    CONFIG_BT=y
+    CONFIG_BT_INTEL=y
+    CONFIG_BT_HCIBTUSB=y
+    CONFIG_BT_HCIBTUSB_BCM=y
+    CONFIG_BT_LT=y
+    CONFIG_BT_RLT=y
+    CONFIG_BT_RFCOMM=y
+    CONFIG_BT_BNEP=y
+    CONFIG_BT_BNEP_BCM=y
+
+  07misc: |
+    CONFIG_PHY=y
+    CONFIG_REALTEK_PHY=y
 
   99firmware: |
     CONFIG_EXTRA_FIRMWARE_DIR="/lib/firmware"

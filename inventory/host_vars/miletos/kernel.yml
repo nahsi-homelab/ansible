@@ -32,8 +32,10 @@ kernel_module_configs:
   hid_apple: |
     options hid_apple swap_fn_leftctrl=1 swap_opt_cmd=1
 
-  audio_powersave: |
+  audio: |
     options snd_hda_intel power_save=1
+    options snd_hda_intel id=PCH index=0
+    options snd_hda_intel id=HDMI index=1
 
   wifi_powersave: |
     options iwlwifi power_save=1 uapsd_disable=0

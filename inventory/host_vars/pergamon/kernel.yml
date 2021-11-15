@@ -6,6 +6,7 @@ kernel_refind_menu: |
 
 kernel_refind_config: |
   timeout "5"
+  resolution 2560 1440
   shutdown_after_timeout "false"
   use_nvram "false"
   screensaver "300"
@@ -13,7 +14,7 @@ kernel_refind_config: |
   showtools "shell, memtest, apple_recovery, shutdown, reboot, about"
   scan_all_linux_kernels "true"
   fold_linux_kernels "true"
-  # include themes/rEFInd-minimal/theme.conf
+  include themes/rEFInd-minimal/theme.conf
 
 kernel_firmware:
   - amdgpu/polaris11_ce.bin
@@ -37,6 +38,8 @@ kernel_firmware:
   - amdgpu/polaris11_vce.bin
   - amdgpu/polaris11_uvd.bin
 
+  - iwlwifi-cc-46
+
 kernel_zfsbootmenu_config:
   Global:
     ManageImages: true
@@ -48,8 +51,10 @@ kernel_zfsbootmenu_config:
     Enabled: true
 
 kernel_module_configs:
-  audio_powersave: |
+  audio: |
     options snd_hda_intel power_save=1
+    options snd_hda_intel id=Generic index=0
+    options snd_hda_intel id=HDMI index=2
 
 kernel_configs:
   01platform: |
@@ -57,14 +62,12 @@ kernel_configs:
 
     CONFIG_SENSORS_AMD_ENERGY=y
     CONFIG_SENSORS_K10TEMP=y
-    CONFIG_SENSORS_FAM15H_POWER=y
     CONFIG_SENSORS_CORETEMP=y
     CONFIG_SENSORS_IT87=y
+    CONFIG_I2C_PIIX4=y
 
   02video: |
     CONFIG_DRM=y
-    CONFIG_DRM_KMS_HELPER=y
-    CONFIG_DRM_TTM_HELPER=y
     CONFIG_DRM_AMDGPU=y
     CONFIG_DRM_AMD_DC=n
     CONFIG_HSA_AMD=y
@@ -102,10 +105,6 @@ kernel_configs:
     CONFIG_BT_RFCOMM=y
     CONFIG_BT_BNEP=y
     CONFIG_BT_BNEP_BCM=y
-
-  07misc: |
-    CONFIG_PHY=y
-    CONFIG_REALTEK_PHY=y
 
   99firmware: |
     CONFIG_EXTRA_FIRMWARE_DIR="/lib/firmware"

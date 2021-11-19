@@ -6,7 +6,7 @@ base_portage_makeconf_pergamon:
   LUA_TARGETS: "luajit"
   LUA_SINGLE_TARGET: "luajit"
   LLVM_TARGETS: "X86"
-  DISTCC_HOSTS: "antiochia.node.consul/16"
+  DISTCC_HOSTS: "antiochia.node.consul/16 pergamon.node.consul/32"
   FEATURES: "parallel-install distcc"
   INPUT_DEVICES: "synaptics evdev"
   ACCEPT_LICENSE: "* -@EULA google-chrome"

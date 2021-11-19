@@ -5,7 +5,7 @@ base_portage_makeconf_pergamon:
   INPUT_DEVICES: "evdev"
   LUA_TARGETS: "luajit"
   LUA_SINGLE_TARGET: "luajit"
-  DISTCC_HOSTS: "antiochia.node.consul/16"
+  DISTCC_HOSTS: "antiochia.node.consul/16 pergamon.node.consul/32"
   FEATURES: "parallel-install distcc"
 base_portage_makeconf: >
   {{

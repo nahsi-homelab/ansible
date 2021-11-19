@@ -19,7 +19,6 @@ base_portage_makeconf: >
 base_portage_env:
   notmpfs: |
     PORTAGE_TMPDIR="/var/notmpfs"
-    COMMON_FLAGS="$COMMON_FLAGS -pipe"
 
 base_portage_package_env:
   chromium: |

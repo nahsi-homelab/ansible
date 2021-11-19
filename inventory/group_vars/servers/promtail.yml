@@ -1,4 +1,4 @@
-promtail_version: "2.3.0"
+promtail_version: "2.4.1"
 promtail_config:
   server:
     http_listen_port: 9380

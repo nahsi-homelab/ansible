@@ -1,3 +1,4 @@
+base_portage_jobs: 16
 base_portage_distcc_cores: 0
 base_portage_makeconf_pergamon:
   COMMON_FLAGS: "-O2 -march=znver3"

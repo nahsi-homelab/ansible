@@ -88,4 +88,36 @@ telegraf_configs_all:
     [[inputs.smart]]
       attributes = true
 
+  system-info: |
+    [[inputs.execd]]
+      command = ["/opt/telegraf/script.d/info.sh"]
+      signal = "STDIN"
+
 telegraf_configs: "{{ telegraf_configs_all }}"
+
+telegraf_scripts_all:
+  info: |
+    #! /usr/bin/env bash
+
+    kernel_release() {
+      local out="$(uname -r)"
+      echo "$out"
+    }
+
+    cpu_model() {
+      local out="$(grep -m 1 'model name' /proc/cpuinfo)"
+      local out="${out#*: }"
+      echo "${out// /_}"
+    }
+
+    emit() {
+    cat<<EOF
+    system,kernel_release=$(kernel_release),cpu_model=$(cpu_model) info=1
+    EOF
+    }
+
+    while IFS= read -r LINE; do
+      emit
+    done
+
+telegraf_scripts: "{{ telegraf_scripts_all }}"

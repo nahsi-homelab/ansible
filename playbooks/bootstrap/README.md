@@ -19,11 +19,11 @@ ansible-playbook bootstrap.yml -k -e "target=<target>"
 - https://arstechnica.com/information-technology/2020/05/zfs-101-understanding-zfs-storage-and-performance
 
 ```sh
-zpool create -o ashift=12 \
+zpool create -o ashift=13 \
     -O xattr=sa \
     -O relatime=on \
     -O acltype=posix \
-    -O mountpoint=off \
+    -O mountpoint=none \
     -O normalization=formD \
     -O compression=zstd \
     -O dnodesize=auto \

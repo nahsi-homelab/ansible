@@ -8,6 +8,7 @@
   loop:
     - /etc/portage/package.use
     - /etc/portage/package.mask
+    - /etc/portage/package.env
     - /etc/portage/package.accept_keywords
     - /etc/portage/repos.conf
     - /etc/portage/savedconfig
@@ -32,7 +33,7 @@
   find:
     paths: "/etc/portage/package.use/"
     patterns: ["base-*.use"]
-  register: __files_present
+  register: _use_present
 
 - name: copy useflag files
   tags: [ portage, packages ]
@@ -47,21 +48,80 @@
   loop_control:
     loop_var: "file"
     label: "{{ file.key }}"
-  register: __files_copied
-
-- name: ansible magic
-  tags: [ portage, packages ]
-  set_fact:
-    __files_present_list: "{{ __files_present | json_query('files[*].path') | default([]) }}"
-    __files_copied_list: "{{ __files_copied | json_query('results[*].dest') | default([]) }}"
+  register: _use_copied
 
 - name: delete useflag files
   tags: [ portage, packages ]
+  vars:
+    _present: "{{ _use_present | json_query('files[*].path') | default([]) }}"
+    _copied: "{{ _use_copied | json_query('results[*].dest') | default([]) }}"
   file:
     path: "{{ item }}"
     state: absent
-  loop: "{{ __files_present_list | difference(__files_copied_list) }}"
+  loop: "{{ _present | difference(_copied) }}"
   notify: update use
+
+- name: register present env configs
+  tags: portage
+  find:
+    paths: "/etc/portage/env/"
+    patterns: ["base-*.conf"]
+  register: _env_present
+
+- name: copy env configs
+  tags: portage
+  copy:
+    content: "{{ file.value }}"
+    dest: "/etc/portage/env/base-{{ file.key }}.conf"
+    owner: root
+    group: root
+    mode: 0644
+  loop: "{{ base_portage_env | dict2items }}"
+  loop_control:
+    loop_var: "file"
+    label: "{{ file.key }}"
+  register: _env_copied
+
+- name: delete env configs
+  tags: portage
+  vars:
+    _present: "{{ _env_present | json_query('files[*].path') | default([]) }}"
+    _copied: "{{ _env_copied | json_query('results[*].dest') | default([]) }}"
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop: "{{ _present | difference(_copied) }}"
+
+- name: register present package env files
+  tags: portage
+  find:
+    paths: "/etc/portage/package.env/"
+    patterns: ["base-*"]
+  register: _package_env_present
+
+- name: copy package env files
+  tags: portage
+  copy:
+    content: "{{ file.value }}"
+    dest: "/etc/portage/package.env/base-{{ file.key }}"
+    owner: root
+    group: root
+    mode: 0644
+  loop: "{{ base_portage_package_env | dict2items }}"
+  loop_control:
+    loop_var: "file"
+    label: "{{ file.key }}"
+  register: _package_env_copied
+
+- name: delete package env files
+  tags: portage
+  vars:
+    _present: "{{ _package_env_present | json_query('files[*].path') | default([]) }}"
+    _copied: "{{ _package_env_copied | json_query('results[*].dest') | default([]) }}"
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop: "{{ _present | difference(_copied) }}"
 
 - name: install distcc
   portage:

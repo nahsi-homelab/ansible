@@ -16,6 +16,17 @@ base_portage_makeconf: >
     combine(base_portage_makeconf_pergamon, recursive=true)
   }}
 
+base_portage_env:
+  notmpfs: |
+    PORTAGE_TMPDIR="/var/notmpfs"
+    COMMON_FLAGS="$COMMON_FLAGS -pipe"
+
+base_portage_package_env:
+  chromium: |
+    www-client/chromium base-notmpfs
+  qtwebengine: |
+    dev-qt/qtwebengine base-notmpfs
+
 base_portage_package_use_miletos:
   system: |
     media-libs/mesa -gles2

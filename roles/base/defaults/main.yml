@@ -1,6 +1,8 @@
 chroot: false
 
 base_portage_package_use: {}
+base_portage_env: {}
+base_portage_package_env: {}
 base_syslog_configs: {}
 base_wireguard_interfaces: []
 base_network_interfaces: []

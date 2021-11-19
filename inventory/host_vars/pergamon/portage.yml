@@ -16,6 +16,17 @@ base_portage_makeconf: >
     combine(base_portage_makeconf_pergamon, recursive=true)
   }}
 
+base_portage_env:
+  cc1plus: |
+    EMERGE_DEFAULT_OPTS=--jobs=12 --load-average={{ base_portage_la }} --quiet-build
+    MAKEOPTS=--jobs=12 --load-average={{ base_portage_la }}
+
+base_portage_package_env:
+  chromium:
+    www-client/chromium base-cc1plus
+  qtwebengine:
+    dev-qt/qtwebengine base-cc1plus
+
 base_portage_package_use_pergamon:
   system: |
     media-libs/mesa -classic -gles2

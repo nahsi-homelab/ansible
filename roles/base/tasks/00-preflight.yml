@@ -17,6 +17,22 @@
       - base_portage_package_use is defined
       - base_portage_package_use is mapping
     quiet: true
+
+- name: check "base_portage_env" variable
+  tags: always
+  assert:
+    that:
+      - base_portage_env is defined
+      - base_portage_env is mapping
+    quiet: true
+
+- name: check "base_portage_package_env" variable
+  tags: always
+  assert:
+    that:
+      - base_portage_package_env is defined
+      - base_portage_package_env is mapping
+    quiet: true
 # }}}
 
 - name: check "base_timezone" variable

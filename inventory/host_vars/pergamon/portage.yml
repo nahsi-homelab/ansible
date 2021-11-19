@@ -23,9 +23,9 @@ base_portage_env:
 
 base_portage_package_env:
   chromium:
-    www-client/chromium base-cc1plus
+    www-client/chromium base-cc1plus.conf
   qtwebengine:
-    dev-qt/qtwebengine base-cc1plus
+    dev-qt/qtwebengine base-cc1plus.conf
 
 base_portage_package_use_pergamon:
   system: |

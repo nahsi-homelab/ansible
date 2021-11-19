@@ -23,9 +23,9 @@ base_portage_env:
 
 base_portage_package_env:
   chromium: |
-    www-client/chromium base-notmpfs
+    www-client/chromium base-notmpfs.conf
   qtwebengine: |
-    dev-qt/qtwebengine base-notmpfs
+    dev-qt/qtwebengine base-notmpfs.conf
 
 base_portage_package_use_miletos:
   system: |

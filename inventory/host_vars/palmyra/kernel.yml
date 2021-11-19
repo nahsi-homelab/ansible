@@ -1,4 +1,4 @@
-kernel_boot_device: "/dev/disk/by-uuid/21c81eb4-4509-4c87-9e4e-f0a391e7e2ee"
+kernel_boot_device: "/dev/disk/by-uuid/cd4f87d3-29dd-493b-9740-513ed92159cc"
 
 kernel_firmware:
   - amd-ucode/microcode_amd.bin
@@ -26,12 +26,6 @@ kernel_configs:
     CONFIG_I2C_PIIX4=y
 
     CONFIG_MBK10=y
-
-  02video: |
-    CONFIG_DRM=y
-    CONFIG_DRM_AMDGPU=y
-    CONFIG_DRM_AMD_DC=n
-    CONFIG_HSA_AMD=y
 
   99firmware: |
     CONFIG_EXTRA_FIRMWARE_DIR="/lib/firmware"

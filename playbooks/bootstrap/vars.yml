@@ -1,4 +1,4 @@
 __chroot: "chroot {{ install_prefix }} bash -c "
 __stage3_url: "https://bouncer.gentoo.org/fetch/root/all/releases/{{ arch }}/autobuilds"
-__stage3_latest: "{{ __stage3_url }}/latest-stage3-{{ arch }}.txt"
+__stage3_latest: "{{ __stage3_url }}/latest-stage3-{{ arch }}-openrc.txt"
 __stage3_link: "{{ __stage3_url }}/{{ lookup('url', __stage3_latest) | regex_search( '.*,(.*tar.xz).*', '\\1' ) | first }}"

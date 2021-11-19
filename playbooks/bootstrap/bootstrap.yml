@@ -7,10 +7,10 @@
     ansible_port: 2222
   pre_tasks:
     - include_role:
-        name: base
+        name: ../../roles/base
         tasks_from: 00-preflight.yml
     - include_role:
-        name: kernel
+        name: ../../roles/kernel
         tasks_from: 00-preflight.yml
 
     - name: Install packages required for adding nahsi-overlay
@@ -31,5 +31,5 @@
       command: "emaint sync -r nahsi-overlay"
 
   roles:
-    - base
-    - kernel
+    - role: ../../roles/base
+    - role: ../../roles/kernel

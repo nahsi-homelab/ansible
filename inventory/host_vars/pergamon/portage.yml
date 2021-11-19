@@ -74,7 +74,7 @@ base_portage_env:
     MAKEOPTS="--jobs=12 --load-average={{ base_portage_la }}"
 
 base_portage_package_env:
-  chromium:
+  cc1plus: |
     www-client/chromium base-cc1plus.conf
-  qtwebengine:
     dev-qt/qtwebengine base-cc1plus.conf
+    net-im/telegram-desktop base-cc1plus.conf

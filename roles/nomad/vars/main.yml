@@ -1,4 +1,0 @@
-__archive: "nomad_{{ nomad_version }}_linux_amd64.zip"
-__archive_url: "{{ nomad_download_url }}/nomad/{{ nomad_version }}/{{ __archive }}"
-__archive_checksum: "{{ nomad_download_url }}/nomad/{{ nomad_version }}/nomad_{{ nomad_version }}_SHA256SUMS"
-__archive_dir: "/tmp/{{ __archive | splitext | first }}"

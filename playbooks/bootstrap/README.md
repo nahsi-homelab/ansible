@@ -82,33 +82,14 @@ mkfs.vfat -F 32 /dev/disk/by-partlabel/EFI
 ```
 
 ### Legacy GPT
+#### Install syslinux bootloader
+```
+dd bs=440 count=1 conv=notrunc if=/usr/share/syslinux/gptmbr.bin of=/path/to//boot/disk
+```
+
 #### Partition disk
-```
-gdisk /path/to/disk
-Command (? for help): x
-
-Expert command (? for help): a
-Partition number (1-3): 1
-Known attributes are:
-0: system partition
-1: hide from EFI
-2: legacy BIOS bootable
-60: read-only
-62: hidden
-63: do not automount
-
-Attribute value is 0000000000000000. Set fields are:
-  No fields set
-
-Toggle which attribute field (0-63, 64 or <Enter> to exit): 2
-Have enabled the 'legacy BIOS bootable' attribute.
-Attribute value is 0000000000000004. Set fields are:
-2 (legacy BIOS bootable)
-
-Toggle which attribute field (0-63, 64 or <Enter> to exit):
-
-Expert command (? for help): w
-```
+- `gdisk /path/to/disk`
+- Last sector: +512M
 
 #### Format partition to ext4
 ```
@@ -122,7 +103,7 @@ mount /path/to/partition /mnt/gentoo/boot/syslinux
 extlinux --install /mnt/gentoo/boot/syslinux
 ```
 
-#### Install syslinux MBR data
+### Set boot attribute
 ```
-dd bs=440 count=1 conv=notrunc if=/usr/lib/syslinux/gptmbr.bin of=/path/to/disk
+sgdisk /path/to/boot/disk --attributes=1:set:2
 ```

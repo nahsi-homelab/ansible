@@ -2,6 +2,12 @@ kernel_boot_device: "/dev/disk/by-uuid/cd4f87d3-29dd-493b-9740-513ed92159cc"
 
 kernel_firmware:
   - amd-ucode/microcode_amd.bin
+
+  - radeon/SUMO2_me.bin
+  - radeon/SUMO2_pfp.bin
+  - radeon/SUMO_rlc.bin
+  - radeon/SUMO_uvd.bin
+
   - rtl_nic/rtl8168e-2.fw
 
 kernel_zfsbootmenu_config:
@@ -10,7 +16,7 @@ kernel_zfsbootmenu_config:
     BootMountPoint: /boot/syslinux
     DracutConfDir: /etc/zfsbootmenu/dracut.conf.d
   Components:
-    ImageDir: /boot/syslinux/zfsbootmenu
+    ImageDir: /boot/syslinux
     Versions: 2
     Enabled: true
     syslinux:
@@ -26,6 +32,13 @@ kernel_configs:
     CONFIG_I2C_PIIX4=y
 
     CONFIG_MBK10=y
+
+  02video: |
+    CONFIG_DRM=m
+    CONFIG_DRM_RADEON=m
+
+  03audio: |
+    CONFIG_SND_HDA_CODEC_REALTEK=m
 
   99firmware: |
     CONFIG_EXTRA_FIRMWARE_DIR="/lib/firmware"

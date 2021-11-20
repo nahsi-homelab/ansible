@@ -13,8 +13,8 @@ base_sysctl:
     value: 1
 
 base_network: |
-  config_enp1s0="192.168.230.20/24"
-  routes_enp1s0="default via 192.168.230.1"
+  config_enp1s0="192.168.130.20/24"
+  routes_enp1s0="default via 192.168.130.1"
 
 base_network_interfaces:
   - name: "enp1s0"

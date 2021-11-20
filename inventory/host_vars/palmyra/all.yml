@@ -1,6 +1,6 @@
 arch: "amd64"
 bios: "legacy"
 
-private_ip: "192.168.230.20"
+private_ip: "192.168.130.20"
 
 zfs_main_pool: "main"

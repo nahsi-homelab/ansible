@@ -13,11 +13,11 @@ base_sysctl:
     value: 1
 
 base_network: |
-  config_enp2s0="192.168.230.20/24"
-  routes_enp2s0="default via 192.168.230.1"
+  config_enp1s0="192.168.230.20/24"
+  routes_enp1s0="default via 192.168.230.1"
 
 base_network_interfaces:
-  - name: "enp2s0"
+  - name: "enp1s0"
 
 base_packages_palmyra:
   - net-misc/r8168

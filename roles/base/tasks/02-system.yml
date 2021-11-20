@@ -176,7 +176,9 @@
   loop_control:
     loop_var: "dataset"
     label: "{{ dataset.name }}"
-  when: base_zfs_datasets is defined
+  when:
+    - base_zfs_datasets is defined
+    - not chroot
 
 - name: ensure zfs datasets ownership
   tags: zfs
@@ -194,5 +196,6 @@
     - base_zfs_datasets is defined
     - dataset.properties.mountpoint is defined
     - dataset.properties.mountpoint != "none"
+    - not chroot
 
 - meta: flush_handlers

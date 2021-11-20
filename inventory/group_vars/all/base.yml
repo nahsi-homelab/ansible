@@ -56,6 +56,10 @@ base_packages_all:
   - app-misc/ca-certificates
   - net-proxy/shadowsocks-libev
 
+  - app-emulation/crun
+  - app-emulation/docker
+  - app-emulation/podman
+
   - dev-python/docker-py
 
   - net-proxy/envoy-bin

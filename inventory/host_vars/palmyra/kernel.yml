@@ -16,8 +16,8 @@ kernel_zfsbootmenu_config:
     syslinux:
       Config: /boot/syslinux/syslinux.cfg
       Enabled: true
-    Kernel:
-      CommandLine: ro quiet loglevel=0
+  Kernel:
+    CommandLine: ro quiet loglevel=0
 
 kernel_configs:
   01platform: |

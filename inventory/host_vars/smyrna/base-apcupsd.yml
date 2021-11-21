@@ -44,7 +44,7 @@ base_apcupsd_config: |
   # If during a power failure, the remaining runtime in minutes
   # (as calculated internally by the UPS) is below or equal to MINUTES,
   # apcupsd, will initiate a system shutdown.
-  MINUTES 5
+  MINUTES 3
 
   # If during a power failure, the UPS has run on batteries for TIMEOUT
   # many seconds or longer, apcupsd will initiate a system shutdown.

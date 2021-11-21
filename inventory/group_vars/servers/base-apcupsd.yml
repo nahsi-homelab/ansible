@@ -35,12 +35,12 @@ base_apcupsd_config: |
   # If during a power failure, the remaining battery percentage
   # (as reported by the UPS) is below or equal to BATTERYLEVEL,
   # apcupsd will initiate a system shutdown.
-  BATTERYLEVEL 15
+  BATTERYLEVEL 25
 
   # If during a power failure, the remaining runtime in minutes
   # (as calculated internally by the UPS) is below or equal to MINUTES,
   # apcupsd, will initiate a system shutdown.
-  MINUTES 15
+  MINUTES 5
 
   # If during a power failure, the UPS has run on batteries for TIMEOUT
   # many seconds or longer, apcupsd will initiate a system shutdown.
@@ -185,7 +185,7 @@ base_apcupsd_scripts:
     # If you do not want apccontrol to continue, exit your script with exit
     # code 99. E.g. "exit 99".
     #
-    if [[ -f ${SCRIPTDIR}/${1} -a -x ${SCRIPTDIR}/${1} ]]; then
+    if [ -f ${SCRIPTDIR}/${1} -a -x ${SCRIPTDIR}/${1} ]; then
       ${SCRIPTDIR}/${1} ${2} ${3} ${4}
       # exit code 99 means he does not want us to do default action
       if [[ $? = 99 ]] ; then

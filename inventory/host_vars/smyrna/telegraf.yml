@@ -1,0 +1,15 @@
+telegraf_configs_smyrna:
+  apcupsd: |
+    [[inputs.apcupsd]]
+      # A list of running apcupsd server to connect to.
+      # If not provided will default to tcp://127.0.0.1:3551
+      servers = ["tcp://{{ private_ip }}:3551"]
+
+      ## Timeout for dialing server.
+      timeout = "5s"
+
+telegraf_configs: >
+  {{
+    telegraf_configs_all |
+    combine(telegraf_configs_smyrna, recursive=true)
+  }}

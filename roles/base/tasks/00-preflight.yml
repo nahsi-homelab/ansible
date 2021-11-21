@@ -1,6 +1,5 @@
 # vim: set foldmethod=marker
 
-# {{{ portage
 - name: check "base_portage_makeconf" variable
   tags: always
   assert:
@@ -33,7 +32,6 @@
       - base_portage_package_env is defined
       - base_portage_package_env is mapping
     quiet: true
-# }}}
 
 - name: check "base_timezone" variable
   tags: always
@@ -325,3 +323,19 @@
       - base_zfs_dataset is not string
     quiet: true
   when: base_zfs_dataset is defined
+
+- name: check "base_apcupsd_config" variable
+  tags: always
+  assert:
+    that:
+      - base_apcupsd_config is string
+    quiet: true
+  when: base_apcupsd_config is defined
+
+- name: check "base_apcupsd_scripts" variable
+  tags: always
+  assert:
+    that:
+      - base_apcupsd_scripts is mapping
+    quiet: true
+  when: base_apcupsd_config is defined

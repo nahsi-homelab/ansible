@@ -4,6 +4,7 @@ base_apcupsd_config: |
   # ========= General configuration parameters ============
   #
 
+  UPSNAME asia
   UPSCABLE usb
   UPSTYPE modbus
   DEVICE

@@ -8,6 +8,14 @@ telegraf_configs_smyrna:
       ## Timeout for dialing server.
       timeout = "5s"
 
+    [[processors.regex]]
+      namepass = ["apcupsd*"]
+      [[processors.regex.tags]]
+        key = "ups_name"
+        pattern = ".*"
+        replacement = "{{ dc }}"
+
+
 telegraf_configs: >
   {{
     telegraf_configs_all |

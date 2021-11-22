@@ -1,5 +1,3 @@
-# vim: set foldmethod=marker
-
 - name: check "base_portage_makeconf" variable
   tags: always
   assert:

@@ -10,7 +10,7 @@
     paths: "/etc/init.d/"
     patterns: "wg.*"
     file_type: link
-  register: __links_present
+  register: _wireguard_present
 
 - name: create wireguard links
   tags: wireguard
@@ -21,30 +21,27 @@
   loop: "{{ base_wireguard_interfaces }}"
   loop_control:
     label: "{{ item.name }}"
-  register: __links_created
-
-- name: ansible magic
-  tags: wireguard
-  set_fact:
-    __links_present_list: "{{ __links_present | json_query('files[*].path') | default([]) }}"
-    __links_created_list: "{{ __links_created | json_query('results[*].dest') | default([]) }}"
+  register: _wireguard_created
 
 - name: disable wireguard interfaces
   tags: wireguard
+  vars:
+    _present: "{{ _wireguard_present | json_query('files[*].path') | default([]) }}"
+    _created: "{{ _wireguard_created | json_query('results[*].dest') | default([]) }}"
   service:
     name: "{{ item | basename }}"
     enabled: false
     state: stopped
     runlevel: default
     use: openrc
-  loop: "{{ __links_present_list | difference(__links_created_list) }}"
+  loop: "{{ _present | difference(_created) }}"
 
 - name: delete wireguard links
   tags: wireguard
   file:
     path: "{{ item }}"
     state: absent
-  loop: "{{ __links_present_list | difference(__links_created_list) }}"
+  loop: "{{ _present | difference(_created) }}"
 
 - name: enable wireguard interfaces
   tags: wireguard
@@ -71,7 +68,7 @@
   find:
     paths: "/etc/wireguard/"
     patterns: "*.conf"
-  register: __files_present
+  register: _files_present
 
 - name: copy wireguard configurations
   tags: wireguard
@@ -87,18 +84,15 @@
   loop_control:
     loop_var: "config"
     label: "{{ config.key }}"
-  register: __files_copied
+  register: _files_copied
   when: base_wireguard_configs is defined
-
-- name: ansible magic
-  tags: wireguard
-  set_fact:
-    __files_present_list: "{{ __files_present | json_query('files[*].path') | default([]) }}"
-    __files_copied_list: "{{ __files_copied | json_query('results[*].dest') | default([]) }}"
 
 - name: delete wireguard configs
   tags: wireguard
+  vars:
+    _present: "{{ _files_present | json_query('files[*].path') | default([]) }}"
+    _copied: "{{ _files_copied | json_query('results[*].dest') | default([]) }}"
   file:
     path: "{{ item }}"
     state: absent
-  loop: "{{ __files_present_list | difference(__files_copied_list) }}"
+  loop: "{{ _present | difference(_copied) }}"

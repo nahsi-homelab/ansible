@@ -1,0 +1,20 @@
+dns_unbound_configs:
+  smyrna: |
+    server:
+      interface: 192.168.210.1@53
+      interface: 192.168.230.1@53
+      interface: 192.168.250.1@53
+      interface: 127.0.0.1@53
+      access-control: 192.168.210.0/24 allow
+      access-control: 192.168.230.0/24 allow
+      access-control: 192.168.250.0/24 allow
+
+  consul: |
+    server:
+      private-domain: "consul"
+      domain-insecure: "consul"
+
+    stub-zone:
+      name: "consul"
+      stub-addr: 127.0.0.1@8600
+      stub-no-cache: yes

@@ -13,9 +13,8 @@
     mode: 0770
 
 - name: copy unbound config
-  tags: dns
   copy:
-    content: "{{ router_unbound_config }}"
+    content: "{{ dns_unbound_config }}"
     dest: "/etc/unbound/unbound.conf"
     owner: root
     group: unbound
@@ -24,14 +23,12 @@
   notify: restart unbound
 
 - name: register present unbound configs
-  tags: dns
   find:
     paths: "/etc/unbound/conf.d/"
     patterns: ["*.conf"]
-  register: __files_present
+  register: _unbound_present
 
 - name: copy unbound configs
-  tags: dns
   copy:
     content: "{{ file.value }}"
     dest: "/etc/unbound/conf.d/{{ file.key }}.conf"
@@ -40,24 +37,20 @@
     mode: 0640
     validate: "unbound-checkconf %s"
   notify: restart unbound
-  loop: "{{ router_unbound_configs | dict2items }}"
+  loop: "{{ dns_unbound_configs | dict2items }}"
   loop_control:
     loop_var: "file"
     label: "{{ file.key }}"
-  register: __files_copied
-
-- name: ansible magic
-  tags: dns
-  set_fact:
-    __files_present_list: "{{ __files_present | json_query('files[*].path') | default([]) }}"
-    __files_copied_list: "{{ __files_copied | json_query('results[*].dest') | default([]) }}"
+  register: _unbound_copied
 
 - name: delete unbound configs
-  tags: dns
+  vars:
+    _present: "{{ _unbound_present | json_query('files[*].path') | default([]) }}"
+    _copied: "{{ _unbound_copied | json_query('results[*].dest') | default([]) }}"
   file:
     path: "{{ item }}"
     state: absent
-  loop: "{{ __files_present_list | difference(__files_copied_list) }}"
+  loop: "{{ _present | difference(_copied) }}"
   notify: restart unbound
 
 - name: enable unbound

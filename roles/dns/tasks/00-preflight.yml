@@ -1,0 +1,31 @@
+- name: check "dns_dnscrypt_config" variable
+  assert:
+    that:
+      - dns_dnscrypt_config is defined
+      - dns_dnscrypt_config is string
+      - dns_dnscrypt_config | length
+    quiet: true
+
+- name: check "dns_dnscrypt_openrc_config" variable
+  assert:
+    that:
+      - dns_dnscrypt_openrc_config is defined
+      - dns_dnscrypt_openrc_config is string
+      - dns_dnscrypt_openrc_config | length
+    quiet: true
+
+- name: check "dns_unbound_config" variable
+  assert:
+    that:
+      - dns_unbound_config is defined
+      - dns_unbound_config is string
+      - dns_unbound_config | length
+    quiet: true
+
+- name: check "dns_unbound_configs" variable
+  assert:
+    that:
+      - dns_unbound_configs is defined
+      - dns_unbound_configs is mapping
+      - dns_unbound_configs | length
+    quiet: true

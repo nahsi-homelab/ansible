@@ -1,20 +1,12 @@
 - name: Preflight
   include_tasks: 00-preflight.yml
 
-- name: Configure dnscrypt-proxy
-  tags: dns
-  include_tasks: 01-dnscrypt.yml
-
-- name: Configure unbound
-  tags: dns
-  include_tasks: 02-unbound.yml
-
 - name: Configure hostapd
-  include_tasks: 03-hostapd.yml
+  include_tasks: 01-hostapd.yml
   when: router_hostapd_config is defined
 
 - name: Configure dhcp
-  include_tasks: 04-dhcp.yml
+  include_tasks: 02-dhcp.yml
 
 - name: Configure iptables
-  include_tasks: 05-iptables.yml
+  include_tasks: 03-iptables.yml

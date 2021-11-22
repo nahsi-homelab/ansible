@@ -13,9 +13,8 @@
     mode: 0770
 
 - name: copy dnscrypt config
-  tags: dns
   copy:
-    content: "{{ router_dnscrypt_config }}"
+    content: "{{ dns_dnscrypt_config }}"
     dest: "/etc/dnscrypt-proxy/dnscrypt-proxy.toml"
     validate: "dnscrypt-proxy -check -config %s"
     owner: root
@@ -24,9 +23,8 @@
   notify: restart dnscrypt
 
 - name: copy dnscrypt openrc config
-  tags: dns
   copy:
-    content: "{{ router_dnscrypt_openrc_config }}"
+    content: "{{ dns_dnscrypt_openrc_config }}"
     dest: "/etc/conf.d/dnscrypt-proxy"
     owner: root
     group: root

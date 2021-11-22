@@ -1,28 +1,3 @@
-router_unbound_configs:
-  tyros: |
-    server:
-      interface: 192.168.110.1@53
-      interface: 192.168.130.1@53
-      interface: 192.168.150.1@53
-      interface: 127.0.0.1@53
-      access-control: 192.168.110.0/24 allow
-      access-control: 192.168.130.0/24 allow
-      access-control: 192.168.150.0/24 allow
-      access-control: 192.168.5.0/24 allow
-
-  consul: |
-    server:
-      private-domain: "consul"
-      domain-insecure: "consul"
-
-    stub-zone:
-      name: "consul"
-      stub-addr: 127.0.0.1@8600
-      stub-addr: 192.168.130.1@8600
-      stub-addr: 192.168.130.10@8600
-      stub-addr: 192.168.230.1@8600
-      stub-no-cache: yes
-
 router_dnsmasq_config: |
   interface=enp2s0.10
   dhcp-range=vlan10,192.168.110.100,192.168.110.250,80h
@@ -39,7 +14,4 @@ router_dnsmasq_config: |
   dhcp-option=vlan50,3,192.168.150.1
   dhcp-option=vlan50,6,192.168.150.1
 
-router_dnsmasq_openrc_config: |
-  DNSMASQ_OPTS="--user=dnsmasq --group=dnsmasq --port=0"
-
-router_iptables: "{{ iptables.tyros }}"
+router_firewall: "{{ iptables.tyros }}"

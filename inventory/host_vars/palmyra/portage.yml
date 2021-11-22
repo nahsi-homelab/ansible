@@ -1,4 +1,4 @@
-base_portage_makeconf_pergamon:
+base_portage_makeconf_palmyra:
   COMMON_FLAGS: "-O2 -march=amdfam10 -mcx16 -mpopcnt"
   RUSTFLAGS: "-C target-cpu=amdfam10"
   CPU_FLAGS_X86: "3dnow 3dnowext popcnt mmx mmxext sse sse2 sse3 sse4a"
@@ -10,7 +10,7 @@ base_portage_makeconf_pergamon:
 base_portage_makeconf: >
   {{
     base_portage_makeconf_all |
-    combine(base_portage_makeconf_pergamon, recursive=true)
+    combine(base_portage_makeconf_palmyra, recursive=true)
   }}
 
 base_portage_use:

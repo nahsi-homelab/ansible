@@ -38,6 +38,9 @@
 
 - name: delete wireguard links
   tags: wireguard
+  vars:
+    _present: "{{ _wireguard_present | json_query('files[*].path') | default([]) }}"
+    _created: "{{ _wireguard_created | json_query('results[*].dest') | default([]) }}"
   file:
     path: "{{ item }}"
     state: absent

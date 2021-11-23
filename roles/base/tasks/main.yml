@@ -21,6 +21,7 @@
 - name: Configure network
   tags: network
   include_tasks: 05-network.yml
+  when: base_network is defined
 
 - name: Configure wireless network
   tags: network

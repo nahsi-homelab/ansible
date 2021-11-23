@@ -8,8 +8,6 @@ base_wireguard_interfaces: []
 base_network_interfaces: []
 base_udev_rules: {}
 
-base_network: ""
-
 base_sshd_openrc_config: |
   SSHD_CONFDIR="${RC_PREFIX%/}/etc/ssh"
   SSHD_OPTS=""

@@ -62,8 +62,6 @@ base_packages_all:
 
   - dev-python/docker-py
 
-  - net-proxy/envoy-bin
-
   - app-portage/portage-utils
   - app-portage/flaggie
   - app-portage/cpuid2cpuflags

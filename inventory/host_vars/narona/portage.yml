@@ -1,0 +1,24 @@
+base_portage_mirrors:
+  - https://mirror.netcologne.de/gentoo/
+  - https://distfiles.gentoo.org/
+
+base_portage_distcc_cores: 16
+base_portage_makeconf_narona:
+  COMMON_FLAGS: "-O2 -march=znver1"
+  RUSTFLAGS: "-C target-cpu=znver1"
+  CPU_FLAGS_X86: "aes avx avx2 f16c fma3 mmx mmxext pclmul popcnt rdrand sha sse sse2 sse3 sse4_1 sse4_2 sse4a ssse3"
+  LUA_TARGETS: "luajit"
+  LUA_SINGLE_TARGET: "luajit"
+  DISTCC_HOSTS: "192.168.130.10/16"
+  FEATURES: "parallel-install distcc"
+base_portage_makeconf: >
+  {{
+    base_portage_makeconf_all |
+    combine(base_portage_makeconf_narona, recursive=true)
+  }}
+
+base_portage_use:
+  - zstd
+  - luajit
+  - -X
+  - -introspection

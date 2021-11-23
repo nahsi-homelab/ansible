@@ -16,10 +16,19 @@ antiochia
 tyros
 palmyra
 
+[dalmatia]
+narona ansible_host="dalmatia.nahsi.dev"
 
 [workstations]
 pergamon
 miletos
+
+[ups]
+antiochia
+smyrna
+tyros
+pergamon
+palmyra
 
 [servers]
 antiochia
@@ -27,11 +36,16 @@ smyrna
 tyros
 pergamon
 palmyra
+narona
 
 [routers]
 tyros
 smyrna
 
+[dns]
+tyros
+smyrna
+narona
 
 [consul]
 antiochia

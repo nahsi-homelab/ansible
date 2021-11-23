@@ -1,0 +1,27 @@
+base_sysctl:
+  - name: vm.swappiness
+    value: 1
+
+base_wireguard_configs:
+  syria: "{{ lookup('hashi_vault', 'secret/data/wireguard/narona:syria') }}"
+
+base_wireguard_interfaces:
+  - name: "syria"
+
+base_dns: |
+  resolv_conf="/etc/resolv.conf"
+  name_servers="1.1.1.1"
+
+base_containers_storage: |
+  [storage]
+  driver="overlay2"
+
+base_containers_docker:
+  default-runtime: "crun"
+  runtimes:
+    crun:
+      path: "/usr/bin/crun"
+  log-driver: "json-file"
+  log-opts:
+    max-size: "32m"
+    max-file: "2"

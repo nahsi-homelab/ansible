@@ -1,5 +1,5 @@
 arch: "amd64"
 
-private_ip: "{{ ansible_default_ipv4.address }}"
+private_ip: "192.168.175.83"
 
 zfs_main_pool: "main"

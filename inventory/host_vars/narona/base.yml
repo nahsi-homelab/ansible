@@ -3,10 +3,10 @@ base_sysctl:
     value: 1
 
 base_wireguard_configs:
-  syria: "{{ lookup('hashi_vault', 'secret/data/wireguard/narona:syria') }}"
+  oikumene: "{{ lookup('hashi_vault', 'secret/data/wireguard/narona:oikumene') }}"
 
 base_wireguard_interfaces:
-  - name: "syria"
+  - name: "oikumene"
 
 base_dns: |
   resolv_conf="/etc/resolv.conf"

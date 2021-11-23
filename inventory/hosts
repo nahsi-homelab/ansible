@@ -17,7 +17,7 @@ tyros
 palmyra
 
 [dalmatia]
-narona ansible_host="dalmatia.nahsi.dev"
+narona
 
 [workstations]
 pergamon

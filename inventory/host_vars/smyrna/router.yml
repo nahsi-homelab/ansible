@@ -14,4 +14,4 @@ router_dnsmasq_config: |
   dhcp-option=vlan50,3,192.168.250.1
   dhcp-option=vlan50,6,192.168.250.1
 
-router_firewall: "{{ iptables.smyrna }}"
+router_iptables: "{{ iptables.smyrna }}"

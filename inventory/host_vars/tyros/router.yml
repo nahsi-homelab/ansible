@@ -14,4 +14,4 @@ router_dnsmasq_config: |
   dhcp-option=vlan50,3,192.168.150.1
   dhcp-option=vlan50,6,192.168.150.1
 
-router_firewall: "{{ iptables.tyros }}"
+router_iptables: "{{ iptables.tyros }}"

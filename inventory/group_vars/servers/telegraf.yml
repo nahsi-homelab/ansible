@@ -76,6 +76,7 @@ telegraf_configs_all:
       device = ["*/containers/*"]
 
   zfs: |
+    {% if inventory_hostname != "narona" %}
     [[inputs.zfs]]
       kstatMetrics = ["arcstats", "zil"]
     [[inputs.execd]]
@@ -83,6 +84,7 @@ telegraf_configs_all:
       signal = "STDIN"
       restart_delay = "10s"
       data_format = "influx"
+    {% endif %}
 
   smart: |
     [[inputs.smart]]

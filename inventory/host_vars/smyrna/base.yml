@@ -25,7 +25,7 @@ base_services:
 
 base_packages_smyrna:
   - net-dialup/ppp
-  - net-wireless/iw
+  - sys-power/apcupsd
 base_packages: "{{ base_packages_all + base_packages_smyrna | unique }}"
 
 base_wireguard_configs:

@@ -25,6 +25,7 @@ base_packages_pergamon:
   - net-misc/r8168
   - media-plugins/hyperion
   - media-sound/beets
+  - sys-power/apcupsd
 base_packages: >
   {{
     base_packages_all +

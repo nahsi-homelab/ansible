@@ -21,6 +21,7 @@ base_network_interfaces:
 
 base_packages_palmyra:
   - net-misc/r8168
+  - sys-power/apcupsd
 base_packages: >
   {{
     base_packages_all +

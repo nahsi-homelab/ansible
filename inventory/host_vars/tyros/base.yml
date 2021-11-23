@@ -25,6 +25,7 @@ base_services:
 
 base_packages_tyros:
   - net-dialup/ppp
+  - sys-power/apcupsd
 base_packages: "{{ base_packages_all + base_packages_tyros | unique }}"
 
 base_wireguard_configs:

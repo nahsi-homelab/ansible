@@ -1,6 +1,6 @@
 consul_config_server:
   server: true
-  bootstrap_expect: 3
+  bootstrap_expect: 5
 
   ui_config:
     enabled: true

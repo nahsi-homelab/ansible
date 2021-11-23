@@ -1,0 +1,5 @@
+nomad_config: >
+  {{
+    nomad_config_agent |
+    combine(nomad_config_server, recursive=true)
+  }}

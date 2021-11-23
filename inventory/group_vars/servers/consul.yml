@@ -4,7 +4,7 @@ consul_servers:
   - 192.168.130.20
   - 192.168.230.10
   - 192.168.230.1
-  - narona.nahsi.dev
+  - 192.168.175.83
 
 gotmpl_docker: !unsafe '{{ GetInterfaceIP "docker0" }}'
 

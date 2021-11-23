@@ -1,4 +1,4 @@
-dc: "thracia"
+dc: "dalmatia"
 
 base_dns: |
   resolv_conf="/etc/resolv.conf"

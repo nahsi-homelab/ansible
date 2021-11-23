@@ -1,4 +1,9 @@
 dc: "thracia"
 
-gotmpl_private_address: !unsafe '{{ GetInterfaceIP "eth0" }}'
-gotmpl_private_interface: !unsafe '{{ GetPublicInterfaces | attr "name" }}'
+base_dns: |
+  resolv_conf="/etc/resolv.conf"
+  name_servers="192.168.175.83"
+  search_domains="node.consul service.consul"
+
+gotmpl_private_address: !unsafe '{{ GetPrivateInterfaces | include "network" "192.168.128.0/17" | attr "address" }}'
+gotmpl_private_interface: !unsafe '{{ GetPrivateInterfaces | include "network" "192.168.128.0/17" | attr "name" }}'

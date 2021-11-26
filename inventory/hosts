@@ -16,8 +16,8 @@ antiochia
 tyros
 palmyra
 
-[dalmatia]
-narona
+[pontus]
+heraclea
 
 [workstations]
 pergamon
@@ -36,7 +36,7 @@ smyrna
 tyros
 pergamon
 palmyra
-narona
+heraclea
 
 [routers]
 tyros
@@ -45,21 +45,21 @@ smyrna
 [dns]
 tyros
 smyrna
-narona
+heraclea
 
 [consul]
 antiochia
 palmyra
 pergamon
 smyrna
-narona
+heraclea
 
 [nomad]
 antiochia
 palmyra
 pergamon
 smyrna
-narona
+heraclea
 
 [vault]
 antiochia

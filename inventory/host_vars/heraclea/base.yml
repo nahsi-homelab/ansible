@@ -3,7 +3,7 @@ base_sysctl:
     value: 1
 
 base_wireguard_configs:
-  oikumene: "{{ lookup('hashi_vault', 'secret/data/wireguard/narona:oikumene') }}"
+  oikumene: "{{ lookup('hashi_vault', 'secret/data/wireguard/heraclea:oikumene') }}"
 
 base_wireguard_interfaces:
   - name: "oikumene"

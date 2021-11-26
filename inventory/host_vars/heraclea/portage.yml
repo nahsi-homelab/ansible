@@ -3,7 +3,7 @@ base_portage_mirrors:
   - https://distfiles.gentoo.org/
 
 base_portage_distcc_cores: 16
-base_portage_makeconf_narona:
+base_portage_makeconf_heraclea:
   COMMON_FLAGS: "-O2 -march=znver1"
   RUSTFLAGS: "-C target-cpu=znver1"
   CPU_FLAGS_X86: "aes avx avx2 f16c fma3 mmx mmxext pclmul popcnt rdrand sha sse sse2 sse3 sse4_1 sse4_2 sse4a ssse3"
@@ -14,7 +14,7 @@ base_portage_makeconf_narona:
 base_portage_makeconf: >
   {{
     base_portage_makeconf_all |
-    combine(base_portage_makeconf_narona, recursive=true)
+    combine(base_portage_makeconf_heraclea, recursive=true)
   }}
 
 base_portage_use:

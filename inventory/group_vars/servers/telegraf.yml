@@ -76,7 +76,7 @@ telegraf_configs_all:
       device = ["*/containers/*"]
 
   zfs: |
-    {% if inventory_hostname != "narona" %}
+    {% if inventory_hostname != "heraclea" %}
     [[inputs.zfs]]
       kstatMetrics = ["arcstats", "zil"]
     [[inputs.execd]]

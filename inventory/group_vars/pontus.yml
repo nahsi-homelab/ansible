@@ -1,4 +1,4 @@
-dc: "dalmatia"
+dc: "pontus"
 
 base_dns: |
   resolv_conf="/etc/resolv.conf"

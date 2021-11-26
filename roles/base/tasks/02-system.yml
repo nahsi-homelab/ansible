@@ -78,6 +78,7 @@
   hostname:
     name: "{{ inventory_hostname }}"
     use: openrc
+  notify: restart hostname
 
 - name: configure /etc/hosts
   tags: system

@@ -17,6 +17,12 @@
 - name: run resolvconf
   command: resolvconf -u
 
+- name: restart hostname
+  service:
+    name: hostname
+    state: restarted
+    use: openrc
+
 - name: reload udev rules
   command: udevadm control --reload-rules
   when:

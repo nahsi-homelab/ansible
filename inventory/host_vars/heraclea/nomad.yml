@@ -11,8 +11,6 @@ nomad_configs:
       host_volume:
         - zookeeper:
             path: "/var/lib/zookeeper"
-        - postgres:
-            path: "/var/lib/postgres"
 
   meta:
     client:

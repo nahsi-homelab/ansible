@@ -22,8 +22,6 @@ nomad_configs:
             path: "/var/lib/jellyfin/config"
         - jellyfin-cache:
             path: "/var/lib/jellyfin/cache"
-        - redpanda:
-            path: "/var/lib/redpanda"
         - zookeeper:
             path: "/var/lib/zookeeper"
         - kafka:
@@ -34,8 +32,6 @@ nomad_configs:
       meta:
         zoo_node_id: 1
         kafka_node_id: 1
-        redpanda_node_id: 1
-        redpanda_root: ""
 
 nomad_config: >
   {{

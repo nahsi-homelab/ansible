@@ -1,3 +1,11 @@
+nomad_configs:
+  public_network:
+    client:
+      host_network:
+        - public:
+            cidr: "{{ private_ip }}/32"
+            reserved_ports: "443"
+
 nomad_config: >
   {{
     nomad_config_agent |

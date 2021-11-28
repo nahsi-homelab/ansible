@@ -1,4 +1,11 @@
 nomad_configs:
+  public_network:
+    client:
+      host_network:
+        - public:
+            interface: "ppp0"
+            reserved_ports: "443"
+
   volumes:
     client:
       host_volume:

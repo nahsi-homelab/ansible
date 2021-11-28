@@ -5,14 +5,3 @@ nomad_configs:
         - public:
             interface: "ppp0"
             reserved_ports: "443"
-
-  volumes:
-    client:
-      host_volume:
-        - zookeeper:
-            path: "/var/lib/zookeeper"
-
-  meta:
-    client:
-      meta:
-        zoo_node_id: 3

@@ -11,11 +11,14 @@ nomad_configs:
       host_volume:
         - zookeeper:
             path: "/var/lib/zookeeper"
+        - minio:
+            path: "/var/lib/minio"
 
   meta:
     client:
       meta:
         zoo_node_id: 5
+        minio_node_id: 5
 
 nomad_config: >
   {{

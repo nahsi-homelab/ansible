@@ -97,3 +97,11 @@ base_zfs_datasets:
     owner: "1001"
     group: "1001"
     mode: "0700"
+
+  - name: "hot/data/minio"
+    properties:
+      atime: "off"
+      mountpoint: "/var/lib/minio"
+    owner: "1001"
+    group: "1001"
+    mode: "0700"

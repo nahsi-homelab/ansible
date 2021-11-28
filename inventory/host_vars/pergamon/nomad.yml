@@ -8,12 +8,15 @@ nomad_configs:
             path: "/var/lib/zookeeper"
         - kafka:
             path: "/var/lib/kafka"
+        - minio:
+            path: "/var/lib/minio"
 
   meta:
     client:
       meta:
         zoo_node_id: 3
         kafka_node_id: 3
+        minio_node_id: 3
 
 nomad_config: >
   {{

@@ -60,6 +60,7 @@ base_packages_desktop:
   - sys-fs/fuse:0 # error loading libfuse.so.2
 
   - app-emulation/qemu
+  - app-cdr/cdrtools
   - app-emulation/docker-compose
 
   - app-admin/chezmoi

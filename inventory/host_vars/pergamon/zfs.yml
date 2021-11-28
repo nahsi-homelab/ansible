@@ -64,6 +64,8 @@ base_zfs_datasets:
       atime: "off"
       mountpoint: "/var/lib/zookeeper/datalog"
     owner: "1001"
+    group: "1001"
+    mode: "0700"
 
   - name: "main/data/kafka"
     properties:

@@ -3,7 +3,7 @@ nomad_configs:
     client:
       host_network:
         - public:
-            cidr: "{{ private_ip }}/32"
+            cidr: "194.233.161.117/24"
             reserved_ports: "443"
 
   volumes:

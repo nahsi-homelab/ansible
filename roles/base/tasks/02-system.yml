@@ -168,7 +168,9 @@
   when: base_services is defined
 
 - name: manage zfs dataset
-  tags: zfs
+  tags:
+    - zfs
+    - system
   zfs:
     name: "{{ dataset.name }}"
     state: "{{ dataset.state | d('present') }}"
@@ -182,7 +184,9 @@
     - not chroot
 
 - name: ensure zfs datasets ownership
-  tags: zfs
+  tags:
+    - zfs
+    - system
   file:
     path: "{{ dataset.properties.mountpoint }}"
     state: "{{ dataset.state | d('directory') }}"
@@ -198,5 +202,19 @@
     - dataset.properties.mountpoint is defined
     - dataset.properties.mountpoint != "none"
     - not chroot
+
+- name: create directories
+  tags: system
+  file:
+    path: "{{ dir.path }}"
+    state: "{{ dir.state | d('directory') }}"
+    owner: "{{ dir.owner | d('root') }}"
+    group: "{{ dir.group | d('root') }}"
+    mode: "{{ dir.mode | d('0755') }}"
+  loop: "{{ base_directories }}"
+  loop_control:
+    loop_var: "dir"
+    label: "{{ dir.path }}"
+  when: base_directories is defined
 
 - meta: flush_handlers

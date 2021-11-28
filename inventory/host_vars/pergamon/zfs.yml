@@ -41,3 +41,34 @@ base_zfs_datasets:
     owner: "nahsi"
     group: "nahsi"
     mode: "0755"
+
+  - name: "main/data/postgres"
+    properties:
+      atime: "off"
+      compression: "zstd"
+      mountpoint: "/var/lib/postgres"
+    owner: "999"
+    group: "999"
+    mode: "0700"
+
+  - name: "main/data/zookeeper/data"
+    properties:
+      atime: "off"
+      mountpoint: "/var/lib/zookeeper/data"
+    owner: "1001"
+    group: "1001"
+    mode: "0700"
+
+  - name: "main/data/zookeeper/datalog"
+    properties:
+      atime: "off"
+      mountpoint: "/var/lib/zookeeper/datalog"
+    owner: "1001"
+
+  - name: "main/data/kafka"
+    properties:
+      atime: "off"
+      mountpoint: "/var/lib/kafka"
+    owner: "1001"
+    group: "1001"
+    mode: "0700"

@@ -6,6 +6,19 @@ nomad_configs:
             cidr: "{{ private_ip }}/32"
             reserved_ports: "443"
 
+  volumes:
+    client:
+      host_volume:
+        - zookeeper:
+            path: "/var/lib/zookeeper"
+        - postgres:
+            path: "/var/lib/postgres"
+
+  meta:
+    client:
+      meta:
+        zoo_node_id: 5
+
 nomad_config: >
   {{
     nomad_config_agent |

@@ -9,22 +9,16 @@ nomad_configs:
   volumes:
     client:
       host_volume:
-        - redpanda:
-            path: "/var/lib/redpanda"
         - zookeeper:
             path: "/var/lib/zookeeper"
         - kafka:
             path: "/var/lib/kafka"
-        - postgres:
-            path: "/var/lib/postgres"
 
   meta:
     client:
       meta:
-        zoo_node_id: 2
-        kafka_node_id: 2
-        redpanda_node_id: 2
-        redpanda_root: "redpanda-1.service.consul:33145"
+        zoo_node_id: 4
+        kafka_node_id: 4
 
 nomad_config: >
   {{

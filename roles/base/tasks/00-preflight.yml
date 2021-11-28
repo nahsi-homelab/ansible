@@ -313,14 +313,23 @@
       - base_udev_rules is mapping
     quiet: true
 
-- name: check "base_zfs_dataset" variable
+- name: check "base_zfs_datasets" variable
   tags: always
   assert:
     that:
-      - base_zfs_dataset is mapping
-      - base_zfs_dataset is not string
+      - base_zfs_datasets is iterable
+      - base_zfs_datasets is not string
     quiet: true
-  when: base_zfs_dataset is defined
+  when: base_zfs_datasets is defined
+
+- name: check "base_directories" variable
+  tags: always
+  assert:
+    that:
+      - base_directories is iterable
+      - base_directories is not string
+    quiet: true
+  when: base_directories is defined
 
 - name: check "base_apcupsd_config" variable
   tags: always

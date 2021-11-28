@@ -34,14 +34,6 @@ base_zfs_datasets:
     group: "nahsi"
     mode: "0755"
 
-  - name: "main/data/redpanda"
-    properties:
-      atime: "off"
-      mountpoint: "/var/lib/redpanda"
-    owner: "101"
-    group: "101"
-    mode: "0700"
-
   - name: "main/data/zookeeper/data"
     properties:
       atime: "off"

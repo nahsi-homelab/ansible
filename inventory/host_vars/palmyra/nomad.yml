@@ -1,3 +1,20 @@
+nomad_configs:
+  volumes:
+    client:
+      host_volume:
+        - postgres:
+            path: "/var/lib/postgres"
+        - zookeeper:
+            path: "/var/lib/zookeeper"
+        - kafka:
+            path: "/var/lib/kafka"
+
+  meta:
+    client:
+      meta:
+        zoo_node_id: 2
+        kafka_node_id: 2
+
 nomad_config: >
   {{
     nomad_config_agent |

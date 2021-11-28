@@ -21,3 +21,19 @@ base_containers_docker:
   log-opts:
     max-size: "32m"
     max-file: "2"
+
+base_directories:
+  - path: "/var/lib/zookeeper/data"
+    owner: "1001"
+    group: "1001"
+    mode: "0700"
+
+  - path: "/var/lib/zookeeper/datalog"
+    owner: "1001"
+    group: "1001"
+    mode: "0700"
+
+  - path: "/var/lib/kafka"
+    owner: "1001"
+    group: "1001"
+    mode: "0700"

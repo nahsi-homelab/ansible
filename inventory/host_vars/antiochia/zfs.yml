@@ -74,14 +74,6 @@ base_zfs_datasets:
     group: "1000"
     mode: "0750"
 
-  - name: "hot/data/redpanda"
-    properties:
-      atime: "off"
-      mountpoint: "/var/lib/redpanda"
-    owner: "101"
-    group: "101"
-    mode: "0700"
-
   - name: "hot/data/zookeeper/data"
     properties:
       atime: "off"

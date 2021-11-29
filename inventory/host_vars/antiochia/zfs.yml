@@ -103,6 +103,6 @@ base_zfs_datasets:
       atime: "off"
       mountpoint: "/var/lib/minio"
       quota: "50G"
-    owner: "1001"
-    group: "1001"
+    owner: "nobody"
+    group: "nobody"
     mode: "0700"

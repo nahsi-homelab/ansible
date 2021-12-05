@@ -21,9 +21,11 @@ dns_unbound_configs:
 
   cinarra: |
     forward-zone:
-      name: "cinarra.io"
+      name: "cinarra.io."
       forward-addr: 1.1.1.1
+      forward-no-cache: yes
 
     forward-zone:
-      name: "cinarra.com"
+      name: "cinarra.com."
       forward-addr: 1.1.1.1
+      forward-no-cache: yes

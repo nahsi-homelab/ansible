@@ -42,7 +42,7 @@ base_services:
 base_wireguard_configs:
   vpn: "{{ lookup('hashi_vault', 'secret/data/wireguard/miletos:vpn') }}"
   office: "{{ lookup('hashi_vault', 'secret/data/wireguard/miletos:office') }}"
-  syria: "{{ lookup('hashi_vault', 'secret/data/wireguard/miletos:syria') }}"
+  oikumene: "{{ lookup('hashi_vault', 'secret/data/wireguard/miletos:oikumene') }}"
 
 base_wireguard_interfaces:
   - name: "office"
@@ -51,7 +51,7 @@ base_wireguard_interfaces:
   - name: "vpn"
     enable: false
     start: false
-  - name: "syria"
+  - name: "oikumene"
     enable: false
     start: false
 

@@ -70,8 +70,8 @@ base_portage_use:
 
 base_portage_env:
   cc1plus: |
-    EMERGE_DEFAULT_OPTS="--jobs=10 --load-average={{ base_portage_la }} --quiet-build"
-    MAKEOPTS="--jobs=10 --load-average={{ base_portage_la }}"
+    EMERGE_DEFAULT_OPTS="--jobs=8 --load-average={{ base_portage_la }} --quiet-build"
+    MAKEOPTS="--jobs=8 --load-average={{ base_portage_la }}"
 
 base_portage_package_env:
   cc1plus: |

@@ -77,6 +77,7 @@ base_packages_all:
   - net-analyzer/arp-scan
   - net-misc/iperf
   - net-analyzer/openbsd-netcat
+  - sys-apps/dmidecode
 
   - sys-power/cpupower
   - sys-apps/lm-sensors

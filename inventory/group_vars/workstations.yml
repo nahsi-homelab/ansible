@@ -28,12 +28,6 @@ base_packages_desktop:
   - www-apps/hugo
   - net-misc/s4cmd
 
-  # japanese input
-  - app-i18n/mozc
-  - app-i18n/fcitx
-  - app-i18n/fcitx-qt5
-  - app-i18n/fcitx-configtool
-
   - dev-python/wheel
   - app-admin/ansible
   - app-admin/ansible-lint

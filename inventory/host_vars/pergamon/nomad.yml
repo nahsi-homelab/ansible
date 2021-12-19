@@ -10,6 +10,8 @@ nomad_configs:
             path: "/var/lib/kafka"
         - minio:
             path: "/var/lib/minio"
+        - mongo:
+            path: "/var/lib/mongo"
 
   meta:
     client:
@@ -17,6 +19,8 @@ nomad_configs:
         zoo_node_id: 3
         kafka_node_id: 3
         minio_node_id: 3
+
+        mongo_node_id: "secondary"
 
 nomad_config: >
   {{

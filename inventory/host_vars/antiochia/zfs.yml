@@ -106,3 +106,13 @@ base_zfs_datasets:
     owner: "nobody"
     group: "nobody"
     mode: "0700"
+
+  - name: "hot/data/mongo"
+    properties:
+      atime: "off"
+      compression: "zstd"
+      mountpoint: "/var/lib/mongo"
+      quota: "100G"
+    owner: "999"
+    group: "999"
+    mode: "0700"

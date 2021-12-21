@@ -20,6 +20,7 @@ base_packages_desktop:
   - net-analyzer/wireshark
 
   - dev-db/pg_activity
+  - app-admin/warp
 
   - net-im/telegram-desktop
   - net-im/slack

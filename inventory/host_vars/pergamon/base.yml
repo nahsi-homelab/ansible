@@ -26,6 +26,7 @@ base_packages_pergamon:
   - media-plugins/hyperion
   - media-sound/beets
   - sys-power/apcupsd
+  - media-tv/v4l-utils
 base_packages: >
   {{
     base_packages_all +

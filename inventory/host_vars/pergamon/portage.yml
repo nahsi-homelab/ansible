@@ -23,6 +23,8 @@ base_portage_package_use_pergamon:
   pergamon: |
     media-plugins/hyperion -v4l -qt-grabber -zeroconf
 
+    media-tv/v4l-utils qt5 -bpf
+
     # xorg-server
     x11-libs/libdrm video_cards_radeon
 

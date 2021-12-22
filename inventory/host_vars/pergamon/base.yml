@@ -27,6 +27,7 @@ base_packages_pergamon:
   - media-sound/beets
   - sys-power/apcupsd
   - media-tv/v4l-utils
+  - media-video/v4l2loopback
   - media-video/obs-studio
 base_packages: >
   {{

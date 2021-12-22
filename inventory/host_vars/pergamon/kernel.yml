@@ -56,6 +56,9 @@ kernel_module_configs:
     options snd_hda_intel id=Generic index=0
     options snd_hda_intel id=HDMI index=2
 
+  virtual_webcam: |
+    options v4l2loopback exclusive_caps=1 card_label=OBS
+
 kernel_configs:
   01platform: |
     CONFIG_MZEN3=y

@@ -26,6 +26,9 @@ base_portage_package_use_pergamon:
     media-tv/v4l-utils qt5 -bpf
     media-video/obs-studio truetype v4l
 
+    app-text/poppler cairo
+
+
     # xorg-server
     x11-libs/libdrm video_cards_radeon
 
@@ -46,6 +49,7 @@ base_portage_use:
   - X
   - elogind
   - -policykit
+  - -geolocation
   - dri
   - drm
   - icu

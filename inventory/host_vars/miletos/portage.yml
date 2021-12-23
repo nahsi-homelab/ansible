@@ -44,6 +44,7 @@ base_portage_use:
   - elogind
   - cups
   - -policykit
+  - -geolocation
   - dri
   - drm
   - icu

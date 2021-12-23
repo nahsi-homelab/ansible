@@ -29,6 +29,7 @@ base_packages_pergamon:
   - media-tv/v4l-utils
   - media-video/v4l2loopback
   - media-video/obs-studio
+  - media-gfx/inkscape
 base_packages: >
   {{
     base_packages_all +

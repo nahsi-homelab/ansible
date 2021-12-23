@@ -65,7 +65,7 @@ base_packages_desktop:
   - app-misc/smug
   - sys-apps/bat
   - app-misc/task
-  - net-misc/youtube-dl
+  - net-misc/yt-dlp
   - app-portage/pfl
   - net-irc/tiny
   - app-benchmarks/hyperfine

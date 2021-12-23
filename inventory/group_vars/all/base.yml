@@ -57,9 +57,9 @@ base_packages_all:
   - net-proxy/shadowsocks-libev
 
   - app-emulation/qemu
-  - app-emulation/crun
-  - app-emulation/docker
-  - app-emulation/podman
+  - app-containers/crun
+  - app-containers/docker
+  - app-containers/podman
 
   - dev-python/docker-py
 

@@ -57,7 +57,7 @@ base_packages_desktop:
 
   - app-emulation/qemu
   - app-cdr/cdrtools
-  - app-emulation/docker-compose
+  - app-containers/docker-compose
 
   - app-admin/chezmoi
   - x11-terms/kitty

@@ -30,6 +30,7 @@ base_packages_pergamon:
   - media-video/v4l2loopback
   - media-video/obs-studio
   - media-gfx/inkscape
+  - media-sound/easyeffects
 base_packages: >
   {{
     base_packages_all +

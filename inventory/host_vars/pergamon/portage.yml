@@ -28,6 +28,12 @@ base_portage_package_use_pergamon:
 
     app-text/poppler cairo
 
+    # audio
+    media-video/pipewire pipewire-alsa extra gstreamer jack-sdk
+    media-libs/portaudio jack
+    media-sound/easyeffects -doc calf mda-lv2 zamaudio
+    media-libs/rubberband ladspa
+    media-plugins/calf lv2
 
     # xorg-server
     x11-libs/libdrm video_cards_radeon

@@ -41,6 +41,7 @@ base_packages_desktop:
   - x11-wm/awesome
   - x11-libs/lain
   - media-video/pipewire
+  - media-sound/pulsemixer
   - x11-apps/xrandr
 
   - app-crypt/gnupg
@@ -109,7 +110,7 @@ base_packages_desktop:
   - dev-util/cargo-ebuild
   - dev-util/cargo-license
 
-  # language servers 
+  # language servers
   - dev-go/gopls
   - app-admin/terraform-ls
 
@@ -122,7 +123,6 @@ base_portage_package_use_desktop:
     media-video/ffmpeg chromium libdrm x264 x265 webp vpx vorbis theora
     media-gfx/imagemagick -X tiff
     virtual/imagemagick-tools tiff
-    media-video/pipewire pipewire-alsa extra
     media-libs/freetype harfbuzz
     sys-apps/util-linux caps # for pfl
     app-text/hunspell l10n_en l10n_ru
@@ -130,6 +130,11 @@ base_portage_package_use_desktop:
 
     media-fonts/noto cjk
     media-fonts/nerd-fonts firacode
+
+    # pipewire
+    media-video/pipewire pipewire-alsa extra
+    net-im/zoom pulseaudio
+    media-sound/pulseaudio -* glib
 
     # chromium
     www-client/chromium widevine official -suid -js-type-check

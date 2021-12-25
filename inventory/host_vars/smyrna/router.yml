@@ -9,6 +9,11 @@ router_dnsmasq_config: |
   dhcp-option=vlan30,3,192.168.230.1
   dhcp-option=vlan30,6,192.168.230.1
 
+  interface=enp2s0.40
+  dhcp-range=vlan40,192.168.240.200,192.168.240.250,75h
+  dhcp-option=vlan40,3,192.168.240.1
+  dhcp-option=vlan40,6,192.168.240.1
+
   interface=enp2s0.50
   dhcp-range=vlan50,192.168.250.200,192.168.250.250,75h
   dhcp-option=vlan50,3,192.168.250.1

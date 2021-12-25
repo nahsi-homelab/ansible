@@ -1,15 +1,15 @@
 - name: install crun OCI runtime
   tags: containers
   portage:
-    package: app-emulation/crun
+    package: app-containers/crun
     state: present
 
 - name: install docker and podman
   tags: containers
   portage:
     package:
-      - app-emulation/docker
-      - app-emulation/podman
+      - app-containers/docker
+      - app-containers/podman
     state: present
 
 - name: configure containers

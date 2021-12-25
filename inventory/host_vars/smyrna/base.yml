@@ -71,7 +71,8 @@ base_network: |
   # lan
   config_enp2s0="null"
 
-  vlans_enp2s0="10 30 50"
+  vlans_enp2s0="10 30 40 50"
   config_enp2s0_10="192.168.210.1/24"
   config_enp2s0_30="192.168.230.1/24"
+  config_enp2s0_40="192.168.240.1/24"
   config_enp2s0_50="192.168.250.1/24"

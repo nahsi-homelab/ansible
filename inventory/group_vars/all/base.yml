@@ -56,6 +56,15 @@ base_packages_all:
   - app-misc/ca-certificates
   - net-proxy/shadowsocks-libev
 
+  # github-runner dependencies
+  - dev-libs/icu
+  - dev-util/lttng-ust
+  - sys-libs/zlib
+  - dev-libs/openssl
+  - net-dns/libidn
+  - net-libs/nghttp2
+  - dev-dotnet/dotnet-sdk-bin
+
   - app-emulation/qemu
   - app-containers/crun
   - app-containers/docker

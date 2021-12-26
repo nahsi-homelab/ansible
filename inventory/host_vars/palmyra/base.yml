@@ -53,5 +53,5 @@ base_users: >
 base_udev_rules:
   10_virtualbox: |
     KERNEL=="vboxdrv", GROUP="vboxusers", MODE="0660"
-    KERNEL=="vboxdrvu", GROUP="vboxusers", MODE="0660"
+    KERNEL=="vboxdrvu", GROUP="root", MODE="0666"
     KERNEL=="vboxnetctl", GROUP="vboxusers", MODE="0660"

@@ -4,6 +4,9 @@ nomad_configs:
       host_volume:
         - docker-socket:
             path: "/var/run/docker.sock"
+        - vboxdrv:
+            path: "/dev/vboxdrv"
+
         - postgres:
             path: "/var/lib/postgres"
         - zookeeper:
@@ -26,19 +29,19 @@ nomad_configs:
 
         mongo_node_id: "secondary"
 
-  chroot:
-    client:
-      chroot_env:
-        "/bin": "/bin"
-        "/etc": "/etc"
-        "/lib": "/lib"
-        "/lib64": "/lib64"
-        "/run/resolvconf": "/run/resolvconf"
-        "/sbin": "/sbin"
-        "/usr": "/usr"
-        "/dev/vboxdrv": "/dev/vboxdrv"
-        "/dev/vboxdrvu": "/dev/vboxdrvu"
-        "/dev/vboxnetctl": "/dev/vboxctl"
+  # chroot:
+  #   client:
+  #     chroot_env:
+  #       "/bin": "/bin"
+  #       "/etc": "/etc"
+  #       "/lib": "/lib"
+  #       "/lib64": "/lib64"
+  #       "/run/resolvconf": "/run/resolvconf"
+  #       "/sbin": "/sbin"
+  #       "/usr": "/usr"
+  #       "/dev/vboxdrv": "/dev/vboxdrv"
+  #       "/dev/vboxdrvu": "/dev/vboxdrvu"
+  #       "/dev/vboxnetctl": "/dev/vboxctl"
 
 nomad_config: >
   {{

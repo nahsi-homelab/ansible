@@ -6,6 +6,8 @@ nomad_configs:
             path: "/var/run/docker.sock"
         - vboxdrv:
             path: "/dev/vboxdrv"
+        - vboxnetctl:
+            path: "/dev/vboxnetctl"
 
         - prometheus:
             path: "/var/lib/prometheus"

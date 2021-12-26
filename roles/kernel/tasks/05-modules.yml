@@ -1,0 +1,73 @@
+- name: create modules directories
+  tags: modules
+  file:
+    dest: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  loop:
+    - /etc/modprobe.d
+    - /etc/modules-load.d
+
+- name: config kernel modules
+  tags: modules
+  block:
+  - name: register present configs
+    find:
+      paths: "/etc/modprobe.d/"
+      pattern: "kernel-*.conf"
+    register: _configs_present
+
+  - name: copy configs
+    copy:
+      content: "{{ config.value }}"
+      dest: "/etc/modprobe.d/kernel-{{ config.key }}.conf"
+      owner: root
+      group: root
+      mode: 0644
+    loop: "{{ kernel_module_configs | dict2items }}"
+    loop_control:
+      loop_var: "config"
+      label: "{{ config.key }}"
+    register: _configs_copied
+
+  - name: delete configs
+    vars:
+      _present: "{{ _configs_present | json_query('files[*].path') | default([]) }}"
+      _copied: "{{ _configs_copied | json_query('results[*].dest') | default([]) }}"
+    file:
+      path: "{{ item }}"
+      state: absent
+    loop: "{{ _present | difference(_copied) }}"
+
+- name: enable kernel modules on start
+  tags: modules
+  block:
+  - name: register present configs
+    find:
+      paths: "/etc/modules-load.d/"
+      pattern: "kernel-*.conf"
+    register: _modules_present
+
+  - name: copy configs
+    copy:
+      content: "{{ config.value }}"
+      dest: "/etc/modules-load.d/kernel-{{ config.key }}.conf"
+      owner: root
+      group: root
+      mode: 0644
+    loop: "{{ kernel_module_load | dict2items }}"
+    loop_control:
+      loop_var: "config"
+      label: "{{ config.key }}"
+    register: _modules_copied
+
+  - name: delete configs
+    vars:
+      _present: "{{ _modules_present | json_query('files[*].path') | default([]) }}"
+      _copied: "{{ _modules_copied | json_query('results[*].dest') | default([]) }}"
+    file:
+      path: "{{ item }}"
+      state: absent
+    loop: "{{ _present | difference(_copied) }}"

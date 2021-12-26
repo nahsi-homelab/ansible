@@ -18,6 +18,12 @@ kernel_refind_menu: |
   "Boot default" "root=zfsbootmenu:POOL=hot timeout=10 ro quiet loglevel=0"
   "Boot to menu" "root=zfsbootmenu:POOL=hot timeout=-1 ro quiet loglevel=0"
 
+kernel_module_load:
+  virtualbox: |
+    vboxdrv
+    vboxnetadp
+    vboxnetflt
+
 kernel_configs:
   01platform: |
     CONFIG_MZEN2=y

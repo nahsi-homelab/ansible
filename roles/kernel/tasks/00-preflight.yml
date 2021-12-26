@@ -79,6 +79,14 @@
       - kernel_module_configs is mapping
     quiet: true
 
+- name: check "kernel_module_load" variable
+  tags: always
+  assert:
+    that:
+      - kernel_module_load is defined
+      - kernel_module_load is mapping
+    quiet: true
+
 - name: check "kernel_postinst" variable
   tags: always
   assert:

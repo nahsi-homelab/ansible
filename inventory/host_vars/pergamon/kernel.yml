@@ -59,6 +59,12 @@ kernel_module_configs:
   virtual_webcam: |
     options v4l2loopback exclusive_caps=1 card_label=OBS
 
+kernel_module_load:
+  virtualbox: |
+    vboxdrv
+    vboxnetadp
+    vboxnetflt
+
 kernel_configs:
   01platform: |
     CONFIG_MZEN3=y

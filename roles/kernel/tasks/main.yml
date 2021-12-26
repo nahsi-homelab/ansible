@@ -21,3 +21,7 @@
 
 - name: Configure zfs on root
   include_tasks: 04-zfs.yml
+
+- name: Configure and load kernel modules
+  tags: modules
+  include_tasks: 05-modules.yml

@@ -27,6 +27,12 @@ kernel_zfsbootmenu_config:
   Kernel:
     CommandLine: ro quiet loglevel=0
 
+kernel_module_load:
+  virtualbox: |
+    vboxdrv
+    vboxnetadp
+    vboxnetflt
+
 kernel_configs:
   01platform: |
     CONFIG_SENSORS_K10TEMP=y

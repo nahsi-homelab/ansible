@@ -8,28 +8,39 @@
 - name: add users
   tags: users
   user:
-    name: "{{ user.username }}"
+    name: "{{ user.name }}"
     comment: "{{ user.comment | default('') }}"
-    create_home: "{{ user.create_home | default('yes') }}"
-    system: "{{ user.system | default('no') }}"
-    shell: "{{ user.shell | default('/bin/bash') }}"
-    groups: "{{ user.groups | default(['']) + ['ansible-managed'] }}"
+    create_home: "{{ user.create_home | default('true') }}"
+    system: "{{ user.system | default('false') }}"
+    groups: "{{ user.groups | default([]) }}"
+    uid: "{{ user.uid | default(omit) }}"
+    append: "{{ user.append | default(true) }}"
+  loop: "{{ base_users }}"
+  loop_control:
+    loop_var: "user"
+    label: "{{ user.name }}"
+
+- name: add users to "ansible-managed" group
+  tags: users
+  user:
+    name: "{{ user.name }}"
+    groups: "ansible-managed"
     append: true
   loop: "{{ base_users }}"
   loop_control:
     loop_var: "user"
-    label: "{{ user.username }}"
+    label: "{{ user.name }}"
 
 - name: add ssh keys
   tags: users
   authorized_key:
-    user: "{{ user.username }}"
+    user: "{{ user.name }}"
     key: "{{ user.ssh }}"
-    exclusive: yes
+    exclusive: true
   loop: "{{ base_users }}"
   loop_control:
     loop_var: user
-    label: "{{ user.username }}"
+    label: "{{ user.name }}"
   when:
     - user.ssh is defined
     - user.ssh | length
@@ -43,15 +54,13 @@
         key: "ansible-managed"
         split: ":"
 
-    - name: ansible magic
-      set_fact:
-        __users: "{{ base_users | json_query('[*].username') }}"
-        __existing_users: "{{ getent_group['ansible-managed'][-1].split(',') }}"
-
     - name: delete users
+      vars:
+        _users: "{{ base_users | json_query('[*].name') }}"
+        _existing_users: "{{ getent_group['ansible-managed'][-1].split(',') }}"
       user:
         name: "{{ user }}"
         state: absent
-      loop: "{{ __existing_users | difference(__users) }}"
+      loop: "{{ _existing_users | difference(_users) }}"
       loop_control:
         loop_var: "user"

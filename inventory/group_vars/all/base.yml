@@ -69,6 +69,7 @@ base_packages_all:
   - app-containers/crun
   - app-containers/docker
   - app-containers/podman
+  - app-emulation/virtualbox
 
   - dev-python/docker-py
 
@@ -130,10 +131,21 @@ base_sshd_config: |
   Subsystem sftp internal-sftp
 
 base_users:
-  - username: nahsi
+  - name: nahsi
     groups:
       - wheel
       - portage
       - docker
+    append: true
     ssh: https://github.com/nahsi.keys
     password: "bd7465fc49ba157a92c751e33c3de9030a5d303e917daeab49cd76ba8f1409abe573286925f1127fea19932c1292867d4eaead98aacbb0969a83a8f75fbe7181"
+
+  - name: github
+    comment: "GitHub actions runner user"
+    create_home: false
+    system: true
+    groups:
+      - docker
+      - vboxusers
+    append: true
+    uid: 950

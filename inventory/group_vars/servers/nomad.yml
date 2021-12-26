@@ -23,7 +23,7 @@ nomad_config_agent:
 
   vault:
     enabled: true
-    address: "http://active.vault.service.consul:8200"
+    address: "http://vault.service.consul:8200"
 
   plugin:
     docker:
@@ -33,6 +33,24 @@ nomad_config_agent:
           - "crun"
         volumes:
           enabled: true
+
+    exec:
+      config:
+        allow_caps:
+          - "audit_write"
+          - "chown"
+          - "dac_override"
+          - "fowner"
+          - "fsetid"
+          - "kill"
+          - "mknod"
+          - "net_bind_service"
+          - "setfcap"
+          - "setgid"
+          - "setpcap"
+          - "setuid"
+          - "sys_chroot"
+          - "net_admin"
 
     raw_exec:
       config:

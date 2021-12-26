@@ -49,3 +49,9 @@ base_users: >
     base_users_all +
     base_users_palmyra | unique
   }}
+
+base_udev_rules:
+  10_virtualbox: |
+    KERNEL=="vboxdrv", GROUP="vboxusers", MODE="0660"
+    KERNEL=="vboxdrvu", GROUP="vboxusers", MODE="0660"
+    KERNEL=="vboxnetctl", GROUP="vboxusers", MODE="0660"

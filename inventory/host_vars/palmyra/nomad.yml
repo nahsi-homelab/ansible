@@ -19,25 +19,9 @@ nomad_configs:
   meta:
     client:
       meta:
-        virtualbox: true
-
         zoo_node_id: 2
         kafka_node_id: 2
         minio_node_id: 2
-
-  # chroot:
-  #   client:
-  #     chroot_env:
-  #       "/bin": "/bin"
-  #       "/etc": "/etc"
-  #       "/lib": "/lib"
-  #       "/lib64": "/lib64"
-  #       "/run/resolvconf": "/run/resolvconf"
-  #       "/sbin": "/sbin"
-  #       "/usr": "/usr"
-  #       "/dev/vboxdrv": "/dev/vboxdrv"
-  #       "/dev/vboxdrvu": "/dev/vboxdrvu"
-  #       "/dev/vboxnetctl": "/dev/vboxctl"
 
 nomad_config: >
   {{

@@ -31,6 +31,7 @@ base_packages_pergamon:
   - media-video/obs-studio
   - media-gfx/inkscape
   - media-sound/easyeffects
+  - app-emulation/vagrant
 base_packages: >
   {{
     base_packages_all +

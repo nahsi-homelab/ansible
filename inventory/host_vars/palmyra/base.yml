@@ -23,6 +23,7 @@ base_packages_palmyra:
   - net-misc/r8168
   - sys-power/apcupsd
   - app-emulation/virtualbox
+  - app-emulation/vagrant
 base_packages: >
   {{
     base_packages_all +

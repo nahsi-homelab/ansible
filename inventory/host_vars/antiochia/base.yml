@@ -11,6 +11,7 @@ base_filesystems:
 base_packages_antiochia:
   - sys-power/apcupsd
   - app-emulation/virtualbox
+  - app-emulation/vagrant
 base_packages: >
   {{
     base_packages_all +

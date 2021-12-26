@@ -14,6 +14,8 @@ nomad_configs:
   meta:
     client:
       meta:
+        virtualbox: true
+
         zoo_node_id: 2
         kafka_node_id: 2
         minio_node_id: 2

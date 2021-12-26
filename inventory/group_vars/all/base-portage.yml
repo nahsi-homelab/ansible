@@ -5,7 +5,6 @@ base_portage_package_use_all:
     net_misc/openssh -pam
     net-analyzer/tcpdump -samba -smi
     sys-apps/util-linux tty-helpers
-    app-emulation/virtualbox -* headless python_single_target_python3_9
 
 base_portage_package_use: "{{ base_portage_package_use_all }}"
 

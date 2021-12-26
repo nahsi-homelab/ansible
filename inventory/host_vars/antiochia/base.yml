@@ -10,6 +10,7 @@ base_filesystems:
 
 base_packages_antiochia:
   - sys-power/apcupsd
+  - app-emulation/virtualbox
 base_packages: >
   {{
     base_packages_all +
@@ -26,3 +27,19 @@ base_network_interfaces:
 base_services:
   - name: "docker"
     runlevel: "boot"
+
+base_users_antiochia:
+  - name: github
+    comment: "GitHub actions runner user"
+    create_home: false
+    system: true
+    groups:
+      - docker
+      - vboxusers
+    append: true
+    uid: 950
+base_users: >
+  {{
+    base_users_all +
+    base_users_antiochia | unique
+  }}

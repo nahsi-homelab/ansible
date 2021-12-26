@@ -19,3 +19,13 @@ base_portage_use:
   - dist-kernel
   - -X
   - -introspection
+
+base_portage_package_use_palmyra:
+  palmyra: |
+   app-emulation/virtualbox -* headless python_single_target_python3_9
+
+base_portage_package_use: >
+  {{
+    base_portage_package_use_palmyra |
+    combine(base_portage_package_use_all, recursive=true)
+  }}

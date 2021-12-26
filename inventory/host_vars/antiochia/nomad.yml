@@ -2,6 +2,8 @@ nomad_configs:
   volumes:
     client:
       host_volume:
+        - docker-socker:
+            path: "/var/run/docker.sock"
         - prometheus:
             path: "/var/lib/prometheus"
         - loki:

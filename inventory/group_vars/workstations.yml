@@ -110,9 +110,12 @@ base_packages_desktop:
   - dev-util/cargo-ebuild
   - dev-util/cargo-license
 
+  # runtimes
+  - net-lib/deno
+
   # language servers
   - dev-go/gopls
-  - app-admin/terraform-ls
+  - dev-utils/terraform-ls
 
   # for nvim plugins
   - app-misc/code-minimap

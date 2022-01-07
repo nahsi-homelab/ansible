@@ -111,11 +111,11 @@ base_packages_desktop:
   - dev-util/cargo-license
 
   # runtimes
-  - net-lib/deno
+  - net-libs/deno
 
   # language servers
   - dev-go/gopls
-  - dev-utils/terraform-ls
+  - dev-util/terraform-ls
 
   # for nvim plugins
   - app-misc/code-minimap

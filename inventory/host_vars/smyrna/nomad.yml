@@ -15,8 +15,6 @@ nomad_configs:
             path: "/var/lib/kafka"
         - minio:
             path: "/var/lib/minio"
-        - redis-sentinel:
-            path: "/var/lib/redis/sentinel"
 
   meta:
     client:
@@ -24,7 +22,8 @@ nomad_configs:
         zoo_node_id: 4
         kafka_node_id: 4
         minio_node_id: 4
-        sentinel_node_id: 2
+
+        sentinel_node_id: "96f1e74a64b93144c209fa3f64a1057f30b515ea"
 
 nomad_config: >
   {{

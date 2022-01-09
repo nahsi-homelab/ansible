@@ -8,10 +8,4 @@ nomad_configs:
   meta:
     client:
       meta:
-        sentinel_node_id: 1
-
-  volumes:
-    client:
-      host_volume:
-        - redis-sentinel:
-            path: "/var/lib/redis/sentinel"
+        sentinel_node_id: "26edb1c260bcb968b0286521f68d8713aabad26b"

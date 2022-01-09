@@ -75,3 +75,11 @@ base_zfs_datasets:
     owner: "nobody"
     group: "nobody"
     mode: "0700"
+
+  - name: "main/data/redis/mail"
+    properties:
+      atime: "off"
+      mountpoint: "/var/lib/redis/mail"
+      quota: "5G"
+    owner: "nobody"
+    group: "nobody"

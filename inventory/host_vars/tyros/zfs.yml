@@ -33,3 +33,11 @@ base_zfs_datasets:
     owner: "nahsi"
     group: "nahsi"
     mode: "0755"
+
+  - name: "main/data/redis/sentinel"
+    properties:
+      atime: "off"
+      mountpoint: "/var/lib/redis/sentinel"
+      quota: "1G"
+    owner: "nobody"
+    group: "nobody"

@@ -37,6 +37,8 @@ nomad_configs:
             path: "/var/lib/minio"
         - mongo:
             path: "/var/lib/mongo"
+        - redis-mail-master:
+            path: "/var/lib/redis/mail"
 
   meta:
     client:

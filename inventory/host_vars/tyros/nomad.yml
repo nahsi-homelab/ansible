@@ -5,3 +5,13 @@ nomad_configs:
         - public:
             interface: "ppp0"
             reserved_ports: "443"
+  meta:
+    client:
+      meta:
+        sentinel_node_id: 1
+
+  volumes:
+    client:
+      host_volume:
+        - redis-sentinel:
+            path: "/var/lib/redis/sentinel"

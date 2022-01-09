@@ -13,11 +13,14 @@ nomad_configs:
             path: "/var/lib/zookeeper"
         - mongo:
             path: "/var/lib/mongo"
+        - redis-sentinel:
+            path: "/var/lib/redis/sentinel"
 
   meta:
     client:
       meta:
         zoo_node_id: 5
+        sentinel_node_id: 3
         mongo_node_id: "arbiter"
 
 nomad_config: >

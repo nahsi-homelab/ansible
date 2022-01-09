@@ -17,6 +17,8 @@ nomad_configs:
             path: "/var/lib/kafka"
         - minio:
             path: "/var/lib/minio"
+        - redis-mail-replica:
+            path: "/var/lib/redis/mail"
 
   meta:
     client:

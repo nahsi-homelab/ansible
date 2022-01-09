@@ -42,3 +42,7 @@ base_directories:
     owner: "999"
     group: "999"
     mode: "0700"
+
+  - path: "/var/lib/redis/sentinel"
+    owner: "nobody"
+    group: "nobody"

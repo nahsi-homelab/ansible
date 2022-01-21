@@ -66,3 +66,12 @@ base_zfs_datasets:
     owner: "nobody"
     group: "nobody"
     mode: "0700"
+
+  - name: "main/data/home-assistant"
+    properties:
+      atime: "off"
+      mountpoint: "/var/lib/home-assistant"
+      quota: "5G"
+    owner: "1000"
+    group: "1000"
+    mode: "0700"

@@ -32,6 +32,8 @@ base_packages_pergamon:
   - media-gfx/inkscape
   - media-sound/easyeffects
   - app-emulation/vagrant
+  - app-misc/deckmaster
+  - media-video/obs-cli
 base_packages: >
   {{
     base_packages_all +
@@ -74,3 +76,7 @@ base_users: >
     base_users_all +
     base_users_pergamon | unique
   }}
+
+base_udev_rules:
+  10_streamdeck: |
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="0fd9", ATTRS{idProduct}=="0080", MODE:="660", GROUP="usb", SYMLINK+="streamdeck"

@@ -123,6 +123,10 @@ kernel_configs:
     CONFIG_USB_CONFIGFS_F_UVC=y
     CONFIG_USB_G_WEBCAM=y
 
+  08usb: |
+    CONFIG_INPUT_MISC=y
+    CONFIG_INPUT_UINPUT=y
+
   99firmware: |
     CONFIG_EXTRA_FIRMWARE_DIR="/lib/firmware"
     CONFIG_EXTRA_FIRMWARE="{{ kernel_firmware | join(' ') }}"

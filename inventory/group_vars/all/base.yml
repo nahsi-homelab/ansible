@@ -55,6 +55,7 @@ base_packages_all:
   - sys-apps/gptfdisk
   - app-misc/ca-certificates
   - net-proxy/shadowsocks-libev
+  - net-misc/httpie
 
   # github-runner dependencies
   - dev-libs/icu

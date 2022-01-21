@@ -19,4 +19,9 @@ router_dnsmasq_config: |
   dhcp-option=vlan50,3,192.168.250.1
   dhcp-option=vlan50,6,192.168.250.1
 
+  dhcp-host=6c:29:90:27:12:e1,192.168.240.11
+  dhcp-host=d8:a0:11:24:34:8c,192.168.240.12
+  dhcp-host=3c:6a:9d:15:8b:17,192.168.240.31
+  dhcp-host=3c:6a:9d:1a:4d:6c,192.168.240.32
+
 router_iptables: "{{ iptables.smyrna }}"

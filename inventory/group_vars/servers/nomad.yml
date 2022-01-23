@@ -1,4 +1,4 @@
-nomad_version: "1.2.4"
+nomad_version: "1.2.3"
 
 nomad_config_agent:
   region: "oikumene"

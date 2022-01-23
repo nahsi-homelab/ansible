@@ -45,7 +45,7 @@ consul_config_agent:
 
 consul_config: "{{ consul_config_agent }}"
 
-consul_services:
+consul_services_all:
   telegraf:
     service:
       id: "telegraf"
@@ -74,6 +74,8 @@ consul_services:
         http: "http://{{ private_ip }}:9380/ready"
         interval: "20s"
         timeout: "2s"
+
+consul_services: "{{ consul_services_all }}"
 
 consul_service: |
   #!/sbin/openrc-run

@@ -3,3 +3,32 @@ consul_config: >
     consul_config_agent |
     combine(consul_config_server, recursive=true)
   }}
+
+consul_services_pergamon:
+  hyperion-json:
+    service:
+      id: "hyperion-json"
+      name: "hyperion-json"
+      port: 19444
+      meta:
+        external-source: "consul"
+
+  hyperion:
+    service:
+      id: "hyperion"
+      name: "hyperion"
+      port: 8090
+      meta:
+        external-source: "consul"
+      tags:
+        - "traefik.enable=true"
+        - "traefik.http.routers.hyperion.entrypoints=https"
+        - "traefik.http.routers.hyperion.rule=Host(`hyperion.service.consul`)"
+        - "traefik.http.routers.hyperion.tls=true"
+
+
+consul_services: >
+  {{
+    consul_services_all |
+    combine(consul_services_pergamon, recursive=true)
+  }}

@@ -4,7 +4,6 @@ nomad_configs:
       host_network:
         - public:
             interface: "ppp0"
-            reserved_ports: "80,443,25,465,993"
   meta:
     client:
       meta:

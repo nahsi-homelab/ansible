@@ -4,7 +4,6 @@ nomad_configs:
       host_network:
         - public:
             cidr: "194.233.161.117/24"
-            reserved_ports: "80,443,25,465,993"
 
   volumes:
     client:

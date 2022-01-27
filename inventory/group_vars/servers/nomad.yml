@@ -29,6 +29,7 @@ nomad_config_agent:
     docker:
       config:
         endpoint: "unix:///var/run/docker.sock"
+        allow_privileged: true
         allow_runtimes:
           - "crun"
         volumes:

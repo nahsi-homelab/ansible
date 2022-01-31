@@ -13,6 +13,8 @@ station_hashi:
     version: "2.2.19"
 
 base_packages_desktop:
+  - media-gfx/graphviz
+
   - www-client/qutebrowser
   - dev-python/tldextract
   - www-client/chromium
@@ -133,6 +135,9 @@ base_portage_package_use_desktop:
 
     media-fonts/noto cjk
     media-fonts/nerd-fonts firacode
+
+    # graphiz
+    media-libs/gd truetype fontconfig
 
     # pipewire
     media-video/pipewire pipewire-alsa extra

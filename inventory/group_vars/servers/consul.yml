@@ -46,16 +46,52 @@ consul_config_agent:
 consul_config: "{{ consul_config_agent }}"
 
 consul_services_all:
+  consul:
+    service:
+      id: "consul-api"
+      name: "consul-api"
+      port: 8500
+      tags:
+        - "traefik.enable=true"
+        - "traefik.http.routers.consul.entrypoints=https"
+        - "traefik.http.routers.consul.rule=Host(`consul.service.consul`)"
+      meta:
+        external-source: "consul"
+      check:
+        id: "consul-api-health"
+        name: "consul-api-health"
+        http: "http://localhost:8500/v1/agent/self"
+        interval: "20s"
+        timeout: "2s"
+
+  nomad:
+    service:
+      id: "nomad-api"
+      name: "nomad-api"
+      port: 4646
+      tags:
+        - "traefik.enable=true"
+        - "traefik.http.routers.nomad.entrypoints=https"
+        - "traefik.http.routers.nomad.rule=Host(`nomad.service.consul`)"
+      meta:
+        external-source: "consul"
+      check:
+        id: "nomad-api-health"
+        name: "nomad-api-health"
+        http: "http://localhost:4646/v1/agent/health"
+        interval: "20s"
+        timeout: "2s"
+
   telegraf:
     service:
-      id: "telegraf"
-      name: "telegraf"
+      id: "telegraf-exporter"
+      name: "telegraf-exporter"
       port: 9271
       meta:
         external-source: "consul"
       check:
-        id: "telegraf-health"
-        name: "telegraf"
+        id: "telegraf-exporter-health"
+        name: "telegraf-exporter-health"
         http: "http://localhost:9270"
         interval: "20s"
         timeout: "2s"
@@ -65,13 +101,13 @@ consul_services_all:
       id: "promtail"
       name: "promtail"
       port: 9380
-      tags: ["service=system"]
       meta:
+        sidecar_to: "system"
         external-source: "consul"
       check:
         id: "promtail-health"
-        name: "promtail"
-        http: "http://{{ private_ip }}:9380/ready"
+        name: "promtail-health"
+        http: "http://localhost:9380/ready"
         interval: "20s"
         timeout: "2s"
 

@@ -5,6 +5,9 @@ roles:
   - src: nahsi.nomad
     name: nomad
 
+  - src: nahsi.vault
+    name: vault
+
 collections:
   - community.general
   - ansible.posix

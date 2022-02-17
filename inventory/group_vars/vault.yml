@@ -1,19 +1,23 @@
-vault_version: "1.9.0"
+vault_version: "1.9.3"
 vault_config:
   ui: true
+  log_level: "info"
 
   disable_mlock: true
 
-  api_addr: "http://{{ private_ip }}:8200"
-
-  log_level: "info"
+  api_addr: "http://{{ gotmpl_private_address }}:8200"
+  cluster_name: "oikumene"
 
   listener:
     tcp:
       tls_disable: true
-      address: "{{ private_ip }}:8200"
-      # address: "{{ gotmpl_private_address }}:8200"
+      address: "{{ gotmpl_private_address }}:8200"
+
+  telemetry:
+    disable_hostname: true
+    prometheus_retention_time: "60s"
 
   storage:
     consul:
       address: "http://localhost:8500"
+      service_tags: "traefik.enable=true,traefik.http.routers.vault.entrypoints=https,trafik.http.routers.vault.rule=Host(`vault.service.consul`)"

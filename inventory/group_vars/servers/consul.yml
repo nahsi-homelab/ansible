@@ -1,4 +1,4 @@
-consul_version: "1.11.2"
+consul_version: "1.11.3"
 consul_servers:
   - 192.168.130.10
   - 192.168.130.20
@@ -13,6 +13,7 @@ consul_config_agent:
   encrypt: "{{ lookup('hashi_vault', 'secret/data/gossip:consul') }}"
 
   data_dir: "/var/lib/consul/"
+  protocol: 3
 
   enable_syslog: true
   # "trace", "debug", "info", "warn", "err"
@@ -32,7 +33,6 @@ consul_config_agent:
     enabled: true
 
   enable_central_service_config: true
-
   enable_local_script_checks: true
 
   telemetry:
@@ -42,6 +42,9 @@ consul_config_agent:
 
   server: false
   retry_join: "{{ consul_servers }}"
+
+  ui_config:
+    enabled: true
 
 consul_config: "{{ consul_config_agent }}"
 

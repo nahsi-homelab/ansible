@@ -15,8 +15,18 @@ nomad_config_agent:
   client:
     enabled: true
     network_interface: "{{ gotmpl_private_interface }}"
+    reserved:
+      cpu: 500
+      memory: 512
+      disk: 1024
     servers:
       - "nomad.service.consul:4647"
+
+  telemetry:
+    disable_hostname: true
+    prometheus_metrics: true
+    publish_allocation_metrics: true
+    publish_node_metrics: true
 
   consul:
     address: "127.0.0.1:8500"
@@ -30,10 +40,17 @@ nomad_config_agent:
       config:
         endpoint: "unix:///var/run/docker.sock"
         allow_privileged: true
+        extra_labels:
+          - "job_name"
+          - "task_group_name"
+          - "task_name"
+          - "namespace"
+          - "node_name"
         allow_runtimes:
           - "crun"
         volumes:
           enabled: true
+
     raw_exec:
       config:
         enabled: true

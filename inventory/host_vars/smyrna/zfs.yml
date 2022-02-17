@@ -75,12 +75,3 @@ base_zfs_datasets:
     owner: "1000"
     group: "1000"
     mode: "0700"
-
-  - name: "main/data/victoria-metrics"
-    properties:
-      atime: "off"
-      compression: "zstd"
-      mountpoint: "/var/lib/victoria-metrics"
-    owner: "nobody"
-    group: "nobody"
-    mode: "0750"

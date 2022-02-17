@@ -83,3 +83,12 @@ base_zfs_datasets:
       quota: "5G"
     owner: "nobody"
     group: "nobody"
+
+  - name: "main/data/victoria-metrics"
+    properties:
+      atime: "off"
+      compression: "zstd"
+      mountpoint: "/var/lib/victoria-metrics"
+    owner: "nobody"
+    group: "nobody"
+    mode: "0750"

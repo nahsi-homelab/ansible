@@ -16,6 +16,8 @@ nomad_configs:
             path: "/var/lib/minio"
         - home-assistant:
             path: "/var/lib/home-assistant"
+        - victoria-metrics:
+            path: "/var/lib/victoria-metrics"
 
   meta:
     client:

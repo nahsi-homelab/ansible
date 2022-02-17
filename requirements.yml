@@ -1,7 +1,8 @@
 roles:
-  - src: nahsi.ansible_consul
+  - src: nahsi.consul
     name: consul
-  - src: nahsi.ansible_nomad
+
+  - src: nahsi.nomad
     name: nomad
 
 collections:

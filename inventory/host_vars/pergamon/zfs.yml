@@ -42,15 +42,6 @@ base_zfs_datasets:
     group: "nahsi"
     mode: "0755"
 
-  - name: "main/data/postgres"
-    properties:
-      atime: "off"
-      compression: "zstd"
-      mountpoint: "/var/lib/postgres"
-    owner: "999"
-    group: "999"
-    mode: "0700"
-
   - name: "main/data/zookeeper/data"
     properties:
       atime: "off"

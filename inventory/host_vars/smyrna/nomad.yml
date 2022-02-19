@@ -8,14 +8,16 @@ nomad_configs:
   volumes:
     client:
       host_volume:
+        - home-assistant:
+            path: "/var/lib/home-assistant"
         - zookeeper:
             path: "/var/lib/zookeeper"
         - kafka:
             path: "/var/lib/kafka"
         - minio:
             path: "/var/lib/minio"
-        - home-assistant:
-            path: "/var/lib/home-assistant"
+        - postgres:
+            path: "/var/lib/postgres"
 
   meta:
     client:

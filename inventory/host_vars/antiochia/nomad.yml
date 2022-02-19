@@ -13,8 +13,6 @@ nomad_configs:
             path: "/var/lib/prometheus"
         - loki:
             path: "/var/lib/loki"
-        - postgres:
-            path: "/var/lib/postgres"
         - linkding:
             path: "/var/lib/linkding"
         - podgrab:

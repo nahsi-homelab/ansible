@@ -75,3 +75,11 @@ base_zfs_datasets:
     owner: "1000"
     group: "1000"
     mode: "0700"
+
+  - name: "main/data/postgres"
+    properties:
+      atime: "off"
+      mountpoint: "/var/lib/postgres"
+    owner: "999"
+    group: "999"
+    mode: "0700"

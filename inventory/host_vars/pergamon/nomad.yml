@@ -2,8 +2,6 @@ nomad_configs:
   volumes:
     client:
       host_volume:
-        - postgres:
-            path: "/var/lib/postgres"
         - zookeeper:
             path: "/var/lib/zookeeper"
         - kafka:

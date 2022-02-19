@@ -17,15 +17,6 @@ base_zfs_datasets:
     group: "nobody"
     mode: "0750"
 
-  - name: "hot/data/postgres"
-    properties:
-      atime: "off"
-      compression: "zstd"
-      mountpoint: "/var/lib/postgres"
-    owner: "999"
-    group: "999"
-    mode: "0700"
-
   - name: "hot/data/linkding"
     properties:
       atime: "off"

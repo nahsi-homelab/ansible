@@ -7,6 +7,8 @@ nomad_config_agent:
   data_dir: "/var/lib/nomad"
 
   bind_addr: "{{ gotmpl_private_address }}"
+  addresses:
+    http: "{{ gotmpl_private_address }} 127.0.0.1"
 
   log_level: "info"
   enable_syslog: true

@@ -22,6 +22,7 @@ base_packages_desktop:
   - net-analyzer/wireshark
 
   - dev-db/pg_activity
+  - dev-db/pgcli
   - app-admin/warp
 
   - net-im/telegram-desktop

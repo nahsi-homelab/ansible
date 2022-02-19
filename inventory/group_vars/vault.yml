@@ -20,4 +20,4 @@ vault_config:
   storage:
     consul:
       address: "http://localhost:8500"
-      service_tags: "traefik.enable=true,traefik.http.routers.vault.entrypoints=https,trafik.http.routers.vault.rule=Host(`vault.service.consul`)"
+      service_tags: "traefik.enable=true,traefik.http.routers.vault.entrypoints=https,traefik.http.routers.vault.rule=Host(`vault.service.consul`)"

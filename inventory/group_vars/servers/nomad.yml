@@ -14,6 +14,13 @@ nomad_config_agent:
   enable_syslog: true
   syslog_facility: "LOCAL5"
 
+  ui:
+    enabled: true
+    consul:
+      ui_url: "https://consul.service.consul"
+    vault:
+      ui_url: "https://vault.service.consul"
+
   client:
     enabled: true
     network_interface: "{{ gotmpl_private_interface }}"

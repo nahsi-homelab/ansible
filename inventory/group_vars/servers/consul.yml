@@ -46,6 +46,19 @@ consul_config_agent:
 
   ui_config:
     enabled: true
+    metrics_provider: "prometheus"
+    metrics_proxy:
+      base_url: "https://victoria-metrics.service.consul"
+    dashboard_url_templates:
+      service: !unsafe "https://grafana.service.consul/d/{{Service.Meta.dashboard}}"
+
+  config_entries:
+    bootstrap:
+      - kind: "proxy-defaults"
+        name: "global"
+        config:
+          protocol: "http"
+          envoy_prometheus_bind_addr: "0.0.0.0:9102"
 
 consul_config: "{{ consul_config_agent }}"
 

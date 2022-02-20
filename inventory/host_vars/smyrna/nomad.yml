@@ -18,6 +18,8 @@ nomad_configs:
             path: "/var/lib/minio"
         - postgres:
             path: "/var/lib/postgres"
+        - redis-mail:
+            path: "/var/lib/redis/mail"
 
   meta:
     client:

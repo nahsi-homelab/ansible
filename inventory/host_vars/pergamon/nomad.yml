@@ -10,8 +10,6 @@ nomad_configs:
             path: "/var/lib/minio"
         - mongo:
             path: "/var/lib/mongo"
-        - redis-mail:
-            path: "/var/lib/redis/mail"
 
   meta:
     client:

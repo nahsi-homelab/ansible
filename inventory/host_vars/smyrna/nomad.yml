@@ -28,8 +28,6 @@ nomad_configs:
         kafka_node_id: 4
         minio_node_id: 4
 
-        sentinel_node_id: "96f1e74a64b93144c209fa3f64a1057f30b515ea"
-
 nomad_config: >
   {{
     nomad_config_agent |

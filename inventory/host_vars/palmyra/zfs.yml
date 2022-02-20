@@ -80,7 +80,7 @@ base_zfs_datasets:
     properties:
       atime: "off"
       mountpoint: "/var/lib/redis/mail"
-      quota: "5G"
+      quota: "1G"
     owner: "nobody"
     group: "nobody"
 
@@ -89,6 +89,7 @@ base_zfs_datasets:
       atime: "off"
       compression: "zstd"
       mountpoint: "/var/lib/victoria-metrics"
+      quota: "50G"
     owner: "nobody"
     group: "nobody"
     mode: "0750"

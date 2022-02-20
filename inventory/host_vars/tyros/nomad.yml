@@ -4,7 +4,3 @@ nomad_configs:
       host_network:
         - public:
             interface: "ppp0"
-  meta:
-    client:
-      meta:
-        sentinel_node_id: "26edb1c260bcb968b0286521f68d8713aabad26b"

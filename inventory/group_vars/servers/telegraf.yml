@@ -51,6 +51,8 @@ telegraf_configs_all:
     [[inputs.consul]]
       metric_version = 2
       tag_delimiter = "="
+      [inputs.consul.tags]
+        dc = "oikumene"
 
   system: |
     [[inputs.system]]

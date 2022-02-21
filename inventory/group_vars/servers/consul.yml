@@ -74,6 +74,7 @@ consul_services_all:
         - "traefik.http.routers.consul.rule=Host(`consul.service.consul`)"
       meta:
         external-source: "consul"
+        dc: "oikumene"
       check:
         id: "consul-api-health"
         name: "consul-api-health"
@@ -92,6 +93,7 @@ consul_services_all:
         - "traefik.http.routers.nomad.rule=Host(`nomad.service.consul`)"
       meta:
         external-source: "consul"
+        dc: "oikumene"
       check:
         id: "nomad-api-health"
         name: "nomad-api-health"

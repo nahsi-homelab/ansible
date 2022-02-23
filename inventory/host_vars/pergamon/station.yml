@@ -5,7 +5,7 @@ station_xorg_configs:
       MatchIsKeyboard "on"
       Driver "evdev"
       Option "XkbLayout" "us,ru"
-      Option "XkbOptions" "grp:caps_toggle,compose:ralt"
+      Option "XkbOptions" "grp:alt_shift_toggle,compose:ralt"
     EndSection
 
   20_amd: |

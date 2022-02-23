@@ -80,3 +80,5 @@ base_users: >
 base_udev_rules:
   10_streamdeck: |
     SUBSYSTEM=="usb", ATTRS{idVendor}=="0fd9", ATTRS{idProduct}=="0080", MODE:="660", GROUP="usb", SYMLINK+="streamdeck"
+  11_moonlander: |
+    SUBSYSTEM=="usb", ATTR{idVendor}=="3297", ATTR{idProduct}=="1969", GROUP="plugdev"

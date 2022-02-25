@@ -107,3 +107,12 @@ base_zfs_datasets:
     owner: "999"
     group: "999"
     mode: "0700"
+
+  - name: "hot/data/mariadb"
+    properties:
+      atime: "off"
+      compression: "zstd"
+      mountpoint: "/var/lib/mariadb"
+    owner: "999"
+    group: "999"
+    mode: "0700"

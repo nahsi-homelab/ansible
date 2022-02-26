@@ -132,4 +132,6 @@ base_zfs_datasets:
       compression: "zstd"
       mountpoint: "/var/lib/filestash"
       quota: "10G"
+    owner: "1000"
+    group: "1000"
     mode: "0700"

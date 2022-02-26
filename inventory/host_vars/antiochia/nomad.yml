@@ -37,6 +37,8 @@ nomad_configs:
             path: "/var/lib/mongo"
         - mariadb:
             path: "/var/lib/mariadb"
+        - shinobi:
+            path: "/var/lib/shinobi"
 
   meta:
     client:

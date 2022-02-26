@@ -122,6 +122,6 @@ base_zfs_datasets:
       atime: "off"
       mountpoint: "/var/lib/shinobi"
       compression: "lz4"
-    owner: "nobody"
-    group: "nobody"
+    owner: "root"
+    group: "root"
     mode: "0750"

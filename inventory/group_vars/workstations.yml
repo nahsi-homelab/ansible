@@ -23,6 +23,7 @@ base_packages_desktop:
 
   - dev-db/pg_activity
   - dev-db/pgcli
+  - dev-db/mycli
   - app-admin/warp
 
   - net-im/telegram-desktop

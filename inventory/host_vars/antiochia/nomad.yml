@@ -39,6 +39,8 @@ nomad_configs:
             path: "/var/lib/mariadb"
         - shinobi:
             path: "/var/lib/shinobi"
+        - filestash:
+            path: "/var/lib/filestash"
 
   meta:
     client:

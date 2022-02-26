@@ -125,3 +125,11 @@ base_zfs_datasets:
     owner: "root"
     group: "root"
     mode: "0750"
+
+  - name: "hot/data/filestash"
+    properties:
+      atime: "off"
+      compression: "zstd"
+      mountpoint: "/var/lib/filestash"
+      quota: "10G"
+    mode: "0700"

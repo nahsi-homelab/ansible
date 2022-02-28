@@ -2,7 +2,7 @@ nomad_config_server:
   server:
     enabled: true
     bootstrap_expect: 5
-    # raft_protocol: 3
+    raft_protocol: 3
     server_join:
       retry_join:
         - 192.168.130.10

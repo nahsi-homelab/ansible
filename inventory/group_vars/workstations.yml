@@ -193,6 +193,8 @@ base_portage_package_use_desktop:
     app-i18n/fcitx-configtool
 
   steam: |
+    dev-libs/libbsd abi_x86_32
+    app-crypt/libmd abi_x86_32
     x11-libs/libX11 abi_x86_32
     x11-libs/libXau abi_x86_32
     x11-libs/libxcb abi_x86_32

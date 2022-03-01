@@ -91,3 +91,4 @@ base_portage_package_env:
     www-client/chromium base-cc1plus.conf
     dev-qt/qtwebengine base-cc1plus.conf
     net-im/telegram-desktop base-cc1plus.conf
+    media-gfx/inkscape base-cc1plus.conf

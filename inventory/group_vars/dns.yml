@@ -69,7 +69,7 @@ dns_dnscrypt_config: |
 
   [anonymized_dns]
   routes = [
-    { server_name = "*", via = ["anon-cs-nl", "anon-pwoss.org"] }
+    { server_name = "*", via = ["acsacsar-ams-ipv4", "ahadns-doh-nl"] }
   ]
   skip_incompatible = true
 

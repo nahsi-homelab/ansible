@@ -39,22 +39,6 @@ base_services:
   - name: "docker"
     runlevel: "default"
 
-base_wireguard_configs:
-  vpn: "{{ lookup('hashi_vault', 'secret/data/wireguard/miletos:vpn') }}"
-  office: "{{ lookup('hashi_vault', 'secret/data/wireguard/miletos:office') }}"
-  oikumene: "{{ lookup('hashi_vault', 'secret/data/wireguard/miletos:oikumene') }}"
-
-base_wireguard_interfaces:
-  - name: "office"
-    enable: false
-    start: false
-  - name: "vpn"
-    enable: false
-    start: false
-  - name: "oikumene"
-    enable: false
-    start: false
-
 base_iwd: |
   [General]
   EnableNetworkConfiguration=true

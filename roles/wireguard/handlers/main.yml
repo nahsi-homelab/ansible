@@ -1,0 +1,10 @@
+- name: restart wireguard
+  service:
+    name: "wg.{{ item.name }}"
+    state: restarted
+    use: openrc
+  loop: "{{ wireguard_interfaces }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when:
+    - item.start | default(true)

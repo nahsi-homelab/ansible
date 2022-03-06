@@ -28,12 +28,6 @@ base_packages_tyros:
   - sys-power/apcupsd
 base_packages: "{{ base_packages_all + base_packages_tyros | unique }}"
 
-base_wireguard_configs:
-  oikumene: "{{ lookup('hashi_vault', 'secret/data/wireguard/tyros:oikumene') }}"
-
-base_wireguard_interfaces:
-  - name: "oikumene"
-
 base_network_interfaces:
   - name: "enp2s0"
   - name: "enp3s0"

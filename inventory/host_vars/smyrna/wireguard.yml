@@ -1,0 +1,5 @@
+wireguard_configs:
+  oikumene: "{{ lookup('hashi_vault', 'secret/data/wireguard/smyrna:oikumene') }}"
+
+wireguard_interfaces:
+  - name: "oikumene"

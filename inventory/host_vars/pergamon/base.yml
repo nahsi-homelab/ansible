@@ -49,18 +49,6 @@ base_services:
   - name: "docker"
     runlevel: "boot"
 
-base_wireguard_configs:
-  vpn: "{{ lookup('hashi_vault', 'secret/data/wireguard/pergamon:vpn') }}"
-  office: "{{ lookup('hashi_vault', 'secret/data/wireguard/pergamon:office') }}"
-
-base_wireguard_interfaces:
-  - name: "vpn"
-    enable: false
-    start: false
-  - name: "office"
-    enable: false
-    start: false
-
 base_users_pergamon:
   - name: github
     comment: "GitHub actions runner user"

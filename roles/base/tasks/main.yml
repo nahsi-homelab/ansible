@@ -14,32 +14,28 @@
   tags: containers
   include_tasks: 03-containers.yml
 
-- name: Configure wireguard
-  tags: wireguard
-  include_tasks: 04-wireguard.yml
-
 - name: Configure network
   tags: network
-  include_tasks: 05-network.yml
+  include_tasks: 04-network.yml
   when: base_network is defined
 
 - name: Configure wireless network
   tags: network
-  include_tasks: 05-wireless.yml
+  include_tasks: 04-wireless.yml
   when: base_iwd is defined
 
 - name: Configure sshd
   tags: ssh
-  include_tasks: 06-ssh.yml
+  include_tasks: 05-ssh.yml
 
 - name: Create users
   tags: users
-  include_tasks: 07-users.yml
+  include_tasks: 06-users.yml
 
 - name: Configure logging
   tags: syslog
-  include_tasks: 08-syslog.yml
+  include_tasks: 07-syslog.yml
 
 - name: Configure udev
   tags: udev
-  include_tasks: 09-udev.yml
+  include_tasks: 08-udev.yml

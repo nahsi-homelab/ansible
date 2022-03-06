@@ -1,0 +1,6 @@
+- name: Preflight
+  tags: always
+  include_tasks: 00-preflight.yml
+
+- name: Configure wireguard
+  include_tasks: 01-wireguard.yml

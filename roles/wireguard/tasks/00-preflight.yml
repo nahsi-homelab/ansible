@@ -1,0 +1,13 @@
+- name: check "wireguard_configs" variable
+  tags: always
+  assert:
+    that:
+      - wireguard_configs is mapping
+    quiet: true
+
+- name: check "wireguard_interfaces" variable
+  tags: always
+  assert:
+    that:
+      - wireguard_interfaces is iterable
+    quiet: true

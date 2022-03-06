@@ -1,11 +1,9 @@
 - name: install wireguard-tools
-  tags: wireguard
   portage:
     package: net-vpn/wireguard-tools
     state: present
 
 - name: register present wireguard links
-  tags: wireguard
   find:
     paths: "/etc/init.d/"
     patterns: "wg.*"
@@ -13,18 +11,16 @@
   register: _wireguard_present
 
 - name: create wireguard links
-  tags: wireguard
   file:
     src: "/etc/init.d/wg-quick"
     dest: "/etc/init.d/wg.{{ item.name }}"
     state: link
-  loop: "{{ base_wireguard_interfaces }}"
+  loop: "{{ wireguard_interfaces }}"
   loop_control:
     label: "{{ item.name }}"
   register: _wireguard_created
 
 - name: disable wireguard interfaces
-  tags: wireguard
   vars:
     _present: "{{ _wireguard_present | json_query('files[*].path') | default([]) }}"
     _created: "{{ _wireguard_created | json_query('results[*].dest') | default([]) }}"
@@ -37,7 +33,6 @@
   loop: "{{ _present | difference(_created) }}"
 
 - name: delete wireguard links
-  tags: wireguard
   vars:
     _present: "{{ _wireguard_present | json_query('files[*].path') | default([]) }}"
     _created: "{{ _wireguard_created | json_query('results[*].dest') | default([]) }}"
@@ -47,18 +42,16 @@
   loop: "{{ _present | difference(_created) }}"
 
 - name: enable wireguard interfaces
-  tags: wireguard
   service:
     name: "wg.{{ item.name }}"
     enabled: "{{ item.enable | default(true) }}"
     runlevel: default
     use: openrc
-  loop: "{{ base_wireguard_interfaces }}"
+  loop: "{{ wireguard_interfaces }}"
   loop_control:
     label: "{{ item.name }}"
 
 - name: create wireguard directory
-  tags: wireguard
   file:
     path: "/etc/wireguard/"
     state: directory
@@ -67,14 +60,12 @@
     mode: 0700
 
 - name: register present wireguard configs
-  tags: wireguard
   find:
     paths: "/etc/wireguard/"
     patterns: "*.conf"
   register: _files_present
 
 - name: copy wireguard configurations
-  tags: wireguard
   no_log: true
   copy:
     content: "{{ config.value }}"
@@ -83,12 +74,12 @@
     group: root
     mode: 0600
   notify: restart wireguard
-  loop: "{{ base_wireguard_configs | dict2items }}"
+  loop: "{{ wireguard_configs | dict2items }}"
   loop_control:
     loop_var: "config"
     label: "{{ config.key }}"
   register: _files_copied
-  when: base_wireguard_configs is defined
+  when: wireguard_configs is defined
 
 - name: delete wireguard configs
   tags: wireguard

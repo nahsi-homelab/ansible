@@ -1,7 +1,0 @@
-- name: check 'consul_template_version' variable
-  assert:
-    that:
-      - consul_template_version is defined
-      - consul_template_version is string
-      - consul_template_version | length
-    quiet: true

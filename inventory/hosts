@@ -19,24 +19,9 @@ palmyra
 [pontus]
 heraclea
 
-[workstations]
+[workstation]
 pergamon
 miletos
-
-[ups]
-antiochia
-smyrna
-tyros
-pergamon
-palmyra
-
-[servers]
-antiochia
-smyrna
-tyros
-pergamon
-palmyra
-heraclea
 
 [routers]
 tyros
@@ -47,20 +32,7 @@ tyros
 smyrna
 heraclea
 
-[consul]
+[hashistack]
 antiochia
 palmyra
-pergamon
-smyrna
-heraclea
-
-[nomad]
-antiochia
-palmyra
-pergamon
-smyrna
-heraclea
-
-[vault]
-antiochia
 smyrna

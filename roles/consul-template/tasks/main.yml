@@ -1,8 +1,0 @@
-- name: Preflight
-  include_tasks: 00-preflight.yml
-
-- name: Install and configure Consul Template
-  include_tasks: 01-consul-template.yml
-
-- name: Copy templates
-  include_tasks: 02-templates.yml

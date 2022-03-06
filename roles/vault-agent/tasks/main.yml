@@ -1,8 +1,0 @@
-- name: Preflight
-  include_tasks: 00-preflight.yml
-
-- name: Install and configure Vault Agent
-  include_tasks: 01-vault-agent.yml
-
-- name: Copy sources
-  include_tasks: 02-sources.yml

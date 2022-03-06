@@ -1,4 +1,4 @@
-vault_version: "1.9.3"
+vault_version: "1.9.4"
 vault_config:
   ui: true
   log_level: "info"
@@ -20,4 +20,10 @@ vault_config:
   storage:
     consul:
       address: "http://localhost:8500"
-      service_tags: "traefik.enable=true,traefik.http.routers.vault.entrypoints=https,traefik.http.routers.vault.rule=Host(`vault.service.consul`)"
+      service_tags: >-
+        traefik.enable=true,
+        traefik.http.routers.vault.entrypoints=https,
+        traefik.http.routers.vault.rule=Host(`vault.service.consul`),
+        ingress.enable=true,
+        ingress.http.routers.vault.entrypoints=https,
+        ingress.http.routers.vault.rule=Host(`vault.nahsi.dev`)

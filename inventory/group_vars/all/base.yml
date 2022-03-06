@@ -1,5 +1,6 @@
 # /usr/share/zoneinfo
 base_timezone: "Europe/Moscow"
+
 # /usr/share/consolefonts
 base_consolefont: "ter-i16b"
 
@@ -107,6 +108,70 @@ base_packages_all:
   - app-admin/pwgen
 base_packages: "{{ base_packages_all }}"
 
+base_portage_package_use_all:
+  common: |
+    sys-devel/gcc pgo
+    dev-lang/rust clippy rls rustfmt rust-src
+    net_misc/openssh -pam
+    net-analyzer/tcpdump -samba -smi
+    sys-apps/util-linux tty-helpers
+
+base_portage_package_use: "{{ base_portage_package_use_all }}"
+
+base_portage_distcc_cores: 16
+# --jobs=N
+# where N is number of logical cores
+# when using distcc N is a number of local + remote logical cores
+base_portage_jobs: >-
+  {{
+    (ansible_processor_cores * ansible_processor_threads_per_core) +
+    base_portage_distcc_cores
+  }}
+# --load-average=X.Y
+# where X.Y=N*0.9 where N is a number of local cores (even with distcc enabled)
+base_portage_la: >-
+  {{
+    ansible_processor_cores * ansible_processor_threads_per_core |
+    float * 0.9
+  }}
+
+# https://wiki.gentoo.org/wiki/GENTOO_MIRRORS
+base_portage_mirrors:
+  - https://mirror.yandex.ru/gentoo-distfiles/
+  - https://distfiles.gentoo.org/
+
+# https://wiki.gentoo.org/wiki//etc/portage/make.conf
+# https://github.com/gentoo/portage/blob/master/cnf/make.conf.example
+base_portage_makeconf_all:
+  CHOST: "x86_64-pc-linux-gnu"
+  # -march=native won't work with distcc
+  COMMON_FLAGS: "-O2 -march=native"
+  CFLAGS: "${COMMON_FLAGS}"
+  CXXFLAGS: "${COMMON_FLAGS}"
+  FCFLAGS: "${COMMON_FLAGS}"
+  FFLAGS: "${COMMON_FLAGS}"
+  EMERGE_DEFAULT_OPTS: "--jobs={{ base_portage_jobs }} --load-average={{ base_portage_la }} --quiet-build"
+  MAKEOPTS: "--jobs={{ base_portage_jobs }} --load-average={{ base_portage_la }}"
+  PORTAGE_NICENESS: "19"
+  # portage uses ${PORTAGE_TMPDIR}/portage
+  # it's a good idea to mount tmpfs or zram device to this directory
+  # to reduce disk wear
+  # https://wiki.gentoo.org/wiki/Portage_TMPDIR_on_tmpfs
+  PORTAGE_TMPDIR: "/var/tmp"
+  PORTAGE_ELOG_CLASSES: "log warn error"
+  PORTAGE_ELOG_SYSTEM: "syslog"
+  GENTOO_MIRRORS: "{{ base_portage_mirrors | join(' ') }}"
+  ACCEPT_KEYWORDS: "~amd64"
+  ACCEPT_LICENSE: "* -@EULA"
+  ABI_X86: "64"
+  L10N: "en"
+  LINGUAS: "en"
+  # This sets the language of build output to English
+  LC_MESSAGES: "C"
+  USE: "{{ base_portage_use | join(' ') }}"
+
+base_portage_makeconf: "{{ base_portage_makeconf_all }}"
+
 base_sshd_config: |
   Protocol 2
   KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256
@@ -141,3 +206,341 @@ base_users_all:
     password: "bd7465fc49ba157a92c751e33c3de9030a5d303e917daeab49cd76ba8f1409abe573286925f1127fea19932c1292867d4eaead98aacbb0969a83a8f75fbe7181"
 
 base_users: "{{ base_users_all }}"
+
+# https://github.com/containers/image/blob/master/docs/containers-registries.conf.5.md
+base_containers_registries: |
+  [registries.search]
+  registries = ["docker.io", "quay.io"]
+
+# https://github.com/containers/image/blob/master/docs/containers-policy.json.5.md
+base_containers_policy:
+  default:
+    - type: insecureAcceptAnything
+
+# https://github.com/containers/storage/blob/master/docs/containers-storage.conf.5.md
+# base_containers_storage: ""
+
+# https://github.com/containers/common/blob/master/docs/containers.conf.5.md
+base_containers_containers: |
+  [engine]
+  runtime="crun"
+
+base_containers_storage: |
+  [storage]
+  driver="zfs"
+  runroot="/run/containers/storage"
+  graphroot="/var/lib/containers/storage"
+  [storage.options.zfs]
+  fsname="{{ zfs_main_pool }}/containers"
+
+base_containers_docker:
+  default-runtime: "crun"
+  runtimes:
+    crun:
+      path: "/usr/bin/crun"
+  storage-driver: "zfs"
+  storage-opts:
+    - zfs.fsname={{ zfs_main_pool }}/containers
+  log-driver: "json-file"
+  log-opts:
+    max-size: "32m"
+    max-file: "2"
+
+base_syslog_config: |
+  @version: "3.35"
+  @include "/etc/syslog-ng/conf.d/*.conf"
+
+  options {
+    threaded(yes);
+    chain_hostnames(no);
+    use_dns(no);
+    dns_cache(no);
+    flush_lines(0);
+    stats_freq(43200);
+    mark_freq(3600);
+  };
+
+  source src {
+    unix-stream("/dev/log" max-connections(256));
+    internal();
+  };
+  source kernel {
+    file("/proc/kmsg");
+  };
+
+  destination syslog {
+    file("/var/log/syslog.log");
+  };
+  destination authlog {
+    file("/var/log/auth.log");
+  };
+  destination cron {
+    file("/var/log/cron.log");
+  };
+  destination daemon {
+    file("/var/log/daemon.log");
+  };
+  destination kern {
+    file("/var/log/kern.log");
+  };
+  destination lpr {
+    file("/var/log/lpr.log");
+  };
+  destination user {
+    file("/var/log/user.log");
+  };
+  destination mail {
+    file("/var/log/mail.log");
+  };
+  destination news {
+    file("/var/log/news.log");
+  };
+  destination debug {
+    file("/var/log/debug");
+  };
+  destination messages {
+    file("/var/log/messages");
+  };
+  destination console {
+    usertty("root");
+  };
+  destination default {
+    file("/var/log/all");
+  };
+
+  filter authpriv { facility(auth, authpriv); };
+  filter syslog { not facility(authpriv, mail); };
+  filter cron { facility(cron); };
+  filter daemon { facility(daemon); };
+  filter kern { facility(kern); };
+  filter lpr { facility(lpr); };
+  filter mail { facility(mail); };
+  filter user { facility(user); };
+  filter debug { not facility(auth, authpriv, news, mail); };
+  filter messages { level(info..warn) and not facility(auth, authpriv, mail, news); };
+  filter emergency { level(emerg); };
+  filter info { level(info); };
+  filter notice { level(notice); };
+  filter warn { level(warn); };
+  filter crit { level(crit); };
+  filter err { level(err); };
+  filter failed { message("failed"); };
+  filter denied { message("denied"); };
+
+  log {
+    source(src);
+    filter(authpriv);
+    destination(authlog);
+  };
+  log {
+    source(src);
+    filter(syslog);
+    destination(syslog);
+  };
+  log {
+    source(src);
+    filter(cron);
+    destination(cron);
+  };
+  log {
+    source(src);
+    filter(daemon);
+    destination(daemon);
+  };
+  log {
+    source(kernel);
+    filter(kern);
+    destination(kern);
+  };
+  log {
+    source(src);
+    filter(lpr);
+    destination(lpr);
+  };
+  log {
+    source(src);
+    filter(mail);
+    destination(mail);
+  };
+  log {
+    source(src);
+    filter(user);
+    destination(user);
+  };
+  log {
+    source(src);
+    filter(debug);
+    destination(debug);
+  };
+  log {
+    source(src);
+    filter(messages);
+    destination(messages);
+  };
+  log {
+    source(src);
+    filter(emergency);
+    destination(console);
+  };
+  log {
+    source(src);
+    destination(default);
+  };
+
+base_syslog_logrotate: |
+  "/var/log/syslog.log" {
+      rotate 2
+      weekly
+      missingok
+      notifempty
+      maxsize 100M
+      dateext
+      postrotate
+      /etc/init.d/syslog-ng reload > /dev/null 2>&1 || true
+      endscript
+  }
+  "/var/log/auth.log" {
+      rotate 2
+      weekly
+      missingok
+      notifempty
+      maxsize 100M
+      dateext
+      postrotate
+      /etc/init.d/syslog-ng reload > /dev/null 2>&1 || true
+      endscript
+  }
+  "/var/log/cron.log" {
+      rotate 2
+      weekly
+      missingok
+      notifempty
+      maxsize 100M
+      dateext
+      postrotate
+      /etc/init.d/syslog-ng reload > /dev/null 2>&1 || true
+      endscript
+  }
+  "/var/log/daemon.log" {
+      rotate 2
+      weekly
+      missingok
+      notifempty
+      maxsize 100M
+      dateext
+      postrotate
+      /etc/init.d/syslog-ng reload > /dev/null 2>&1 || true
+      endscript
+  }
+  "/var/log/kern.log" {
+      rotate 2
+      weekly
+      missingok
+      notifempty
+      maxsize 100M
+      dateext
+      postrotate
+      /etc/init.d/syslog-ng reload > /dev/null 2>&1 || true
+      endscript
+  }
+  "/var/log/lpr.log" {
+      rotate 2
+      weekly
+      missingok
+      notifempty
+      maxsize 100M
+      dateext
+      postrotate
+      /etc/init.d/syslog-ng reload > /dev/null 2>&1 || true
+      endscript
+  }
+  "/var/log/user.log" {
+      rotate 2
+      weekly
+      missingok
+      notifempty
+      maxsize 100M
+      dateext
+      postrotate
+      /etc/init.d/syslog-ng reload > /dev/null 2>&1 || true
+      endscript
+  }
+  "/var/log/mail.log" {
+      rotate 2
+      weekly
+      missingok
+      notifempty
+      maxsize 100M
+      dateext
+      postrotate
+      /etc/init.d/syslog-ng reload > /dev/null 2>&1 || true
+      endscript
+  }
+  "/var/log/news.log" {
+      rotate 2
+      weekly
+      missingok
+      notifempty
+      maxsize 100M
+      dateext
+      postrotate
+      /etc/init.d/syslog-ng reload > /dev/null 2>&1 || true
+      endscript
+  }
+  "/var/log/debug" {
+      rotate 2
+      weekly
+      missingok
+      notifempty
+      maxsize 100M
+      dateext
+      postrotate
+      /etc/init.d/syslog-ng reload > /dev/null 2>&1 || true
+      endscript
+  }
+  "/var/log/messages" {
+      rotate 2
+      weekly
+      missingok
+      notifempty
+      maxsize 100M
+      dateext
+      postrotate
+      /etc/init.d/syslog-ng reload > /dev/null 2>&1 || true
+      endscript
+  }
+  "/var/log/all" {
+      rotate 2
+      weekly
+      missingok
+      notifempty
+      maxsize 100M
+      dateext
+      postrotate
+      /etc/init.d/syslog-ng reload > /dev/null 2>&1 || true
+      endscript
+  }
+  "/var/log/daemon.log" {
+      rotate 2
+      weekly
+      missingok
+      notifempty
+      maxsize 100M
+      dateext
+  }
+  "/var/log/emerge.log" {
+      rotate 2
+      weekly
+      missingok
+      notifempty
+      maxsize 100M
+      dateext
+  }
+  "/var/log/emerge-fetch.log" {
+      rotate 2
+      weekly
+      missingok
+      notifempty
+      maxsize 100M
+      dateext
+  }

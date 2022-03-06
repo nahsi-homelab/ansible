@@ -4,19 +4,11 @@ nomad_configs:
       host_volume:
         - docker-socket:
             path: "/var/run/docker.sock"
-        - vboxdrv:
-            path: "/dev/vboxdrv"
-        - vboxnetctl:
-            path: "/dev/vboxnetctl"
 
         - prometheus:
             path: "/var/lib/prometheus"
         - loki:
             path: "/var/lib/loki"
-        - linkding:
-            path: "/var/lib/linkding"
-        - podgrab:
-            path: "/var/lib/podgrab"
         - grafana:
             path: "/var/lib/grafana"
         - unifi:
@@ -27,18 +19,12 @@ nomad_configs:
             path: "/var/lib/jellyfin/config"
         - jellyfin-cache:
             path: "/var/lib/jellyfin/cache"
-        - zookeeper:
-            path: "/var/lib/zookeeper"
-        - kafka:
-            path: "/var/lib/kafka"
         - minio:
             path: "/var/lib/minio"
         - mongo:
             path: "/var/lib/mongo"
         - mariadb:
             path: "/var/lib/mariadb"
-        - shinobi:
-            path: "/var/lib/shinobi"
         - filestash:
             path: "/var/lib/filestash"
 

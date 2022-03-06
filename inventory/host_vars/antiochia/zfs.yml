@@ -72,6 +72,7 @@ base_zfs_datasets:
     owner: "1001"
     group: "1001"
     mode: "0700"
+    state: absent
 
   - name: "hot/data/zookeeper/datalog"
     properties:
@@ -80,6 +81,7 @@ base_zfs_datasets:
     owner: "1001"
     group: "1001"
     mode: "0700"
+    state: absent
 
   - name: "hot/data/kafka"
     properties:
@@ -88,6 +90,7 @@ base_zfs_datasets:
     owner: "1001"
     group: "1001"
     mode: "0700"
+    state: absent
 
   - name: "hot/data/minio"
     properties:

@@ -43,8 +43,3 @@
 - name: Configure udev
   tags: udev
   include_tasks: 09-udev.yml
-
-- name: Configure apcupsd
-  tags: apcupsd
-  include_tasks: 10-apcupsd.yml
-  when: base_apcupsd_config is defined

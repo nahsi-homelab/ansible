@@ -1,0 +1,19 @@
+nomad_config_server:
+  server:
+    enabled: true
+    bootstrap_expect: 5
+    raft_protocol: 3
+    server_join:
+      retry_join:
+        - 192.168.130.10
+        - 192.168.130.20
+        - 192.168.230.1
+        - 192.168.230.10
+        - 192.168.175.83
+
+    default_scheduler_config:
+      memory_oversubscription_enabled: true
+
+  vault:
+    token: "{{ nomad_token }}"
+    create_from_role: "nomad-cluster"

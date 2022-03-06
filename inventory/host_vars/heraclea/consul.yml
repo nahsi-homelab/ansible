@@ -1,5 +1,0 @@
-consul_config: >
-  {{
-    consul_config_agent |
-    combine(consul_config_server, recursive=true)
-  }}

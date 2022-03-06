@@ -1,4 +1,3 @@
-[all]
 pergamon
 miletos
 smyrna
@@ -16,9 +15,6 @@ antiochia
 tyros
 palmyra
 
-[pontus]
-heraclea
-
 [workstation]
 pergamon
 miletos
@@ -30,7 +26,6 @@ smyrna
 [dns]
 tyros
 smyrna
-heraclea
 
 [hashistack]
 antiochia

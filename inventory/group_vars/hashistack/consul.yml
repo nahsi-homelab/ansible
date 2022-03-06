@@ -1,4 +1,4 @@
-consul_config_server:
+consul_config_hashistack:
   server: true
   bootstrap_expect: 5
 
@@ -9,3 +9,9 @@ consul_config_server:
         config:
           protocol: "http"
           envoy_prometheus_bind_addr: "0.0.0.0:9102"
+
+consul_config: >
+  {{
+    consul_config_all |
+    combine(consul_config_hashistack, recursive=true)
+  }}

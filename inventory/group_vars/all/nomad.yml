@@ -1,6 +1,6 @@
 nomad_version: "1.2.6"
 
-nomad_config_agent:
+nomad_config_all:
   region: "oikumene"
   datacenter: "{{ dc }}"
 
@@ -64,4 +64,4 @@ nomad_config_agent:
       config:
         enabled: true
 
-nomad_config: "{{ nomad_config_agent }}"
+nomad_config: "{{ nomad_config_all }}"

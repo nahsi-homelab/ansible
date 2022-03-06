@@ -19,9 +19,3 @@ nomad_configs:
         minio_node_id: 3
 
         mongo_node_id: "secondary"
-
-nomad_config: >
-  {{
-    nomad_config_agent |
-    combine(nomad_config_server, recursive=true)
-  }}

@@ -50,9 +50,3 @@ nomad_configs:
         minio_node_id: 1
 
         mongo_node_id: "primary"
-
-nomad_config: >
-  {{
-    nomad_config_agent |
-    combine(nomad_config_server, recursive=true)
-  }}

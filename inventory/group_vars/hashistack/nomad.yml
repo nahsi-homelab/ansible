@@ -1,4 +1,4 @@
-nomad_config_server:
+nomad_config_hashistack:
   server:
     enabled: true
     bootstrap_expect: 5
@@ -17,3 +17,9 @@ nomad_config_server:
   vault:
     token: "{{ nomad_token }}"
     create_from_role: "nomad-cluster"
+
+nomad_config: >
+  {{
+    nomad_config_all |
+    combine(nomad_config_hashistack, recursive=true)
+  }}

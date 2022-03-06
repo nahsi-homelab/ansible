@@ -9,7 +9,7 @@ consul_servers:
 gotmpl_docker: !unsafe '{{ GetInterfaceIP "docker0" }}'
 gotmpl_nomad: !unsafe '{{ GetInterfaceIP "nomad" }}'
 
-consul_config_agent:
+consul_config_all:
   datacenter: "oikumene"
   encrypt: "{{ lookup('hashi_vault', 'secret/data/gossip:consul') }}"
   data_dir: "/var/lib/consul/"
@@ -60,7 +60,7 @@ consul_config_agent:
           protocol: "http"
           envoy_prometheus_bind_addr: "0.0.0.0:9102"
 
-consul_config: "{{ consul_config_agent }}"
+consul_config: "{{ consul_config_all }}"
 
 consul_services_all:
   consul:

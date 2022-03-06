@@ -17,7 +17,7 @@ consul_config_all:
   enable_local_script_checks: true
 
   limits:
-    http_max_conns_per_client: 300
+    http_max_conns_per_client: 500
 
   enable_syslog: true
   # "trace", "debug", "info", "warn", "err"

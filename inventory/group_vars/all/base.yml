@@ -1,5 +1,6 @@
 # /usr/share/zoneinfo
 base_timezone: "Europe/Moscow"
+
 # /usr/share/consolefonts
 base_consolefont: "ter-i16b"
 
@@ -117,7 +118,7 @@ base_portage_package_use_all:
 
 base_portage_package_use: "{{ base_portage_package_use_all }}"
 
-base_portage_distcc_cores: 48
+base_portage_distcc_cores: 16
 # --jobs=N
 # where N is number of logical cores
 # when using distcc N is a number of local + remote logical cores

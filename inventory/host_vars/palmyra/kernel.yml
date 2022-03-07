@@ -1,17 +1,5 @@
 kernel_boot_device: "/dev/disk/by-uuid/cd4f87d3-29dd-493b-9740-513ed92159cc"
 
-kernel_firmware:
-  - amd-ucode/microcode_amd.bin
-
-  - radeon/SUMO2_me.bin
-  - radeon/SUMO2_pfp.bin
-  - radeon/SUMO_me.bin
-  - radeon/SUMO_rlc.bin
-  - radeon/SUMO_uvd.bin
-  - radeon/SUMO_pfp.bin
-
-  - rtl_nic/rtl8168e-2.fw
-
 kernel_zfsbootmenu_config:
   Global:
     ManageImages: true
@@ -25,7 +13,29 @@ kernel_zfsbootmenu_config:
       Config: /boot/syslinux/syslinux.cfg
       Enabled: true
   Kernel:
-    CommandLine: ro quiet loglevel=0
+    CommandLine: >-
+      ro quiet loglevel=0
+      zbm.prefer=zfsbootmenu:POOL=main
+      zbm.set_hostid=0
+      zbm.timeout=30
+      rd.neednet=1
+      ip=192.168.130.21
+      netmask=255.255.255.0
+      gateway=192.168.130.1
+      nameserver=192.168.130.1
+      nameserver=1.1.1.1
+
+kernel_firmware:
+  - amd-ucode/microcode_amd.bin
+
+  - radeon/SUMO2_me.bin
+  - radeon/SUMO2_pfp.bin
+  - radeon/SUMO_me.bin
+  - radeon/SUMO_rlc.bin
+  - radeon/SUMO_uvd.bin
+  - radeon/SUMO_pfp.bin
+
+  - rtl_nic/rtl8168e-2.fw
 
 kernel_module_load:
   virtualbox: |

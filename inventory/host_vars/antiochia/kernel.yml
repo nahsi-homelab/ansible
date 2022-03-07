@@ -1,22 +1,23 @@
 kernel_boot_device: "/dev/disk/by-partlabel/EFI"
 
+_kernel_cmd: >-
+  ro quiet loglevel=0
+  zbm.prefer=zfsbootmenu:POOL=hot
+  zbm.set_hostid=0
+  rd.neednet=1
+  ip=192.168.130.11
+  netmask=255.255.255.0
+  gateway=192.168.130.1
+  nameserver=192.168.130.1
+  nameserver=1.1.1.1
+
+kernel_refind_menu: |
+  "Boot default" "{{ _kernel_cmd }} zbm.timeout=30"
+  "Boot to menu" "{{ _kernel_cmd }} zbm.show"
+
 kernel_firmware:
   - amd/amd_sev_fam17h_model0xh.sbin
   - amd-ucode/microcode_amd_fam17h.bin
-
-kernel_zfsbootmenu_config:
-  Global:
-    ManageImages: true
-    BootMountPoint: /boot/efi
-    DracutConfDir: /etc/zfsbootmenu/dracut.conf.d
-  Components:
-    ImageDir: /boot/efi/EFI/gentoo
-    Versions: 1 # this will keep two versions, possibly a bug
-    Enabled: true
-
-kernel_refind_menu: |
-  "Boot default" "root=zfsbootmenu:POOL=hot timeout=10 ro quiet loglevel=0"
-  "Boot to menu" "root=zfsbootmenu:POOL=hot timeout=-1 ro quiet loglevel=0"
 
 kernel_module_load:
   virtualbox: |

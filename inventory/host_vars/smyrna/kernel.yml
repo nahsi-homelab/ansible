@@ -1,18 +1,14 @@
 kernel_boot_device: "/dev/disk/by-uuid/97AA-E9FE"
 
-kernel_zfsbootmenu_config:
-  Global:
-    ManageImages: true
-    BootMountPoint: /boot/efi
-    DracutConfDir: /etc/zfsbootmenu/dracut.conf.d
-  Components:
-    ImageDir: /boot/efi/EFI/gentoo
-    Versions: 1
-    Enabled: true
+_kernel_cmd: >-
+  ro quiet loglevel=0
+  rd.vconsole.font=ter-i24b
+  zbm.prefer=zfsbootmenu:POOL=main
+  zbm.set_hostid=0
 
 kernel_refind_menu: |
-  "Boot default" "rd.vconsole.font=ter-i24b root=zfsbootmenu:POOL=main timeout=10 ro quiet loglevel=0"
-  "Boot to menu" "rd.vconsole.font=ter-i24b root=zfsbootmenu:POOL=main timeout=-1 ro quiet loglevel=0"
+  "Boot default" "{{ _kernel_cmd }} zbm.timeout=30"
+  "Boot to menu" "{{ _kernel_cmd }} zbm.show"
 
 kernel_firmware:
   - iwlwifi-9000-pu-b0-jf-b0-34.ucode

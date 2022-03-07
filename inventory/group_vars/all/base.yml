@@ -58,6 +58,10 @@ base_packages_all:
   - net-proxy/shadowsocks-libev
   - net-misc/httpie
 
+  # zfsbootmenu ssh
+  - net-misc/dhcp
+  - net-misc/iputils
+
   # github-runner dependencies
   - dev-libs/icu
   - dev-util/lttng-ust
@@ -115,6 +119,8 @@ base_portage_package_use_all:
     net_misc/openssh -pam
     net-analyzer/tcpdump -samba -smi
     sys-apps/util-linux tty-helpers
+    net-misc/dhcp client
+    net-misc/iputils arping
 
 base_portage_package_use: "{{ base_portage_package_use_all }}"
 

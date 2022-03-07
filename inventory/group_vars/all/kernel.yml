@@ -7,6 +7,23 @@ kernel_refind_config: |
   use_nvram "false"
   screensaver "300"
   use_graphics_for "linux"
-  showtools "shell,memtest,about,hidden_tags,shutdown,reboot,exit,firmware,fwupdate"
+  showtools shell hidden_tags reboot shutdown about
   scan_all_linux_kernels "true"
   fold_linux_kernels "true"
+
+kernel_zfsbootmenu_config:
+  Global:
+    ManageImages: true
+    BootMountPoint: /boot/efi
+    DracutConfDir: /etc/zfsbootmenu/dracut.conf.d
+  Components:
+    ImageDir: /boot/efi/EFI/gentoo
+    Versions: 2
+    Enabled: true
+
+kernel_zfsbootmenu_dracut_configs:
+  dropbear: |
+    add_dracutmodules+=" crypt-ssh "
+    dropbear_rsa_key=/etc/dropbear/id_rsa
+    dropbear_ecdsa_key=/etc/dropbear/id_ecdsa
+    dropbear_acl=/home/nahsi/.ssh/authorized_keys

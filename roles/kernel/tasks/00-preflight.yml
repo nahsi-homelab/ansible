@@ -95,10 +95,18 @@
       - kernel_postinst is mapping
     quiet: true
 
-- name: check "kernel_dracut_configs" variable
+- name: check "kernel_zfsbootmenu_dracut_configs" variable
   tags: always
   assert:
     that:
-      - kernel_dracut_configs is defined
-      - kernel_dracut_configs is mapping
+      - kernel_zfsbootmenu_dracut_configs is defined
+      - kernel_zfsbootmenu_dracut_configs is mapping
+    quiet: true
+
+- name: check "kernel_zfsbootmenu_dracut_config" variable
+  tags: always
+  assert:
+    that:
+      - kernel_zfsbootmenu_dracut_config is defined
+      - kernel_zfsbootmenu_dracut_config is string
     quiet: true

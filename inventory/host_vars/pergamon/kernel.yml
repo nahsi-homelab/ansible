@@ -1,8 +1,20 @@
 kernel_boot_device: "/dev/disk/by-uuid/50C7-C33B"
 
+_kernel_cmd: >-
+  ro quiet loglevel=0
+  rd.vconsole.font=ter-i24b
+  zbm.prefer=zfsbootmenu:POOL=main
+  zbm.set_hostid=0
+  rd.neednet=1
+  ip=192.168.230.11
+  netmask=255.255.255.0
+  gateway=192.168.230.1
+  nameserver=192.168.230.1
+  nameserver=1.1.1.1
+
 kernel_refind_menu: |
-  "Boot default" "rd.vconsole.font=ter-i24b root=zfsbootmenu:POOL=main timeout=10 ro quiet loglevel=0"
-  "Boot to menu" "rd.vconsole.font=ter-i24b root=zfsbootmenu:POOL=main timeout=-1 ro quiet loglevel=0"
+  "Boot default" "{{ _kernel_cmd }} zbm.timeout=30"
+  "Boot to menu" "{{ _kernel_cmd }} zbm.show"
 
 kernel_refind_config: |
   timeout "5"
@@ -11,10 +23,17 @@ kernel_refind_config: |
   use_nvram "false"
   screensaver "300"
   use_graphics_for "linux"
-  showtools "shell, memtest, apple_recovery, shutdown, reboot, about"
+  showtools shell hidden_tags reboot shutdown about
+  hideui hints arrows
   scan_all_linux_kernels "true"
   fold_linux_kernels "true"
-  include themes/rEFInd-minimal/theme.conf
+  include themes/refind-theme-regular/theme.conf
+
+  menuentry "Windows 10" {
+    icon /EFI/refind/themes/refind-theme-regular/icons/256-96/os_windows.png
+    volume "e4050232-01"
+    loader \EFI\Microsoft\Boot\bootmgfw.efi
+  }
 
 kernel_firmware:
   - amdgpu/polaris11_ce.bin
@@ -39,16 +58,6 @@ kernel_firmware:
   - amdgpu/polaris11_uvd.bin
 
   - iwlwifi-cc-a0-59.ucode
-
-kernel_zfsbootmenu_config:
-  Global:
-    ManageImages: true
-    BootMountPoint: /boot/efi
-    DracutConfDir: /etc/zfsbootmenu/dracut.conf.d
-  Components:
-    ImageDir: /boot/efi/EFI/gentoo
-    Versions: 1 # this will keep two versions, possibly a bug
-    Enabled: true
 
 kernel_module_configs:
   audio: |

@@ -65,23 +65,13 @@ base_zfs_datasets:
     group: "1000"
     mode: "0750"
 
-  - name: "hot/data/zookeeper/data"
-    properties:
-      atime: "off"
-      mountpoint: "/var/lib/zookeeper/data"
-    owner: "1001"
-    group: "1001"
-    mode: "0700"
-    state: absent
-
   - name: "hot/data/zookeeper/datalog"
     properties:
       atime: "off"
-      mountpoint: "/var/lib/zookeeper/datalog"
+      mountpoint: "/var/lib/zookeeper"
     owner: "1001"
     group: "1001"
     mode: "0700"
-    state: absent
 
   - name: "hot/data/kafka"
     properties:
@@ -90,7 +80,6 @@ base_zfs_datasets:
     owner: "1001"
     group: "1001"
     mode: "0700"
-    state: absent
 
   - name: "hot/data/minio"
     properties:
@@ -119,15 +108,6 @@ base_zfs_datasets:
     owner: "999"
     group: "999"
     mode: "0700"
-
-  - name: "cold/data/shinobi"
-    properties:
-      atime: "off"
-      mountpoint: "/var/lib/shinobi"
-      compression: "lz4"
-    owner: "root"
-    group: "root"
-    mode: "0750"
 
   - name: "hot/data/filestash"
     properties:

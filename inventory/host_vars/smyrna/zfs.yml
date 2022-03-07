@@ -34,23 +34,13 @@ base_zfs_datasets:
     group: "nahsi"
     mode: "0755"
 
-  - name: "main/data/zookeeper/data"
+  - name: "main/data/zookeeper"
     properties:
       atime: "off"
-      mountpoint: "/var/lib/zookeeper/data"
+      mountpoint: "/var/lib/zookeeper"
     owner: "1001"
     group: "1001"
     mode: "0700"
-    state: absent
-
-  - name: "main/data/zookeeper/datalog"
-    properties:
-      atime: "off"
-      mountpoint: "/var/lib/zookeeper/datalog"
-    owner: "1001"
-    group: "1001"
-    mode: "0700"
-    state: absent
 
   - name: "main/data/kafka"
     properties:

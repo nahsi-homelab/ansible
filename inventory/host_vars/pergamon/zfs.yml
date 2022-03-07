@@ -34,41 +34,6 @@ base_zfs_datasets:
     group: "nahsi"
     mode: "0755"
 
-  - name: "main/users/nahsi/music"
-    properties:
-      mountpoint: "/home/nahsi/media/music"
-      recordsize: "1M"
-    owner: "nahsi"
-    group: "nahsi"
-    mode: "0755"
-
-  - name: "main/data/zookeeper/data"
-    properties:
-      atime: "off"
-      mountpoint: "/var/lib/zookeeper/data"
-    owner: "1001"
-    group: "1001"
-    mode: "0700"
-    state: absent
-
-  - name: "main/data/zookeeper/datalog"
-    properties:
-      atime: "off"
-      mountpoint: "/var/lib/zookeeper/datalog"
-    owner: "1001"
-    group: "1001"
-    mode: "0700"
-    state: absent
-
-  - name: "main/data/kafka"
-    properties:
-      atime: "off"
-      mountpoint: "/var/lib/kafka"
-    owner: "1001"
-    group: "1001"
-    mode: "0700"
-    state: absent
-
   - name: "main/data/minio"
     properties:
       atime: "off"

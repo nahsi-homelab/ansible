@@ -1,13 +1,11 @@
 dns_unbound_configs:
   tyros: |
     server:
+      interface: 127.0.0.1@53
       interface: 192.168.110.1@53
       interface: 192.168.130.1@53
       interface: 192.168.150.1@53
-      interface: 127.0.0.1@53
-      access-control: 192.168.110.0/24 allow
-      access-control: 192.168.130.0/24 allow
-      access-control: 192.168.150.0/24 allow
+      interface: 100.96.73.84@53
 
   consul: |
     server:
@@ -18,4 +16,3 @@ dns_unbound_configs:
       name: "consul"
       stub-addr: 127.0.0.1@8600
       stub-no-cache: yes
-

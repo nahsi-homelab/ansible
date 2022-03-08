@@ -10,5 +10,5 @@
   community.general.iptables_state:
     state: restored
     path: "/etc/iptables.rules"
-  async: "{{ ansible_timeout }}"
-  poll: 0
+  # async: "{{ ansible_timeout }}"
+  # poll: 0

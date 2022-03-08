@@ -1,4 +1,4 @@
 base_dns: |
   resolv_conf="/etc/resolv.conf"
-  name_servers="192.168.210.1"
+  name_servers="192.168.230.1"
   search_domains="node.consul service.consul"

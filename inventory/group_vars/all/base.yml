@@ -1,3 +1,8 @@
+base_dns: |
+  resolv_conf="/etc/resolv.conf"
+  name_servers="100.114.27.75"
+  search_domains="node.consul service.consul"
+
 base_users_all:
   - name: nahsi
     shell: /bin/bash

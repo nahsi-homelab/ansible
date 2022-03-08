@@ -7,10 +7,16 @@ base_filesystems:
     type: "tmpfs"
 
 base_sysctl:
-  - name: vm.swappiness
-    value: 1
   - name: vm.dirty_writeback_centisecs
     value: 1500
+  - name: net.ipv4.ip_forward
+    value: 1
+  - name: net.ipv6.conf.all.forwarding
+    value: 1
+  - name: net.ipv4.conf.default.rp_filter
+    value: 1
+  - name: vm.swappiness
+    value: 1
 
 base_packages_miletos:
   - app-laptop/mbpfan
@@ -22,10 +28,6 @@ base_packages: >
     base_packages_miletos +
     base_packages_desktop | unique
   }}
-
-base_dns: |
-  resolv_conf="/etc/resolv.conf"
-  search_domains="node.consul service.consul"
 
 base_services:
   - name: "mbpfan"

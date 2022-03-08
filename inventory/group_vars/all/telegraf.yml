@@ -27,7 +27,7 @@ telegraf_config: |
 telegraf_configs_all:
   output: |
     [[outputs.prometheus_client]]
-      listen = "{{ private_ip }}:9271"
+      listen = ":9271"
       metric_version = 2
       path = "/metrics"
       expiration_interval = "30s"

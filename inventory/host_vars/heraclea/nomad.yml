@@ -1,0 +1,32 @@
+nomad_service: |
+  [Unit]
+  Description=HashiCorp Nomad - a workload orchestrator
+  Documentation=https://www.nomadproject.io/docs/
+  Requires=network-online.target
+  BindsTo=wg-quick@oikumene.service
+  After=network-online.target cloud-init.target wg-quick@oikumene.service
+  DefaultDependencies=no
+  ConditionFileNotEmpty={{ nomad_dirs.main.path }}/nomad.json
+
+  [Service]
+  User=root
+  Group=root
+  ExecStart=/usr/bin/nomad agent -config {{ nomad_dirs.main.path }}/nomad.json -config={{ nomad_dirs.configs.path }}
+  ExecReload=/bin/kill --signal HUP $MAINPID
+  KillMode=process
+  KillSignal=SIGINT
+  Restart=on-failure
+  RestartSec=2
+  StartLimitIntervalSec=10
+  StartLimitBurst=3
+  TasksMax=infinity
+
+  [Install]
+  WantedBy=multi-user.target
+
+nomad_configs:
+  public_network:
+    client:
+      host_network:
+        - public:
+            interface: "enp1s0"

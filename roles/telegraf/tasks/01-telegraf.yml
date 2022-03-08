@@ -23,7 +23,7 @@
     system: true
     shell: "/sbin/nologin"
     group: telegraf
-    groups: 
+    groups:
       - docker
       - disk
     append: true
@@ -69,15 +69,6 @@
     mode: 0555
   notify: restart telegraf
 
-- name: create telegraf service
-  copy:
-    content: "{{ telegraf_service }}"
-    dest: "/etc/init.d/telegraf"
-    owner: root
-    group: root
-    mode: 0755
-  notify: restart telegraf
-
 - name: create telegraf configuration
   tags: configs
   copy:
@@ -89,7 +80,35 @@
     validate: "telegraf -test -logfile=/dev/null -config %s"
   notify: restart telegraf
 
+- name: create telegraf service
+  copy:
+    content: "{{ telegraf_service }}"
+    dest: "/etc/init.d/telegraf"
+    owner: root
+    group: root
+    mode: 0755
+  notify: restart telegraf
+  when: ansible_service_mgr == "openrc"
+
 - name: enable telegraf
   service:
     name: telegraf
     enabled: true
+  when: ansible_service_mgr == "openrc"
+
+- name: create telegraf unit file
+  copy:
+    content: "{{ telegraf_unit }}"
+    dest: "/etc/systemd/system/telegraf.service"
+    owner: root
+    group: root
+    mode: 0755
+  notify: restart telegraf
+  when: ansible_service_mgr == "systemd"
+
+- name: enable telegraf
+  systemd:
+    name: telegraf
+    enabled: true
+    daemon_reload: true
+  when: ansible_service_mgr == "systemd"

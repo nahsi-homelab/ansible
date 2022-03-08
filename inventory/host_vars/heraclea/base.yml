@@ -8,6 +8,7 @@ base_sysctl:
 
 base_packages:
   - doas
+  - smartmontools
   - ca-certificates
   - jq
   - unzip

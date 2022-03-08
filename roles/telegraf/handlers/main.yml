@@ -2,10 +2,8 @@
   service:
     name: telegraf
     state: restarted
-    use: openrc
 
 - name: reload telegraf
   service:
     name: telegraf
     state: reloaded
-    use: openrc

@@ -39,3 +39,22 @@ telegraf_service: |
       ${supervisor} ${RC_SVCNAME} --signal HUP --pidfile "${PIDFILE}"
       eend $?
   }
+
+telegraf_unit: |
+  [Unit]
+  Description="The plugin-driven metrics agent"
+  Documentation=https://github.com/influxdata/telegraf
+  After=network.target
+  ConditionFileNotEmpty={{ telegraf_dir }}/telegraf.conf
+
+  [Service]
+  User=telegraf
+  Group=telegraf
+  ExecStart=/usr/bin/telegraf -config {{ telegraf_dir }}/telegraf.conf -config-directory {{ telegraf_dirs.configs.path }}
+  ExecReload=/bin/kill -HUP $MAINPID
+  Restart=on-failure
+  RestartForceExitStatus=SIGPIPE
+  KillMode=control-group
+
+  [Install]
+  WantedBy=multi-user.target

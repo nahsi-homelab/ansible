@@ -1,0 +1,22 @@
+consul_service: |
+  [Unit]
+  Description=HashiCorp Consul - A service mesh solution
+  Documentation=https://www.consul.io/
+  Requires=network-online.target
+  BindsTo=docker.service wg-quick@oikumene.service
+  After=network-online.target cloud-init.target docker.service wg-quick@oikumene.service
+  DefaultDependencies=no
+  ConditionFileNotEmpty={{ consul_dirs.main.path }}/consul.json
+
+  [Service]
+  User=consul
+  Group=consul
+  ExecStart=/usr/bin/consul agent -config-file={{ consul_dirs.main.path }}/consul.json -config-dir={{ consul_dirs.configs.path }} -config-dir={{ consul_dirs.services.path }}
+  ExecReload=/bin/kill --signal HUP $MAINPID
+  KillMode=process
+  KillSignal=SIGTERM
+  Restart=on-failure
+  LimitNOFILE=65536
+
+  [Install]
+  WantedBy=multi-user.target

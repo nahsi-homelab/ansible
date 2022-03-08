@@ -55,6 +55,7 @@ base_doas_conf: >
 
 base_packages_all:
   - app-admin/doas
+  - net-vpn/tailscale
   - sys-devel/distcc
   - dev-vcs/git
   - sys-process/cronie

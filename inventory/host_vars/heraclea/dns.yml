@@ -3,6 +3,7 @@ dns_unbound_configs:
     server:
       interface: 192.168.30.1@53
       interface: 127.0.0.1@53
+      access-control: 192.168.0.0/16 allow
 
   consul: |
     server:

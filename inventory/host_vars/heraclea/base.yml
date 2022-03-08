@@ -19,11 +19,15 @@ base_packages:
   - nnn
   - docker-compose
   - containernetworking-plugins
+  - tailscale
 
 base_services:
   - name: "docker"
     enabled: true
-    staate: "started"
+    state: "started"
+  - name: "tailscaled"
+    enabled: true
+    state: "started"
 
 base_docker_config:
   log-driver: "json-file"

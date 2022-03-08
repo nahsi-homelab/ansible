@@ -11,13 +11,19 @@
     state: present
   when: ansible_distribution == "Ubuntu"
 
+- name: create dnscrypt-proxy system group
+  group:
+    name: dnscrypt-proxy
+    system: true
+    state: present
+
 - name: create dnscrypt directory
   file:
     path: "/etc/dnscrypt-proxy"
     state: directory
     owner: root
-    group: root
-    mode: 0770
+    group: dnscrypt-proxy
+    mode: 0775
 
 - name: copy dnscrypt config
   copy:
@@ -25,8 +31,8 @@
     dest: "/etc/dnscrypt-proxy/dnscrypt-proxy.toml"
     validate: "dnscrypt-proxy -check -config %s"
     owner: root
-    group: root
-    mode: 0640
+    group: dnscrypt-proxy
+    mode: 0644
   notify: restart dnscrypt
 
 - name: copy dnscrypt openrc config

@@ -38,6 +38,8 @@ base_services:
     runlevel: "default"
   - name: "docker"
     runlevel: "default"
+  - name: "tailscale"
+    runlevel: "default"
 
 base_iwd: |
   [General]

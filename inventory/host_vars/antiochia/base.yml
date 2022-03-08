@@ -27,7 +27,9 @@ base_network_interfaces:
 
 base_services:
   - name: "docker"
-    runlevel: "boot"
+    runlevel: "default"
+  - name: "tailscale"
+    runlevel: "default"
 
 base_users_antiochia:
   - name: github

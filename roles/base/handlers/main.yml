@@ -77,3 +77,9 @@
     use: openrc
   when:
     - not chroot
+
+- name: stop systemd-resolved
+  systemd:
+    name: systemd-resolved
+    enabled: false
+    state: stopped

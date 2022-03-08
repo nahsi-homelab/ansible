@@ -1,10 +1,6 @@
 wireguard_configs:
   office: "{{ lookup('hashi_vault', 'secret/data/wireguard/pergamon:office') }}"
-  oikumene: "{{ lookup('hashi_vault', 'secret/data/wireguard/pergamon:oikumene') }}"
 
 wireguard_interfaces:
   - name: "office"
-    enabled: false
-
-  - name: "oikumene"
     enabled: false

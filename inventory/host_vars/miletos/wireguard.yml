@@ -1,10 +1,6 @@
 wireguard_configs:
   office: "{{ lookup('hashi_vault', 'secret/data/wireguard/miletos:office') }}"
-  oikumene: "{{ lookup('hashi_vault', 'secret/data/wireguard/miletos:oikumene') }}"
 
 wireguard_interfaces:
   - name: "office"
-    enabled: false
-
-  - name: "oikumene"
     enabled: false

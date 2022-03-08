@@ -47,7 +47,9 @@ base_services:
   - name: "alsasound"
     runlevel: "default"
   - name: "docker"
-    runlevel: "boot"
+    runlevel: "default"
+  - name: "tailscale"
+    runlevel: "default"
 
 base_users_pergamon:
   - name: github

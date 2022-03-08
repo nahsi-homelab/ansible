@@ -12,6 +12,14 @@
     group: root
     mode: 0644
 
+- name: add Tailscale GPG key
+  apt_key: url=https://pkgs.tailscale.com/stable/ubuntu/impish.gpg
+
+- name: add Tailscale repository
+  apt_repository:
+    repo: >
+      deb https://pkgs.tailscale.com/stable/ubuntu {{ ansible_distribution_release }} main
+
 - name: install packages
   tags: packages
   apt:
@@ -78,3 +86,35 @@
     loop_var: "dir"
     label: "{{ dir.path }}"
   when: base_directories is defined
+
+- name: enable services
+  tags: system
+  service:
+  args: "{{ service }}"
+  loop: "{{ base_services }}"
+  loop_control:
+    loop_var: "service"
+    label: "{{ service.name }}"
+  when: base_services is defined
+
+- name: install openresolv
+  apt:
+    name:
+      - "openresolv"
+    install_recommends: false
+    state: present
+
+- name: disable systemd-resolved
+  systemd:
+    name: systemd-resolved
+    enabled: false
+  notify: stop systemd-resolved
+
+- name: configure openresolv
+  copy:
+    content: "{{ base_dns }}"
+    dest: /etc/resolvconf.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: run resolvconf

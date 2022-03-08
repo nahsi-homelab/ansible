@@ -3,6 +3,10 @@ base_dns: |
   name_servers="100.114.27.75"
   search_domains="node.consul service.consul"
 
+base_tailscale_config: |
+ # /etc/conf.d/tailscaled
+ tailscaled_args="--debug=0.0.0.0:8282"
+
 base_users_all:
   - name: nahsi
     shell: /bin/bash

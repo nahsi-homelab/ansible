@@ -74,6 +74,15 @@
     quiet: true
   when: base_dns is defined
 
+- name: check "base_tailscale_configs" variable
+  tags: always
+  assert:
+    that:
+      - base_tailscale_config is string
+      - base_tailscale_config | length
+    quiet: true
+  when: base_tailscale_config is defined
+
 - name: check "base_hosts" variable
   assert:
     that:

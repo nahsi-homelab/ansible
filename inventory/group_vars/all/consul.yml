@@ -113,6 +113,14 @@ consul_services_all:
         interval: "20s"
         timeout: "2s"
 
+  tailscale:
+    service:
+      id: "tailscale"
+      name: "tailscale"
+      port: 8282
+      meta:
+        external-source: "consul"
+
   # promtail:
   #   service:
   #     id: "promtail"

@@ -30,6 +30,16 @@
     autoremove: true
     state: present
 
+- name: copy tailscale config
+  tags: system
+  copy:
+    content: "{{ base_tailscale_config }}"
+    dest: "/etc/default/tailscaled"
+    owner: root
+    group: root
+    mode: 0660
+  notify: restart tailscaled
+
 - name: configure doas
   tags: system
   copy:

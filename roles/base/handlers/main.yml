@@ -78,6 +78,17 @@
   when:
     - not chroot
 
+- name: restart tailscale
+  service:
+    name: tailscale
+    state: restarted
+    use: openrc
+
+- name: restart tailscaled
+  service:
+    name: tailscaled
+    state: restarted
+
 - name: stop systemd-resolved
   systemd:
     name: systemd-resolved

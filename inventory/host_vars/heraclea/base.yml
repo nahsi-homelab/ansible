@@ -1,3 +1,7 @@
+base_tailscale_config: |
+  PORT="41641"
+  FLAGS="--debug=0.0.0.0:8282"
+
 base_groups:
   - name: "wheel"
   - name: "portage"

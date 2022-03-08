@@ -1,0 +1,5 @@
+nomad_configs:
+  meta:
+    client:
+      meta:
+        workstation: true

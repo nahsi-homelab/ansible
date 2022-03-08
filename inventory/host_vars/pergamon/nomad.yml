@@ -10,6 +10,8 @@ nomad_configs:
   meta:
     client:
       meta:
+        workstation: true
+
         zoo_node_id: 3
         kafka_node_id: 3
         minio_node_id: 3

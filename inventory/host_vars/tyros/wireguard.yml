@@ -3,3 +3,5 @@ wireguard_configs:
 
 wireguard_interfaces:
   - name: "oikumene"
+    enabled: true
+    state: "started"

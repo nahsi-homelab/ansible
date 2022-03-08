@@ -1,0 +1,80 @@
+- name: set hostname
+  tags: system
+  hostname:
+    name: "{{ inventory_hostname }}"
+
+- name: configure /etc/hosts
+  tags: system
+  copy:
+    dest: "/etc/hosts"
+    content: "{{ base_hosts }}"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: install packages
+  tags: packages
+  apt:
+    name: "{{ base_packages }}"
+    install_recommends: false
+    update_cache: true
+    autoclean: true
+    autoremove: true
+    state: present
+
+- name: configure doas
+  tags: system
+  copy:
+    content: "{{ base_doas_conf }}"
+    dest: /etc/doas.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: mount filesystems
+  tags: system
+  mount:
+    src: "{{ fs.src }}"
+    opts: "{{ fs.opts }}"
+    path: "{{ fs.path }}"
+    fstype: "{{ fs.type }}"
+    state: mounted
+  loop: "{{ base_filesystems }}"
+  loop_control:
+    loop_var: "fs"
+    label: "{{ fs.path }}"
+  when: base_filesystems is defined
+
+- name: install python packages
+  apt:
+    name:
+      - "python3-pip"
+      - "python3-dev"
+      - "python3-setuptools"
+      - "virtualenv"
+    install_recommends: false
+
+- name: set sysctl entries
+  tags: system
+  sysctl:
+    name: "{{ sysctl.name }}"
+    value: "{{ sysctl.value }}"
+    state: present
+    sysctl_set: true
+  loop: "{{ base_sysctl }}"
+  loop_control:
+    loop_var: "sysctl"
+    label: "{{ sysctl.name }}"
+  when: base_sysctl is defined
+
+- name: create directories or files
+  tags:
+    - system
+    - directories
+  file:
+  args: "{{ dir }}"
+  loop: "{{ base_directories }}"
+  loop_control:
+    loop_var: "dir"
+    label: "{{ dir.path }}"
+  when: base_directories is defined

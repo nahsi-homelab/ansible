@@ -2,5 +2,10 @@
   tags: always
   include_tasks: 00-preflight.yml
 
-- name: Configure wireguard
-  include_tasks: 01-wireguard.yml
+- name: Install wireguard
+  include_tasks: 01-gentoo.yml
+  when: ansible_distribution == "Gentoo"
+
+- name: Install wireguard
+  include_tasks: 01-ubuntu.yml
+  when: ansible_distribution == "Ubuntu"

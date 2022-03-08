@@ -1,5 +1,5 @@
 - hosts: "{{ target }}"
-  become: yes
+  become: true
   become_method: sudo
   vars:
     install_prefix: "/mnt/gentoo"

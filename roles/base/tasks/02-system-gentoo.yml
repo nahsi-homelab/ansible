@@ -170,6 +170,7 @@
 - name: manage zfs dataset
   tags:
     - zfs
+    - directories
     - system
   zfs:
     name: "{{ dataset.name }}"
@@ -186,6 +187,7 @@
 - name: ensure zfs datasets ownership
   tags:
     - zfs
+    - directories
     - system
   file:
     path: "{{ dataset.properties.mountpoint }}"
@@ -204,7 +206,9 @@
     - not chroot
 
 - name: create directories
-  tags: system
+  tags:
+    - system
+    - directoreis
   file:
     path: "{{ dir.path }}"
     state: "{{ dir.state | d('directory') }}"

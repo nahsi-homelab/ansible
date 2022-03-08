@@ -1,5 +1,5 @@
 wireguard_configs:
-  oikumene: "{{ lookup('hashi_vault', 'secret/data/wireguard/smyrna:oikumene') }}"
+  oikumene: "{{ lookup('hashi_vault', 'secret/data/wireguard/heraclea:oikumene') }}"
 
 wireguard_interfaces:
   - name: "oikumene"

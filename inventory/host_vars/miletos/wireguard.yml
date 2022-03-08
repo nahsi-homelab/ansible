@@ -1,17 +1,10 @@
 wireguard_configs:
-  vpn: "{{ lookup('hashi_vault', 'secret/data/wireguard/miletos:vpn') }}"
   office: "{{ lookup('hashi_vault', 'secret/data/wireguard/miletos:office') }}"
   oikumene: "{{ lookup('hashi_vault', 'secret/data/wireguard/miletos:oikumene') }}"
 
 wireguard_interfaces:
   - name: "office"
-    enable: false
-    start: false
-
-  - name: "vpn"
-    enable: false
-    start: false
+    enabled: false
 
   - name: "oikumene"
-    enable: false
-    start: false
+    enabled: false

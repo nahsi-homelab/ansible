@@ -60,7 +60,6 @@
   service:
     name: sshd
     state: restarted
-    use: openrc
   when:
     - not chroot
 
@@ -68,7 +67,6 @@
   service:
     name: docker
     state: restarted
-    use: openrc
   when:
     - not chroot
 

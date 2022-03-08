@@ -1,4 +1,4 @@
-- name: restart wireguard
+- name: restart wireguard-openrc
   service:
     name: "wg.{{ item.name }}"
     state: restarted
@@ -7,4 +7,14 @@
   loop_control:
     label: "{{ item.name }}"
   when:
-    - item.start | default(true)
+    - item.state == "started"
+
+- name: restart wireguard-systemd
+  systemd:
+    name: "wg-quick@{{ item.name }}.service"
+    state: restarted
+  loop: "{{ wireguard_interfaces }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when:
+    - item.state == "started"

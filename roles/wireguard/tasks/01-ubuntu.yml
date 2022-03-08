@@ -1,0 +1,46 @@
+- name: install wireguard
+  apt:
+    name: wireguard
+    state: present
+
+- name: create wireguard directory
+  file:
+    path: "/etc/wireguard/"
+    state: directory
+    owner: root
+    group: root
+    mode: 0700
+
+- name: register present wireguard configs
+  find:
+    paths: "/etc/wireguard/"
+    patterns: "*.conf"
+  register: _files_present
+
+- name: copy wireguard configurations
+  no_log: true
+  copy:
+    content: "{{ config.value }}"
+    dest: "/etc/wireguard/{{ config.key }}.conf"
+    owner: root
+    group: root
+    mode: 0600
+  notify: restart wireguard-systemd
+  loop: "{{ wireguard_configs | dict2items }}"
+  loop_control:
+    loop_var: "config"
+    label: "{{ config.key }}"
+  register: _files_copied
+  when: wireguard_configs is defined
+
+- name: confugure wireguard interfaces
+  vars:
+    _present: "{{ _wireguard_present | json_query('files[*].path') | default([]) }}"
+    _created: "{{ _wireguard_created | json_query('results[*].dest') | default([]) }}"
+  service:
+    name: "wg-quick@{{ item.name }}.service"
+    use: systemd
+  args: "{{ item }}"
+  loop: "{{ wireguard_interfaces }}"
+  loop_control:
+    label: "{{ item.name }}"

@@ -4,6 +4,7 @@ smyrna
 tyros
 palmyra
 antiochia
+heraclea
 
 [asia]
 pergamon
@@ -14,6 +15,9 @@ smyrna
 antiochia
 tyros
 palmyra
+
+[pontus]
+heraclea
 
 [workstation]
 pergamon

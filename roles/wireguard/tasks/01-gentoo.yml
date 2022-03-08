@@ -1,0 +1,82 @@
+- name: install wireguard-tools
+  portage:
+    package: net-vpn/wireguard-tools
+    state: present
+
+- name: create wireguard directory
+  file:
+    path: "/etc/wireguard/"
+    state: directory
+    owner: root
+    group: root
+    mode: 0700
+
+- name: register present wireguard configs
+  find:
+    paths: "/etc/wireguard/"
+    patterns: "*.conf"
+  register: _files_present
+
+- name: copy wireguard configurations
+  no_log: true
+  copy:
+    content: "{{ config.value }}"
+    dest: "/etc/wireguard/{{ config.key }}.conf"
+    owner: root
+    group: root
+    mode: 0600
+  notify: restart wireguard-openrc
+  loop: "{{ wireguard_configs | dict2items }}"
+  loop_control:
+    loop_var: "config"
+    label: "{{ config.key }}"
+  register: _files_copied
+  when: wireguard_configs is defined
+
+- name: delete wireguard configs
+  vars:
+    _present: "{{ _files_present | json_query('files[*].path') | default([]) }}"
+    _copied: "{{ _files_copied | json_query('results[*].dest') | default([]) }}"
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop: "{{ _present | difference(_copied) }}"
+
+- name: register present wireguard links
+  find:
+    paths: "/etc/init.d/"
+    patterns: "wg.*"
+    file_type: link
+  register: _wireguard_present
+
+- name: create wireguard links
+  file:
+    src: "/etc/init.d/wg-quick"
+    dest: "/etc/init.d/wg.{{ item.name }}"
+    state: link
+  loop: "{{ wireguard_interfaces }}"
+  loop_control:
+    label: "{{ item.name }}"
+  register: _wireguard_created
+
+- name: confugure wireguard interfaces
+  vars:
+    _present: "{{ _wireguard_present | json_query('files[*].path') | default([]) }}"
+    _created: "{{ _wireguard_created | json_query('results[*].dest') | default([]) }}"
+  service:
+    name: "wg.{{ item.name }}"
+    runlevel: default
+    use: openrc
+  args: "{{ item }}"
+  loop: "{{ wireguard_interfaces }}"
+  loop_control:
+    label: "{{ item.name }}"
+
+- name: delete wireguard links
+  vars:
+    _present: "{{ _wireguard_present | json_query('files[*].path') | default([]) }}"
+    _created: "{{ _wireguard_created | json_query('results[*].dest') | default([]) }}"
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop: "{{ _present | difference(_created) }}"

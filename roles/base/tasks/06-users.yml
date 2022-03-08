@@ -1,3 +1,14 @@
+- name: create groups
+  tags: users
+  group:
+    state: present
+  args: "{{ group }}"
+  loop: "{{ base_groups }}"
+  loop_control:
+    loop_var: "group"
+    label: "{{ group.name }}"
+  when: base_groups is defined
+
 - name: create "ansible-managed" group
   tags: users
   group:
@@ -8,24 +19,9 @@
 - name: add users
   tags: users
   user:
-    name: "{{ user.name }}"
-    comment: "{{ user.comment | default('') }}"
-    create_home: "{{ user.create_home | default('true') }}"
-    system: "{{ user.system | default('false') }}"
-    groups: "{{ user.groups | default([]) }}"
-    uid: "{{ user.uid | default(omit) }}"
-    append: "{{ user.append | default(true) }}"
-  loop: "{{ base_users }}"
-  loop_control:
-    loop_var: "user"
-    label: "{{ user.name }}"
-
-- name: add users to "ansible-managed" group
-  tags: users
-  user:
-    name: "{{ user.name }}"
-    groups: "ansible-managed"
-    append: true
+    state: present
+    ssh: "{{ omit }}"
+  args: "{{ user }}"
   loop: "{{ base_users }}"
   loop_control:
     loop_var: "user"
@@ -39,7 +35,7 @@
     exclusive: true
   loop: "{{ base_users }}"
   loop_control:
-    loop_var: user
+    loop_var: "user"
     label: "{{ user.name }}"
   when:
     - user.ssh is defined

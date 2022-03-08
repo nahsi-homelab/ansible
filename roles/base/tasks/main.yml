@@ -3,30 +3,51 @@
   include_tasks: 00-preflight.yml
 
 - name: Configure portage
-  tags: [ portage, packages ]
+  tags:
+    - portage
+    - packages
   include_tasks: 01-portage.yml
+  when: ansible_distribution == "Gentoo"
 
-- name: Configure system
-  tags: [ system, packages, zfs ]
-  include_tasks: 02-system.yml
+- name: Configure Gentoo
+  tags:
+    - system
+    - packages
+    - zfs
+    - directories
+  include_tasks: 02-system-gentoo.yml
+  when: ansible_distribution == "Gentoo"
+
+- name: Configure Ubuntu
+  tags:
+    - system
+    - packages
+    - directories
+  include_tasks: 02-system-ubuntu.yml
+  when: ansible_distribution == "Ubuntu"
 
 - name: Configure containers
   tags: containers
-  include_tasks: 03-containers.yml
+  include_tasks: 03-docker.yml
 
 - name: Configure network
   tags: network
   include_tasks: 04-network.yml
-  when: base_network is defined
+  when:
+    - base_network is defined
+    - ansible_distribution == "Gentoo"
 
 - name: Configure wireless network
   tags: network
   include_tasks: 04-wireless.yml
-  when: base_iwd is defined
+  when:
+    - base_iwd is defined
+    - ansible_distribution == "Gentoo"
 
 - name: Configure sshd
   tags: ssh
   include_tasks: 05-ssh.yml
+  when: ansible_distribution == "Gentoo"
 
 - name: Create users
   tags: users
@@ -35,7 +56,9 @@
 - name: Configure logging
   tags: syslog
   include_tasks: 07-syslog.yml
+  when: ansible_distribution == "Gentoo"
 
 - name: Configure udev
   tags: udev
   include_tasks: 08-udev.yml
+  when: ansible_distribution == "Gentoo"

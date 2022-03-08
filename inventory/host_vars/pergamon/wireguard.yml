@@ -1,12 +1,10 @@
 wireguard_configs:
-  vpn: "{{ lookup('hashi_vault', 'secret/data/wireguard/pergamon:vpn') }}"
   office: "{{ lookup('hashi_vault', 'secret/data/wireguard/pergamon:office') }}"
+  oikumene: "{{ lookup('hashi_vault', 'secret/data/wireguard/pergamon:oikumene') }}"
 
 wireguard_interfaces:
-  - name: "vpn"
-    enable: false
-    start: false
-
   - name: "office"
-    enable: false
-    start: false
+    enabled: false
+
+  - name: "oikumene"
+    enabled: false

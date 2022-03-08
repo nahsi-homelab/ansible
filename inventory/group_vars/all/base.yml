@@ -1,3 +1,15 @@
+base_users_all:
+  - name: nahsi
+    shell: /bin/bash
+    groups:
+      - wheel
+      - portage
+      - docker
+    append: true
+    ssh: https://github.com/nahsi.keys
+
+base_users: "{{ base_users_all }}"
+
 # /usr/share/zoneinfo
 base_timezone: "Europe/Moscow"
 
@@ -201,45 +213,7 @@ base_sshd_config: |
 
   Subsystem sftp internal-sftp
 
-base_users_all:
-  - name: nahsi
-    groups:
-      - wheel
-      - portage
-      - docker
-    append: true
-    ssh: https://github.com/nahsi.keys
-    password: "bd7465fc49ba157a92c751e33c3de9030a5d303e917daeab49cd76ba8f1409abe573286925f1127fea19932c1292867d4eaead98aacbb0969a83a8f75fbe7181"
-
-base_users: "{{ base_users_all }}"
-
-# https://github.com/containers/image/blob/master/docs/containers-registries.conf.5.md
-base_containers_registries: |
-  [registries.search]
-  registries = ["docker.io", "quay.io"]
-
-# https://github.com/containers/image/blob/master/docs/containers-policy.json.5.md
-base_containers_policy:
-  default:
-    - type: insecureAcceptAnything
-
-# https://github.com/containers/storage/blob/master/docs/containers-storage.conf.5.md
-# base_containers_storage: ""
-
-# https://github.com/containers/common/blob/master/docs/containers.conf.5.md
-base_containers_containers: |
-  [engine]
-  runtime="crun"
-
-base_containers_storage: |
-  [storage]
-  driver="zfs"
-  runroot="/run/containers/storage"
-  graphroot="/var/lib/containers/storage"
-  [storage.options.zfs]
-  fsname="{{ zfs_main_pool }}/containers"
-
-base_containers_docker:
+base_docker_config:
   default-runtime: "crun"
   runtimes:
     crun:

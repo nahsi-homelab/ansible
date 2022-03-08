@@ -1,0 +1,31 @@
+base_groups:
+  - name: "wheel"
+  - name: "portage"
+
+base_sysctl:
+  - name: vm.swappiness
+    value: 1
+
+base_packages:
+  - doas
+  - ca-certificates
+  - jq
+  - unzip
+  - bind9-utils
+  - net-tools
+  - htop
+  - neovim
+  - nnn
+  - docker-compose
+  - containernetworking-plugins
+
+base_services:
+  - name: "docker"
+    enabled: true
+    staate: "started"
+
+base_docker_config:
+  log-driver: "json-file"
+  log-opts:
+    max-size: "32m"
+    max-file: "2"

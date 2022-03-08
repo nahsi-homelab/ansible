@@ -1,0 +1,53 @@
+- name: install crun OCI runtime
+  tags: containers
+  portage:
+    package: app-containers/crun
+    state: present
+  when: ansible_distribution == "Gentoo"
+
+- name: install docker
+  tags: containers
+  portage:
+    package:
+      - app-containers/docker
+    state: present
+  when: ansible_distribution == "Gentoo"
+
+- name: add Docker GPG key
+  apt_key: url=https://download.docker.com/linux/ubuntu/gpg
+  when: ansible_distribution == "Ubuntu"
+
+- name: add Docker APT repository
+  apt_repository:
+    repo: >
+      deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
+  when: ansible_distribution == "Ubuntu"
+
+- name: install Docker CE
+  apt:
+    name:
+      - "docker-ce"
+      - "docker-ce-cli"
+      - "containerd.io"
+    update_cache: true
+    install_recommends: false
+  when: ansible_distribution == "Ubuntu"
+
+- name: create /etc/docker
+  tags: containers
+  file:
+    dest: "/etc/docker"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: configure docker
+  tags: containers
+  copy:
+    content: "{{ base_docker_config | to_nice_json }}"
+    dest: "/etc/docker/daemon.json"
+    owner: root
+    group: root
+    mode: 0600
+  notify: restart docker

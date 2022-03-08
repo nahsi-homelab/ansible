@@ -20,10 +20,16 @@ base_sshd_openrc_config: |
 base_services:
   - name: "docker"
     runlevel: "default"
+    enabled: true
+    state: "started"
   - name: "iptables"
     runlevel: "default"
+    enabled: true
+    state: "started"
   - name: "tailscale"
     runlevel: "default"
+    enabled: true
+    state: "started"
 
 base_packages_tyros:
   - net-dialup/ppp

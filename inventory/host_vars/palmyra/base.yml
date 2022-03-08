@@ -33,8 +33,12 @@ base_packages: >
 base_services:
   - name: "docker"
     runlevel: "default"
+    enabled: true
+    state: "started"
   - name: "tailscale"
     runlevel: "default"
+    enabled: true
+    state: "started"
 
 base_users_palmyra:
   - name: github

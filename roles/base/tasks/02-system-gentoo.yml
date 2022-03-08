@@ -157,10 +157,7 @@
 - name: enable services
   tags: system
   service:
-    name: "{{ service.name }}"
-    enabled: yes
-    runlevel: "{{ service.runlevel }}"
-    use: openrc
+  args: "{{ service }}"
   loop: "{{ base_services }}"
   loop_control:
     loop_var: "service"

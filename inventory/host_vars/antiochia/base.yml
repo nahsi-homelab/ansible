@@ -28,8 +28,12 @@ base_network_interfaces:
 base_services:
   - name: "docker"
     runlevel: "default"
+    enabled: true
+    state: "started"
   - name: "tailscale"
     runlevel: "default"
+    enabled: true
+    state: "started"
 
 base_users_antiochia:
   - name: github

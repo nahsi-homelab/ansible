@@ -44,12 +44,20 @@ base_packages: >
 base_services:
   - name: "elogind"
     runlevel: "default"
+    enabled: true
+    state: "started"
   - name: "alsasound"
     runlevel: "default"
+    enabled: true
+    state: "started"
   - name: "docker"
     runlevel: "default"
+    enabled: true
+    state: "started"
   - name: "tailscale"
     runlevel: "default"
+    enabled: true
+    state: "started"
 
 base_users_pergamon:
   - name: github

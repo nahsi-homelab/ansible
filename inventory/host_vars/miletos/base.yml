@@ -30,16 +30,28 @@ base_dns: |
 base_services:
   - name: "mbpfan"
     runlevel: "default"
+    enabled: true
+    state: "started"
   - name: "thermald"
     runlevel: "default"
+    enabled: true
+    state: "started"
   - name: "elogind"
     runlevel: "default"
+    enabled: true
+    state: "started"
   - name: "alsasound"
     runlevel: "default"
+    enabled: true
+    state: "started"
   - name: "docker"
     runlevel: "default"
+    enabled: true
+    state: "started"
   - name: "tailscale"
     runlevel: "default"
+    enabled: true
+    state: "started"
 
 base_iwd: |
   [General]

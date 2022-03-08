@@ -1,8 +1,8 @@
 consul_version: "1.11.4"
 consul_servers:
-  - 192.168.130.10
-  - 192.168.130.20
-  - 192.168.230.1
+  - 100.81.139.12
+  - 100.65.144.108
+  - 100.81.139.12
 
 gotmpl_docker: !unsafe '{{ GetInterfaceIP "docker0" }}'
 gotmpl_nomad: !unsafe '{{ GetInterfaceIP "nomad" }}'
@@ -150,6 +150,7 @@ consul_service: |
   depend() {
       need net
       after docker
+      after tailscale
   }
 
   reload() {

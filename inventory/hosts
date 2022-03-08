@@ -8,7 +8,6 @@ heraclea
 
 [asia]
 pergamon
-miletos
 smyrna
 
 [syria]
@@ -18,6 +17,9 @@ palmyra
 
 [pontus]
 heraclea
+
+[cosmos]
+miletos dc=cosmos
 
 [workstation]
 pergamon

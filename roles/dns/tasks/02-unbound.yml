@@ -2,7 +2,14 @@
   portage:
     package: net-dns/unbound
     state: present
-  notify: restart unbound
+  when: ansible_distribution == "Gentoo"
+
+- name: install unbound
+  apt:
+    package: unbound
+    install_recommends: false
+    state: present
+  when: ansible_distribution == "Ubuntu"
 
 - name: create unbound config directory
   file:
@@ -57,5 +64,3 @@
   service:
     name: unbound
     enabled: true
-    runlevel: default
-    use: openrc

@@ -1,0 +1,26 @@
+dns_unbound_configs:
+  heracle: |
+    server:
+      interface: 192.168.30.1@53
+      interface: 127.0.0.1@53
+
+  consul: |
+    server:
+      private-domain: "consul"
+      domain-insecure: "consul"
+
+    stub-zone:
+      name: "consul"
+      stub-addr: 127.0.0.1@8600
+      stub-no-cache: yes
+
+  cinarra: |
+    forward-zone:
+      name: "cinarra.io."
+      forward-addr: 1.1.1.1
+      forward-no-cache: yes
+
+    forward-zone:
+      name: "cinarra.com."
+      forward-addr: 1.1.1.1
+      forward-no-cache: yes

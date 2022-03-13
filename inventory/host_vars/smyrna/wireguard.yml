@@ -1,7 +1,7 @@
 wireguard_configs:
-  oikumene: "{{ lookup('hashi_vault', 'secret/data/wireguard/smyrna:oikumene') }}"
+  relay: "{{ lookup('hashi_vault', 'secret/data/wireguard/smyrna:relay') }}"
 
 wireguard_interfaces:
-  - name: "oikumene"
+  - name: "relay"
     enabled: true
     state: "started"

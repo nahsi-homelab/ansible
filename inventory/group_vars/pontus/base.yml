@@ -1,6 +1,7 @@
-base_tailscale_config: |
-  PORT="41641"
-  FLAGS="--debug=0.0.0.0:8282"
+base_dns: |
+  resolv_conf="/etc/resolv.conf"
+  search_domains="node.consul service.consul"
+  name_servers="1.1.1.1"
 
 base_groups:
   - name: "wheel"
@@ -9,7 +10,7 @@ base_groups:
 base_sysctl:
   - name: net.ipv4.ip_forward
     value: 1
-  - name: net.ipv6.conf.all.forwarding
+  - name: net.ipv4.conf.all.proxy_arp
     value: 1
   - name: net.ipv4.conf.default.rp_filter
     value: 1
@@ -29,15 +30,6 @@ base_packages:
   - nnn
   - docker-compose
   - containernetworking-plugins
-  - tailscale
-
-base_services:
-  - name: "docker"
-    enabled: true
-    state: "started"
-  - name: "tailscaled"
-    enabled: true
-    state: "started"
 
 base_docker_config:
   log-driver: "json-file"

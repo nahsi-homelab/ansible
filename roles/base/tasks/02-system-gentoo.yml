@@ -154,16 +154,6 @@
     group: root
     mode: 0644
 
-- name: copy tailscale openrc config
-  tags: system
-  copy:
-    content: "{{ base_tailscale_config }}"
-    dest: "/etc/conf.d/tailscale"
-    owner: root
-    group: root
-    mode: 0660
-  notify: restart tailscale
-
 - name: enable services
   tags: system
   service:

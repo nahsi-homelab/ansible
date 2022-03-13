@@ -1,1 +1,2 @@
 dc: "pontus"
+private_ip: "{{ ansible_default_ipv4 }}"

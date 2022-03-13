@@ -6,31 +6,13 @@ base_filesystems:
     opts: "rw,nosuid,noatime,nodev,size=1G,mode=1777"
     type: "tmpfs"
 
-base_sysctl:
-  - name: net.ipv4.ip_forward
-    value: 1
-  - name: net.ipv6.conf.all.forwarding
-    value: 1
-  - name: net.ipv4.conf.default.rp_filter
-    value: 1
-  - name: vm.swappiness
-    value: 1
-
 base_sshd_openrc_config: |
   SSHD_CONFDIR="${RC_PREFIX%/}/etc/ssh"
   SSHD_OPTS=""
   rc_need="net.enp2s0"
 
 base_services:
-  - name: "docker"
-    runlevel: "default"
-    enabled: true
-    state: "started"
   - name: "iptables"
-    runlevel: "default"
-    enabled: true
-    state: "started"
-  - name: "tailscale"
     runlevel: "default"
     enabled: true
     state: "started"

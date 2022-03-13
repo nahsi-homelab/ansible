@@ -1,5 +1,5 @@
 wireguard_configs:
-  relay: "{{ lookup('hashi_vault', 'secret/data/wireguard/tyros:relay') }}"
+  relay: "{{ lookup('hashi_vault', 'secret/data/wireguard/{{ inventory_hostname }}:relay') }}"
 
 wireguard_interfaces:
   - name: "relay"

@@ -1,8 +1,8 @@
 consul_version: "1.11.4"
 consul_servers:
-  - 100.81.139.12
-  - 100.65.144.108
-  - 100.81.139.12
+  - 100.116.124.127
+  - 100.105.155.85
+  - 100.82.139.12
 
 gotmpl_docker: !unsafe '{{ GetInterfaceIP "docker0" }}'
 gotmpl_nomad: !unsafe '{{ GetInterfaceIP "nomad" }}'

@@ -12,14 +12,6 @@
     group: root
     mode: 0644
 
-- name: add Tailscale GPG key
-  apt_key: url=https://pkgs.tailscale.com/stable/ubuntu/impish.gpg
-
-- name: add Tailscale repository
-  apt_repository:
-    repo: >
-      deb https://pkgs.tailscale.com/stable/ubuntu {{ ansible_distribution_release }} main
-
 - name: install packages
   tags: packages
   apt:
@@ -29,16 +21,6 @@
     autoclean: true
     autoremove: true
     state: present
-
-- name: copy tailscale config
-  tags: system
-  copy:
-    content: "{{ base_tailscale_config }}"
-    dest: "/etc/default/tailscaled"
-    owner: root
-    group: root
-    mode: 0660
-  notify: restart tailscaled
 
 - name: configure doas
   tags: system
@@ -128,3 +110,7 @@
     group: root
     mode: 0644
   notify: run resolvconf
+
+- name: disable ufw
+  ufw:
+    state: disabled

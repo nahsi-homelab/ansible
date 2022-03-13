@@ -51,3 +51,19 @@
     group: root
     mode: 0600
   notify: restart docker
+
+- name: enable docker
+  tags: containers
+  service:
+    name: docker
+    enabled: true
+    runlevel: default
+    use: openrc
+  when: ansible_distribution == "Gentoo"
+
+- name: enable docker
+  tags: containers
+  service:
+    name: docker
+    enabled: true
+  when: ansible_distribution == "Ubuntu"

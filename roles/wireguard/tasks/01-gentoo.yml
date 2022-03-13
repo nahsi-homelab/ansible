@@ -33,6 +33,18 @@
   register: _files_copied
   when: wireguard_configs is defined
 
+- name: disable wireguard interfaces
+  vars:
+    _present: "{{ _files_present | json_query('files[*].path') | default([]) }}"
+    _created: "{{ _files_copied | json_query('results[*].dest') | default([]) }}"
+  service:
+    name: "{{ item | basename }}"
+    enabled: false
+    state: stopped
+    runlevel: default
+    use: openrc
+  loop: "{{ _present | difference(_created) }}"
+
 - name: delete wireguard configs
   vars:
     _present: "{{ _files_present | json_query('files[*].path') | default([]) }}"

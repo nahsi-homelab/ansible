@@ -65,7 +65,7 @@ telegraf_configs_all:
     [[inputs.sensors]]
 
     [[inputs.net]]
-    interfaces = ["eth*", "enp*", "ppp*", "oikumene", "docker0", "nomad", "tailscale0"]
+    interfaces = ["eth*", "enp*", "ppp*", "relay", "docker0", "nomad"]
     [[inputs.netstat]]
 
     [[inputs.disk]]

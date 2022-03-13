@@ -2,9 +2,15 @@ base_dns: |
   resolv_conf="/etc/resolv.conf"
   search_domains="node.consul service.consul"
 
-base_tailscale_config: |
- # /etc/conf.d/tailscaled
- tailscaled_args="--debug=0.0.0.0:8282"
+base_sysctl:
+  - name: net.ipv4.ip_forward
+    value: 1
+  - name: net.ipv4.conf.all.proxy_arp
+    value: 1
+  - name: net.ipv4.conf.default.rp_filter
+    value: 1
+  - name: vm.swappiness
+    value: 1
 
 base_users_all:
   - name: nahsi
@@ -63,7 +69,6 @@ base_doas_conf: >
 
 base_packages_all:
   - app-admin/doas
-  - net-vpn/tailscale
   - sys-devel/distcc
   - dev-vcs/git
   - sys-process/cronie

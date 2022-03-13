@@ -10,16 +10,6 @@ base_filesystems:
     opts: "rw,nosuid,noatime,nodev,size=2G,mode=1777"
     type: "tmpfs"
 
-base_sysctl:
-  - name: net.ipv4.ip_forward
-    value: 1
-  - name: net.ipv6.conf.all.forwarding
-    value: 1
-  - name: net.ipv4.conf.default.rp_filter
-    value: 1
-  - name: vm.swappiness
-    value: 1
-
 base_network: |
   config_enp4s0="192.168.230.10/24"
   routes_enp4s0="default via 192.168.230.1"
@@ -52,15 +42,8 @@ base_services:
     runlevel: "default"
     enabled: true
     state: "started"
+
   - name: "alsasound"
-    runlevel: "default"
-    enabled: true
-    state: "started"
-  - name: "docker"
-    runlevel: "default"
-    enabled: true
-    state: "started"
-  - name: "tailscale"
     runlevel: "default"
     enabled: true
     state: "started"

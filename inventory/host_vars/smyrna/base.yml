@@ -12,7 +12,6 @@ base_sshd_openrc_config: |
   rc_need="net.enp2s0"
 
 base_services:
-
   - name: "iptables"
     runlevel: "default"
     enabled: true

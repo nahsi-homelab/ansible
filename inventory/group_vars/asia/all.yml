@@ -1,3 +1,4 @@
 dc: "asia"
 
-apcupsd_address: "192.168.230.1:3551"
+gotmpl_private_address: !unsafe '{{ GetPrivateInterfaces | include "network" "192.168.230.0/24" | attr "address" }}'
+gotmpl_private_interface: !unsafe '{{ GetPrivateInterfaces | include "network" "192.168.230.0/24" | attr "name" }}'

@@ -6,7 +6,6 @@ dns_unbound_configs:
       interface: 192.168.230.1@53
       interface: 192.168.240.1@53
       interface: 192.168.250.1@53
-      interface: {{ private_ip }}@53
 
   consul: |
     server:

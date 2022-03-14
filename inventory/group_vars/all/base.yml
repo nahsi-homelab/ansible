@@ -69,6 +69,7 @@ base_doas_conf: >
 
 base_packages_all:
   - app-admin/doas
+  - net-vpn/innernet
   - sys-devel/distcc
   - dev-vcs/git
   - sys-process/cronie
@@ -147,6 +148,7 @@ base_portage_package_use_all:
     sys-apps/util-linux tty-helpers
     net-misc/dhcp client
     net-misc/iputils arping
+    net-vpn/innernet server client
 
 base_portage_package_use: "{{ base_portage_package_use_all }}"
 

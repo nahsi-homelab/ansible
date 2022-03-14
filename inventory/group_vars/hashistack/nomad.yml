@@ -2,12 +2,13 @@ nomad_config_hashistack:
   server:
     enabled: true
     bootstrap_expect: 3
+    encrypt: "oh11aOi8mTd1xrer/D78mue+LarnCRb7ATZfUN4xenI="
     raft_protocol: 3
     server_join:
       retry_join:
-        - 100.116.124.127
-        - 100.105.155.85
-        - 100.82.139.12
+        - 192.168.130.10
+        - 192.168.130.20
+        - 192.168.230.1
 
     default_scheduler_config:
       memory_oversubscription_enabled: true

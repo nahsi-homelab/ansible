@@ -1,15 +1,15 @@
 consul_version: "1.11.4"
 consul_servers:
-  - 100.116.124.127
-  - 100.105.155.85
-  - 100.82.139.12
+  - 192.168.130.10
+  - 192.168.130.20
+  - 192.168.230.1
 
 gotmpl_docker: !unsafe '{{ GetInterfaceIP "docker0" }}'
 gotmpl_nomad: !unsafe '{{ GetInterfaceIP "nomad" }}'
 
 consul_config_all:
   datacenter: "oikumene"
-  encrypt: "{{ lookup('hashi_vault', 'secret/data/gossip:consul') }}"
+  encrypt: "ceoLcY2WbPcp+tfWxP4uAJNAHi4S1K8dhXdhf+DQmIE="
   data_dir: "/var/lib/consul/"
   protocol: 3
   rejoin_after_leave: true

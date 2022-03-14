@@ -1,2 +1,5 @@
 dc: "pontus"
 private_ip: "{{ ansible_default_ipv4 }}"
+
+gotmpl_private_address: !unsafe '{{ GetPrivateInterfaces | include "network" "10.3.10.0/24" | attr "address" }}'
+gotmpl_private_interface: !unsafe '{{ GetPrivateInterfaces | include "network" "10.3.10.0/24" | attr "name" }}'

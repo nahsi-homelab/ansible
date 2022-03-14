@@ -28,4 +28,4 @@ nomad_configs:
     client:
       host_network:
         - public:
-            interface: "enp6s0"
+            interface: "enp7s0"

@@ -1,6 +1,6 @@
 pergamon
 miletos
-smyrna
+smyrna ansible_host=192.168.230.1
 tyros
 palmyra
 antiochia

@@ -1,7 +1,7 @@
 arch: "amd64"
 bios: "uefi"
 
-private_ip: "100.91.170.72"
+private_ip: "192.168.230.10"
 
 zfs_main_pool: "main"
 

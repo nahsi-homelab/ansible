@@ -1,6 +1,11 @@
 wireguard_configs:
   office: "{{ lookup('hashi_vault', 'secret/data/wireguard/miletos:office') }}"
+  relay: "{{ lookup('hashi_vault', 'secret/data/wireguard/miletos:relay') }}"
 
 wireguard_interfaces:
   - name: "office"
     enabled: false
+
+  - name: "relay"
+    enabled: true
+    state: "started"

@@ -16,16 +16,16 @@
         name: ../../telegraf
         tasks_from: 00-preflight.yml
 
-#      - include_role:
-#          name: consul
-#          tasks_from: 00-preflight.yml
+    - include_role:
+        name: consul
+        tasks_from: 00-preflight.yml
 
-#      - include_role:
-#          name: nomad
-#          tasks_from: 00-preflight.yml
+    - include_role:
+        name: nomad
+        tasks_from: 00-preflight.yml
   roles:
     - role: ../../roles/base
     - role: ../../roles/wireguard
     - role: ../../telegraf
-    # - "consul"
-    # - "nomad"
+    - "consul"
+    - "nomad"

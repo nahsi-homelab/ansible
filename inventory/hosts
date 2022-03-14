@@ -1,11 +1,11 @@
 pergamon
 miletos
-smyrna ansible_host=192.168.230.1
+smyrna
 tyros
 palmyra
 antiochia
-heraclea ansible_host=heraclea.nahsi.dev
-nicomedia ansible_host=nicomedia.nahsi.dev
+heraclea
+nicomedia
 
 [asia]
 pergamon

@@ -1,7 +1,7 @@
 base_dns: |
   resolv_conf="/etc/resolv.conf"
   search_domains="node.consul service.consul"
-  name_servers="1.1.1.1"
+  name_servers="10.3.10.3 10.3.10.4 1.1.1.1"
 
 base_groups:
   - name: "wheel"
@@ -20,6 +20,7 @@ base_sysctl:
 base_packages:
   - doas
   - smartmontools
+  - lm-sensors
   - ca-certificates
   - jq
   - unzip

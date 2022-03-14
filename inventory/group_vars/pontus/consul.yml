@@ -2,9 +2,9 @@ consul_service: |
   [Unit]
   Description=HashiCorp Consul - A service mesh solution
   Documentation=https://www.consul.io/
-  Requires=network-online.target
-  BindsTo=docker.service
-  After=network-online.target cloud-init.target docker.service
+  Requires=network-online.target wg-quick@relay.service
+  BindsTo=docker.service wg-quick@relay.service
+  After=network-online.target cloud-init.target docker.service wg-quick@relay.service
   DefaultDependencies=no
   ConditionFileNotEmpty={{ consul_dirs.main.path }}/consul.json
 

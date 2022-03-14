@@ -3,7 +3,7 @@ nomad_service: |
   Description=HashiCorp Nomad - a workload orchestrator
   Documentation=https://www.nomadproject.io/docs/
   Requires=network-online.target
-  After=network-online.target cloud-init.target
+  After=network-online.target cloud-init.target wg-quick@relay.service
   DefaultDependencies=no
   ConditionFileNotEmpty={{ nomad_dirs.main.path }}/nomad.json
 

@@ -29,3 +29,7 @@ nomad_configs:
       host_network:
         - public:
             interface: "enp1s0"
+  meta:
+    client:
+      meta:
+        vultr_region: "ams"

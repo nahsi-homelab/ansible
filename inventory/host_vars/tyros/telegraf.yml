@@ -1,4 +1,16 @@
 telegraf_configs_tyros:
+  sensors: |
+    [[inputs.sensors]]
+
+  zfs: |
+    [[inputs.zfs]]
+      kstatMetrics = ["arcstats", "zil"]
+    [[inputs.execd]]
+      command = ["/usr/libexec/zfs/zpool_influxdb", "--execd"]
+      signal = "STDIN"
+      restart_delay = "10s"
+      data_format = "influx"
+
   apcupsd: |
     [[inputs.apcupsd]]
       # A list of running apcupsd server to connect to.

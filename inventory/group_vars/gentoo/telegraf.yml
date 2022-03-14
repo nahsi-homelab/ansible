@@ -1,0 +1,7 @@
+telegraf_configs_gentoo:
+
+telegraf_configs: >
+  {{
+    telegraf_configs_all |
+    combine(telegraf_configs_gentoo, recursive=true)
+  }}

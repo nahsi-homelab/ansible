@@ -3,12 +3,12 @@ telegraf_checksum: "f27a8e4a395e5ad7fac7663400b9119b0b0ff77f3baf5e68fa944b40b509
 
 telegraf_config: |
   [agent]
-    interval = "15s"
+    interval = "5s"
     round_interval = true
     metric_batch_size = 10000
     metric_buffer_limit = 100000
     collection_jitter = "1s"
-    flush_interval = "15s"
+    flush_interval = "5s"
     flush_jitter = "0s"
     precision = ""
     ## Override default hostname, if empty use os.Hostname()
@@ -30,7 +30,7 @@ telegraf_configs_all:
       listen = "{{ private_ip }}:9271"
       metric_version = 2
       path = "/metrics"
-      expiration_interval = "30s"
+      expiration_interval = "15s"
 
     [[outputs.health]]
       service_address = "http://127.0.0.1:9270"
@@ -62,7 +62,6 @@ telegraf_configs_all:
     [[inputs.kernel]]
     [[inputs.kernel_vmstat]]
     [[inputs.processes]]
-    [[inputs.sensors]]
 
     [[inputs.net]]
     interfaces = ["eth*", "enp*", "ppp*", "relay", "docker0", "nomad"]
@@ -76,17 +75,6 @@ telegraf_configs_all:
     [[inputs.diskio]]
       [inputs.diskio.tagdrop]
       device = ["*/containers/*"]
-
-  zfs: |
-    {% if dc != "pontus" %}
-    [[inputs.zfs]]
-      kstatMetrics = ["arcstats", "zil"]
-    [[inputs.execd]]
-      command = ["/usr/libexec/zfs/zpool_influxdb", "--execd"]
-      signal = "STDIN"
-      restart_delay = "10s"
-      data_format = "influx"
-    {% endif %}
 
   smart: |
     [[inputs.smart]]
@@ -111,12 +99,13 @@ telegraf_scripts_all:
     cpu_model() {
       local out="$(grep -m 1 'model name' /proc/cpuinfo)"
       local out="${out#*: }"
+      local out="${out//,/_}"
       echo "${out// /_}"
     }
 
     emit() {
     cat<<EOF
-    system,kernel_release=$(kernel_release),cpu_model=$(cpu_model) info=1
+    system,dc={{ dc }},kernel_release=$(kernel_release),cpu_model=$(cpu_model) info=1
     EOF
     }
 

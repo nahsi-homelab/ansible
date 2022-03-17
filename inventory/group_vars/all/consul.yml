@@ -150,7 +150,6 @@ consul_service: |
   depend() {
       need net
       after docker
-      after tailscale
   }
 
   reload() {

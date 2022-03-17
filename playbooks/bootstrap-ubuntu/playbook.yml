@@ -5,6 +5,10 @@
     ansible_user: root
   pre_tasks:
     - include_role:
+        name: ../../roles/dns
+        tasks_from: 00-preflight.yml
+
+    - include_role:
         name: ../../roles/base
         tasks_from: 00-preflight.yml
 
@@ -24,6 +28,7 @@
         name: nomad
         tasks_from: 00-preflight.yml
   roles:
+    - role: ../../roles/dns
     - role: ../../roles/base
     - role: ../../roles/wireguard
     - role: ../../telegraf

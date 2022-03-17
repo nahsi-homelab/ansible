@@ -1,14 +1,16 @@
 nomad_config_hashistack:
   server:
     enabled: true
-    bootstrap_expect: 3
+    bootstrap_expect: 5
     encrypt: "oh11aOi8mTd1xrer/D78mue+LarnCRb7ATZfUN4xenI="
     raft_protocol: 3
     server_join:
       retry_join:
         - 192.168.130.10
         - 192.168.130.20
-        - 192.168.230.1
+        - 10.0.30.1
+        - 10.0.30.2
+        - 10.0.30.3
 
     default_scheduler_config:
       memory_oversubscription_enabled: true

@@ -17,7 +17,7 @@
         tasks_from: 00-preflight.yml
 
     - include_role:
-        name: ../../telegraf
+        name: ../../roles/telegraf
         tasks_from: 00-preflight.yml
 
     - include_role:
@@ -31,6 +31,6 @@
     - role: ../../roles/dns
     - role: ../../roles/base
     - role: ../../roles/wireguard
-    - role: ../../telegraf
+    - role: ../../roles/telegraf
     - "consul"
     - "nomad"

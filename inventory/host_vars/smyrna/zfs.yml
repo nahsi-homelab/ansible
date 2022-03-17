@@ -29,7 +29,7 @@ base_zfs_datasets:
 
   - name: "main/users/nahsi/home"
     properties:
-      mountpoint: "/home/nahsi/"
+      mountpoint: "/home/nahsi"
     owner: "nahsi"
     group: "nahsi"
     mode: "0755"

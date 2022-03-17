@@ -118,3 +118,19 @@ base_zfs_datasets:
     owner: "1000"
     group: "1000"
     mode: "0700"
+
+  - name: "hot/data/postgres"
+    properties:
+      atime: "off"
+      mountpoint: "/var/lib/postgres"
+    owner: "999"
+    group: "999"
+    mode: "0700"
+
+  - name: "hot/data/redis-mail"
+    properties:
+      atime: "off"
+      mountpoint: "/var/lib/redis-mail"
+      quota: "1G"
+    owner: "nobody"
+    group: "nobody"

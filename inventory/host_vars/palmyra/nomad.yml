@@ -10,13 +10,11 @@ nomad_configs:
         - minio:
             path: "/var/lib/minio"
         - redis-mail:
-            path: "/var/lib/redis/mail"
+            path: "/var/lib/redis-mail"
         - victoria-metrics:
             path: "/var/lib/victoria-metrics"
 
   meta:
     client:
       meta:
-        zoo_node_id: 2
-        kafka_node_id: 2
         minio_node_id: 2

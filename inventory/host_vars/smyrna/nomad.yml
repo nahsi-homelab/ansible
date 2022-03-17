@@ -12,14 +12,8 @@ nomad_configs:
             path: "/var/lib/home-assistant"
         - minio:
             path: "/var/lib/minio"
-        - postgres:
-            path: "/var/lib/postgres"
-        - redis-mail:
-            path: "/var/lib/redis/mail"
 
   meta:
     client:
       meta:
-        zoo_node_id: 4
-        kafka_node_id: 4
         minio_node_id: 4

@@ -5,12 +5,6 @@ nomad_configs:
         - docker-socket:
             path: "/var/run/docker.sock"
 
-        - prometheus:
-            path: "/var/lib/prometheus"
-        - loki:
-            path: "/var/lib/loki"
-        - grafana:
-            path: "/var/lib/grafana"
         - unifi:
             path: "/var/lib/unifi"
         - transmission:
@@ -27,12 +21,12 @@ nomad_configs:
             path: "/var/lib/mariadb"
         - filestash:
             path: "/var/lib/filestash"
+        - postgres:
+            path: "/var/lib/postgres"
+        - redis-mail:
+            path: "/var/lib/redis-mail"
 
   meta:
     client:
       meta:
-        zoo_node_id: 1
-        kafka_node_id: 1
-        minio_node_id: 1
-
         mongo_node_id: "primary"

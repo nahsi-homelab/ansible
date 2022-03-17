@@ -22,14 +22,3 @@ nomad_service: |
 
   [Install]
   WantedBy=multi-user.target
-
-nomad_configs:
-  public_network:
-    client:
-      host_network:
-        - public:
-            interface: "enp1s0"
-  meta:
-    client:
-      meta:
-        vultr_region: "ams"

@@ -3,7 +3,6 @@ kernel_boot_device: "/dev/disk/by-uuid/50C7-C33B"
 _kernel_cmd: >-
   ro quiet loglevel=0
   rd.vconsole.font=ter-i24b
-  zbm.prefer=zfsbootmenu:POOL=main
   zbm.set_hostid=0
   rd.neednet=1
   ip=192.168.230.11

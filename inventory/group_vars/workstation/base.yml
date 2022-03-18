@@ -39,6 +39,7 @@ base_packages_desktop:
   - app-admin/pass
 
   - media-video/ffmpeg
+  - media-video/handbrake
   - media-video/mpv
   - media-video/mediainfo
   - media-tv/jellyfin-mpv-shim
@@ -113,7 +114,8 @@ base_packages_desktop:
 
 base_portage_package_use_desktop:
   desktop: |
-    media-video/ffmpeg chromium libdrm x264 x265 webp vpx vorbis theora
+    media-video/ffmpeg chromium libdrm x264 x265 webp vpx vorbis theora fdk
+    media-video/handbrake fdk x265
     media-gfx/imagemagick -X tiff
     virtual/imagemagick-tools tiff
     media-libs/freetype harfbuzz

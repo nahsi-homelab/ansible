@@ -1,4 +1,4 @@
-kernel_boot_device: "/dev/disk/by-uuid/cd4f87d3-29dd-493b-9740-513ed92159cc"
+kernel_boot_device: "/dev/disk/by-uuid/713c7f89-dc5d-426b-a7eb-6fab99ce006e"
 
 kernel_zfsbootmenu_config:
   Global:

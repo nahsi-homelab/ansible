@@ -115,7 +115,7 @@ base_packages_desktop:
 base_portage_package_use_desktop:
   desktop: |
     media-video/ffmpeg chromium libdrm x264 x265 webp vpx vorbis theora fdk
-    media-video/handbrake fdk x265
+    media-video/handbrake fdk x265 gtk
     media-gfx/imagemagick -X tiff
     virtual/imagemagick-tools tiff
     media-libs/freetype harfbuzz

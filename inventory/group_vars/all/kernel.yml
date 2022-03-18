@@ -21,9 +21,11 @@ kernel_zfsbootmenu_config:
     Versions: 2
     Enabled: true
 
-kernel_zfsbootmenu_dracut_configs:
+kernel_zfsbootmenu_dracut_configs_all:
   dropbear: |
     add_dracutmodules+=" crypt-ssh "
     dropbear_rsa_key=/etc/dropbear/id_rsa
     dropbear_ecdsa_key=/etc/dropbear/id_ecdsa
     dropbear_acl=/home/nahsi/.ssh/authorized_keys
+
+kernel_zfsbootmenu_dracut_configs: "{{ kernel_zfsbootmenu_dracut_configs_all }}"

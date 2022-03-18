@@ -15,7 +15,6 @@ kernel_zfsbootmenu_config:
   Kernel:
     CommandLine: >-
       ro quiet loglevel=0
-      zbm.prefer=zfsbootmenu:POOL=main
       zbm.set_hostid=0
       zbm.timeout=30
       rd.neednet=1
@@ -37,12 +36,6 @@ kernel_firmware:
 
   - rtl_nic/rtl8168e-2.fw
 
-kernel_module_load:
-  virtualbox: |
-    vboxdrv
-    vboxnetadp
-    vboxnetflt
-
 kernel_configs:
   01platform: |
     CONFIG_SENSORS_K10TEMP=y
@@ -61,3 +54,13 @@ kernel_configs:
   99firmware: |
     CONFIG_EXTRA_FIRMWARE_DIR="/lib/firmware"
     CONFIG_EXTRA_FIRMWARE="{{ kernel_firmware | join(' ') }}"
+
+kernel_zfsbootmenu_dracut_configs_palmyra:
+  rtl: |
+    add_drivers+=" r8168 "
+
+kernel_zfsbootmenu_dracut_configs: >
+  {{
+    kernel_zfsbootmenu_dracut_configs_all |
+    combine(kernel_zfsbootmenu_dracut_configs_palmyra, recursive=true)
+  }}

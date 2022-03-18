@@ -9,6 +9,7 @@ dns_unbound_config: |
     access-control: 172.17.0.0/16 allow
     access-control: 172.26.64.0/20 allow
     access-control: 192.168.0.0/16 allow
+    access-control: 10.0.0.0/8 allow
     do-ip4: yes
     do-ip6: no
     do-udp: yes

@@ -2,8 +2,8 @@ kernel_boot_device: "/dev/disk/by-partlabel/EFI"
 
 _kernel_cmd: >-
   ro quiet loglevel=0
-  zbm.prefer=zfsbootmenu:POOL=hot
   zbm.set_hostid=0
+  zbm.timeout=30
   rd.neednet=1
   ip=192.168.130.11
   netmask=255.255.255.0
@@ -18,12 +18,6 @@ kernel_refind_menu: |
 kernel_firmware:
   - amd/amd_sev_fam17h_model0xh.sbin
   - amd-ucode/microcode_amd_fam17h.bin
-
-kernel_module_load:
-  virtualbox: |
-    vboxdrv
-    vboxnetadp
-    vboxnetflt
 
 kernel_configs:
   01platform: |

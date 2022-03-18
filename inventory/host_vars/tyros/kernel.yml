@@ -3,7 +3,6 @@ kernel_boot_device: "/dev/disk/by-uuid/4EA4-5E30"
 _kernel_cmd: >-
   ro quiet loglevel=0
   rd.vconsole.font=ter-i24b
-  zbm.prefer=zfsbootmenu:POOL=main
   zbm.set_hostid=0
 
 kernel_refind_menu: |
@@ -86,7 +85,3 @@ kernel_configs:
   99firmware: |
     CONFIG_EXTRA_FIRMWARE_DIR="/lib/firmware"
     CONFIG_EXTRA_FIRMWARE="{{ kernel_firmware | join(' ') }}"
-
-kernel_dracut_configs:
-  xhci_teardown:
-    zfsbootmenu_teardown+=" /usr/share/examples/zfsbootmenu/xhci-teardown.sh "

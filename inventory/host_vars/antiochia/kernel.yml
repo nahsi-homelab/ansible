@@ -3,7 +3,6 @@ kernel_boot_device: "/dev/disk/by-partlabel/EFI"
 _kernel_cmd: >-
   ro quiet loglevel=0
   zbm.set_hostid=0
-  zbm.timeout=30
   rd.neednet=1
   ip=192.168.130.11
   netmask=255.255.255.0

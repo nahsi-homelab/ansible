@@ -13,3 +13,4 @@ nomad_configs:
         workstation: true
 
         mongo_node_id: "secondary"
+        minio_node_id: 3

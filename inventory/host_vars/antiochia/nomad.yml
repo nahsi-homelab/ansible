@@ -30,3 +30,4 @@ nomad_configs:
     client:
       meta:
         mongo_node_id: "primary"
+        minio_node_id: 1

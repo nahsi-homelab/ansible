@@ -1,5 +1,5 @@
 dns_unbound_configs:
-  heracle: |
+  pontus: |
     server:
       interface: 127.0.0.1@53
       interface: {{ private_ip }}@53

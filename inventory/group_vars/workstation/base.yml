@@ -39,6 +39,8 @@ base_packages_desktop:
   - app-admin/pass
 
   - media-video/ffmpeg
+  - media-video/mkvtoolnix
+  - media-video/subtitleeditor
   - media-video/handbrake
   - media-video/mpv
   - media-video/mediainfo
@@ -116,6 +118,7 @@ base_portage_package_use_desktop:
   desktop: |
     media-video/ffmpeg chromium libdrm x264 x265 webp vpx vorbis theora fdk
     media-video/handbrake fdk x265 gtk
+    media-video/mkvtoolnix dvd gui
     media-gfx/imagemagick -X tiff
     virtual/imagemagick-tools tiff
     media-libs/freetype harfbuzz

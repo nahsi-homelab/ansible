@@ -1,4 +1,4 @@
-vault_version: "1.9.4"
+vault_version: "1.10.0"
 vault_config:
   ui: true
   log_level: "info"

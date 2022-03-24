@@ -5,5 +5,3 @@ private_ip: "10.0.100.1"
 
 gotmpl_private_address: !unsafe '{{ GetInterfaceIP "relay" }}'
 gotmpl_private_interface: "relay"
-
-zfs_main_pool: "main"

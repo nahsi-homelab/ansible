@@ -1,8 +1,6 @@
 arch: "amd64"
 bios: "uefi"
 
-zfs_main_pool: "hot"
-
 private_ip: "192.168.130.10"
 
 distccd_config: |

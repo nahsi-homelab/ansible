@@ -1,5 +1,5 @@
 base_zfs_datasets:
-  - name: "cold/data/prometheus"
+  - name: "storage/data/prometheus"
     properties:
       atime: "off"
       compression: "zstd"
@@ -8,7 +8,7 @@ base_zfs_datasets:
     group: "nobody"
     mode: "0750"
 
-  - name: "cold/data/loki"
+  - name: "storage/data/loki"
     properties:
       atime: "off"
       compression: "zstd"
@@ -17,21 +17,21 @@ base_zfs_datasets:
     group: "nobody"
     mode: "0750"
 
-  - name: "hot/data/linkding"
+  - name: "main/data/linkding"
     properties:
       atime: "off"
       compression: "zstd"
       mountpoint: "/var/lib/linkding"
     mode: "0750"
 
-  - name: "hot/data/podgrab"
+  - name: "main/data/podgrab"
     properties:
       mountpoint: "/var/lib/podgrab"
     owner: "nobody"
     group: "nobody"
     mode: "0750"
 
-  - name: "hot/data/grafana"
+  - name: "main/data/grafana"
     properties:
       atime: "off"
       mountpoint: "/var/lib/grafana"
@@ -39,7 +39,7 @@ base_zfs_datasets:
     group: "nobody"
     mode: "0750"
 
-  - name: "hot/data/unifi"
+  - name: "main/data/unifi"
     properties:
       atime: "off"
       mountpoint: "/var/lib/unifi"
@@ -48,7 +48,7 @@ base_zfs_datasets:
     group: "1000"
     mode: "0750"
 
-  - name: "hot/data/jellyfin"
+  - name: "main/data/jellyfin"
     properties:
       atime: "off"
       mountpoint: "/var/lib/jellyfin"
@@ -57,7 +57,7 @@ base_zfs_datasets:
     group: "nobody"
     mode: "0750"
 
-  - name: "hot/data/transmission"
+  - name: "main/data/transmission"
     properties:
       atime: "off"
       mountpoint: "/var/lib/transmission"
@@ -65,7 +65,7 @@ base_zfs_datasets:
     group: "1000"
     mode: "0750"
 
-  - name: "hot/data/zookeeper/datalog"
+  - name: "main/data/zookeeper/datalog"
     properties:
       atime: "off"
       mountpoint: "/var/lib/zookeeper"
@@ -73,7 +73,7 @@ base_zfs_datasets:
     group: "1001"
     mode: "0700"
 
-  - name: "hot/data/kafka"
+  - name: "main/data/kafka"
     properties:
       atime: "off"
       mountpoint: "/var/lib/kafka"
@@ -81,7 +81,7 @@ base_zfs_datasets:
     group: "1001"
     mode: "0700"
 
-  - name: "hot/data/minio"
+  - name: "main/data/minio"
     properties:
       atime: "off"
       mountpoint: "/var/lib/minio"
@@ -90,7 +90,7 @@ base_zfs_datasets:
     group: "nobody"
     mode: "0700"
 
-  - name: "hot/data/mongo"
+  - name: "main/data/mongo"
     properties:
       atime: "off"
       compression: "zstd"
@@ -100,7 +100,7 @@ base_zfs_datasets:
     group: "999"
     mode: "0700"
 
-  - name: "hot/data/mariadb"
+  - name: "main/data/mariadb"
     properties:
       atime: "off"
       compression: "zstd"
@@ -109,7 +109,7 @@ base_zfs_datasets:
     group: "999"
     mode: "0700"
 
-  - name: "hot/data/filestash"
+  - name: "main/data/filestash"
     properties:
       atime: "off"
       compression: "zstd"
@@ -119,7 +119,7 @@ base_zfs_datasets:
     group: "1000"
     mode: "0700"
 
-  - name: "hot/data/postgres"
+  - name: "main/data/postgres"
     properties:
       atime: "off"
       mountpoint: "/var/lib/postgres"
@@ -127,7 +127,7 @@ base_zfs_datasets:
     group: "999"
     mode: "0700"
 
-  - name: "hot/data/redis-mail"
+  - name: "main/data/redis-mail"
     properties:
       atime: "off"
       mountpoint: "/var/lib/redis-mail"

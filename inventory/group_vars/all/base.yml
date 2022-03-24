@@ -235,7 +235,7 @@ base_docker_config:
       path: "/usr/bin/crun"
   storage-driver: "zfs"
   storage-opts:
-    - zfs.fsname={{ zfs_main_pool }}/containers
+    - zfs.fsname=main/containers
   log-driver: "json-file"
   log-opts:
     max-size: "32m"

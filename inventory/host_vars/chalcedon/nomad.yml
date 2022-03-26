@@ -8,3 +8,7 @@ nomad_configs:
     client:
       meta:
         vultr_region: "fra"
+
+  cni:
+    client:
+      cni_path: "/usr/lib/cni"

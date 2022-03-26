@@ -120,6 +120,7 @@ base_packages_all:
   - net-misc/iperf
   - net-analyzer/openbsd-netcat
   - sys-apps/dmidecode
+  - sys-apps/hdparm
 
   - sys-power/cpupower
   - sys-apps/lm-sensors

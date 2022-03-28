@@ -2,9 +2,6 @@ nomad_configs:
   volumes:
     client:
       host_volume:
-        - docker-socket:
-            path: "/var/run/docker.sock"
-
         - postgres:
             path: "/var/lib/postgres"
         - minio:

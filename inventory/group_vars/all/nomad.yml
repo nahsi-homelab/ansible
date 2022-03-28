@@ -31,6 +31,10 @@ nomad_config_all:
     servers:
       - "nomad.service.consul:4647"
 
+    host_volume:
+      - docker-socket:
+          path: "/var/run/docker.sock"
+
   telemetry:
     disable_hostname: true
     prometheus_metrics: true

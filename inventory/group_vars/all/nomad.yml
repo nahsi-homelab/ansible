@@ -10,9 +10,11 @@ nomad_config_all:
   addresses:
     http: "{{ gotmpl_private_address }} 127.0.0.1"
 
+  enable_syslog: false
+  # "trace", "debug", "info", "warn", "err"
   log_level: "info"
-  enable_syslog: true
-  syslog_facility: "LOCAL5"
+  log_file: "/var/log/nomad/"
+  log_rotate_max_files: 1
 
   ui:
     enabled: true

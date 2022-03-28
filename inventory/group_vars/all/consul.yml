@@ -21,10 +21,11 @@ consul_config_all:
   limits:
     http_max_conns_per_client: 500
 
-  enable_syslog: true
+  enable_syslog: false
   # "trace", "debug", "info", "warn", "err"
   log_level: "info"
-  syslog_facility: "LOCAL5"
+  log_file: "/var/log/consul/"
+  log_rotate_max_files: 1
 
   bind_addr: "{{ gotmpl_private_address }}"
   addresses:

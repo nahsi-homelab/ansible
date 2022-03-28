@@ -116,20 +116,20 @@ consul_services_all:
         interval: "20s"
         timeout: "2s"
 
-  # promtail:
-  #   service:
-  #     id: "promtail"
-  #     name: "promtail"
-  #     port: 9380
-  #     meta:
-  #       sidecar_to: "system"
-  #       external-source: "consul"
-  #     check:
-  #       id: "promtail-health"
-  #       name: "promtail-health"
-  #       http: "http://127.0.0.1:9380/ready"
-  #       interval: "20s"
-  #       timeout: "2s"
+  promtail:
+    service:
+      id: "promtail"
+      name: "promtail"
+      port: 9380
+      meta:
+        sidecar_to: "system"
+        external-source: "consul"
+      check:
+        id: "promtail-health"
+        name: "promtail-health"
+        http: "http://{{ private_ip }}:9380/ready"
+        interval: "20s"
+        timeout: "2s"
 
 consul_services: "{{ consul_services_all }}"
 

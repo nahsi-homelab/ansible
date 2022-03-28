@@ -37,6 +37,9 @@ nomad_config_all:
       - docker-socket:
           path: "/var/run/docker.sock"
 
+      - cni:
+          path: "/opt/cni/bin"
+
   telemetry:
     disable_hostname: true
     prometheus_metrics: true

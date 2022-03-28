@@ -110,3 +110,14 @@
 - name: disable ufw
   ufw:
     state: disabled
+
+- name: create "/opt/cni" directory
+  file:
+    dest: "/opt/cni"
+    state: directory
+
+- name: create cni bin dir link
+  file:
+    src: "/usr/lib/cni"
+    dest: "/opt/cni/bin"
+    state: link

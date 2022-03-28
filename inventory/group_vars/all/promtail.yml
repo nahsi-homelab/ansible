@@ -1,4 +1,4 @@
-promtail_version: "2.4.1"
+promtail_version: "2.4.2"
 promtail_config:
   server:
     http_listen_port: 9380
@@ -9,32 +9,36 @@ promtail_config:
     filename: "{{ promtail_dir }}/positions.yml"
 
   clients:
-    - url: "http://loki.service.consul:3100/loki/api/v1/push"
+    - url: "https://loki-distributor.service.consul/loki/api/v1/push"
       external_labels:
         dc: "{{ dc }}"
         host: "{{ inventory_hostname }}"
+      basic_auth:
+        username: "promtail"
+        password: "{{ lookup('hashi_vault', 'secret/data/promtail/loki:password') }}"
 
   scrape_configs:
-    - job_name: "syslog"
-      syslog:
-        listen_address: "127.0.0.1:1514"
-        idle_timeout: "3600s"
-        use_incoming_timestamp: true
-      relabel_configs:
-        - source_labels: ["__syslog_message_hostname"]
-          target_label: "host"
-        - source_labels: ["__syslog_message_severity"]
-          target_label: "level"
-        - source_labels: ["__syslog_message_app_name"]
-          target_label: "app"
-        - source_labels: ["__syslog_message_facility"]
-          target_label: "facility"
+    # - job_name: "syslog"
+    #   syslog:
+    #     listen_address: "127.0.0.1:1514"
+    #     idle_timeout: "3600s"
+    #     use_incoming_timestamp: true
+    #   relabel_configs:
+    #     - source_labels: ["__syslog_message_hostname"]
+    #       target_label: "host"
+    #     - source_labels: ["__syslog_message_severity"]
+    #       target_label: "level"
+    #     - source_labels: ["__syslog_message_app_name"]
+    #       target_label: "app"
+    #     - source_labels: ["__syslog_message_facility"]
+    #       target_label: "facility"
 
-    - job_name: "emerge"
+    - job_name: "portage"
       static_configs:
         - labels:
             __path__: "/var/log/emerge.log"
-            app: "emerge"
+            source: "system"
+            app: "portage"
       pipeline_stages:
         - regex:
              expression: "^(?P<time>\\d+):.*"
@@ -46,7 +50,42 @@ promtail_config:
       static_configs:
         - labels:
             __path__: "/var/log/vault/vault.log"
+            source: "system"
             app: "vault"
+      pipeline_stages:
+        - multiline:
+            firstline: "^.+ \\[.+\\]"
+        - regex:
+            expression: "^(?P<time>.+) \\[(?P<level>.)\\] (?P<message>(?s:.*))$"
+        - labels:
+            level:
+        - timestamp:
+            source: "time"
+            format: "RFC3339Nano"
+
+    - job_name: "nomad"
+      static_configs:
+        - labels:
+            __path__: "/var/log/nomad/nomad.log"
+            source: "system"
+            app: "nomad"
+      pipeline_stages:
+        - multiline:
+            firstline: "^.+ \\[.+\\]"
+        - regex:
+            expression: "^(?P<time>.+) \\[(?P<level>.)\\] (?P<message>(?s:.*))$"
+        - labels:
+            level:
+        - timestamp:
+            source: "time"
+            format: "RFC3339Nano"
+
+    - job_name: "consul"
+      static_configs:
+        - labels:
+            __path__: "/var/log/consul/*"
+            source: "system"
+            app: "consul"
       pipeline_stages:
         - multiline:
             firstline: "^.+ \\[.+\\]"
@@ -62,6 +101,7 @@ promtail_config:
       static_configs:
         - labels:
             __path__: "/var/log/docker.log"
+            source: "system"
             app: "docker"
       pipeline_stages:
         - timestamp:
@@ -72,6 +112,7 @@ promtail_config:
       static_configs:
         - labels:
             __path__: "/var/log/telegraf/telegraf.log"
+            source: "system"
             app: "telegraf"
       pipeline_stages:
         - regex:

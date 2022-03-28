@@ -2,3 +2,18 @@ base_dns: |
   resolv_conf="/etc/resolv.conf"
   name_servers="192.168.130.1"
   search_domains="node.consul service.consul"
+
+base_docker_config:
+  dns:
+    - "192.168.130.1"
+  default-runtime: "crun"
+  runtimes:
+    crun:
+      path: "/usr/bin/crun"
+  storage-driver: "zfs"
+  storage-opts:
+    - zfs.fsname=main/containers
+  log-driver: "json-file"
+  log-opts:
+    max-size: "32m"
+    max-file: "2"

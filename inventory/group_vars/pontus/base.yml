@@ -33,6 +33,10 @@ base_packages:
   - containernetworking-plugins
 
 base_docker_config:
+  dns:
+    - "10.0.30.1"
+    - "10.0.30.2"
+    - "10.0.30.3"
   log-driver: "json-file"
   log-opts:
     max-size: "32m"

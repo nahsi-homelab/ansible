@@ -229,19 +229,6 @@ base_sshd_config: |
 
   Subsystem sftp internal-sftp
 
-base_docker_config:
-  default-runtime: "crun"
-  runtimes:
-    crun:
-      path: "/usr/bin/crun"
-  storage-driver: "zfs"
-  storage-opts:
-    - zfs.fsname=main/containers
-  log-driver: "json-file"
-  log-opts:
-    max-size: "32m"
-    max-file: "2"
-
 base_syslog_config: |
   @version: "3.35"
   @include "/etc/syslog-ng/conf.d/*.conf"

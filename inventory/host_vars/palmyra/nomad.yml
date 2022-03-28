@@ -8,8 +8,6 @@ nomad_configs:
             path: "/var/lib/minio"
         - redis-mail:
             path: "/var/lib/redis-mail"
-        - victoria-metrics:
-            path: "/var/lib/victoria-metrics"
 
   meta:
     client:

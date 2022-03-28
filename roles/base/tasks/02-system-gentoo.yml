@@ -1,11 +1,7 @@
 - name: mount filesystems
   tags: system
   mount:
-    src: "{{ fs.src }}"
-    opts: "{{ fs.opts }}"
-    path: "{{ fs.path }}"
-    fstype: "{{ fs.type }}"
-    state: mounted
+  args: "{{ fs }}"
   loop: "{{ base_filesystems }}"
   loop_control:
     loop_var: "fs"

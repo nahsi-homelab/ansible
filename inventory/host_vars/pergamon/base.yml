@@ -4,11 +4,19 @@ base_filesystems:
   - path: "/var/tmp"
     src: "tmpfs"
     opts: "rw,nosuid,noatime,nodev,size=75%,mode=1777"
-    type: "tmpfs"
+    fstype: "tmpfs"
+    state: "mounted"
+
   - path: "/tmp"
     src: "tmpfs"
     opts: "rw,nosuid,noatime,nodev,size=2G,mode=1777"
-    type: "tmpfs"
+    fstype: "tmpfs"
+    state: "mounted"
+
+  - path: "/sys/fs/bpf"
+    src: "bpffs"
+    fstype: "bpf"
+    state: "mounted"
 
 base_network: |
   config_enp4s0="192.168.230.10/24"

@@ -1,3 +1,9 @@
+base_filesystems:
+  - path: "/sys/fs/bpf"
+    src: "bpffs"
+    fstype: "bpf"
+    state: "mounted"
+
 base_dns: |
   resolv_conf="/etc/resolv.conf"
   search_domains="node.consul service.consul"

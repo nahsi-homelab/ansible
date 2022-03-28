@@ -4,7 +4,26 @@ base_filesystems:
   - path: "/tmp"
     src: "tmpfs"
     opts: "rw,nosuid,noatime,nodev,size=2G,mode=1777"
-    type: "tmpfs"
+    fstype: "tmpfs"
+    state: "mounted"
+
+  - path: "/sys/fs/bpf"
+    src: "bpffs"
+    fstype: "bpf"
+    state: "mounted"
+
+base_docker_config:
+  default-runtime: "crun"
+  runtimes:
+    crun:
+      path: "/usr/bin/crun"
+  storage-driver: "zfs"
+  storage-opts:
+    - zfs.fsname=main/containers
+  log-driver: "json-file"
+  log-opts:
+    max-size: "32m"
+    max-file: "2"
 
 base_sysctl:
   - name: vm.dirty_writeback_centisecs

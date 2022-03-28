@@ -41,6 +41,7 @@ base_network: |
     mru 1492
     mtu 1492
     lcp-echo-interval 15 lcp-echo-failure 3
+    logfile /var/log/pppoe.log
     noaccomp noccp nobsdcomp nodeflate nopcomp novj novjccomp"
 
   username_ppp0={{ lookup('hashi_vault', 'secret/data/ISP/asia:username') }}

@@ -121,6 +121,7 @@ base_packages_all:
   - net-analyzer/openbsd-netcat
   - sys-apps/dmidecode
   - sys-apps/hdparm
+  - dev-util/bpftrace
 
   - sys-power/cpupower
   - sys-apps/lm-sensors
@@ -149,6 +150,7 @@ base_portage_package_use_all:
     net-misc/dhcp client
     net-misc/iputils arping
     net-vpn/innernet server client
+    dev-libs/libbpf static-libs
 
 base_portage_package_use: "{{ base_portage_package_use_all }}"
 

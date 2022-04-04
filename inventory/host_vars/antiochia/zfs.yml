@@ -111,3 +111,11 @@ base_zfs_datasets:
     owner: "nobody"
     group: "nobody"
     mode: "0750"
+
+  - name: "main/data/nats"
+    properties:
+      atime: "off"
+      compression: "zstd"
+      mountpoint: "/var/lib/nats"
+      quota: "10G"
+    mode: "0750"

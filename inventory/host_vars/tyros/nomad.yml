@@ -4,3 +4,8 @@ nomad_configs:
       host_network:
         - public:
             interface: "ppp0"
+
+  meta:
+    client:
+      meta:
+        nats_node_id: 3

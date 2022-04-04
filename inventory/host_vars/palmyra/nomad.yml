@@ -13,3 +13,4 @@ nomad_configs:
     client:
       meta:
         minio_node_id: 2
+        nats_node_id: 2

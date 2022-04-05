@@ -1,4 +1,4 @@
-kernel_boot_device: "/dev/disk/by-uuid/97AA-E9FE"
+kernel_boot_device: "/dev/disk/by-uuid/F997-B25D"
 
 _kernel_cmd: >-
   ro quiet loglevel=0

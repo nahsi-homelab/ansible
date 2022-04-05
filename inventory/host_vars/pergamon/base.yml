@@ -19,8 +19,8 @@ base_filesystems:
     state: "mounted"
 
 base_network: |
-  config_enp4s0="192.168.230.10/24"
-  routes_enp4s0="default via 192.168.230.1"
+  config_enp4s0="{{ private_ip }}/24"
+  routes_enp4s0="default via 10.2.10.1"
 
 base_network_interfaces:
   - name: "enp4s0"
@@ -55,22 +55,6 @@ base_services:
     runlevel: "default"
     enabled: true
     state: "started"
-
-base_users_pergamon:
-  - name: github
-    comment: "GitHub actions runner user"
-    create_home: false
-    system: true
-    groups:
-      - docker
-      - vboxusers
-    append: true
-    uid: 950
-base_users: >
-  {{
-    base_users_all +
-    base_users_pergamon | unique
-  }}
 
 base_udev_rules:
   10_streamdeck: |

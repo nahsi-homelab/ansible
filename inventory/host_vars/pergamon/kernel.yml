@@ -5,10 +5,10 @@ _kernel_cmd: >-
   rd.vconsole.font=ter-i24b
   zbm.set_hostid=0
   rd.neednet=1
-  ip=192.168.230.11
+  ip=10.2.10.11
   netmask=255.255.255.0
-  gateway=192.168.230.1
-  nameserver=192.168.230.1
+  gateway=10.2.10.1
+  nameserver=10.2.10.1
   nameserver=1.1.1.1
 
 kernel_refind_menu: |

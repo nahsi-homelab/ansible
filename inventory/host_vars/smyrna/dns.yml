@@ -2,10 +2,9 @@ dns_unbound_configs:
   smyrna: |
     server:
       interface: 127.0.0.1@53
-      interface: 192.168.210.1@53
-      interface: 192.168.230.1@53
-      interface: 192.168.240.1@53
-      interface: 192.168.250.1@53
+      interface: 10.2.10.1@53
+      interface: 10.2.30.1@53
+      interface: 10.2.50.1@53
 
   consul: |
     server:

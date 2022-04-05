@@ -9,3 +9,9 @@ nomad_configs:
     client:
       meta:
         nats_node_id: 3
+
+  volumes:
+    client:
+      host_volume:
+        - unifi:
+            path: "/var/lib/unifi"

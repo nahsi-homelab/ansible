@@ -2,8 +2,6 @@ nomad_configs:
   volumes:
     client:
       host_volume:
-        - unifi:
-            path: "/var/lib/unifi"
         - transmission:
             path: "/var/lib/transmission"
         - jellyfin:

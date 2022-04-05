@@ -8,6 +8,8 @@ nomad_configs:
   volumes:
     client:
       host_volume:
+        - unifi:
+            path: "/var/lib/unifi"
         - home-assistant:
             path: "/var/lib/home-assistant"
         - minio:

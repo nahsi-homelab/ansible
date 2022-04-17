@@ -18,10 +18,10 @@ kernel_zfsbootmenu_config:
       zbm.set_hostid=0
       zbm.timeout=30
       rd.neednet=1
-      ip=192.168.130.21
+      ip=10.1.10.21
       netmask=255.255.255.0
-      gateway=192.168.130.1
-      nameserver=192.168.130.1
+      gateway=10.1.10.1
+      nameserver=10.1.10.1
       nameserver=1.1.1.1
 
 kernel_firmware:

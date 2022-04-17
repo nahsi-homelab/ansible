@@ -1,4 +1,4 @@
 dc: "syria"
 
-gotmpl_private_address: !unsafe '{{ GetPrivateInterfaces | include "network" "192.168.130.0/24" | attr "address" }}'
-gotmpl_private_interface: !unsafe '{{ GetPrivateInterfaces | include "network" "192.168.130.0/24" | attr "name" }}'
+gotmpl_private_address: !unsafe '{{ GetPrivateInterfaces | include "network" "10.1.10.0/24" | attr "address" }}'
+gotmpl_private_interface: !unsafe '{{ GetPrivateInterfaces | include "network" "10.1.10.0/24" | attr "name" }}'

@@ -17,8 +17,8 @@ base_filesystems:
     state: "mounted"
 
 base_network: |
-  config_enp1s0="192.168.130.20/24"
-  routes_enp1s0="default via 192.168.130.1"
+  config_enp1s0="10.1.10.20/24"
+  routes_enp1s0="default via 10.1.10.1"
 
 base_network_interfaces:
   - name: "enp1s0"

@@ -1,4 +1,4 @@
 arch: "amd64"
 bios: "legacy"
 
-private_ip: "192.168.130.20"
+private_ip: "10.1.10.20"

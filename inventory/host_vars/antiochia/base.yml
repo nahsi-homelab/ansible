@@ -27,8 +27,8 @@ base_packages: >
   }}
 
 base_network: |
-  config_enp35s0="192.168.130.10/24"
-  routes_enp35s0="default via 192.168.130.1"
+  config_enp35s0="10.1.10.10/24"
+  routes_enp35s0="default via 10.1.10.1"
 
 base_network_interfaces:
   - name: "enp35s0"

@@ -2,7 +2,7 @@ station_xorg_configs:
   20_monitor: |
     Section "Monitor"
       Identifier "HDMI-2"
-      Option "PreferredMode" "2560x1440"
+      #Option "PreferredMode" "2560x1440"
       Option "LeftOf" "eDP-1"
     EndSection
 
@@ -17,7 +17,7 @@ station_xorg_configs:
       Identifier "keyboard-all"
       Driver "evdev"
       Option "XkbLayout" "us,ru"
-      Option "XkbOptions" "grp:caps_toggle,compose:ralt"
+      Option "XkbOptions" "grp:lalt_shift_toggle,compose:ralt"
     EndSection
 
   40_touchpad: |

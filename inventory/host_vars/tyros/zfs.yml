@@ -34,13 +34,6 @@ base_zfs_datasets:
     group: "nahsi"
     mode: "0755"
 
-  - name: "main/data/nats"
-    properties:
-      atime: "off"
-      compression: "zstd"
-      mountpoint: "/var/lib/nats"
-      quota: "10G"
-
   - name: "main/data/unifi"
     properties:
       atime: "off"

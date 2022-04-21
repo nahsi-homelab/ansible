@@ -1,10 +1,8 @@
-consul_version: "1.11.4"
+consul_version: "1.11.5"
 consul_servers:
   - 10.1.10.10
   - 10.1.10.20
-  - 10.0.30.1
-  - 10.0.30.2
-  - 10.0.30.3
+  - 10.2.10.1
 
 gotmpl_docker: !unsafe '{{ GetInterfaceIP "docker0" }}'
 gotmpl_nomad: !unsafe '{{ GetInterfaceIP "nomad" }}'

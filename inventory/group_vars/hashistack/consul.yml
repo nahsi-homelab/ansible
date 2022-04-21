@@ -1,6 +1,6 @@
 consul_config_hashistack:
   server: true
-  bootstrap_expect: 5
+  bootstrap_expect: 3
 
   config_entries:
     bootstrap:

@@ -5,32 +5,38 @@
     ansible_user: root
   pre_tasks:
     - include_role:
-        name: ../../roles/dns
+        name: roles/dns
         tasks_from: 00-preflight.yml
 
     - include_role:
-        name: ../../roles/base
+        name: roles/base
         tasks_from: 00-preflight.yml
 
     - include_role:
-        name: ../../roles/wireguard
+        name: roles/wireguard
         tasks_from: 00-preflight.yml
 
     - include_role:
-        name: ../../roles/telegraf
+        name: roles/telegraf
         tasks_from: 00-preflight.yml
 
-    # - include_role:
-    #     name: consul
-    #     tasks_from: 00-preflight.yml
+    - include_role:
+        name: consul
+        tasks_from: 00-preflight.yml
 
-    # - include_role:
-    #     name: nomad
-    #     tasks_from: 00-preflight.yml
+    - include_role:
+        name: nomad
+        tasks_from: 00-preflight.yml
   roles:
-    - role: ../../roles/dns
-    - role: ../../roles/base
-    - role: ../../roles/wireguard
-    - role: ../../roles/telegraf
-    # - "consul"
-    # - "nomad"
+    - role: roles/dns
+    - role: roles/base
+    - role: roles/wireguard
+    - role: roles/telegraf
+    - "consul"
+    - "nomad"
+
+  post_tasks:
+    - name: Delete "/etc/resolv.conf" link
+      file:
+        state: absent
+        dest: "/etc/resolv.conf"

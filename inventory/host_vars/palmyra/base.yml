@@ -33,19 +33,3 @@ base_packages: >
     base_packages_all +
     base_packages_palmyra | unique
   }}
-
-base_users_palmyra:
-  - name: github
-    comment: "GitHub actions runner user"
-    create_home: false
-    system: true
-    groups:
-      - docker
-      - vboxusers
-    append: true
-    uid: 950
-base_users: >
-  {{
-    base_users_all +
-    base_users_palmyra | unique
-  }}

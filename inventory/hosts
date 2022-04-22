@@ -4,8 +4,7 @@ smyrna
 tyros
 palmyra
 antiochia
-heraclea
-nicomedia
+chalcedon ansible_host=chalcedon.nahsi.dev
 
 [asia]
 pergamon
@@ -17,8 +16,6 @@ tyros
 palmyra
 
 [pontus]
-heraclea
-nicomedia
 chalcedon
 
 [cosmos]
@@ -35,8 +32,6 @@ smyrna
 [dns]
 tyros
 smyrna
-heraclea
-nicomedia
 chalcedon
 
 [hashistack]

@@ -8,9 +8,16 @@ nomad_configs:
             path: "/var/lib/minio"
         - redis-mail:
             path: "/var/lib/redis-mail"
+        - seaweedfs-master:
+            path: "/var/lib/seaweedfs-master"
+        - seaweedfs-ssd:
+            path: "/var/lib/seaweedfs-ssd"
+        - seaweedfs-hdd:
+            path: "/var/lib/seaweedfs-hdd"
 
   meta:
     client:
       meta:
         minio_node_id: 2
         nats_node_id: 2
+        seaweedfs_id: 2

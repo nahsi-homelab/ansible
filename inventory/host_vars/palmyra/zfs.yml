@@ -83,3 +83,33 @@ base_zfs_datasets:
       mountpoint: "/var/lib/nats"
       quota: "10G"
     mode: "0750"
+
+  - name: "main/data/seaweedfs-master"
+    properties:
+      atime: "off"
+      compression: "zstd"
+      mountpoint: "/var/lib/seaweedfs-master"
+      quota: "10G"
+    mode: "0700"
+    owner: "nobody"
+    group: "nobody"
+
+  - name: "main/data/seaweedfs-ssd"
+    properties:
+      atime: "off"
+      compression: "zstd"
+      mountpoint: "/var/lib/seaweedfs-ssd"
+      quota: "200G"
+    mode: "0700"
+    owner: "nobody"
+    group: "nobody"
+
+  - name: "storage/data/seaweedfs-hdd"
+    properties:
+      atime: "off"
+      compression: "zstd"
+      mountpoint: "/var/lib/seaweedfs-hdd"
+      quota: "1TB"
+    mode: "0750"
+    owner: "nobody"
+    group: "nobody"

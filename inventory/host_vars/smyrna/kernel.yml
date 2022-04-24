@@ -3,7 +3,6 @@ kernel_boot_device: "/dev/disk/by-uuid/F997-B25D"
 _kernel_cmd: >-
   ro quiet loglevel=0
   rd.vconsole.font=ter-i24b
-  zbm.prefer=zfsbootmenu:POOL=main
   zbm.set_hostid=0
 
 kernel_refind_menu: |

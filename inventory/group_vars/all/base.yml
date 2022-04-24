@@ -130,7 +130,6 @@ base_packages_all:
   - net-analyzer/openbsd-netcat
   - sys-apps/dmidecode
   - sys-apps/hdparm
-  - dev-util/bpftrace
 
   - sys-power/cpupower
   - sys-apps/lm-sensors

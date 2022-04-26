@@ -48,7 +48,7 @@ base_zfs_datasets:
       atime: "off"
       compression: "zstd"
       mountpoint: "/var/lib/seaweedfs-master"
-      quota: "10G"
+      quota: "1G"
     mode: "0700"
     owner: "nobody"
     group: "nobody"

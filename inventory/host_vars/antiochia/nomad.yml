@@ -24,6 +24,8 @@ nomad_configs:
             path: "/var/lib/victoria-metrics"
         - seaweedfs-master:
             path: "/var/lib/seaweedfs-master"
+        - seaweedfs-index:
+            path: "/var/lib/seaweedfs-index"
         - seaweedfs-ssd:
             path: "/var/lib/seaweedfs-ssd"
         - seaweedfs-hdd:

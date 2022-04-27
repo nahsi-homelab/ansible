@@ -306,3 +306,12 @@
       - base_directories is not string
     quiet: true
   when: base_directories is defined
+
+- name: check "base_files" variable
+  tags: always
+  assert:
+    that:
+      - base_files is iterable
+      - base_files is not string
+    quiet: true
+  when: base_files is defined

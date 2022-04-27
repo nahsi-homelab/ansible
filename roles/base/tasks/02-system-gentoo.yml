@@ -201,17 +201,25 @@
 - name: create directories
   tags:
     - system
-    - directoreis
+    - directories
   file:
-    path: "{{ dir.path }}"
-    state: "{{ dir.state | d('directory') }}"
-    owner: "{{ dir.owner | d('root') }}"
-    group: "{{ dir.group | d('root') }}"
-    mode: "{{ dir.mode | d('0755') }}"
+  args: "{{ dir }}"
   loop: "{{ base_directories }}"
   loop_control:
     loop_var: "dir"
     label: "{{ dir.path }}"
   when: base_directories is defined
+
+- name: create files
+  tags:
+    - system
+    - files
+  copy:
+  args: "{{ file }}"
+  loop: "{{ base_files }}"
+  loop_control:
+    loop_var: "file"
+    label: "{{ file.dest }}"
+  when: base_files is defined
 
 - meta: flush_handlers

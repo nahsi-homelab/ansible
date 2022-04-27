@@ -1,0 +1,52 @@
+vault_agent_version: "1.10.0"
+
+vault_agent_config:
+  vault:
+    address: "http://vault.service.consul:8200"
+
+  auto_auth:
+    method:
+      - type: "approle"
+        config:
+          role_id_file_path: "/var/lib/vault-agent/approle/role_id"
+          secret_id_file_path: "/var/lib/vault-agent/approle/secret_id"
+          remove_secret_id_file_after_reading: false
+
+  template:
+    - destination: "/usr/local/share/ca-certificates/internal.crt"
+      perms: 0644
+      left_delimiter: "[["
+      right_delimiter: "]]"
+      command: "update-ca-certificates --fresh"
+      contents: |
+        [[- with secret "pki/issue/internal" "ttl=10d" "common_name=*.service.consul" -]]
+        [[ .Data.issuing_ca ]][[ end ]]
+
+    - source: "{{ vault_agent_dirs.templates.path }}/consul_gossip.tmpl"
+      destination: "/opt/consul/config.d/gossip_vault.json"
+      perms: 0644
+      left_delimiter: "[["
+      right_delimiter: "]]"
+
+    - source: "{{ vault_agent_dirs.templates.path }}/nomad_gossip.tmpl"
+      destination: "/opt/nomad/config.d/gossip_vault.json"
+      perms: 0644
+      left_delimiter: "[["
+      right_delimiter: "]]"
+
+vault_agent_templates:
+  consul_gossip: |
+    [[- with secret "secret/gossip" -]]
+    {
+      "encrypt": "[[ .Data.data.consul ]]"
+    }
+    [[- end ]]
+
+  nomad_gossip: |
+    [[- with secret "secret/gossip" -]]
+    {
+      "server": {
+        "encrypt": "[[ .Data.data.nomad ]]"
+      }
+    }
+    [[- end ]]

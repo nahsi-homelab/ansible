@@ -1,4 +1,4 @@
-promtail_version: "2.4.2"
+promtail_version: "2.5.0"
 promtail_config:
   server:
     http_listen_port: 9380
@@ -52,6 +52,23 @@ promtail_config:
             __path__: "/var/log/vault/vault.log"
             source: "system"
             app: "vault"
+      pipeline_stages:
+        - multiline:
+            firstline: "^.+ \\[.+\\]"
+        - regex:
+            expression: "^(?P<time>.+) \\[(?P<level>.)\\] (?P<message>(?s:.*))$"
+        - labels:
+            level:
+        - timestamp:
+            source: "time"
+            format: "RFC3339Nano"
+
+    - job_name: "vault-agent"
+      static_configs:
+        - labels:
+            __path__: "/var/log/vault-agent/vault-agent.log"
+            source: "system"
+            app: "vault-agent"
       pipeline_stages:
         - multiline:
             firstline: "^.+ \\[.+\\]"

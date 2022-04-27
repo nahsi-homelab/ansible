@@ -8,6 +8,9 @@ roles:
   - src: nahsi.vault
     name: vault
 
+  - src: nahsi.vaultagent
+    name: vault-agent
+
 collections:
   - community.general
   - ansible.posix

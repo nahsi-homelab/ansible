@@ -1,3 +1,17 @@
+base_directories:
+  - path: "/var/lib/vault-agent/approle"
+    state: directory
+    mode: "0700"
+
+base_files:
+  - dest: "/var/lib/vault-agent/approle/role_id"
+    content: "{{ lookup('community.hashi_vault.vault_read', 'auth/approle/role/vault-agent/role-id').data.role_id }}"
+    mode: "0600"
+
+  - dest: "/var/lib/vault-agent/approle/secret_id"
+    content: "{{ lookup('community.hashi_vault.vault_write', 'auth/approle/role/vault-agent/secret-id').data.secret_id }}"
+    mode: "0600"
+
 base_dns: |
   resolv_conf="/etc/resolv.conf"
   search_domains="node.consul service.consul"

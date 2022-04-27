@@ -2,7 +2,6 @@ nomad_config_hashistack:
   server:
     enabled: true
     bootstrap_expect: 3
-    encrypt: "oh11aOi8mTd1xrer/D78mue+LarnCRb7ATZfUN4xenI="
     raft_protocol: 3
     server_join:
       retry_join:
@@ -14,7 +13,7 @@ nomad_config_hashistack:
       memory_oversubscription_enabled: true
 
   vault:
-    token: "{{ nomad_token }}"
+    token: "{{ lookup('community.hashi_vault.vault_token_create', policies=['nomad-server'] ).auth.client_token }}"
     create_from_role: "nomad-cluster"
 
 nomad_config: >

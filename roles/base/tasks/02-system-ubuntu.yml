@@ -63,7 +63,7 @@
     label: "{{ sysctl.name }}"
   when: base_sysctl is defined
 
-- name: create directories or files
+- name: create directories
   tags:
     - system
     - directories
@@ -74,6 +74,18 @@
     loop_var: "dir"
     label: "{{ dir.path }}"
   when: base_directories is defined
+
+- name: create files
+  tags:
+    - system
+    - files
+  copy:
+  args: "{{ file }}"
+  loop: "{{ base_files }}"
+  loop_control:
+    loop_var: "file"
+    label: "{{ file.dest }}"
+  when: base_files is defined
 
 - name: enable services
   tags: system

@@ -9,7 +9,6 @@ gotmpl_nomad: !unsafe '{{ GetInterfaceIP "nomad" }}'
 
 consul_config_all:
   datacenter: "oikumene"
-  encrypt: "ceoLcY2WbPcp+tfWxP4uAJNAHi4S1K8dhXdhf+DQmIE="
   data_dir: "/var/lib/consul/"
   protocol: 3
   rejoin_after_leave: true

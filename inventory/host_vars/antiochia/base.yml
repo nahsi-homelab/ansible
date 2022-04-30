@@ -26,6 +26,15 @@ base_packages: >
     base_packages_antiochia | unique
   }}
 
+base_users_antiochia:
+  - name: taisto
+    shell: /bin/bash
+base_users: |
+  {{
+    base_users_all +
+    base_users_antiochia | unique
+  }}
+
 base_network: |
   config_enp35s0="10.1.10.10/24"
   routes_enp35s0="default via 10.1.10.1"

@@ -2,8 +2,10 @@ nomad_configs:
   volumes:
     client:
       host_volume:
-        - transmission:
-            path: "/var/lib/transmission"
+        - transmission-nahsi:
+            path: "/var/lib/transmission-nahsi"
+        - transmission-taisto:
+            path: "/var/lib/transmission-taisto"
         - jellyfin:
             path: "/var/lib/jellyfin/config"
         - jellyfin-cache:

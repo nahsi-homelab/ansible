@@ -168,7 +168,7 @@
   zfs:
     name: "{{ dataset.name }}"
     state: "{{ dataset.state | d('present') }}"
-    extra_zfs_properties: "{{ dataset.properties }}"
+    extra_zfs_properties: "{{ dataset.properties | d(omit) }}"
   loop: "{{ base_zfs_datasets }}"
   loop_control:
     loop_var: "dataset"

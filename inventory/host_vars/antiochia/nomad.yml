@@ -24,14 +24,10 @@ nomad_configs:
             path: "/var/lib/jellyfin/config"
         - jellyfin-cache:
             path: "/var/lib/jellyfin/cache"
-        - polaris:
-            path: "/var/lib/polaris"
         - minio:
             path: "/var/lib/minio"
         - mongo:
             path: "/var/lib/mongo"
-        - mariadb:
-            path: "/var/lib/mariadb"
         - filestash:
             path: "/var/lib/filestash"
         - postgres:

@@ -2,6 +2,20 @@ nomad_configs:
   volumes:
     client:
       host_volume:
+        - video-nahsi:
+            path: "/home/nahsi/media/video"
+        - music-nahsi:
+            path: "/home/nahsi/media/music"
+        - audio-nahsi:
+            path: "/home/nahsi/media/audio"
+        - downloads-nahsi:
+            path: "/home/nahsi/downloads"
+
+        - video-taisto:
+            path: "/home/taisto/media/video"
+        - downloads-taisto:
+            path: "/home/taisto/downloads"
+
         - transmission-nahsi:
             path: "/var/lib/transmission-nahsi"
         - transmission-taisto:

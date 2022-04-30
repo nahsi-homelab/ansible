@@ -65,6 +65,22 @@ base_zfs_datasets:
     group: "nahsi"
     mode: "0755"
 
+  - name: "main/users/nahsi/downloads/incomplete"
+    properties:
+      mountpoint: "/home/nahsi/downloads/incomplete"
+      compression: "off"
+    owner: "nahsi"
+    group: "nahsi"
+    mode: "0755"
+
+  - name: "storage/users/nahsi/downloads/complete"
+    properties:
+      mountpoint: "/home/nahsi/downloads/complete"
+      compression: "zstd"
+    owner: "nahsi"
+    group: "nahsi"
+    mode: "0755"
+
   - name: "storage/users/nahsi/media/video"
     properties:
       mountpoint: "/home/nahsi/media/video"
@@ -85,14 +101,6 @@ base_zfs_datasets:
     properties:
       mountpoint: "/home/nahsi/media/music"
       compression: "off"
-    owner: "nahsi"
-    group: "nahsi"
-    mode: "0755"
-
-  - name: "storage/users/nahsi/media/books"
-    properties:
-      mountpoint: "/home/nahsi/media/books"
-      compression: "zstd"
     owner: "nahsi"
     group: "nahsi"
     mode: "0755"
@@ -122,6 +130,24 @@ base_zfs_datasets:
     group: "taisto"
     mode: "0755"
 
+  - name: "main/users/taisto/downloads/incomplete"
+    properties:
+      mountpoint: "/home/taisto/downloads/incomplete"
+      compression: "off"
+      quota: "200G"
+    owner: "taisto"
+    group: "taisto"
+    mode: "0755"
+
+  - name: "storage/users/taisto/downloads/complete"
+    properties:
+      mountpoint: "/home/taisto/downloads/complete"
+      compression: "zstd"
+      quota: "500G"
+    owner: "taisto"
+    group: "taisto"
+    mode: "0755"
+
   - name: "storage/users/taisto/media/video"
     properties:
       mountpoint: "/home/taisto/media/video"
@@ -145,6 +171,7 @@ base_zfs_datasets:
       atime: "off"
       compression: "zstd"
       mountpoint: "/var/lib/polaris"
+    owner: "100"
     mode: "0750"
 
   - name: "main/data/linkding"

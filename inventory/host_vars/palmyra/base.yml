@@ -16,6 +16,12 @@ base_filesystems:
     fstype: "bpf"
     state: "mounted"
 
+  - path: "/var/lib/nomad/client/csi"
+    src: "/var/lib/nomad/client/csi"
+    fstype: "none"
+    opts: "rshared"
+    state: "mounted"
+
 base_network: |
   config_enp1s0="10.1.10.20/24"
   routes_enp1s0="default via 10.1.10.1"

@@ -12,6 +12,12 @@ base_filesystems:
     fstype: "bpf"
     state: "mounted"
 
+  - path: "/var/lib/nomad/client/csi"
+    src: "/var/lib/nomad/client/csi"
+    fstype: "none"
+    opts: "rshared"
+    state: "mounted"
+
 base_sshd_openrc_config: |
   SSHD_CONFDIR="${RC_PREFIX%/}/etc/ssh"
   SSHD_OPTS=""

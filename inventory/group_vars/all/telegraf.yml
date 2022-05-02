@@ -44,8 +44,13 @@ telegraf_configs_all:
       total = true
       total_include = ["cpu", "blkio", "network"]
 
-      # docker_label_include = []
-      docker_label_exclude = ["*"]
+      docker_label_include = [
+        "com.hashicorp.nomad.alloc_id",
+        "com.hashicorp.nomad.job_name",
+        "com.hashicorp.nomad.task_name",
+        "com.hashicorp.nomad.task_group_name",
+        "com.hashicorp.nomad.namespace",
+    ]
 
   consul: |
     [[inputs.consul]]

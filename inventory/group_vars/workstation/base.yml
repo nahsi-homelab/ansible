@@ -12,6 +12,11 @@ base_packages_desktop:
   - dev-db/mycli
   - app-admin/warp
 
+  - dev-util/StyLua
+  - dev-util/hclfmt
+  - dev-util/shfmt
+  - dev-python/autopep8
+
   - net-im/telegram-desktop
   - net-im/slack
   - net-im/zoom

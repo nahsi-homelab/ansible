@@ -86,6 +86,8 @@ base_openrc: |
   rc_log_path="/var/log/rc.log"
   # Number of ttys allocated for logins
   rc_tty_number=2
+  rc_cgroup_mode=unified
+  rc_cgroup_controllers="cpuset cpu io memory hugetlb pids"
 
 base_doas_conf: >
   permit nopass :wheel

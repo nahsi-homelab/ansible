@@ -6,7 +6,7 @@ base_dns: |
 base_docker_config:
   dns:
     - "10.2.10.1"
-  default-runtime: "crun"
+  default-runtime: "runc"
   runtimes:
     crun:
       path: "/usr/bin/crun"

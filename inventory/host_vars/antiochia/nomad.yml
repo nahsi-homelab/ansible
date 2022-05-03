@@ -36,6 +36,10 @@ nomad_configs:
             path: "/var/lib/redis-mail"
         - victoria-metrics:
             path: "/var/lib/victoria-metrics"
+        - calibre:
+            path: "/var/lib/calibre"
+        - calibre-web:
+            path: "/var/lib/calibre-web"
         - seaweedfs-master:
             path: "/var/lib/seaweedfs-master"
         - seaweedfs-index:

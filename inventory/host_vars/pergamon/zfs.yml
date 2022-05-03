@@ -50,3 +50,23 @@ base_zfs_datasets:
     owner: "999"
     group: "999"
     mode: "0700"
+
+  - name: "main/data/calibre"
+    properties:
+      atime: "off"
+      compression: "zstd"
+      mountpoint: "/var/lib/calibre"
+      quota: "10G"
+    mode: "0755"
+    owner: "nahsi"
+    group: "nahsi"
+
+  - name: "main/data/calibre-web"
+    properties:
+      atime: "off"
+      compression: "zstd"
+      mountpoint: "/var/lib/calibre-web"
+      quota: "1G"
+    mode: "0750"
+    owner: "nahsi"
+    group: "nahsi"

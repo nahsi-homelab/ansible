@@ -38,6 +38,7 @@ base_packages_pergamon:
   - app-emulation/vagrant
   - app-misc/deckmaster
   - media-video/obs-cli
+  - app-text/calibre
 base_packages: >
   {{
     base_packages_all +

@@ -41,6 +41,12 @@ base_portage_package_use_pergamon:
     # messengers
     app-text/ghostscript-gpl cups
 
+    # calibre
+    app-text/poppler qt5
+    app-accessibility/speech-dispatcher python
+    app-text/podofo lua_single_target_lua5-4
+    app-text/calibre -udisks
+
 base_portage_package_use: >
   {{
     base_portage_package_use_pergamon |

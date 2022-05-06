@@ -22,7 +22,7 @@ nomad_configs:
   meta:
     client:
       meta:
-        mariadb_primary: "no"
+        mariadb_index: 2
         minio_node_id: 2
         nats_node_id: 2
         seaweedfs_id: 2

@@ -166,30 +166,14 @@ base_zfs_datasets:
     group: "taisto"
     mode: "0755"
 
-  - name: "main/data/linkding"
+  - name: "main/data/polaris"
     properties:
       atime: "off"
-      compression: "zstd"
-      mountpoint: "/var/lib/linkding"
-    mode: "0750"
-    state: absent
-
-  - name: "main/data/linkding"
-    properties:
-      atime: "off"
-      compression: "zstd"
-      mountpoint: "/var/lib/linkding"
-    mode: "0750"
-    state: absent
-
-  - name: "main/data/grafana"
-    properties:
-      atime: "off"
-      mountpoint: "/var/lib/grafana"
-    owner: "nobody"
-    group: "nobody"
-    mode: "0750"
-    state: absent
+      compression: "lz4"
+      mountpoint: "/var/lib/polaris"
+    mode: "0700"
+    owner: "100"
+    group: "100"
 
   - name: "main/data/jellyfin"
     properties:
@@ -270,8 +254,8 @@ base_zfs_datasets:
       recordsize: "16k"
       xattr: "sa"
       mountpoint: "/var/lib/mariadb"
-    owner: "1001"
-    group: "1001"
+    owner: "999"
+    group: "999"
     mode: "0700"
 
   - name: "main/data/redis-mail"

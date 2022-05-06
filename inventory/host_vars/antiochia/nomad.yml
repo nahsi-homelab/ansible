@@ -20,6 +20,8 @@ nomad_configs:
             path: "/var/lib/transmission-nahsi"
         - transmission-taisto:
             path: "/var/lib/transmission-taisto"
+        - polaris:
+            path: "/var/lib/polaris"
         - jellyfin:
             path: "/var/lib/jellyfin/config"
         - jellyfin-cache:
@@ -51,7 +53,7 @@ nomad_configs:
     client:
       meta:
         mongo_node_id: "primary"
-        mariadb_primary: "yes"
+        mariadb_index: 1
         minio_node_id: 1
         nats_node_id: 1
         seaweedfs_index: 1

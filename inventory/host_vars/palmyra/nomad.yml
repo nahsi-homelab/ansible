@@ -4,6 +4,8 @@ nomad_configs:
       host_volume:
         - postgres:
             path: "/var/lib/postgres"
+        - mariadb:
+            path: "/var/lib/mariadb"
         - minio:
             path: "/var/lib/minio"
         - redis-mail:
@@ -20,6 +22,7 @@ nomad_configs:
   meta:
     client:
       meta:
+        mariadb_primary: "no"
         minio_node_id: 2
         nats_node_id: 2
         seaweedfs_id: 2

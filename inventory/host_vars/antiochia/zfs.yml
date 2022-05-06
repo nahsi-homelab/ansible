@@ -172,6 +172,15 @@ base_zfs_datasets:
       compression: "zstd"
       mountpoint: "/var/lib/linkding"
     mode: "0750"
+    state: absent
+
+  - name: "main/data/linkding"
+    properties:
+      atime: "off"
+      compression: "zstd"
+      mountpoint: "/var/lib/linkding"
+    mode: "0750"
+    state: absent
 
   - name: "main/data/grafana"
     properties:
@@ -180,6 +189,7 @@ base_zfs_datasets:
     owner: "nobody"
     group: "nobody"
     mode: "0750"
+    state: absent
 
   - name: "main/data/jellyfin"
     properties:
@@ -249,6 +259,19 @@ base_zfs_datasets:
       mountpoint: "/var/lib/postgres"
     owner: "999"
     group: "999"
+    mode: "0700"
+
+  - name: "main/data/mariadb"
+    properties:
+      atime: "off"
+      compression: "lz4"
+      logbias: "throughput"
+      primarycache: "metadata"
+      recordsize: "16k"
+      xattr: "sa"
+      mountpoint: "/var/lib/mariadb"
+    owner: "1001"
+    group: "1001"
     mode: "0700"
 
   - name: "main/data/redis-mail"

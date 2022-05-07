@@ -10,11 +10,15 @@ nomad_configs:
             path: "/home/nahsi/media/audio"
         - downloads-nahsi:
             path: "/home/nahsi/downloads"
+        - storage-nahsi:
+            path: "/home/nahsi/storage"
 
         - video-taisto:
             path: "/home/taisto/media/video"
         - downloads-taisto:
             path: "/home/taisto/downloads"
+        - storage-taisto:
+            path: "/home/taisto/storage"
 
         - transmission-nahsi:
             path: "/var/lib/transmission-nahsi"
@@ -30,6 +34,8 @@ nomad_configs:
             path: "/var/lib/minio"
         - mongo:
             path: "/var/lib/mongo"
+        - filerun:
+            path: "/var/lib/filerun"
         - filestash:
             path: "/var/lib/filestash"
         - postgres:

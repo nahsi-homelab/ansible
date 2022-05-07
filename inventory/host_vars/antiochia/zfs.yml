@@ -109,8 +109,8 @@ base_zfs_datasets:
     properties:
       mountpoint: "/home/nahsi/storage"
       compression: "zstd"
-    owner: "nahsi"
-    group: "nahsi"
+    owner: "33"
+    group: "33"
     mode: "0755"
 
   - name: "storage/users/nahsi/unsorted"
@@ -162,8 +162,8 @@ base_zfs_datasets:
       mountpoint: "/home/taisto/storage"
       compression: "zstd"
       quota: "1T"
-    owner: "taisto"
-    group: "taisto"
+    owner: "33"
+    group: "33"
     mode: "0755"
 
   - name: "main/data/polaris"
@@ -171,9 +171,9 @@ base_zfs_datasets:
       atime: "off"
       compression: "lz4"
       mountpoint: "/var/lib/polaris"
-    mode: "0700"
     owner: "100"
     group: "100"
+    mode: "0700"
 
   - name: "main/data/jellyfin"
     properties:
@@ -183,6 +183,15 @@ base_zfs_datasets:
     owner: "nobody"
     group: "nobody"
     mode: "0750"
+
+  - name: "main/data/filerun"
+    properties:
+      atime: "off"
+      compression: "zstd"
+      mountpoint: "/var/lib/filerun"
+    owner: "33"
+    group: "33"
+    mode: "0700"
 
   - name: "main/data/transmission-nahsi"
     properties:

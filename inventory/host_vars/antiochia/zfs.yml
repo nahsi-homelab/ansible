@@ -332,3 +332,12 @@ base_zfs_datasets:
     mode: "0750"
     owner: "nobody"
     group: "nobody"
+
+  - name: "main/data/unifi"
+    properties:
+      atime: "off"
+      mountpoint: "/var/lib/unifi"
+      compression: "lz4"
+    owner: "1000"
+    group: "1000"
+    mode: "0750"

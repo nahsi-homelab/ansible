@@ -51,7 +51,7 @@ base_users: "{{ base_users_all }}"
 base_timezone: "Europe/Moscow"
 
 # /usr/share/consolefonts
-base_consolefont: "ter-i16b"
+base_consolefont: "ter-i24b"
 
 base_hosts: |
   127.0.0.1 {{ inventory_hostname }}.{{ dc }} {{ inventory_hostname }} localhost

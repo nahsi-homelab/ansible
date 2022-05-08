@@ -1,5 +1,3 @@
-base_consolefont: "ter-i24b"
-
 base_filesystems:
   - path: "/tmp"
     src: "tmpfs"

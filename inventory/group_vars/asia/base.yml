@@ -1,11 +1,11 @@
 base_dns: |
   resolv_conf="/etc/resolv.conf"
-  name_servers="10.2.10.1"
+  name_servers="10.2.10.10"
   search_domains="node.consul service.consul"
 
 base_docker_config:
   dns:
-    - "10.2.10.1"
+    - "10.2.10.10"
   default-runtime: "runc"
   runtimes:
     crun:

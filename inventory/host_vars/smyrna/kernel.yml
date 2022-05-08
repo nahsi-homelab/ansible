@@ -70,10 +70,6 @@ kernel_configs:
     CONFIG_BT_RFCOMM=y
     CONFIG_BT_BNEP=y
 
-  05ppoe: |
-    CONFIG_PPP=y
-    CONFIG_PPPOE=y
-
   06other: |
     CONFIG_MEMSTICK=y
     CONFIG_MEMSTICK_REALTEK_USB=y

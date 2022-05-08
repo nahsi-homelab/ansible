@@ -1,5 +1,3 @@
-base_consolefont: "ter-i24b"
-
 base_filesystems:
   - path: "/tmp"
     src: "tmpfs"
@@ -12,61 +10,9 @@ base_filesystems:
     fstype: "bpf"
     state: "mounted"
 
-base_sshd_openrc_config: |
-  SSHD_CONFDIR="${RC_PREFIX%/}/etc/ssh"
-  SSHD_OPTS=""
-  rc_need="net.enp2s0"
-
-base_services:
-  - name: "iptables"
-    runlevel: "default"
-    enabled: true
-    state: "started"
-
-base_packages_smyrna:
-  - net-dialup/ppp
-  - sys-power/apcupsd
-base_packages: "{{ base_packages_all + base_packages_smyrna | unique }}"
-
 base_network_interfaces:
   - name: "enp2s0"
-  - name: "enp3s0"
-    start: false
-    enable: false
-  - name: "ppp0"
 
 base_network: |
-  # pppoe
-  config_enp3s0=null
-  config_ppp0="ppp"
-  link_ppp0="enp3s0"
-  plugins_ppp0="pppoe"
-  pppd_ppp0="
-    noauth
-    defaultroute
-    mru 1492
-    mtu 1492
-    lcp-echo-interval 15 lcp-echo-failure 3
-    logfile /var/log/pppoe.log
-    noaccomp noccp nobsdcomp nodeflate nopcomp novj novjccomp"
-
-  username_ppp0={{ lookup('hashi_vault', 'secret/data/ISP/asia:username') }}
-  password_ppp0={{ lookup('hashi_vault', 'secret/data/ISP/asia:password') }}
-
-  rc_net_ppp0_need="net.enp3s0"
-
-  # a workaround for 'WARNING: net.ppp0 has started, but is inactive'
-  preup() {
-    if [ "${IFACE}" == "ppp0" ]; then
-      trap 'mark_service_started' EXIT
-    fi
-    return 0
-  }
-
-  # lan
-  config_enp2s0="null"
-
-  vlans_enp2s0="10 30 50"
-  config_enp2s0_10="10.2.10.1/24"
-  config_enp2s0_30="10.2.30.1/24"
-  config_enp2s0_50="10.2.50.1/24"
+  config_enp2s0="{{ private_ip }}/24"
+  routes_enp2s0="default via 10.2.10.10"

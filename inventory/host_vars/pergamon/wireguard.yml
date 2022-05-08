@@ -1,6 +1,9 @@
 wireguard_configs:
   office: "{{ lookup('hashi_vault', 'secret/data/wireguard/pergamon:office') }}"
+  relay: "{{ lookup('hashi_vault', 'secret/data/wireguard/pergamon:relay') }}"
 
 wireguard_interfaces:
   - name: "office"
     enabled: false
+  - name: "relay"
+    enabled: true

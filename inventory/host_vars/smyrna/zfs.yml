@@ -49,6 +49,7 @@ base_zfs_datasets:
     owner: "1000"
     group: "1000"
     mode: "0700"
+    state: absent
 
   - name: "main/data/unifi"
     properties:
@@ -58,3 +59,4 @@ base_zfs_datasets:
     owner: "1000"
     group: "1000"
     mode: "0750"
+    state: absent

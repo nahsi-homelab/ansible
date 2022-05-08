@@ -1,4 +1,10 @@
 nomad_configs:
+  public_network:
+    client:
+      host_network:
+        - public:
+            interface: "ppp0"
+
   volumes:
     client:
       host_volume:
@@ -11,6 +17,10 @@ nomad_configs:
             path: "/var/lib/mongo"
         - calibre-web:
             path: "/var/lib/calibre-web"
+        - home-assistant:
+            path: "/var/lib/home-assistant"
+        - unifi:
+            path: "/var/lib/unifi"
 
   meta:
     client:

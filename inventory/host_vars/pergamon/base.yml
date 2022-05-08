@@ -1,5 +1,3 @@
-base_consolefont: "ter-i24b"
-
 base_filesystems:
   - path: "/var/tmp"
     src: "tmpfs"
@@ -19,14 +17,51 @@ base_filesystems:
     state: "mounted"
 
 base_network: |
-  config_enp4s0="{{ private_ip }}/24"
-  routes_enp4s0="default via 10.2.10.1"
+  # pppoe
+  config_enp5s0=null
+  config_ppp0="ppp"
+  link_ppp0="enp5s0"
+  plugins_ppp0="pppoe"
+  pppd_ppp0="
+    noauth
+    defaultroute
+    mru 1492
+    mtu 1492
+    lcp-echo-interval 15 lcp-echo-failure 3
+    logfile /var/log/pppoe.log
+    noaccomp noccp nobsdcomp nodeflate nopcomp novj novjccomp"
+
+  username_ppp0={{ lookup('hashi_vault', 'secret/data/ISP/asia:username') }}
+  password_ppp0={{ lookup('hashi_vault', 'secret/data/ISP/asia:password') }}
+
+  rc_net_ppp0_need="net.enp4s0"
+
+  # a workaround for 'WARNING: net.ppp0 has started, but is inactive'
+  preup() {
+    if [ "${IFACE}" == "ppp0" ]; then
+      trap 'mark_service_started' EXIT
+    fi
+    return 0
+  }
+
+  # lan
+  config_enp4s0="null"
+
+  vlans_enp4s0="10 30 50"
+  config_enp4s0_10="10.2.10.10/24"
+  config_enp4s0_30="10.2.30.10/24"
+  config_enp4s0_50="10.2.50.10/24"
 
 base_network_interfaces:
   - name: "enp4s0"
+  - name: "enp5s0"
+    start: false
+    enable: false
+  - name: "ppp0"
 
 base_packages_pergamon:
-  - net-misc/r8168
+  - net-misc/r8125
+  - net-dialup/ppp
   - media-plugins/hyperion
   - media-sound/beets
   - sys-power/apcupsd
@@ -53,6 +88,11 @@ base_services:
     state: "started"
 
   - name: "alsasound"
+    runlevel: "default"
+    enabled: true
+    state: "started"
+
+  - name: "iptables"
     runlevel: "default"
     enabled: true
     state: "started"

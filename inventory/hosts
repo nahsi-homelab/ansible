@@ -1,9 +1,9 @@
 pergamon
 miletos
-smyrna
 tyros
-palmyra
 antiochia
+palmyra
+byblos
 chalcedon ansible_host=chalcedon.nahsi.dev
 
 [asia]
@@ -12,8 +12,9 @@ smyrna
 
 [syria]
 antiochia
-tyros
 palmyra
+byblos
+tyros
 
 [pontus]
 chalcedon
@@ -26,20 +27,18 @@ pergamon
 miletos
 
 [routers]
-tyros
 pergamon
 
 [dns]
-tyros
 pergamon
 chalcedon
 
 [hashistack]
 antiochia
 palmyra
-smyrna
+byblos
 
 [vault]
 antiochia
 palmyra
-smyrna
+byblos

@@ -15,4 +15,4 @@ base_network_interfaces:
 
 base_network: |
   config_enp2s0="{{ private_ip }}/24"
-  routes_enp2s0="default via 10.2.10.10"
+  routes_enp2s0="default via 10.1.10.1"

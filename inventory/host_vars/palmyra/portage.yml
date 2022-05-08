@@ -5,7 +5,7 @@ base_portage_makeconf_palmyra:
   INPUT_DEVICES: "evdev"
   LUA_TARGETS: "luajit"
   LUA_SINGLE_TARGET: "luajit"
-  DISTCC_HOSTS: "antiochia.node.consul/16 pergamon.node.consul/32"
+  DISTCC_HOSTS: "antiochia.node.consul/16"
   FEATURES: "parallel-install distcc"
 base_portage_makeconf: >
   {{

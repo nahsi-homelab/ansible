@@ -8,7 +8,7 @@ nomad_configs:
   volumes:
     client:
       host_volume:
-        - minio:
+        - mongo:
             path: "/var/lib/mongo"
 
   meta:

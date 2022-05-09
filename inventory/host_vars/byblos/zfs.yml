@@ -41,18 +41,6 @@ base_zfs_datasets:
     group: "nobody"
     mode: "0700"
 
-  - name: "main/data/mongo"
-    properties:
-      atime: "off"
-      compression: "zstd"
-      logbias: "throughput"
-      primarycache: "metadata"
-      mountpoint: "/var/lib/mongo"
-      quota: "100G"
-    owner: "999"
-    group: "999"
-    mode: "0700"
-
   - name: "main/data/seaweedfs-master"
     properties:
       atime: "off"

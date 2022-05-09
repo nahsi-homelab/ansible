@@ -4,7 +4,15 @@ nomad_configs:
       host_network:
         - public:
             interface: "enp1s0"
+
+  volumes:
+    client:
+      host_volume:
+        - minio:
+            path: "/var/lib/mongo"
+
   meta:
     client:
       meta:
         vultr_region: "fra"
+        mongo_node_id: "arbitrer"

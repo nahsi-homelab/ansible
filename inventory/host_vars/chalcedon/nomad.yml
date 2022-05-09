@@ -15,4 +15,4 @@ nomad_configs:
     client:
       meta:
         vultr_region: "fra"
-        mongo_node_id: "arbitrer"
+        mongo_node_id: "arbiter"

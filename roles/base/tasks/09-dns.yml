@@ -1,0 +1,87 @@
+- name: install dnsmasq
+  tags: dns
+  portage:
+    package: net-dns/dnsmasq
+    state: present
+  when: ansible_distribution == "Gentoo"
+
+- name: install dnsmasq
+  tags: dns
+  apt:
+    name:
+      - "dnsmasq"
+    install_recommends: false
+    state: present
+  when: ansible_distribution == "Ubuntu"
+
+- name: copy dnsmasq config
+  tags: dns
+  copy:
+    content: "{{ base_dnsmasq_config }}"
+    dest: "/etc/dnsmasq.conf"
+    mode: 0660
+  notify: restart dnsmasq
+  when: ansible_distribution == "Ubuntu"
+
+- name: copy dnsmasq config
+  tags: dns
+  copy:
+    content: "{{ base_dnsmasq_config }}"
+    dest: "/etc/dnsmasq.conf"
+    owner: dnsmasq
+    group: dnsmasq
+    mode: 0660
+  notify: restart dnsmasq
+  when: ansible_distribution == "Gentoo"
+
+- name: copy dnsmasq openrc config
+  tags: dns
+  copy:
+    content: "{{ base_dnsmasq_openrc_config }}"
+    dest: "/etc/conf.d/dnsmasq"
+    owner: root
+    group: root
+    mode: 0660
+  notify: restart dnsmasq
+  when: ansible_distribution == "Gentoo"
+
+- name: enable dnsmasq
+  tags: dns
+  service:
+    name: dnsmasq
+    enabled: true
+
+- name: install openresolv
+  tags: dns
+  portage:
+    package: net-dns/openresolv
+    state: present
+  when: ansible_distribution == "Gentoo"
+
+- name: install openresolv
+  tags: dns
+  apt:
+    name:
+      - "dnsmasq"
+    install_recommends: false
+    state: present
+  when: ansible_distribution == "Ubuntu"
+
+- name: disable systemd-resolved
+  tags: dns
+  systemd:
+    name: systemd-resolved
+    enabled: false
+  notify: stop systemd-resolved
+  when: ansible_distribution == "Ubuntu"
+
+- name: configure openresolv
+  tags: dns
+  copy:
+    content: "{{ base_dns }}"
+    dest: /etc/resolvconf.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: run resolvconf
+  when: base_dns is defined

@@ -85,22 +85,6 @@
     group: root
     mode: 0644
 
-- name: install openresolv
-  portage:
-    package: net-dns/openresolv
-    state: present
-
-- name: configure openresolv
-  tags: system
-  copy:
-    content: "{{ base_dns }}"
-    dest: /etc/resolvconf.conf
-    owner: root
-    group: root
-    mode: 0644
-  notify: run resolvconf
-  when: base_dns is defined
-
 - meta: flush_handlers
 
 - name: install base packages

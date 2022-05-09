@@ -1,7 +1,7 @@
 # router
 
 ## Description
-> Configure hostapd, DHCP, firewall
+> Configure hostapd, firewall
 
 ## Author
 * **Anatoly Laskaris** - [nahsi](https://github.com/nahsi)

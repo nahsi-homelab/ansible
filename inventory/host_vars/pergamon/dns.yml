@@ -1,20 +1,9 @@
 dns_unbound_configs:
   pergamon: |
     server:
-      interface: 127.0.0.1@53
-      interface: 10.2.10.10@53
-      interface: 10.2.30.10@53
-      interface: 10.2.50.10@53
-
-  consul: |
-    server:
-      private-domain: "consul"
-      domain-insecure: "consul"
-
-    stub-zone:
-      name: "consul"
-      stub-addr: 127.0.0.1@8600
-      stub-no-cache: yes
+      interface: 10.2.10.10@54
+      interface: 10.2.30.10@54
+      interface: 10.2.50.10@54
 
   cinarra: |
     forward-zone:

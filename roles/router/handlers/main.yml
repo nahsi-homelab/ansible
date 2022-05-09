@@ -2,8 +2,3 @@
   service:
     name: hostapd
     state: restarted
-
-- name: restart dnsmasq
-  service:
-    name: dnsmasq
-    state: restarted

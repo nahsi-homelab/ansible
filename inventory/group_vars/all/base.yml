@@ -15,6 +15,42 @@ base_files:
 base_dns: |
   resolv_conf="/etc/resolv.conf"
   search_domains="node.consul service.consul"
+  name_servers="127.0.0.1"
+
+base_dnsmasq_config: |
+  listen-address=127.0.0.1,172.17.0.1
+
+  interface=docker0
+  interface=lo
+  bind-interfaces
+
+  server=/consul/127.0.0.1#8600
+  server={{ nameserver }}
+
+  rev-server=0.0.0.0/8,127.0.0.1#8600
+  rev-server=10.0.0.0/8,127.0.0.1#8600
+  rev-server=127.0.0.1/8,127.0.0.1#8600
+  rev-server=172.17.0.0/16,127.0.0.1#8600
+  rev-server=192.168.0.0/16,127.0.0.1#8600
+
+  local-service
+  no-poll
+  no-resolv
+
+base_docker_config:
+  dns:
+    - "172.17.0.1"
+  default-runtime: "runc"
+  runtimes:
+    crun:
+      path: "/usr/bin/crun"
+  storage-driver: "zfs"
+  storage-opts:
+    - zfs.fsname=main/containers
+  log-driver: "json-file"
+  log-opts:
+    max-size: "32m"
+    max-file: "2"
 
 base_sysctl:
   - name: net.ipv4.ip_forward

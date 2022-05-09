@@ -8,7 +8,6 @@ chalcedon ansible_host=chalcedon.nahsi.dev
 
 [asia]
 pergamon
-smyrna
 
 [syria]
 antiochia
@@ -31,7 +30,6 @@ pergamon
 
 [dns]
 pergamon
-chalcedon
 
 [hashistack]
 antiochia

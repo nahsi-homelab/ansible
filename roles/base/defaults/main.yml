@@ -12,3 +12,6 @@ base_sshd_openrc_config: |
   SSHD_CONFDIR="${RC_PREFIX%/}/etc/ssh"
   SSHD_OPTS=""
   rc_need="net"
+
+base_dnsmasq_openrc_config: |
+  DNSMASQ_OPTS="--user=dnsmasq --group=dnsmasq"

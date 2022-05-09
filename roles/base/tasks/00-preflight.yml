@@ -65,24 +65,6 @@
     quiet: true
   when: base_consolefont is defined
 
-- name: check "base_dns" variable
-  tags: always
-  assert:
-    that:
-      - base_dns is string
-      - base_dns | length
-    quiet: true
-  when: base_dns is defined
-
-- name: check "base_tailscale_configs" variable
-  tags: always
-  assert:
-    that:
-      - base_tailscale_config is string
-      - base_tailscale_config | length
-    quiet: true
-  when: base_tailscale_config is defined
-
 - name: check "base_hosts" variable
   assert:
     that:
@@ -315,3 +297,29 @@
       - base_files is not string
     quiet: true
   when: base_files is defined
+
+- name: check "base_dnsmasq_config" variable
+  assert:
+    that:
+      - base_dnsmasq_config is defined
+      - base_dnsmasq_config is string
+      - base_dnsmasq_config | length
+    quiet: true
+
+- name: check "base_dnsmasq_openrc_config" variable
+  assert:
+    that:
+      - base_dnsmasq_openrc_config is defined
+      - base_dnsmasq_openrc_config is string
+      - base_dnsmasq_openrc_config | length
+    quiet: true
+
+- name: check "base_dns" variable
+  tags: always
+  assert:
+    that:
+      - base_dns is string
+      - base_dns | length
+    quiet: true
+  when: base_dns is defined
+

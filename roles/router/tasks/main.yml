@@ -5,8 +5,5 @@
   include_tasks: 01-hostapd.yml
   when: router_hostapd_config is defined
 
-- name: Configure dhcp
-  include_tasks: 02-dhcp.yml
-
 - name: Configure iptables
-  include_tasks: 03-iptables.yml
+  include_tasks: 02-iptables.yml

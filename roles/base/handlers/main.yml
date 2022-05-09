@@ -83,3 +83,8 @@
     name: systemd-resolved
     enabled: false
     state: stopped
+
+- name: restart dnsmasq
+  service:
+    name: dnsmasq
+    state: restarted

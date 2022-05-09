@@ -97,28 +97,6 @@
     label: "{{ service.name }}"
   when: base_services is defined
 
-- name: install openresolv
-  apt:
-    name:
-      - "openresolv"
-    install_recommends: false
-    state: present
-
-- name: disable systemd-resolved
-  systemd:
-    name: systemd-resolved
-    enabled: false
-  notify: stop systemd-resolved
-
-- name: configure openresolv
-  copy:
-    content: "{{ base_dns }}"
-    dest: /etc/resolvconf.conf
-    owner: root
-    group: root
-    mode: 0644
-  notify: run resolvconf
-
 - name: disable ufw
   ufw:
     state: disabled

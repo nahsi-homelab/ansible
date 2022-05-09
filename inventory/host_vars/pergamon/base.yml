@@ -16,6 +16,47 @@ base_filesystems:
     fstype: "bpf"
     state: "mounted"
 
+base_dnsmasq_config: |
+  interface=enp4s0.10
+  dhcp-range=vlan10,10.2.10.200,10.2.10.250,75h
+  dhcp-option=vlan10,3,10.2.10.10
+  dhcp-option=vlan10,6,10.2.10.10
+
+  interface=enp4s0.30
+  dhcp-range=vlan30,10.2.30.200,10.2.30.250,75h
+  dhcp-option=vlan30,3,10.2.30.10
+  dhcp-option=vlan30,6,10.2.30.10
+
+  interface=enp4s0.50
+  dhcp-range=vlan50,10.2.50.200,10.2.50.250,75h
+  dhcp-option=vlan50,3,10.2.50.10
+  dhcp-option=vlan50,6,10.2.50.10
+
+  dhcp-host=58:bf:25:22:b1:54,10.2.30.5
+  dhcp-host=6c:29:90:27:12:e1,10.2.30.11
+  dhcp-host=d8:a0:11:24:34:8c,10.2.30.12
+  dhcp-host=3c:6a:9d:15:8b:17,10.2.30.31
+  dhcp-host=3c:6a:9d:1a:4d:6c,10.2.30.32
+
+  listen-address=127.0.0.1,172.17.0.1
+
+  interface=docker0
+  interface=lo
+  bind-interfaces
+
+  server=/consul/127.0.0.1#8600
+  server={{ nameserver }}
+
+  rev-server=0.0.0.0/8,127.0.0.1#8600
+  rev-server=10.0.0.0/8,127.0.0.1#8600
+  rev-server=127.0.0.1/8,127.0.0.1#8600
+  rev-server=172.17.0.0/16,127.0.0.1#8600
+  rev-server=192.168.0.0/16,127.0.0.1#8600
+
+  local-service
+  no-poll
+  no-resolv
+
 base_network: |
   # pppoe
   config_enp5s0=null

@@ -45,6 +45,8 @@ base_zfs_datasets:
     properties:
       atime: "off"
       compression: "zstd"
+      logbias: "throughput"
+      primarycache: "metadata"
       mountpoint: "/var/lib/mongo"
       quota: "100G"
     owner: "999"

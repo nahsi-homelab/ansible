@@ -4,6 +4,8 @@ nomad_configs:
       host_volume:
         - minio:
             path: "/var/lib/minio"
+        - mongo:
+            path: "/var/lib/mongo"
         - seaweedfs-master:
             path: "/var/lib/seaweedfs-master"
         - seaweedfs-index:
@@ -13,3 +15,4 @@ nomad_configs:
     client:
       meta:
         minio_node_id: 4
+        mongo_node_id: "arbitrer"

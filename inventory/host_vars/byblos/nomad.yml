@@ -4,6 +4,10 @@ nomad_configs:
       host_volume:
         - minio:
             path: "/var/lib/minio"
+        - seaweedfs-master:
+            path: "/var/lib/seaweedfs-master"
+        - seaweedfs-index:
+            path: "/var/lib/seaweedfs-index"
 
   meta:
     client:

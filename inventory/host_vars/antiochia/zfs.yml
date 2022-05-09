@@ -326,16 +326,6 @@ base_zfs_datasets:
     owner: "nobody"
     group: "nobody"
 
-  - name: "storage/data/seaweedfs-hdd"
-    properties:
-      atime: "off"
-      compression: "zstd"
-      mountpoint: "/var/lib/seaweedfs-hdd"
-      quota: "1TB"
-    mode: "0750"
-    owner: "nobody"
-    group: "nobody"
-
   - name: "main/data/unifi"
     properties:
       atime: "off"

@@ -52,8 +52,6 @@ nomad_configs:
             path: "/var/lib/seaweedfs-index"
         - seaweedfs-ssd:
             path: "/var/lib/seaweedfs-ssd"
-        - seaweedfs-hdd:
-            path: "/var/lib/seaweedfs-hdd"
 
   meta:
     client:

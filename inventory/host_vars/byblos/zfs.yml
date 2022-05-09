@@ -40,3 +40,23 @@ base_zfs_datasets:
     owner: "nobody"
     group: "nobody"
     mode: "0700"
+
+  - name: "main/data/seaweedfs-master"
+    properties:
+      atime: "off"
+      compression: "zstd"
+      mountpoint: "/var/lib/seaweedfs-master"
+      quota: "1G"
+    mode: "0700"
+    owner: "nobody"
+    group: "nobody"
+
+  - name: "main/data/seaweedfs-index"
+    properties:
+      atime: "off"
+      compression: "zstd"
+      mountpoint: "/var/lib/seaweedfs-index"
+      quota: "10G"
+    mode: "0700"
+    owner: "nobody"
+    group: "nobody"

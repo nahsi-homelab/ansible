@@ -24,6 +24,3 @@ vault_config:
         traefik.enable=true,
         traefik.http.routers.vault.entrypoints=https,
         traefik.http.routers.vault.rule=Host(`vault.service.consul`),
-        ingress.enable=true,
-        ingress.http.routers.vault.entrypoints=https,
-        ingress.http.routers.vault.rule=Host(`vault.nahsi.dev`)

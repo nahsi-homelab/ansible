@@ -438,7 +438,7 @@ base_syslog_logrotate: |
       weekly
       missingok
       notifempty
-      maxsize 100M
+      maxsize 1M
       dateext
       postrotate
       /etc/init.d/syslog-ng reload > /dev/null 2>&1 || true
@@ -449,7 +449,7 @@ base_syslog_logrotate: |
       weekly
       missingok
       notifempty
-      maxsize 100M
+      maxsize 1M
       dateext
       postrotate
       /etc/init.d/syslog-ng reload > /dev/null 2>&1 || true
@@ -460,7 +460,7 @@ base_syslog_logrotate: |
       weekly
       missingok
       notifempty
-      maxsize 100M
+      maxsize 1M
       dateext
       postrotate
       /etc/init.d/syslog-ng reload > /dev/null 2>&1 || true
@@ -471,7 +471,7 @@ base_syslog_logrotate: |
       weekly
       missingok
       notifempty
-      maxsize 100M
+      maxsize 1M
       dateext
       postrotate
       /etc/init.d/syslog-ng reload > /dev/null 2>&1 || true
@@ -482,7 +482,7 @@ base_syslog_logrotate: |
       weekly
       missingok
       notifempty
-      maxsize 100M
+      maxsize 1M
       dateext
       postrotate
       /etc/init.d/syslog-ng reload > /dev/null 2>&1 || true
@@ -493,7 +493,7 @@ base_syslog_logrotate: |
       weekly
       missingok
       notifempty
-      maxsize 100M
+      maxsize 1M
       dateext
       postrotate
       /etc/init.d/syslog-ng reload > /dev/null 2>&1 || true
@@ -504,7 +504,7 @@ base_syslog_logrotate: |
       weekly
       missingok
       notifempty
-      maxsize 100M
+      maxsize 1M
       dateext
       postrotate
       /etc/init.d/syslog-ng reload > /dev/null 2>&1 || true
@@ -515,7 +515,7 @@ base_syslog_logrotate: |
       weekly
       missingok
       notifempty
-      maxsize 100M
+      maxsize 1M
       dateext
       postrotate
       /etc/init.d/syslog-ng reload > /dev/null 2>&1 || true
@@ -526,7 +526,7 @@ base_syslog_logrotate: |
       weekly
       missingok
       notifempty
-      maxsize 100M
+      maxsize 1M
       dateext
       postrotate
       /etc/init.d/syslog-ng reload > /dev/null 2>&1 || true
@@ -537,7 +537,7 @@ base_syslog_logrotate: |
       weekly
       missingok
       notifempty
-      maxsize 100M
+      maxsize 1M
       dateext
       postrotate
       /etc/init.d/syslog-ng reload > /dev/null 2>&1 || true
@@ -548,7 +548,7 @@ base_syslog_logrotate: |
       weekly
       missingok
       notifempty
-      maxsize 100M
+      maxsize 1M
       dateext
       postrotate
       /etc/init.d/syslog-ng reload > /dev/null 2>&1 || true
@@ -559,7 +559,7 @@ base_syslog_logrotate: |
       weekly
       missingok
       notifempty
-      maxsize 100M
+      maxsize 1M
       dateext
       postrotate
       /etc/init.d/syslog-ng reload > /dev/null 2>&1 || true
@@ -570,7 +570,7 @@ base_syslog_logrotate: |
       weekly
       missingok
       notifempty
-      maxsize 100M
+      maxsize 1M
       dateext
   }
   "/var/log/emerge.log" {
@@ -578,7 +578,7 @@ base_syslog_logrotate: |
       weekly
       missingok
       notifempty
-      maxsize 100M
+      maxsize 1M
       dateext
   }
   "/var/log/emerge-fetch.log" {
@@ -586,6 +586,14 @@ base_syslog_logrotate: |
       weekly
       missingok
       notifempty
-      maxsize 100M
+      maxsize 1M
+      dateext
+  }
+  "/var/log/pppoe.log" {
+      rotate 2
+      weekly
+      missingok
+      notifempty
+      maxsize 1M
       dateext
   }

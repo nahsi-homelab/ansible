@@ -246,6 +246,9 @@ base_syslog_config: |
     file("/proc/kmsg");
   };
 
+  destination loki {
+    syslog("localhost" transport("tcp") port(1514));
+  };
   destination syslog {
     file("/var/log/syslog.log");
   };
@@ -363,6 +366,11 @@ base_syslog_config: |
   log {
     source(src);
     destination(default);
+  };
+  log {
+    source(src);
+    source(kernel);
+    destination(loki);
   };
 
 base_syslog_logrotate: |

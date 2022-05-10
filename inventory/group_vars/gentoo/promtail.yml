@@ -15,6 +15,10 @@ _syslog:
   - ntpd
   - dhclient
   - distccd
+  - ssh
+  - doas
+  - su
+  - kernel
 
 promtail_version: "2.5.0"
 promtail_config:

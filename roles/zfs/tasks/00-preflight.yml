@@ -1,0 +1,8 @@
+- name: check "base_zfs_datasets" variable
+  tags: always
+  assert:
+    that:
+      - base_zfs_datasets is iterable
+      - base_zfs_datasets is not string
+    quiet: true
+  when: base_zfs_datasets is defined

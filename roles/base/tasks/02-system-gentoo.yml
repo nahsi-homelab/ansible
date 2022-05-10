@@ -144,44 +144,6 @@
     label: "{{ service.name }}"
   when: base_services is defined
 
-- name: manage zfs dataset
-  tags:
-    - zfs
-    - directories
-    - system
-  zfs:
-    name: "{{ dataset.name }}"
-    state: "{{ dataset.state | d('present') }}"
-    extra_zfs_properties: "{{ dataset.properties | d(omit) }}"
-  loop: "{{ base_zfs_datasets }}"
-  loop_control:
-    loop_var: "dataset"
-    label: "{{ dataset.name }}"
-  when:
-    - base_zfs_datasets is defined
-    - not chroot
-
-- name: ensure zfs datasets ownership
-  tags:
-    - zfs
-    - directories
-    - system
-  file:
-    path: "{{ dataset.properties.mountpoint }}"
-    state: "{{ dataset.state | d('directory') }}"
-    owner: "{{ dataset.owner | d('root') }}"
-    group: "{{ dataset.group | d('root') }}"
-    mode: "{{ dataset.mode | d('0755') }}"
-  loop: "{{ base_zfs_datasets }}"
-  loop_control:
-    loop_var: "dataset"
-    label: "{{ dataset.name }}"
-  when:
-    - base_zfs_datasets is defined
-    - dataset.properties.mountpoint is defined
-    - dataset.properties.mountpoint != "none"
-    - not chroot
-
 - name: create directories
   tags:
     - system

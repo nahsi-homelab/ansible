@@ -13,7 +13,6 @@
   tags:
     - system
     - packages
-    - zfs
     - directories
     - files
   include_tasks: 02-system-gentoo.yml

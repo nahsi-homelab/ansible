@@ -1,0 +1,6 @@
+- name: Preflight
+  tags: always
+  include_tasks: 00-preflight.yml
+
+- name: Manage ZFS datasets
+  include_tasks: 01-datasets.yml

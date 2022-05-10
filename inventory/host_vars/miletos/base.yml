@@ -111,37 +111,3 @@ base_portage_package_use: >
     combine(base_portage_package_use_desktop, recursive=true) |
     combine(base_portage_package_use_gentoo, recursive=true)
   }}
-
-base_zfs_datasets:
-  - name: "main"
-    properties:
-      compression: "zstd"
-      relatime: "on"
-      acltype: "posix"
-      xattr: "sa"
-      dnodesize: "auto"
-      mountpoint: "none"
-      canmount: "off"
-      normalization: "formD"
-
-  - name: "main/system/gentoo"
-    properties:
-      canmount: "noauto"
-      mountpoint: "/"
-      org.zfsbootmenu:commandline: "ro quiet loglevel=0 i915.enable_gvt=1 kvm.ignore_msrs=1 hid_apple.swap_fn_leftctrl=1 hid_apple.swap_opt_cmd=1"
-      org.zfsbootmenu:kernel: "5.10"
-    owner: "root"
-    group: "root"
-    mode: "0755"
-
-  - name: "main/containers"
-    owner: "root"
-    group: "root"
-    mode: "0710"
-
-  - name: "main/users/nahsi/home"
-    properties:
-      mountpoint: "/home/nahsi"
-    owner: "nahsi"
-    group: "nahsi"
-    mode: "0755"

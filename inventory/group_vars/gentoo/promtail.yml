@@ -1,3 +1,21 @@
+_syslog:
+  - promtail
+  - supervise-daemon
+  - crond
+  - anacron
+  - logrotate
+  - dnsmasq
+  - unbound
+  - syslog-ng
+  - pppd
+  - dnsmasq-dhcp
+  - shutdown
+  - apcupsd
+  - apccontrol
+  - ntpd
+  - dhclient
+  - distccd
+
 promtail_version: "2.5.0"
 promtail_config:
   server:
@@ -12,26 +30,37 @@ promtail_config:
     - url: "https://loki-distributor.service.consul/loki/api/v1/push"
       external_labels:
         dc: "{{ dc }}"
-        host: "{{ inventory_hostname }}"
+        instance: "{{ inventory_hostname }}"
       basic_auth:
         username: "promtail"
         password: "{{ lookup('hashi_vault', 'secret/data/promtail/loki:password') }}"
 
   scrape_configs:
-    # - job_name: "syslog"
-    #   syslog:
-    #     listen_address: "127.0.0.1:1514"
-    #     idle_timeout: "3600s"
-    #     use_incoming_timestamp: true
-    #   relabel_configs:
-    #     - source_labels: ["__syslog_message_hostname"]
-    #       target_label: "host"
-    #     - source_labels: ["__syslog_message_severity"]
-    #       target_label: "level"
-    #     - source_labels: ["__syslog_message_app_name"]
-    #       target_label: "app"
-    #     - source_labels: ["__syslog_message_facility"]
-    #       target_label: "facility"
+    - job_name: "syslog"
+      syslog:
+        listen_address: "127.0.0.1:1514"
+        idle_timeout: "3600s"
+        use_incoming_timestamp: true
+      relabel_configs:
+        - source_labels: ["__syslog_message_hostname"]
+          target_label: "instance"
+        - source_labels: ["__syslog_message_app_name"]
+          target_label: "app"
+        - source_labels: ["__syslog_message_facility"]
+          target_label: "facility"
+      pipeline_stages:
+        - match:
+            selector: '{app=~"({{ _syslog | join("|")}})"}'
+            stages:
+              - static_labels:
+                  filtered: "true"
+                  source: "syslog"
+        - match:
+            selector: '{filtered!="true"}'
+            action: drop
+            drop_counter_reason: "syslog-filter"
+        - labeldrop:
+            - "filtered"
 
     - job_name: "portage"
       static_configs:
@@ -139,3 +168,307 @@ promtail_config:
         - timestamp:
             source: "time"
             format: "RFC3339"
+
+    - job_name: "docker"
+      docker_sd_configs:
+        - host: "unix:///var/run/docker.sock"
+          refresh_interval: "5s"
+      relabel_configs:
+        - source_labels: ['__meta_docker_container_label_com_hashicorp_nomad_alloc_id']
+          target_label: "alloc_id"
+        - source_labels: ['__meta_docker_container_label_com_hashicorp_nomad_namespace']
+          target_label: "namespace"
+        - source_labels: ['__meta_docker_container_label_com_hashicorp_nomad_job_name']
+          target_label: "job"
+        - source_labels: ['__meta_docker_container_label_com_hashicorp_nomad_task_group_name']
+          target_label: "group"
+        - source_labels: ['__meta_docker_container_label_com_hashicorp_nomad_task_name']
+          target_label: "task"
+      pipeline_stages:
+        - static_labels:
+            source: "nomad"
+
+        - match: # traefik
+            selector: '{task="traefik"}'
+            pipeline_name: "traefik"
+            stages:
+            - regex:
+                expression: '^time="(?P<time>.*)" level=(?P<level>.*) .*'
+            - timestamp:
+                source: time
+                format: "RFC3339"
+            - static_labels:
+                filtered: "true"
+
+        - match: # grafana
+            selector: '{job="grafana",group="grafana",task="grafana"}'
+            pipeline_name: "grafana"
+            stages:
+            - regex:
+                expression: '^t=(?P<time>\\S+) lvl=(?P<level>\\S+).*$'
+            - timestamp:
+                source: time
+                format: "2006-01-02T15:04:05-0700"
+            - static_labels:
+                filtered: "true"
+
+        - match: # loki
+            selector: '{job="loki",task!~"connect-.*"}'
+            pipeline_name: "loki"
+            stages:
+            - regex:
+                expression: '^.* ts=(?P<time>\\S+).*$'
+            - timestamp:
+                source: time
+                format: "RFC3339Nano"
+            - static_labels:
+                filtered: "true"
+
+        - match: # promtail
+            selector: '{task="promtail"}'
+            pipeline_name: "promtail"
+            stages:
+            - regex:
+                expression: '^level=(?P<level>\\S+) ts=(?P<time>\\S+).*$'
+            - timestamp:
+                source: time
+                format: "RFC3339Nano"
+            - static_labels:
+                filtered: "true"
+
+        - match: # victoria-metrics
+            selector: '{job="victoria-metrics",task=~"victoria-metrics|vmagent"}'
+            pipeline_name: "victoria-metrics"
+            stages:
+            - regex:
+                expression: '^(?P<time>\\S+)\\s+(?P<level>\\S+)\\s+(?P<function>\\S+)\\s+(?P<msg>.*)$'
+            - timestamp:
+                source: time
+                format: "RFC3339Nano"
+            - static_labels:
+                filtered: "true"
+
+        - match: # postgres
+            selector: '{job="postgres",task="patroni"}'
+            pipeline_name: "postgres"
+            stages:
+            - multiline:
+                firstline: '^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}'
+            - regex:
+                expression: '^(?P<time>\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\,\\d{3}).*'
+            - timestamp:
+                source: time
+                format: "2006-01-02 15:04:05,999"
+            - drop:
+                expression: ".*INFO: no action.*"
+                drop_counter_reason: "noise-filter"
+            - static_labels:
+                filtered: "true"
+
+        - match: # postgres-exporter
+            selector: '{task="postgres-exporter"}'
+            pipeline_name: "postgres-exporter"
+            stages:
+            - regex:
+                expression: '^ts=(?P<time>\\S+).*$'
+            - timestamp:
+                source: time
+                format: "RFC3339Nano"
+            - static_labels:
+                filtered: "true"
+
+        - match: # mariadb
+            selector: '{job="mariadb",task="mariadb"}'
+            pipeline_name: "mariadb"
+            stages:
+            - multiline:
+                firstline: '^\\d{4}-\\d{2}-\\d{2}  \\d{2}:\\d{2}:\\d{2}'
+            - regex:
+                expression: '^(?P<time>\\d{4}-\\d{2}-\\d{2}  \\d{2}:\\d{2}:\\d{2}).*'
+            - timestamp:
+                source: time
+                format: "2006-01-02  15:04:05"
+            - drop:
+                source: "__meta_docker_container_log_stream"
+                value: "stdout"
+                drop_counter_reason: "noise-filter"
+            - static_labels:
+                filtered: "true"
+
+        - match: # maxscale
+            selector: '{job="mariadb",task="maxscale"}'
+            pipeline_name: "maxscale"
+            stages:
+            - multiline:
+                firstline: '^\\d{4}-\\d{2}-\\d{2}  \\d{2}:\\d{2}:\\d{2}'
+            - regex:
+                expression: '^(?P<time>\\d{4}-\\d{2}-\\d{2}  \\d{2}:\\d{2}:\\d{2}).*'
+            - timestamp:
+                source: time
+                format: "2006-01-02 15:04:05"
+            - drop:
+                source: "__meta_docker_container_log_stream"
+                value: "stderr"
+                drop_counter_reason: "noise-filter"
+            - static_labels:
+                filtered: "true"
+
+        - match: # minio
+            selector: '{job="minio",task="minio"}'
+            pipeline_name: "minio"
+            stages:
+            - multiline:
+                firstline: '^\\S+'
+            - static_labels:
+                filtered: "true"
+
+        - match: # seaweedfs
+            selector: '{job="seaweedfs"}'
+            pipeline_name: "seaweedfs"
+            stages:
+            - static_labels:
+                filtered: "true"
+
+        - match: # seaweedfs-csi
+            selector: '{job="seaweedfs-csi"}'
+            pipeline_name: "seaweedfs-csi"
+            stages:
+            - static_labels:
+                filtered: "true"
+
+        - match: # redis
+            selector: '{task="redis"}'
+            pipeline_name: "redis"
+            stages:
+            - regex:
+                expression: '^.* (?P<time>\\d{2} \\w{3} \\d{4} \\d{2}:\\d{2}:\\d{2}\\.\\d{3}).*'
+            - timestamp:
+                source: time
+                format: "02 Jan 2006 15:04:05.999"
+            - static_labels:
+                filtered: "true"
+
+        - match: # resec
+            selector: '{task="resec"}'
+            pipeline_name: "resec"
+            stages:
+            - regex:
+                expression: '^time="(?P<time>.*)" level=(?P<level>.*) .*'
+            - timestamp:
+                source: time
+                format: "RFC3339"
+            - static_labels:
+                filtered: "true"
+
+        - match: # wildduck
+            selector: '{job="mail",task="wildduck"}'
+            pipeline_name: "mail"
+            stages:
+            - static_labels:
+                filtered: "true"
+
+        - match: # zone-mta
+            selector: '{job="mail",task="zone-mta"}'
+            pipeline_name: "mail"
+            stages:
+            - static_labels:
+                filtered: "true"
+
+        - match: # haraka
+            selector: '{job="mail",task="haraka"}'
+            pipeline_name: "mail"
+            stages:
+            - drop:
+                source: "__meta_docker_container_log_stream"
+                value: "stderr"
+                drop_counter_reason: "noise-filter"
+            - multiline:
+                firstline: '^\\S+'
+            - regex:
+                expression: '^(?P<time>\\S+) .*'
+            - timestamp:
+                source: time
+                format: "RFC3339Nano"
+            - static_labels:
+                filtered: "true"
+
+        - match: # sftpgo
+            selector: '{job="sftpgo"}'
+            pipeline_name: "sftpgo"
+            stages:
+            - json:
+                expressions:
+                  time:
+                  user_agent:
+            - drop:
+                source: "user_agent"
+                value: "Consul Health Check"
+                drop_counter_reason: "noise-filter"
+            - timestamp:
+                source: time
+                format: "2006-01-02T15:04:05.999"
+            - static_labels:
+                filtered: "true"
+
+        - match: # filestash
+            selector: '{job="filestash"}'
+            pipeline_name: "filestash"
+            stages:
+            - regex:
+                expression: "^(?P<time>\\d{4}/\\d{2}/\\d{2} \\d{2}:\\d{2}:\\d{2}) .*$"
+            - timestamp:
+                source: time
+                format: "2006/01/02 15:04:05"
+            - static_labels:
+                filtered: "true"
+
+        - match: # transmission
+            selector: '{job="transmission",task="transmission"}'
+            pipeline_name: "transmission"
+            stages:
+            - drop:
+                source: "__meta_docker_container_log_stream"
+                value: "stdout"
+                drop_counter_reason: "noise-filter"
+            - static_labels:
+                filtered: "true"
+
+        - match: # home-assistant
+            selector: '{job="home-assistant"}'
+            pipeline_name: "home-assistant"
+            stages:
+            - drop:
+                source: "__meta_docker_container_log_stream"
+                value: "stdout"
+                drop_counter_reason: "noise-filter"
+            - regex:
+                expression: "^(?P<time>\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}) .*$"
+            - timestamp:
+                source: time
+                format: "2006-01-02 15:04:05"
+            - static_labels:
+                filtered: "true"
+
+        - match: # jellyfin
+            selector: '{job="jellyfin"}'
+            pipeline_name: "jellyfin"
+            stages:
+            - drop:
+                source: "__meta_docker_container_log_stream"
+                value: "stderr"
+                drop_counter_reason: "noise-filter"
+            - regex:
+                expression: "^[(?P<time>\\d{2}:\\d{2}:\\d{2})] .*$"
+            - timestamp:
+                source: time
+                format: "15:04:05"
+            - static_labels:
+                filtered: "true"
+
+        - match: # drop
+            selector: '{filtered!="true"}'
+            action: drop
+            drop_counter_reason: "nomad-filter"
+
+        - labeldrop:
+            - "filtered"

@@ -15,7 +15,7 @@ _syslog:
   - ntpd
   - dhclient
   - distccd
-  - ssh
+  - sshd
   - doas
   - su
   - kernel

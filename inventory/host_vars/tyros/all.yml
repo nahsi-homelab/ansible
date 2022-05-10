@@ -1,4 +1,0 @@
-arch: "amd64"
-bios: "uefi"
-
-private_ip: "10.1.10.1"

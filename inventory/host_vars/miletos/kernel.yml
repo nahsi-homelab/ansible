@@ -139,12 +139,6 @@ kernel_configs:
     CONFIG_SND_DMAENGINE_PCM=m
     CONFIG_SND_HDA_CODEC_CIRRUS=m
 
-    # SoundWire
-    # CONFIG_SOUNDWIRE is not set
-    # CONFIG_SOUNDWIRE_GENERIC_ALLOCATION is not set
-    # CONFIG_SOUNDWIRE_INTEL is not set
-    # CONFIG_SOUNDWIRE_CADENCE is not set
-
   06usb_net: |
     CONFIG_USB_NET_DRIVERS=y
     CONFIG_USB_USBNET=y

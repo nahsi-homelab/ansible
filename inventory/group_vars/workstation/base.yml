@@ -227,3 +227,36 @@ base_portage_package_use: >
     base_portage_package_use_desktop |
     combine(base_portage_package_use_all, recursive=true)
   }}
+
+base_portage_use:
+  - zstd
+  - luajit
+  - dist-kernel
+  - X
+  - elogind
+  - -policykit
+  - -geolocation
+  - dri
+  - drm
+  - icu
+  - xcb
+  - -gtk
+  - -gtk3
+  - -sound
+  - alsa
+  - pipewire
+
+  - vulkan
+  - vaapi
+  - vdpau
+  - opengl
+
+  - opus
+  - ogg
+  - vorbis
+  - flac
+  - gif
+  - jpeg
+  - png
+  - webp
+  - dts

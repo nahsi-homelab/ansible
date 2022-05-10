@@ -1,7 +1,0 @@
-wireguard_configs:
-  relay: "{{ lookup('hashi_vault', 'secret/data/wireguard/tyros:relay') }}"
-
-wireguard_interfaces:
-  - name: "relay"
-    enabled: true
-    state: "started"

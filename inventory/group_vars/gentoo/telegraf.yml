@@ -1,4 +1,15 @@
 telegraf_configs_gentoo:
+  sensors: |
+    [[inputs.sensors]]
+
+  zfs: |
+    [[inputs.zfs]]
+      kstatMetrics = ["arcstats", "zil"]
+    [[inputs.execd]]
+      command = ["/usr/libexec/zfs/zpool_influxdb", "--execd"]
+      signal = "STDIN"
+      restart_delay = "10s"
+      data_format = "influx"
 
 telegraf_configs: >
   {{

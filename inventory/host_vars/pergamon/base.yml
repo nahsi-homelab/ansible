@@ -105,7 +105,6 @@ base_packages_pergamon:
   - net-dialup/ppp
   - media-plugins/hyperion
   - media-sound/beets
-  - sys-power/apcupsd
   - media-tv/v4l-utils
   - media-video/v4l2loopback
   - media-video/obs-studio
@@ -117,7 +116,7 @@ base_packages_pergamon:
   - app-text/calibre
 base_packages: >
   {{
-    base_packages_all +
+    base_packages_gentoo +
     base_packages_pergamon +
     base_packages_desktop | unique
   }}
@@ -143,3 +142,164 @@ base_udev_rules:
     SUBSYSTEM=="usb", ATTRS{idVendor}=="0fd9", ATTRS{idProduct}=="0080", MODE:="660", GROUP="usb", SYMLINK+="streamdeck"
   11_moonlander: |
     SUBSYSTEM=="usb", ATTR{idVendor}=="3297", ATTR{idProduct}=="1969", GROUP="plugdev"
+
+base_portage_distcc_cores: 0
+base_portage_makeconf_pergamon:
+  COMMON_FLAGS: "-O2 -march=znver3"
+  RUSTFLAGS: "-C target-cpu=znver3"
+  CPU_FLAGS_X86: "aes avx avx2 f16c fma3 mmx mmxext pclmul popcnt rdrand sha sse sse2 sse3 sse4_1 sse4_2 sse4a ssse3"
+  VIDEO_CARDS: "amdgpu radeonsi"
+  INPUT_DEVICES: "evdev"
+  LUA_TARGETS: "luajit"
+  LUA_SINGLE_TARGET: "luajit"
+  LLVM_TARGETS: "AMDGPU X86"
+  FEATURES: "parallel-install"
+  ACCEPT_LICENSE: "* -@EULA google-chrome"
+base_portage_makeconf: >
+  {{
+    base_portage_makeconf_gentoo |
+    combine(base_portage_makeconf_pergamon, recursive=true)
+  }}
+
+base_portage_package_use_pergamon:
+  system: |
+    media-libs/mesa -classic -gles2
+
+  pergamon: |
+    media-plugins/hyperion -v4l -qt-grabber -zeroconf
+
+    media-tv/v4l-utils qt5 -bpf
+    media-video/obs-studio truetype v4l
+
+    app-text/poppler cairo
+
+    # audio
+    media-video/pipewire pipewire-alsa extra gstreamer jack-sdk
+    media-libs/portaudio jack
+    media-sound/easyeffects -doc calf mda-lv2 zamaudio
+    media-libs/rubberband ladspa
+    media-plugins/calf lv2
+
+    # xorg-server
+    x11-libs/libdrm video_cards_radeon
+
+    # messengers
+    app-text/ghostscript-gpl cups
+
+    # calibre
+    app-text/poppler qt5
+    app-accessibility/speech-dispatcher python
+    app-text/podofo lua_single_target_lua5-4
+    app-text/calibre -udisks
+
+base_portage_package_use: >
+  {{
+    base_portage_package_use_pergamon |
+    combine(base_portage_package_use_desktop, recursive=true) |
+    combine(base_portage_package_use_gentoo, recursive=true)
+  }}
+
+base_portage_env:
+  cc1plus: |
+    EMERGE_DEFAULT_OPTS="--jobs=8 --load-average={{ base_portage_la }} --quiet-build"
+    MAKEOPTS="--jobs=8 --load-average={{ base_portage_la }}"
+
+base_portage_package_env:
+  cc1plus: |
+    www-client/chromium base-cc1plus.conf
+    dev-qt/qtwebengine base-cc1plus.conf
+    net-im/telegram-desktop base-cc1plus.conf
+    media-gfx/inkscape base-cc1plus.conf
+
+base_zfs_datasets:
+  - name: "main"
+    properties:
+      compression: "zstd"
+      relatime: "on"
+      acltype: "posix"
+      xattr: "sa"
+      dnodesize: "auto"
+      mountpoint: "none"
+      canmount: "off"
+      normalization: "formD"
+
+  - name: "main/system/gentoo"
+    properties:
+      canmount: "noauto"
+      mountpoint: "/"
+      org.zfsbootmenu:commandline: "ro quiet loglevel=0 amdgpu.dc=0"
+      org.zfsbootmenu:kernel: "5.10"
+    owner: "root"
+    group: "root"
+    mode: "0755"
+
+  - name: "main/containers"
+    owner: "root"
+    group: "root"
+    mode: "0710"
+
+  - name: "main/users/nahsi/home"
+    properties:
+      mountpoint: "/home/nahsi"
+    owner: "nahsi"
+    group: "nahsi"
+    mode: "0755"
+
+  - name: "main/data/minio"
+    properties:
+      atime: "off"
+      mountpoint: "/var/lib/minio"
+      quota: "50G"
+    owner: "nobody"
+    group: "nobody"
+    mode: "0700"
+
+  - name: "main/data/mongo"
+    properties:
+      atime: "off"
+      compression: "zstd"
+      logbias: "throughput"
+      primarycache: "metadata"
+      mountpoint: "/var/lib/mongo"
+      quota: "100G"
+    owner: "999"
+    group: "999"
+    mode: "0700"
+
+  - name: "main/data/calibre"
+    properties:
+      atime: "off"
+      compression: "zstd"
+      mountpoint: "/var/lib/calibre"
+      quota: "10G"
+    mode: "0755"
+    owner: "nahsi"
+    group: "nahsi"
+
+  - name: "main/data/calibre-web"
+    properties:
+      atime: "off"
+      compression: "zstd"
+      mountpoint: "/var/lib/calibre-web"
+      quota: "1G"
+    mode: "0750"
+    owner: "nahsi"
+    group: "nahsi"
+
+  - name: "main/data/home-assistant"
+    properties:
+      atime: "off"
+      mountpoint: "/var/lib/home-assistant"
+      quota: "5G"
+    owner: "1000"
+    group: "1000"
+    mode: "0700"
+
+  - name: "main/data/unifi"
+    properties:
+      atime: "off"
+      mountpoint: "/var/lib/unifi"
+      compression: "lz4"
+    owner: "1000"
+    group: "1000"
+    mode: "0750"

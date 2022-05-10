@@ -1,0 +1,534 @@
+base_docker_config:
+  dns:
+    - "172.17.0.1"
+  default-runtime: "runc"
+  runtimes:
+    crun:
+      path: "/usr/bin/crun"
+  storage-driver: "zfs"
+  storage-opts:
+    - zfs.fsname=main/containers
+  log-driver: "json-file"
+  log-opts:
+    max-size: "32m"
+    max-file: "2"
+
+base_users: "{{ base_users_all }}"
+
+# /usr/share/zoneinfo
+base_timezone: "Europe/Moscow"
+
+# /usr/share/consolefonts
+base_consolefont: "ter-i24b"
+
+# List of locales to generate
+base_locales:
+  - "en_US.UTF-8 UTF-8"
+
+# Variables to set with eselect
+base_eselect:
+  - module: locale
+    target: "en_US.UTF-8"
+  - module: editor
+    target: "nvim"
+
+base_hwclock: |
+  # Is your hardware clock set to local or to UTC?
+  # If you dualboot with Windows set to "local"
+  clock_local="utc"
+  # Set the hardware clock to the current systemtime during shutdown
+  clock_systohc="YES"
+  # Set systemtime to current hardware clock durning boot
+  clock_hctosys="YES"
+  clock_args=""
+
+# https://github.com/OpenRC/openrc/blob/master/etc/rc.conf
+# https://wiki.gentoo.org/wiki/OpenRC
+base_openrc: |
+  # Enable logging
+  rc_logger="YES"
+  rc_log_path="/var/log/rc.log"
+  # Number of ttys allocated for logins
+  rc_tty_number=2
+  rc_cgroup_mode=unified
+  rc_cgroup_controllers="cpuset cpu io memory hugetlb pids"
+
+base_doas_conf: >
+  permit nopass :wheel
+
+base_packages_gentoo:
+  - app-admin/doas
+  - sys-devel/distcc
+  - dev-vcs/git
+  - sys-process/cronie
+  - app-eselect/eselect-repository
+  - sys-fs/dosfstools
+  - net-firewall/iptables
+  - app-arch/p7zip
+  - media-fonts/terminus-font
+  - app-shells/bash-completion
+  - app-shells/gentoo-bashcomp
+  - sys-apps/gptfdisk
+  - app-misc/ca-certificates
+  - net-proxy/shadowsocks-libev
+  - net-misc/httpie
+
+  # zfsbootmenu ssh
+  - net-misc/dhcp
+  - net-misc/iputils
+
+  # github-runner dependencies
+  - dev-libs/icu
+  - dev-util/lttng-ust
+  - sys-libs/zlib
+  - dev-libs/openssl
+  - net-dns/libidn
+  - net-libs/nghttp2
+  - dev-dotnet/dotnet-sdk-bin
+
+  - app-emulation/qemu
+  - app-containers/crun
+  - app-containers/docker
+  - app-containers/podman
+
+  - dev-python/docker-py
+
+  - app-portage/portage-utils
+  - app-portage/flaggie
+  - app-portage/cpuid2cpuflags
+  - app-misc/resolve-march-native
+  - app-portage/repoman
+  - app-portage/genlop
+
+  - sys-apps/usbutils
+  - sys-apps/lshw
+  - net-dns/bind-tools
+  - net-analyzer/traceroute
+  - net-analyzer/tcpdump
+  - net-analyzer/arp-scan
+  - net-misc/iperf
+  - net-analyzer/openbsd-netcat
+  - sys-apps/dmidecode
+  - sys-apps/hdparm
+
+  - sys-power/cpupower
+  - sys-apps/lm-sensors
+  - sys-apps/smartmontools
+  - sys-power/apcupsd
+
+  - sys-process/iotop-c
+  - sys-process/htop
+  - sys-process/lsof
+  - sys-fs/ncdu
+
+  - app-editors/neovim
+  - dev-python/pynvim
+  - app-text/tree
+  - app-misc/nnn
+  - app-misc/jq
+  - app-admin/pwgen
+base_packages: "{{ base_packages_gentoo }}"
+
+base_portage_use:
+  - zstd
+  - luajit
+  - dist-kernel
+  - -X
+  - -introspection
+
+base_portage_package_use_gentoo:
+  common: |
+    sys-devel/gcc pgo
+    dev-lang/rust clippy rls rustfmt rust-src
+    net_misc/openssh -pam
+    net-analyzer/tcpdump -samba -smi
+    sys-apps/util-linux tty-helpers
+    net-misc/dhcp client
+    net-misc/iputils arping
+    net-vpn/innernet server client
+    dev-libs/libbpf static-libs
+base_portage_package_use: "{{ base_portage_package_use_gentoo }}"
+
+base_portage_distcc_cores: 16
+# --jobs=N
+# where N is number of logical cores
+# when using distcc N is a number of local + remote logical cores
+base_portage_jobs: >-
+  {{
+    (ansible_processor_cores * ansible_processor_threads_per_core) +
+    base_portage_distcc_cores
+  }}
+# --load-average=X.Y
+# where X.Y=N*0.9 where N is a number of local cores (even with distcc enabled)
+base_portage_la: >-
+  {{
+    ansible_processor_cores * ansible_processor_threads_per_core |
+    float * 0.9
+  }}
+
+# https://wiki.gentoo.org/wiki/GENTOO_MIRRORS
+base_portage_mirrors:
+  - https://mirror.yandex.ru/gentoo-distfiles/
+  - https://distfiles.gentoo.org/
+
+# https://wiki.gentoo.org/wiki//etc/portage/make.conf
+# https://github.com/gentoo/portage/blob/master/cnf/make.conf.example
+base_portage_makeconf_gentoo:
+  CHOST: "x86_64-pc-linux-gnu"
+  # -march=native won't work with distcc
+  COMMON_FLAGS: "-O2 -march=native"
+  CFLAGS: "${COMMON_FLAGS}"
+  CXXFLAGS: "${COMMON_FLAGS}"
+  FCFLAGS: "${COMMON_FLAGS}"
+  FFLAGS: "${COMMON_FLAGS}"
+  EMERGE_DEFAULT_OPTS: "--jobs={{ base_portage_jobs }} --load-average={{ base_portage_la }} --quiet-build"
+  MAKEOPTS: "--jobs={{ base_portage_jobs }} --load-average={{ base_portage_la }}"
+  PORTAGE_NICENESS: "19"
+  # portage uses ${PORTAGE_TMPDIR}/portage
+  # it's a good idea to mount tmpfs or zram device to this directory
+  # to reduce disk wear
+  # https://wiki.gentoo.org/wiki/Portage_TMPDIR_on_tmpfs
+  PORTAGE_TMPDIR: "/var/tmp"
+  PORTAGE_ELOG_CLASSES: "log warn error"
+  PORTAGE_ELOG_SYSTEM: "syslog"
+  GENTOO_MIRRORS: "{{ base_portage_mirrors | join(' ') }}"
+  ACCEPT_KEYWORDS: "~amd64"
+  ACCEPT_LICENSE: "* -@EULA"
+  ABI_X86: "64"
+  L10N: "en"
+  LINGUAS: "en"
+  # This sets the language of build output to English
+  LC_MESSAGES: "C"
+  USE: "{{ base_portage_use | join(' ') }}"
+
+base_portage_makeconf: "{{ base_portage_makeconf_gentoo }}"
+
+base_sshd_config: |
+  Protocol 2
+  KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256
+  Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
+  MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,umac-128@openssh.com
+  PermitRootLogin no
+  PubkeyAuthentication yes
+  HostbasedAuthentication no
+  PasswordAuthentication no
+  PermitEmptyPasswords no
+  SyslogFacility AUTH
+  LogLevel INFO
+  AllowGroups wheel
+  HostKey /etc/ssh/ssh_host_rsa_key
+  HostKey /etc/ssh/ssh_host_ed25519_key
+  {% if base_sshd_listen is defined %}
+  {% for addr in base_sshd_listen %}
+  ListenAddress {{ addr }}
+  {% endfor %}
+  {% endif %}
+
+  Subsystem sftp internal-sftp
+
+base_syslog_config: |
+  @version: "3.36"
+  @include "/etc/syslog-ng/conf.d/*.conf"
+
+  options {
+    threaded(yes);
+    chain_hostnames(no);
+    use_dns(no);
+    dns_cache(no);
+    flush_lines(0);
+    stats_freq(43200);
+    mark_freq(3600);
+  };
+
+  source src {
+    unix-stream("/dev/log" max-connections(256));
+    internal();
+  };
+  source kernel {
+    file("/proc/kmsg");
+  };
+
+  destination syslog {
+    file("/var/log/syslog.log");
+  };
+  destination authlog {
+    file("/var/log/auth.log");
+  };
+  destination cron {
+    file("/var/log/cron.log");
+  };
+  destination daemon {
+    file("/var/log/daemon.log");
+  };
+  destination kern {
+    file("/var/log/kern.log");
+  };
+  destination lpr {
+    file("/var/log/lpr.log");
+  };
+  destination user {
+    file("/var/log/user.log");
+  };
+  destination mail {
+    file("/var/log/mail.log");
+  };
+  destination news {
+    file("/var/log/news.log");
+  };
+  destination debug {
+    file("/var/log/debug");
+  };
+  destination messages {
+    file("/var/log/messages");
+  };
+  destination console {
+    usertty("root");
+  };
+  destination default {
+    file("/var/log/all");
+  };
+
+  filter authpriv { facility(auth, authpriv); };
+  filter syslog { not facility(authpriv, mail); };
+  filter cron { facility(cron); };
+  filter daemon { facility(daemon); };
+  filter kern { facility(kern); };
+  filter lpr { facility(lpr); };
+  filter mail { facility(mail); };
+  filter user { facility(user); };
+  filter debug { not facility(auth, authpriv, news, mail); };
+  filter messages { level(info..warn) and not facility(auth, authpriv, mail, news); };
+  filter emergency { level(emerg); };
+  filter info { level(info); };
+  filter notice { level(notice); };
+  filter warn { level(warn); };
+  filter crit { level(crit); };
+  filter err { level(err); };
+  filter failed { message("failed"); };
+  filter denied { message("denied"); };
+
+  log {
+    source(src);
+    filter(authpriv);
+    destination(authlog);
+  };
+  log {
+    source(src);
+    filter(syslog);
+    destination(syslog);
+  };
+  log {
+    source(src);
+    filter(cron);
+    destination(cron);
+  };
+  log {
+    source(src);
+    filter(daemon);
+    destination(daemon);
+  };
+  log {
+    source(kernel);
+    filter(kern);
+    destination(kern);
+  };
+  log {
+    source(src);
+    filter(lpr);
+    destination(lpr);
+  };
+  log {
+    source(src);
+    filter(mail);
+    destination(mail);
+  };
+  log {
+    source(src);
+    filter(user);
+    destination(user);
+  };
+  log {
+    source(src);
+    filter(debug);
+    destination(debug);
+  };
+  log {
+    source(src);
+    filter(messages);
+    destination(messages);
+  };
+  log {
+    source(src);
+    filter(emergency);
+    destination(console);
+  };
+  log {
+    source(src);
+    destination(default);
+  };
+
+base_syslog_logrotate: |
+  "/var/log/syslog.log" {
+      rotate 2
+      weekly
+      missingok
+      notifempty
+      maxsize 1M
+      dateext
+      postrotate
+      /etc/init.d/syslog-ng reload > /dev/null 2>&1 || true
+      endscript
+  }
+  "/var/log/auth.log" {
+      rotate 2
+      weekly
+      missingok
+      notifempty
+      maxsize 1M
+      dateext
+      postrotate
+      /etc/init.d/syslog-ng reload > /dev/null 2>&1 || true
+      endscript
+  }
+  "/var/log/cron.log" {
+      rotate 2
+      weekly
+      missingok
+      notifempty
+      maxsize 1M
+      dateext
+      postrotate
+      /etc/init.d/syslog-ng reload > /dev/null 2>&1 || true
+      endscript
+  }
+  "/var/log/daemon.log" {
+      rotate 2
+      weekly
+      missingok
+      notifempty
+      maxsize 1M
+      dateext
+      postrotate
+      /etc/init.d/syslog-ng reload > /dev/null 2>&1 || true
+      endscript
+  }
+  "/var/log/kern.log" {
+      rotate 2
+      weekly
+      missingok
+      notifempty
+      maxsize 1M
+      dateext
+      postrotate
+      /etc/init.d/syslog-ng reload > /dev/null 2>&1 || true
+      endscript
+  }
+  "/var/log/lpr.log" {
+      rotate 2
+      weekly
+      missingok
+      notifempty
+      maxsize 1M
+      dateext
+      postrotate
+      /etc/init.d/syslog-ng reload > /dev/null 2>&1 || true
+      endscript
+  }
+  "/var/log/user.log" {
+      rotate 2
+      weekly
+      missingok
+      notifempty
+      maxsize 1M
+      dateext
+      postrotate
+      /etc/init.d/syslog-ng reload > /dev/null 2>&1 || true
+      endscript
+  }
+  "/var/log/mail.log" {
+      rotate 2
+      weekly
+      missingok
+      notifempty
+      maxsize 1M
+      dateext
+      postrotate
+      /etc/init.d/syslog-ng reload > /dev/null 2>&1 || true
+      endscript
+  }
+  "/var/log/news.log" {
+      rotate 2
+      weekly
+      missingok
+      notifempty
+      maxsize 1M
+      dateext
+      postrotate
+      /etc/init.d/syslog-ng reload > /dev/null 2>&1 || true
+      endscript
+  }
+  "/var/log/debug" {
+      rotate 2
+      weekly
+      missingok
+      notifempty
+      maxsize 1M
+      dateext
+      postrotate
+      /etc/init.d/syslog-ng reload > /dev/null 2>&1 || true
+      endscript
+  }
+  "/var/log/messages" {
+      rotate 2
+      weekly
+      missingok
+      notifempty
+      maxsize 1M
+      dateext
+      postrotate
+      /etc/init.d/syslog-ng reload > /dev/null 2>&1 || true
+      endscript
+  }
+  "/var/log/all" {
+      rotate 2
+      weekly
+      missingok
+      notifempty
+      maxsize 1M
+      dateext
+      postrotate
+      /etc/init.d/syslog-ng reload > /dev/null 2>&1 || true
+      endscript
+  }
+  "/var/log/daemon.log" {
+      rotate 2
+      weekly
+      missingok
+      notifempty
+      maxsize 1M
+      dateext
+  }
+  "/var/log/emerge.log" {
+      rotate 2
+      weekly
+      missingok
+      notifempty
+      maxsize 1M
+      dateext
+  }
+  "/var/log/emerge-fetch.log" {
+      rotate 2
+      weekly
+      missingok
+      notifempty
+      maxsize 1M
+      dateext
+  }
+  "/var/log/pppoe.log" {
+      rotate 2
+      weekly
+      missingok
+      notifempty
+      maxsize 1M
+      dateext
+  }

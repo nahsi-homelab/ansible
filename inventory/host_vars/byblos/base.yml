@@ -16,3 +16,81 @@ base_network_interfaces:
 base_network: |
   config_enp2s0="{{ private_ip }}/24"
   routes_enp2s0="default via 10.1.10.1"
+
+base_portage_makeconf_byblos:
+  COMMON_FLAGS: "-O2 -march=goldmont-plus -pipe"
+  RUSTFLAGS: "-C target-cpu=goldmont-plus"
+  CPU_FLAGS_X86: "aes mmx mmxext pclmul popcnt rdrand sha sse sse2 sse3 sse4_1 sse4_2 ssse3"
+  LUA_TARGETS: "luajit"
+  LUA_SINGLE_TARGET: "luajit"
+  DISTCC_HOSTS: "antiochia.node.consul/16"
+  VIDEO_CARDS: "intel i965 iris"
+  FEATURES: "parallel-install distcc"
+base_portage_makeconf: >
+  {{
+    base_portage_makeconf_gentoo |
+    combine(base_portage_makeconf_byblos, recursive=true)
+  }}
+
+base_zfs_datasets:
+  - name: "main"
+    properties:
+      compression: "zstd"
+      relatime: "on"
+      acltype: "posix"
+      xattr: "sa"
+      dnodesize: "auto"
+      mountpoint: "none"
+      canmount: "off"
+      normalization: "formD"
+
+  - name: "main/system/gentoo"
+    properties:
+      canmount: "noauto"
+      mountpoint: "/"
+      org.zfsbootmenu:commandline: "ro quiet loglevel=0"
+      org.zfsbootmenu:kernel: "5.10"
+    owner: "root"
+    group: "root"
+    mode: "0755"
+
+  - name: "main/containers"
+    owner: "root"
+    group: "root"
+    mode: "0710"
+
+  - name: "main/users/nahsi/home"
+    properties:
+      mountpoint: "/home/nahsi"
+    owner: "nahsi"
+    group: "nahsi"
+    mode: "0755"
+
+  - name: "main/data/minio"
+    properties:
+      atime: "off"
+      mountpoint: "/var/lib/minio"
+      quota: "50G"
+    owner: "nobody"
+    group: "nobody"
+    mode: "0700"
+
+  - name: "main/data/seaweedfs-master"
+    properties:
+      atime: "off"
+      compression: "zstd"
+      mountpoint: "/var/lib/seaweedfs-master"
+      quota: "1G"
+    mode: "0700"
+    owner: "nobody"
+    group: "nobody"
+
+  - name: "main/data/seaweedfs-index"
+    properties:
+      atime: "off"
+      compression: "zstd"
+      mountpoint: "/var/lib/seaweedfs-index"
+      quota: "10G"
+    mode: "0700"
+    owner: "nobody"
+    group: "nobody"

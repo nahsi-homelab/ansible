@@ -292,7 +292,7 @@ base_sshd_config: |
   Subsystem sftp internal-sftp
 
 base_syslog_config: |
-  @version: "3.35"
+  @version: "3.36"
   @include "/etc/syslog-ng/conf.d/*.conf"
 
   options {

@@ -19,7 +19,6 @@
 - name: add users
   tags: users
   user:
-    state: present
     ssh: "{{ omit }}"
   args: "{{ user }}"
   loop: "{{ base_users }}"

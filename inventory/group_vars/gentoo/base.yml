@@ -13,8 +13,6 @@ base_docker_config:
     max-size: "32m"
     max-file: "2"
 
-base_users: "{{ base_users_all }}"
-
 # /usr/share/zoneinfo
 base_timezone: "Europe/Moscow"
 

@@ -57,16 +57,6 @@ base_users:
     append: true
     ssh: https://github.com/nahsi.keys
 
-  - name: github
-    comment: "GitHub actions runner user"
-    create_home: false
-    system: true
-    groups:
-      - docker
-    append: true
-    uid: 950
-    state: absent
-
   - name: taisto
     shell: /bin/bash
 

@@ -20,6 +20,8 @@ nomad_configs:
         - storage-taisto:
             path: "/home/taisto/storage"
 
+        - unifi:
+            path: "/var/lib/unifi"
         - transmission-nahsi:
             path: "/var/lib/transmission-nahsi"
         - transmission-taisto:

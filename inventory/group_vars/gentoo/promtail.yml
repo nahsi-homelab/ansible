@@ -66,6 +66,21 @@ promtail_config:
         - labeldrop:
             - "filtered"
 
+    - job_name: "opnsense"
+      syslog:
+        listen_address: "{{ private_ip }}:1514"
+        idle_timeout: "3600s"
+        use_incoming_timestamp: true
+        labels:
+          source: "opnsense"
+      relabel_configs:
+        - source_labels: ["__syslog_message_hostname"]
+          target_label: "instance"
+        - source_labels: ["__syslog_message_app_name"]
+          target_label: "app"
+        - source_labels: ["__syslog_message_facility"]
+          target_label: "facility"
+
     - job_name: "portage"
       static_configs:
         - labels:

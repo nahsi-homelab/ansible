@@ -30,6 +30,10 @@ nomad_configs:
             path: "/var/lib/transmission-taisto"
         - polaris:
             path: "/var/lib/polaris"
+        - audiobookshelf-config:
+            path: "/var/lib/audiobookshelf-config"
+        - audiobookshelf-metadata:
+            path: "/var/lib/audiobookshelf-metadata"
         - jellyfin:
             path: "/var/lib/jellyfin/config"
         - jellyfin-cache:

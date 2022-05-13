@@ -183,6 +183,24 @@ zfs_datasets:
     group: "100"
     mode: "0700"
 
+  - name: "main/data/audiobookshelf-config"
+    properties:
+      atime: "off"
+      compression: "lz4"
+      mountpoint: "/var/lib/audiobookshelf-config"
+    owner: "99"
+    group: "100"
+    mode: "0700"
+
+  - name: "main/data/audiobookshelf-metadata"
+    properties:
+      atime: "off"
+      compression: "lz4"
+      mountpoint: "/var/lib/audiobookshelf-metadata"
+    owner: "99"
+    group: "100"
+    mode: "0700"
+
   - name: "main/data/jellyfin"
     properties:
       atime: "off"

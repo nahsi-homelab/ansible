@@ -6,8 +6,10 @@ nomad_configs:
             path: "/home/nahsi/media/video"
         - music-nahsi:
             path: "/home/nahsi/media/music"
-        - audio-nahsi:
-            path: "/home/nahsi/media/audio"
+        - audiobooks-nahsi:
+            path: "/home/nahsi/media/audiobooks"
+        - podcasts-nahsi:
+            path: "/home/nahsi/media/podcasts"
         - downloads-nahsi:
             path: "/home/nahsi/downloads"
         - storage-nahsi:

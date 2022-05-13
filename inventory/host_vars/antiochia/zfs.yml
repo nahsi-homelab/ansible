@@ -89,9 +89,17 @@ zfs_datasets:
     group: "nahsi"
     mode: "0755"
 
-  - name: "storage/users/nahsi/media/audio"
+  - name: "storage/users/nahsi/media/audiobooks"
     properties:
-      mountpoint: "/home/nahsi/media/audio"
+      mountpoint: "/home/nahsi/media/audiobooks"
+      compression: "off"
+    owner: "nahsi"
+    group: "nahsi"
+    mode: "0755"
+
+  - name: "storage/users/nahsi/media/podcasts"
+    properties:
+      mountpoint: "/home/nahsi/media/podcasts"
       compression: "off"
     owner: "nahsi"
     group: "nahsi"

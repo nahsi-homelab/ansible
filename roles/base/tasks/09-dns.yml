@@ -31,7 +31,7 @@
     owner: dnsmasq
     group: dnsmasq
     mode: 0660
-  notify: restart dnsmasq
+  # notify: restart dnsmasq
   when: ansible_distribution == "Gentoo"
 
 - name: copy dnsmasq openrc config

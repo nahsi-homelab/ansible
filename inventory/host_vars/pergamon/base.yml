@@ -38,11 +38,7 @@ base_dnsmasq_config: |
   dhcp-host=3c:6a:9d:15:8b:17,10.2.30.31
   dhcp-host=3c:6a:9d:1a:4d:6c,10.2.30.32
 
-  listen-address=127.0.0.1,172.17.0.1
-
-  interface=docker0
-  interface=lo
-  bind-interfaces
+  listen-address=127.0.0.1
 
   server=/consul/127.0.0.1#8600
   server={{ nameserver }}
@@ -118,7 +114,7 @@ base_packages: >
   {{
     base_packages_gentoo +
     base_packages_pergamon +
-    base_packages_desktop | unique
+    base_packages_workstation | unique
   }}
 
 base_services:
@@ -195,7 +191,7 @@ base_portage_package_use_pergamon:
 base_portage_package_use: >
   {{
     base_portage_package_use_pergamon |
-    combine(base_portage_package_use_desktop, recursive=true) |
+    combine(base_portage_package_use_workstation, recursive=true) |
     combine(base_portage_package_use_gentoo, recursive=true)
   }}
 

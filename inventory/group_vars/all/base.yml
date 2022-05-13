@@ -18,11 +18,7 @@ base_dns: |
   name_servers="127.0.0.1"
 
 base_dnsmasq_config: |
-  listen-address=127.0.0.1,172.17.0.1
-
-  interface=docker0
-  interface=lo
-  bind-interfaces
+  listen-address=127.0.0.1,{{ private_ip }}
 
   server=/consul/127.0.0.1#8600
   server={{ nameserver }}

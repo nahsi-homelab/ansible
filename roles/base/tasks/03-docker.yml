@@ -50,7 +50,7 @@
     owner: root
     group: root
     mode: 0600
-  notify: restart docker
+  # notify: restart docker
 
 - name: enable docker
   tags: containers

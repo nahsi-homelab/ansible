@@ -1,6 +1,6 @@
 base_docker_config:
   dns:
-    - "172.17.0.1"
+    - "{{ private_ip }}"
   default-runtime: "runc"
   runtimes:
     crun:

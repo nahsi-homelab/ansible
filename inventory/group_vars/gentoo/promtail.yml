@@ -477,10 +477,22 @@ promtail_config:
                 value: "stderr"
                 drop_counter_reason: "noise-filter"
             - regex:
-                expression: "^[(?P<time>\\d{2}:\\d{2}:\\d{2})] .*$"
+                expression: "^[(?P<time>\S+] .*$"
             - timestamp:
                 source: time
                 format: "15:04:05"
+            - static_labels:
+                filtered: "true"
+
+        - match: # audiobookshelf
+            selector: '{job="audiobookshelf"}'
+            pipeline_name: "audiobookshelf"
+            stages:
+            - regex:
+                expression: "^[(?P<time>\S+].*$"
+            - timestamp:
+                source: time
+              format: "RFC3339Nano"
             - static_labels:
                 filtered: "true"
 

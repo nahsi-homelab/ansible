@@ -303,8 +303,8 @@
     that:
       - base_dnsmasq_config is defined
       - base_dnsmasq_config is string
-      - base_dnsmasq_config | length
     quiet: true
+  when: base_dnsmasq_config | length
 
 - name: check "base_dnsmasq_openrc_config" variable
   assert:

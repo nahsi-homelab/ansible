@@ -10,12 +10,19 @@ base_filesystems:
     fstype: "bpf"
     state: "mounted"
 
+base_dns: |
+  resolv_conf="/etc/resolv.conf"
+  search_domains="node.consul service.consul"
+
+base_dnsmasq_config: ""
+
 base_packages_miletos:
   - app-laptop/mbpfan
   - sys-power/thermald
   - x11-misc/autorandr
   - app-emulation/virt-viewer
   - x11-misc/cbatticon
+  - app-misc/brillo
 base_packages: >
   {{
     base_packages_gentoo +
@@ -40,6 +47,11 @@ base_services:
     state: "started"
 
   - name: "alsasound"
+    runlevel: "default"
+    enabled: true
+    state: "started"
+
+  - name: "iptables"
     runlevel: "default"
     enabled: true
     state: "started"
@@ -104,6 +116,7 @@ base_portage_package_env:
 base_portage_package_use_miletos:
   system: |
     media-libs/mesa -gles2
+    app-misc/brillo -ddcci
 
 base_portage_package_use: >
   {{

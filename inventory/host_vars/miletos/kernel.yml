@@ -15,7 +15,7 @@ kernel_refind_config: |
   use_nvram "false"
   screensaver "300"
   use_graphics_for "linux"
-  showtools shell apple_recovery reboot shutdown about
+  showtools shell apple_recovery hidden_tags reboot shutdown about
   hideui hints arrows
   scan_all_linux_kernels "true"
   fold_linux_kernels "true"
@@ -88,6 +88,7 @@ kernel_configs:
     CONFIG_MMC_SDHCI_PCI=m
     CONFIG_MMC_SDHCI_ACPI=m
     CONFIG_SDIO_UART=m
+    CONFIG_USB_STORAGE_REALTEK=m
 
     CONFIG_USB_BDC_PCI=m
     CONFIG_USB_ROLE_SWITCH=y
@@ -148,6 +149,6 @@ kernel_configs:
     CONFIG_EXTRA_FIRMWARE_DIR="/lib/firmware"
     CONFIG_EXTRA_FIRMWARE="{{ kernel_firmware | join(' ') }}"
 
-kernel_dracut_configs:
+kernel_zfsbootmenu_dracut_configs:
   xhci_teardown:
     zfsbootmenu_teardown+=" /usr/share/examples/zfsbootmenu/xhci-teardown.sh "

@@ -1,4 +1,4 @@
-base_packages_desktop:
+base_packages_workstation:
   - media-gfx/graphviz
 
   - www-client/qutebrowser
@@ -224,7 +224,7 @@ base_portage_package_use_desktop:
 
 base_portage_package_use: >
   {{
-    base_portage_package_use_desktop |
+    base_portage_package_use_workstation |
     combine(base_portage_package_use_all, recursive=true)
   }}
 

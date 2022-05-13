@@ -1,9 +1,14 @@
 dns_unbound_configs:
   pergamon: |
     server:
-      interface: 10.2.10.10@54
-      interface: 10.2.30.10@54
-      interface: 10.2.50.10@54
+      interface: 10.2.10.10@53
+      interface: 10.2.30.10@53
+      interface: 10.2.50.10@53
+      interface: 127.0.0.1@53
+      access-control: 10.2.10.0/24 allow
+      access-control: 10.2.30.0/24 allow
+      access-control: 10.2.50.0/24 allow
+      access-control: 117.17.0.0/16 allow
 
   cinarra: |
     forward-zone:

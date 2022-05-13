@@ -16,6 +16,9 @@ base_filesystems:
     fstype: "bpf"
     state: "mounted"
 
+base_dnsmasq_openrc_config: |
+  DNSMASQ_OPTS="--user=dnsmasq --group=dnsmasq --port=0"
+
 base_dnsmasq_config: |
   interface=enp4s0.10
   dhcp-range=vlan10,10.2.10.200,10.2.10.250,75h
@@ -37,21 +40,6 @@ base_dnsmasq_config: |
   dhcp-host=d8:a0:11:24:34:8c,10.2.30.12
   dhcp-host=3c:6a:9d:15:8b:17,10.2.30.31
   dhcp-host=3c:6a:9d:1a:4d:6c,10.2.30.32
-
-  listen-address=127.0.0.1
-
-  server=/consul/127.0.0.1#8600
-  server={{ nameserver }}
-
-  rev-server=0.0.0.0/8,127.0.0.1#8600
-  rev-server=10.0.0.0/8,127.0.0.1#8600
-  rev-server=127.0.0.1/8,127.0.0.1#8600
-  rev-server=172.17.0.0/16,127.0.0.1#8600
-  rev-server=192.168.0.0/16,127.0.0.1#8600
-
-  local-service
-  no-poll
-  no-resolv
 
 base_network: |
   # pppoe

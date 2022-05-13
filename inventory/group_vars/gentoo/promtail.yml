@@ -492,7 +492,7 @@ promtail_config:
                 expression: "^[(?P<time>\\S+].*$"
             - timestamp:
                 source: time
-              format: "RFC3339Nano"
+                format: "RFC3339Nano"
             - static_labels:
                 filtered: "true"
 

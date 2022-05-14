@@ -6,6 +6,8 @@ promtail_dir: "/opt/promtail"
 promtail_dirs_base:
   main:
     path: "{{ promtail_dir }}"
+  logs:
+    path: "/var/log/promtail"
 promtail_dirs_overlay: {}
 promtail_dirs: >
   {{
@@ -26,6 +28,8 @@ promtail_service: |
   pidfile="/run/${RC_SVCNAME}.pid"
   command="/usr/bin/${RC_SVCNAME}"
   command_args="-config.file={{ promtail_dir }}/promtail.yml"
+  output_log="{{ promtail_dirs.logs.path }}/promtail.log"
+  error_log="{{ promtail_dirs.logs.path }}/promtail.log"
 
   reload() {
       ebegin "Reloading promtail"

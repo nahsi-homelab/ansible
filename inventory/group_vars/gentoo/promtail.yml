@@ -1,5 +1,4 @@
 _syslog:
-  - promtail
   - supervise-daemon
   - crond
   - anacron
@@ -26,6 +25,8 @@ promtail_config:
     http_listen_port: 9380
     http_listen_address: "{{ private_ip }}"
     grpc_listen_port: 0
+
+    # log_level: debug
 
   positions:
     filename: "{{ promtail_dir }}/positions.yml"
@@ -80,6 +81,19 @@ promtail_config:
           target_label: "app"
         - source_labels: ["__syslog_message_facility"]
           target_label: "facility"
+
+    - job_name: "promtail"
+      static_configs:
+        - labels:
+            __path__: "/var/log/promtail/promtail.log"
+            source: "system"
+            app: "promtail"
+      pipeline_stages:
+        - regex:
+            expression: "^level=(?P<level>\\S+) ts=(?P<time>\\S+).*$"
+        - timestamp:
+            source: time
+            format: "RFC3339Nano"
 
     - job_name: "portage"
       static_configs:
@@ -224,7 +238,7 @@ promtail_config:
             pipeline_name: "grafana"
             stages:
             - regex:
-                expression: '^t=(?P<time>\\S+) lvl=(?P<level>\\S+).*$'
+                expression: "^t=(?P<time>\\S+) lvl=(?P<level>\\S+).*$"
             - timestamp:
                 source: time
                 format: "2006-01-02T15:04:05-0700"
@@ -236,7 +250,7 @@ promtail_config:
             pipeline_name: "loki"
             stages:
             - regex:
-                expression: '^.* ts=(?P<time>\\S+).*$'
+                expression: "^.* ts=(?P<time>\\S+).*$"
             - timestamp:
                 source: time
                 format: "RFC3339Nano"
@@ -248,7 +262,7 @@ promtail_config:
             pipeline_name: "promtail"
             stages:
             - regex:
-                expression: '^level=(?P<level>\\S+) ts=(?P<time>\\S+).*$'
+                expression: "^level=(?P<level>\\S+) ts=(?P<time>\\S+).*$"
             - timestamp:
                 source: time
                 format: "RFC3339Nano"
@@ -260,7 +274,7 @@ promtail_config:
             pipeline_name: "victoria-metrics"
             stages:
             - regex:
-                expression: '^(?P<time>\\S+)\\s+(?P<level>\\S+)\\s+(?P<function>\\S+)\\s+(?P<msg>.*)$'
+                expression: "^(?P<time>\\S+)\\s+(?P<level>\\S+)\\s+(?P<function>\\S+)\\s+(?P<msg>.*)$"
             - timestamp:
                 source: time
                 format: "RFC3339Nano"
@@ -272,9 +286,9 @@ promtail_config:
             pipeline_name: "postgres"
             stages:
             - multiline:
-                firstline: '^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}'
+                firstline: "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}"
             - regex:
-                expression: '^(?P<time>\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\,\\d{3}).*'
+                expression: "^(?P<time>\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\,\\d{3}).*"
             - timestamp:
                 source: time
                 format: "2006-01-02 15:04:05,999"
@@ -289,7 +303,7 @@ promtail_config:
             pipeline_name: "postgres-exporter"
             stages:
             - regex:
-                expression: '^ts=(?P<time>\\S+).*$'
+                expression: "^ts=(?P<time>\\S+).*$"
             - timestamp:
                 source: time
                 format: "RFC3339Nano"
@@ -301,9 +315,9 @@ promtail_config:
             pipeline_name: "mariadb"
             stages:
             - multiline:
-                firstline: '^\\d{4}-\\d{2}-\\d{2}  \\d{2}:\\d{2}:\\d{2}'
+                firstline: "^\\d{4}-\\d{2}-\\d{2}  \\d{2}:\\d{2}:\\d{2}"
             - regex:
-                expression: '^(?P<time>\\d{4}-\\d{2}-\\d{2}  \\d{2}:\\d{2}:\\d{2}).*'
+                expression: "^(?P<time>\\d{4}-\\d{2}-\\d{2}  \\d{2}:\\d{2}:\\d{2}).*"
             - timestamp:
                 source: time
                 format: "2006-01-02  15:04:05"
@@ -319,9 +333,9 @@ promtail_config:
             pipeline_name: "maxscale"
             stages:
             - multiline:
-                firstline: '^\\d{4}-\\d{2}-\\d{2}  \\d{2}:\\d{2}:\\d{2}'
+                firstline: "^\\d{4}-\\d{2}-\\d{2}  \\d{2}:\\d{2}:\\d{2}"
             - regex:
-                expression: '^(?P<time>\\d{4}-\\d{2}-\\d{2}  \\d{2}:\\d{2}:\\d{2}).*'
+                expression: "^(?P<time>\\d{4}-\\d{2}-\\d{2}  \\d{2}:\\d{2}:\\d{2}).*"
             - timestamp:
                 source: time
                 format: "2006-01-02 15:04:05"

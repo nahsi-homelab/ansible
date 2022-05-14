@@ -26,8 +26,6 @@ promtail_config:
     http_listen_address: "{{ private_ip }}"
     grpc_listen_port: 0
 
-    # log_level: debug
-
   positions:
     filename: "{{ promtail_dir }}/positions.yml"
 
@@ -90,7 +88,7 @@ promtail_config:
             app: "promtail"
       pipeline_stages:
         - regex:
-            expression: "^level=(?P<level>\\S+) ts=(?P<time>\\S+).*$"
+            expression: "^level=(?P<level>\\S+) ts=(?P<time>\\S+) .*"
         - timestamp:
             source: time
             format: "RFC3339Nano"
@@ -116,11 +114,9 @@ promtail_config:
             app: "vault"
       pipeline_stages:
         - multiline:
-            firstline: "^.+ \\[.+\\]"
+            firstline: "^\\S+ [\\S+]"
         - regex:
-            expression: "^(?P<time>.+) \\[(?P<level>.)\\] (?P<message>(?s:.*))$"
-        - labels:
-            level:
+            expression: "^(?P<time>\\S+) [(?P<level>\\S+)] .*"
         - timestamp:
             source: "time"
             format: "RFC3339Nano"
@@ -133,11 +129,9 @@ promtail_config:
             app: "vault-agent"
       pipeline_stages:
         - multiline:
-            firstline: "^.+ \\[.+\\]"
+            firstline: "^\\S+ [\\S+]"
         - regex:
-            expression: "^(?P<time>.+) \\[(?P<level>.)\\] (?P<message>(?s:.*))$"
-        - labels:
-            level:
+            expression: "^(?P<time>\\S+) [(?P<level>\\S+)] .*"
         - timestamp:
             source: "time"
             format: "RFC3339Nano"
@@ -150,11 +144,9 @@ promtail_config:
             app: "nomad"
       pipeline_stages:
         - multiline:
-            firstline: "^.+ \\[.+\\]"
+            firstline: "^\\S+ [\\S+]"
         - regex:
-            expression: "^(?P<time>.+) \\[(?P<level>.)\\] (?P<message>(?s:.*))$"
-        - labels:
-            level:
+            expression: "^(?P<time>\\S+) [(?P<level>\\S+)] .*"
         - timestamp:
             source: "time"
             format: "RFC3339Nano"
@@ -167,11 +159,9 @@ promtail_config:
             app: "consul"
       pipeline_stages:
         - multiline:
-            firstline: "^.+ \\[.+\\]"
+            firstline: "^\\S+ [\\S+]"
         - regex:
-            expression: "^(?P<time>.+) \\[(?P<level>.)\\] (?P<message>(?s:.*))$"
-        - labels:
-            level:
+            expression: "^(?P<time>\\S+) [(?P<level>\\S+)] .*"
         - timestamp:
             source: "time"
             format: "RFC3339Nano"

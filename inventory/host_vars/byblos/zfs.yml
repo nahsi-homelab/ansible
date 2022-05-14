@@ -41,6 +41,14 @@ zfs_datasets:
     group: "nobody"
     mode: "0700"
 
+  - name: "main/data/nats"
+    properties:
+      atime: "off"
+      compression: "zstd"
+      mountpoint: "/var/lib/nats"
+      quota: "10G"
+    mode: "0750"
+
   - name: "main/data/seaweedfs-master"
     properties:
       atime: "off"

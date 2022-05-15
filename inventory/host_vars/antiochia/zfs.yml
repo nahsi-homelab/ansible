@@ -363,3 +363,13 @@ zfs_datasets:
     owner: "1000"
     group: "1000"
     mode: "0750"
+
+  - name: "storage/data/dendrite-media"
+    properties:
+      atime: "off"
+      compression: "zstd"
+      mountpoint: "/var/lib/dendrite-media"
+      quota: "500G"
+    mode: "0700"
+    owner: "nobody"
+    group: "nobody"

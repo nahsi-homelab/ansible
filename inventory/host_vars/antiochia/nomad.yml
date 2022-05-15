@@ -56,6 +56,8 @@ nomad_configs:
             path: "/var/lib/redis-mail"
         - victoria-metrics:
             path: "/var/lib/victoria-metrics"
+        - dendrite-media:
+            path: "/var/lib/dendrite-media"
         - seaweedfs-master:
             path: "/var/lib/seaweedfs-master"
         - seaweedfs-index:

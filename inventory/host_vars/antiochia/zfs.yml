@@ -286,6 +286,15 @@ zfs_datasets:
     group: "999"
     mode: "0700"
 
+  - name: "main/data/pgadmin"
+    properties:
+      atime: "off"
+      compression: "lz4"
+      mountpoint: "/var/lib/pgadmin"
+    owner: "5050"
+    group: "5050"
+    mode: "0700"
+
   - name: "main/data/mariadb"
     properties:
       atime: "off"

@@ -50,6 +50,8 @@ nomad_configs:
             path: "/var/lib/filestash"
         - postgres:
             path: "/var/lib/postgres"
+        - pgadmin:
+            path: "/var/lib/pgadmin"
         - mariadb:
             path: "/var/lib/mariadb"
         - redis-mail:

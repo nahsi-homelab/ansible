@@ -116,6 +116,7 @@ base_packages_workstation:
   # language servers
   - dev-go/gopls
   - dev-util/terraform-ls
+  - dev-util/rust-analyzer
 
   # for nvim plugins
   - app-misc/code-minimap

@@ -3,7 +3,7 @@ base_packages_workstation:
 
   - www-client/qutebrowser
   - dev-python/tldextract
-  - www-client/chromium
+  - www-client/chromium-bin
 
   - net-analyzer/wireshark
 
@@ -146,7 +146,7 @@ base_portage_package_use_workstation:
     media-sound/pulseaudio -* glib
 
     # chromium
-    www-client/chromium widevine official -suid -js-type-check
+    www-client/chromium-bin widevine
     net-libs/nodejs inspector
 
     # emulation

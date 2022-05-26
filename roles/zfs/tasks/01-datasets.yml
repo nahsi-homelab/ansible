@@ -25,3 +25,4 @@
     - zfs_datasets is defined
     - dataset.properties.mountpoint is defined
     - dataset.properties.mountpoint != "none"
+    - dataset.properties.mountpoint != "legacy"

@@ -54,6 +54,11 @@ zfs_datasets:
     group: "nahsi"
     mode: "0755"
 
+  - name: "main/data/nomad"
+    properties:
+      compression: "zstd"
+      mountpoint: "legacy"
+
   - name: "main/data/minio"
     properties:
       atime: "off"

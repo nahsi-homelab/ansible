@@ -16,6 +16,12 @@ base_filesystems:
     fstype: "bpf"
     state: "mounted"
 
+  - path: "/var/lib/nomad"
+    src: "main/data/nomad"
+    fstype: "zfs"
+    opts: "rshared,defaults"
+    state: "mounted"
+
 base_network: |
   config_enp1s0="10.1.10.20/24"
   routes_enp1s0="default via 10.1.10.1"

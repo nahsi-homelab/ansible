@@ -58,6 +58,11 @@ zfs_datasets:
       canmount: "off"
       normalization: "formD"
 
+  - name: "main/data/nomad"
+    properties:
+      compression: "zstd"
+      mountpoint: "legacy"
+
   - name: "main/system/opt"
     properties:
       mountpoint: "/opt"

@@ -47,13 +47,17 @@ zfs_datasets:
       canmount: "off"
       normalization: "formD"
 
-
   - name: "main/users/nahsi/home"
     properties:
       mountpoint: "/home/nahsi"
     owner: "nahsi"
     group: "nahsi"
     mode: "0755"
+
+  - name: "main/data/nomad"
+    properties:
+      compression: "zstd"
+      mountpoint: "legacy"
 
   - name: "main/data/minio"
     properties:

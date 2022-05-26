@@ -31,6 +31,33 @@ zfs_datasets:
     group: "root"
     mode: "0755"
 
+  - name: "main/containers"
+    owner: "root"
+    group: "root"
+    mode: "0710"
+
+  - name: "main/nomad/dataset/v"
+    properties:
+      compression: "off"
+      relatime: "on"
+      acltype: "posix"
+      xattr: "sa"
+      dnodesize: "auto"
+      mountpoint: "none"
+      canmount: "off"
+      normalization: "formD"
+
+  - name: "main/nomad/dataset/s"
+    properties:
+      compression: "off"
+      relatime: "on"
+      acltype: "posix"
+      xattr: "sa"
+      dnodesize: "auto"
+      mountpoint: "none"
+      canmount: "off"
+      normalization: "formD"
+
   - name: "main/system/opt"
     properties:
       mountpoint: "/opt"
@@ -51,11 +78,6 @@ zfs_datasets:
     properties:
       mountpoint: "/var/db/repos"
     mode: "0755"
-
-  - name: "main/containers"
-    owner: "root"
-    group: "root"
-    mode: "0710"
 
   - name: "main/users/home/nahsi" # TODO: change to users/nahsi/home
     properties:

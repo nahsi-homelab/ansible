@@ -23,6 +23,7 @@ base_packages_miletos:
   - app-emulation/virt-viewer
   - x11-misc/cbatticon
   - app-misc/brillo
+  - x11-libs/libva-intel-driver
 base_packages: >
   {{
     base_packages_gentoo +

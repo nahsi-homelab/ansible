@@ -210,6 +210,15 @@ zfs_datasets:
     group: "100"
     mode: "0700"
 
+  - name: "main/data/navidrome"
+    properties:
+      atime: "off"
+      compression: "lz4"
+      mountpoint: "/var/lib/navidrome"
+    owner: "nobody"
+    group: "nobody"
+    mode: "0700"
+
   - name: "main/data/audiobookshelf-config"
     properties:
       atime: "off"

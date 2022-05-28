@@ -190,13 +190,14 @@ base_portage_package_use: >
   }}
 
 base_portage_env:
-  cc1plus: |
+  less-jobs: |
     EMERGE_DEFAULT_OPTS="--jobs=8 --load-average={{ base_portage_la }} --quiet-build"
     MAKEOPTS="--jobs=8 --load-average={{ base_portage_la }}"
 
 base_portage_package_env:
-  cc1plus: |
-    www-client/chromium base-cc1plus.conf
-    dev-qt/qtwebengine base-cc1plus.conf
-    net-im/telegram-desktop base-cc1plus.conf
-    media-gfx/inkscape base-cc1plus.conf
+  less-jobs: |
+    www-client/chromium base-less-jobs.conf
+    dev-qt/qtwebengine base-less-jobs.conf
+    net-im/telegram-desktop base-less-jobs.conf
+    media-gfx/inkscape base-less-jobs.conf
+    dev-lang/rust base-less-jobs.conf

@@ -274,7 +274,7 @@ zfs_datasets:
     properties:
       atime: "off"
       mountpoint: "/var/lib/minio"
-      quota: "50G"
+      quota: "100G"
     owner: "nobody"
     group: "nobody"
     mode: "0700"

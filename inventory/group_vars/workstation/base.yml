@@ -1,6 +1,12 @@
 base_packages_workstation:
   - media-gfx/graphviz
 
+  # openmw
+  - games-engines/openmw
+  - sys-apps/bubblewrap
+  - dev-java/openjdk:8
+  - app-arch/unrar
+
   - www-client/qutebrowser
   - dev-python/tldextract
   - www-client/chromium-bin
@@ -184,6 +190,12 @@ base_portage_package_use_workstation:
 
     # xdg-utils
     app-text/xmlto text
+
+    # openmw
+    games-engines/openmw devtools
+    media-libs/libsdl2 sound
+    sci-physics/bullet double-precision
+    app-arch/p7zip rar
 
     # japanease input
     app-i18n/mozc renderer fcitx4

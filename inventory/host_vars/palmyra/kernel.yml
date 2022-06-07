@@ -20,9 +20,6 @@ kernel_zfsbootmenu_config:
       rd.neednet=1
       ip=10.1.10.21
       netmask=255.255.255.0
-      gateway=10.1.10.1
-      nameserver=10.1.10.1
-      nameserver=1.1.1.1
 
 kernel_firmware:
   - amd-ucode/microcode_amd.bin

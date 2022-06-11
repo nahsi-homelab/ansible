@@ -418,3 +418,13 @@ zfs_datasets:
     mode: "0700"
     owner: "nobody"
     group: "nobody"
+
+  - name: "main/data/vaultwarden"
+    properties:
+      atime: "off"
+      compression: "zstd"
+      mountpoint: "/var/lib/vaultwarden"
+      quota: "50G"
+    mode: "0700"
+    owner: "nobody"
+    group: "nobody"

@@ -207,3 +207,4 @@ base_portage_package_env:
     net-im/telegram-desktop base-less-jobs.conf
     media-gfx/inkscape base-less-jobs.conf
     dev-lang/rust base-less-jobs.conf
+    sys-devel/clang base-less-jobs.conf

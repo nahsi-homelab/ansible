@@ -99,6 +99,20 @@ consul_services_all:
         interval: "20s"
         timeout: "2s"
 
+  node-exporter:
+    service:
+      id: "node-exporter"
+      name: "node-exporter"
+      port: 9100
+      meta:
+        external-source: "consul"
+      check:
+        id: "node-exporter-health"
+        name: "node-exporter-health"
+        http: "http://127.0.0.1:9100"
+        interval: "20s"
+        timeout: "2s"
+
   telegraf:
     service:
       id: "telegraf-exporter"

@@ -11,6 +11,9 @@ roles:
   - src: nahsi.vaultagent
     name: vault-agent
 
+  - src: nahsi.nodeexporter
+    name: node-exporter
+
 collections:
   - community.general
   - ansible.posix

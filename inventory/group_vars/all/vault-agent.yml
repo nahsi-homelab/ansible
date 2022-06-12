@@ -1,4 +1,4 @@
-vault_agent_version: "1.10.0"
+vault_agent_version: "1.10.4"
 
 vault_agent_config:
   vault:

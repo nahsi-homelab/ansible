@@ -22,6 +22,12 @@ base_filesystems:
     opts: "rshared,defaults"
     state: "mounted"
 
+base_hosts: |
+  127.0.0.1 {{ inventory_hostname }}.{{ dc }} {{ inventory_hostname }} localhost
+  ::1       {{ inventory_hostname }}.{{ dc }} {{ inventory_hostname }} localhost
+
+  10.2.10.100 miletos
+
 base_dnsmasq_openrc_config: |
   DNSMASQ_OPTS="--user=dnsmasq --group=dnsmasq --port=0"
 

@@ -12,6 +12,8 @@ nomad_configs:
             path: "/var/lib/nats"
         - redis-mail:
             path: "/var/lib/redis-mail"
+        - keydb:
+            path: "/var/lib/keydb"
         - seaweedfs-master:
             path: "/var/lib/seaweedfs-master"
         - seaweedfs-index:

@@ -65,6 +65,8 @@ nomad_configs:
             path: "/var/lib/mariadb"
         - redis-mail:
             path: "/var/lib/redis-mail"
+        - keydb:
+            path: "/var/lib/keydb"
         - victoria-metrics:
             path: "/var/lib/victoria-metrics"
         - dendrite-media:

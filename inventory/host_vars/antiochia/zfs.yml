@@ -351,6 +351,16 @@ zfs_datasets:
     owner: "nobody"
     group: "nobody"
 
+  - name: "main/data/keydb"
+    properties:
+      atime: "off"
+      mountpoint: "/var/lib/keydb"
+      logbias: "throughput"
+      primarycache: "metadata"
+      quota: "10G"
+    owner: "nobody"
+    group: "nobody"
+
   - name: "main/data/victoria-metrics"
     properties:
       atime: "off"

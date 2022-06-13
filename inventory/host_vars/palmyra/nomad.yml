@@ -24,6 +24,7 @@ nomad_configs:
   meta:
     client:
       meta:
+        keydb_replica: "keydb-antiochia.service.consul"
         mariadb_index: 2
         nats_index: 2
         minio_node_id: 2

@@ -438,3 +438,9 @@ zfs_datasets:
     mode: "0700"
     owner: "nobody"
     group: "nobody"
+
+  - name: "main/data/snipeit"
+    properties:
+      atime: "off"
+      mountpoint: "/var/lib/snipeit"
+      quota: "10G"

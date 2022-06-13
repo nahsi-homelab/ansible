@@ -73,6 +73,8 @@ nomad_configs:
             path: "/var/lib/dendrite-media"
         - vaultwarden:
             path: "/var/lib/vaultwarden"
+        - snipeit:
+            path: "/var/lib/snipeit"
 
   meta:
     client:

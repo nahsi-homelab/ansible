@@ -30,6 +30,7 @@ base_packages_workstation:
 
   - www-apps/hugo
   - net-misc/s4cmd
+  - app-admin/doctl
 
   - dev-python/wheel
   - app-admin/ansible
@@ -49,6 +50,7 @@ base_packages_workstation:
   - app-crypt/gnupg
   - app-crypt/pinentry
   - app-admin/pass
+  - app-crypt/age
 
   - media-video/ffmpeg
   - media-video/mkvtoolnix

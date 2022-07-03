@@ -1,7 +1,0 @@
-- name: Preflight
-  tags: always
-  include_tasks: 00-preflight.yml
-
-- name: Install promtail
-  tags: configs
-  include_tasks: 01-promtail.yml

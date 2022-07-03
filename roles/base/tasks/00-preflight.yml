@@ -150,6 +150,16 @@
     quiet: true
   when: base_sysctl is defined
 
+- name: check "base_limits" variable
+  tags: always
+  assert:
+    that:
+      - base_limits is iterable
+      - base_limits is not string
+      - base_limits | length
+    quiet: true
+  when: base_limits is defined
+
 - name: check "base_docker_config" variable
   tags: always
   assert:

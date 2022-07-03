@@ -20,6 +20,16 @@
     label: "{{ sysctl.name }}"
   when: base_sysctl is defined
 
+- name: manage limits.conf
+  tags: system
+  pam_limits:
+  args: "{{ limit }}"
+  loop: "{{ base_limits }}"
+  loop_control:
+    loop_var: "limit"
+    label: "{{ limit.domain }} {{ limit.limit_item }}:{{ limit.limit_type }}"
+  when: base_limits is defined
+
 - name: set timezone
   tags: system
   copy:

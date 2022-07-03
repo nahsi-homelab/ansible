@@ -43,6 +43,19 @@ base_sysctl:
   - name: vm.swappiness
     value: 1
 
+base_limits:
+  - domain: '*'
+    limit_type: "hard"
+    limit_item: "nofile"
+    comment: "Increse max open file limit"
+    value: 65536
+
+  - domain: '*'
+    limit_type: "soft"
+    limit_item: "nofile"
+    comment: "Increse max open file limit"
+    value: 65536
+
 base_users:
   - name: nahsi
     shell: /bin/bash

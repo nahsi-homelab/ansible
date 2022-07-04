@@ -88,3 +88,6 @@
   service:
     name: dnsmasq
     state: restarted
+    use: openrc
+  when:
+    - not chroot

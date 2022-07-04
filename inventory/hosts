@@ -2,6 +2,7 @@ pergamon
 miletos
 tyros
 antiochia
+heliopolis ansible_host=10.1.10.205
 palmyra
 byblos
 chalcedon ansible_host=chalcedon.nahsi.dev
@@ -11,6 +12,7 @@ pergamon
 
 [syria]
 antiochia
+heliopolis
 palmyra
 byblos
 tyros
@@ -45,6 +47,7 @@ byblos
 pergamon
 miletos
 antiochia
+heliopolis
 palmyra
 byblos
 

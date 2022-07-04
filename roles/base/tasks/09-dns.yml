@@ -50,6 +50,15 @@
   service:
     name: dnsmasq
     enabled: true
+    use: openrc
+  when: ansible_distribution == "Gentoo"
+
+- name: enable dnsmasq
+  tags: dns
+  service:
+    name: dnsmasq
+    enabled: true
+  when: ansible_distribution == "Ubuntu"
 
 - name: install openresolv
   tags: dns

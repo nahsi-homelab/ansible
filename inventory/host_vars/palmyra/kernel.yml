@@ -48,6 +48,11 @@ kernel_configs:
   03audio: |
     CONFIG_SND_HDA_CODEC_REALTEK=m
 
+  04network: |
+    CONFIG_NET_VENDOR_INTEL=y
+    CONFIG_IGB=m
+    CONFIG_IGB_HWMON=m
+
   99firmware: |
     CONFIG_EXTRA_FIRMWARE_DIR="/lib/firmware"
     CONFIG_EXTRA_FIRMWARE="{{ kernel_firmware | join(' ') }}"

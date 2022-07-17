@@ -1,4 +1,4 @@
 # Ansible Homelab Monorepo
 Roles and playbooks for managing Gentoo hosts.
 
-![homelab](.github/images/lab.jpg)
+<img src=".github/images/lab.jpg" height="600">

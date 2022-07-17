@@ -51,7 +51,7 @@
 - name: restart iwd
   service:
     name: iwd
-    state: restart
+    state: restarted
     use: openrc
   when:
     - not chroot

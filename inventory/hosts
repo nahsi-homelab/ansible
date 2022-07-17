@@ -7,15 +7,13 @@ palmyra
 byblos
 chalcedon ansible_host=chalcedon.nahsi.dev
 
-[asia]
-pergamon
-
 [syria]
 antiochia
 heliopolis
 palmyra
 byblos
 tyros
+pergamon
 
 [pontus]
 chalcedon
@@ -28,9 +26,6 @@ pergamon
 miletos
 
 [routers]
-pergamon
-
-[dns]
 pergamon
 
 [hashistack]

@@ -26,75 +26,14 @@ base_hosts: |
   127.0.0.1 {{ inventory_hostname }}.{{ dc }} {{ inventory_hostname }} localhost
   ::1       {{ inventory_hostname }}.{{ dc }} {{ inventory_hostname }} localhost
 
-  10.2.10.100 miletos
+  10.1.10.203 miletos
 
-base_dnsmasq_openrc_config: |
-  DNSMASQ_OPTS="--user=dnsmasq --group=dnsmasq --port=0"
-
-base_dnsmasq_config: |
-  interface=enp4s0.10
-  dhcp-range=vlan10,10.2.10.200,10.2.10.250,75h
-  dhcp-option=vlan10,3,10.2.10.10
-  dhcp-option=vlan10,6,10.2.10.10
-
-  interface=enp4s0.30
-  dhcp-range=vlan30,10.2.30.200,10.2.30.250,75h
-  dhcp-option=vlan30,3,10.2.30.10
-  dhcp-option=vlan30,6,10.2.30.10
-
-  interface=enp4s0.50
-  dhcp-range=vlan50,10.2.50.200,10.2.50.250,75h
-  dhcp-option=vlan50,3,10.2.50.10
-  dhcp-option=vlan50,6,10.2.50.10
-
-  dhcp-host=58:bf:25:22:b1:54,10.2.30.5
-  dhcp-host=6c:29:90:27:12:e1,10.2.30.11
-  dhcp-host=d8:a0:11:24:34:8c,10.2.30.12
-  dhcp-host=3c:6a:9d:15:8b:17,10.2.30.31
-  dhcp-host=3c:6a:9d:1a:4d:6c,10.2.30.32
-
-base_network: |
-  # pppoe
-  config_enp5s0=null
-  config_ppp0="ppp"
-  link_ppp0="enp5s0"
-  plugins_ppp0="pppoe"
-  pppd_ppp0="
-    noauth
-    defaultroute
-    mru 1492
-    mtu 1492
-    lcp-echo-interval 15 lcp-echo-failure 3
-    logfile /var/log/pppoe.log
-    noaccomp noccp nobsdcomp nodeflate nopcomp novj novjccomp"
-
-  username_ppp0={{ lookup('hashi_vault', 'secret/data/ISP/asia:username') }}
-  password_ppp0={{ lookup('hashi_vault', 'secret/data/ISP/asia:password') }}
-
-  rc_net_ppp0_need="net.enp4s0"
-
-  # a workaround for 'WARNING: net.ppp0 has started, but is inactive'
-  preup() {
-    if [ "${IFACE}" == "ppp0" ]; then
-      trap 'mark_service_started' EXIT
-    fi
-    return 0
-  }
-
-  # lan
-  config_enp4s0="null"
-
-  vlans_enp4s0="10 30 50"
-  config_enp4s0_10="10.2.10.10/24"
-  config_enp4s0_30="10.2.30.10/24"
-  config_enp4s0_50="10.2.50.10/24"
-
-base_network_interfaces:
-  - name: "enp4s0"
-  - name: "enp5s0"
-    start: false
-    enable: false
-  - name: "ppp0"
+base_iwd: |
+  [General]
+  EnableNetworkConfiguration=true
+  [Network]
+  RoutePriorityOffset=200
+  NameResolvingService=resolvconf
 
 base_packages_pergamon:
   - net-misc/r8125

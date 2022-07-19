@@ -1,4 +1,4 @@
-consul_version: "1.12.2"
+consul_version: "1.12.3"
 consul_servers:
   - 10.1.10.10
   - 10.1.10.20

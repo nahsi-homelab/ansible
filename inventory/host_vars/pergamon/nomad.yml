@@ -19,8 +19,6 @@ nomad_configs:
             path: "/var/lib/calibre-web"
         - home-assistant:
             path: "/var/lib/home-assistant"
-        - unifi:
-            path: "/var/lib/unifi"
 
   meta:
     client:

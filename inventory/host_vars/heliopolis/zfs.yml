@@ -1,61 +1,39 @@
-# zfs_datasets:
-#   - name: "main"
-#     properties:
-#       compression: "zstd"
-#       relatime: "on"
-#       acltype: "posix"
-#       xattr: "sa"
-#       dnodesize: "auto"
-#       mountpoint: "none"
-#       canmount: "off"
-#       normalization: "formD"
+zfs_datasets:
+  - name: "main"
+    properties:
+      compression: "zstd"
+      relatime: "on"
+      acltype: "posix"
+      xattr: "sa"
+      dnodesize: "auto"
+      mountpoint: "none"
+      canmount: "off"
+      normalization: "formD"
 
-#   - name: "main/system/gentoo"
-#     properties:
-#       canmount: "noauto"
-#       mountpoint: "/"
-#       org.zfsbootmenu:commandline: "ro quiet loglevel=0"
-#       org.zfsbootmenu:kernel: "5.10"
-#     owner: "root"
-#     group: "root"
-#     mode: "0755"
+  - name: "main/system/gentoo"
+    properties:
+      canmount: "noauto"
+      mountpoint: "/"
+      org.zfsbootmenu:commandline: "ro quiet loglevel=0"
+      org.zfsbootmenu:kernel: "5.10"
+    owner: "root"
+    group: "root"
+    mode: "0755"
 
-#   - name: "main/containers"
-#     owner: "root"
-#     group: "root"
-#     mode: "0710"
+  - name: "main/containers"
+    owner: "root"
+    group: "root"
+    mode: "0710"
 
-#   - name: "main/nomad/dataset/v"
-#     properties:
-#       compression: "off"
-#       relatime: "on"
-#       acltype: "posix"
-#       xattr: "sa"
-#       dnodesize: "auto"
-#       mountpoint: "none"
-#       canmount: "off"
-#       normalization: "formD"
+  - name: "main/data/nomad"
+    properties:
+      compression: "zstd"
+      mountpoint: "legacy"
 
-#   - name: "main/nomad/dataset/s"
-#     properties:
-#       compression: "off"
-#       relatime: "on"
-#       acltype: "posix"
-#       xattr: "sa"
-#       dnodesize: "auto"
-#       mountpoint: "none"
-#       canmount: "off"
-#       normalization: "formD"
-
-#   - name: "main/data/nomad"
-#     properties:
-#       compression: "zstd"
-#       mountpoint: "legacy"
-
-#   - name: "main/users/nahsi/home"
-#     properties:
-#       mountpoint: "/home/nahsi"
-#       compression: "zstd"
-#     owner: "nahsi"
-#     group: "nahsi"
-#     mode: "0755"
+  - name: "main/users/nahsi/home"
+    properties:
+      mountpoint: "/home/nahsi"
+      compression: "zstd"
+    owner: "nahsi"
+    group: "nahsi"
+    mode: "0755"

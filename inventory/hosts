@@ -1,8 +1,6 @@
 pergamon
-miletos
-tyros
 antiochia
-heliopolis ansible_host=10.1.10.205
+heliopolis
 palmyra
 byblos
 chalcedon ansible_host=chalcedon.nahsi.dev
@@ -12,18 +10,13 @@ antiochia
 heliopolis
 palmyra
 byblos
-tyros
 pergamon
 
 [pontus]
 chalcedon
 
-[cosmos]
-miletos dc=cosmos
-
 [workstation]
 pergamon
-miletos
 
 [routers]
 pergamon
@@ -31,16 +24,15 @@ pergamon
 [hashistack]
 antiochia
 palmyra
-byblos
+heliopolis
 
 [vault]
 antiochia
 palmyra
-byblos
+heliopolis
 
 [gentoo]
 pergamon
-miletos
 antiochia
 heliopolis
 palmyra
@@ -48,6 +40,3 @@ byblos
 
 [ubuntu]
 chalcedon
-
-[freebsd]
-tyros

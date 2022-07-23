@@ -23,11 +23,11 @@ base_filesystems:
     state: "mounted"
 
 base_network: |
-  config_enp35s0="10.1.10.30/24"
-  routes_enp35s0="default via 10.1.10.1"
+  config_enp37s0="10.1.10.30/24"
+  routes_enp37s0="default via 10.1.10.1"
 
 base_network_interfaces:
-  - name: "enp35s0"
+  - name: "enp37s0"
 
 base_portage_distcc_cores: 0
 base_portage_makeconf_heliopolis:

@@ -2,7 +2,7 @@ vault_agent_version: "1.10.4"
 
 vault_agent_config:
   vault:
-    address: "http://vault.service.consul:8200"
+    address: "http://hashi.nahsi.dev:8200"
 
   auto_auth:
     method:

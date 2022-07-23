@@ -4,15 +4,10 @@ nomad_configs:
       host_volume:
         - minio:
             path: "/var/lib/minio"
-        - nats:
-            path: "/var/lib/nats"
-        - seaweedfs-master:
-            path: "/var/lib/seaweedfs-master"
-        - seaweedfs-index:
-            path: "/var/lib/seaweedfs-index"
+        - home-assistant:
+            path: "/var/lib/home-assistant"
 
   meta:
     client:
       meta:
-        nats_index: 3
         minio_node_id: 4

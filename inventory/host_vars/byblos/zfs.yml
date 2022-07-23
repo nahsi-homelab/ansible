@@ -25,28 +25,6 @@ zfs_datasets:
     group: "root"
     mode: "0710"
 
-  - name: "main/nomad/dataset/v"
-    properties:
-      compression: "off"
-      relatime: "on"
-      acltype: "posix"
-      xattr: "sa"
-      dnodesize: "auto"
-      mountpoint: "none"
-      canmount: "off"
-      normalization: "formD"
-
-  - name: "main/nomad/dataset/s"
-    properties:
-      compression: "off"
-      relatime: "on"
-      acltype: "posix"
-      xattr: "sa"
-      dnodesize: "auto"
-      mountpoint: "none"
-      canmount: "off"
-      normalization: "formD"
-
   - name: "main/users/nahsi/home"
     properties:
       mountpoint: "/home/nahsi"
@@ -68,30 +46,11 @@ zfs_datasets:
     group: "nobody"
     mode: "0700"
 
-  - name: "main/data/nats"
+  - name: "main/data/home-assistant"
     properties:
       atime: "off"
-      compression: "zstd"
-      mountpoint: "/var/lib/nats"
-      quota: "10G"
-    mode: "0750"
-
-  - name: "main/data/seaweedfs-master"
-    properties:
-      atime: "off"
-      compression: "zstd"
-      mountpoint: "/var/lib/seaweedfs-master"
-      quota: "1G"
+      mountpoint: "/var/lib/home-assistant"
+      quota: "5G"
+    owner: "1000"
+    group: "1000"
     mode: "0700"
-    owner: "nobody"
-    group: "nobody"
-
-  - name: "main/data/seaweedfs-index"
-    properties:
-      atime: "off"
-      compression: "zstd"
-      mountpoint: "/var/lib/seaweedfs-index"
-      quota: "10G"
-    mode: "0700"
-    owner: "nobody"
-    group: "nobody"

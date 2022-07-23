@@ -8,22 +8,10 @@ nomad_configs:
   volumes:
     client:
       host_volume:
-        - calibre:
-            path: "/var/lib/calibre"
-
-        - minio:
-            path: "/var/lib/minio"
-        - mongo:
-            path: "/var/lib/mongo"
         - calibre-web:
             path: "/var/lib/calibre-web"
-        - home-assistant:
-            path: "/var/lib/home-assistant"
 
   meta:
     client:
       meta:
         workstation: true
-
-        mongo_node_id: "secondary"
-        minio_node_id: 3

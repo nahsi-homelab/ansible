@@ -22,13 +22,6 @@ nomad_configs:
         - storage-taisto:
             path: "/home/taisto/storage"
 
-        - seaweedfs-master:
-            path: "/var/lib/seaweedfs-master"
-        - seaweedfs-index:
-            path: "/var/lib/seaweedfs-index"
-        - seaweedfs-ssd:
-            path: "/var/lib/seaweedfs-ssd"
-
         - unifi:
             path: "/var/lib/unifi"
         - transmission-nahsi:
@@ -63,8 +56,6 @@ nomad_configs:
             path: "/var/lib/pgadmin"
         - mariadb:
             path: "/var/lib/mariadb"
-        - redis-mail:
-            path: "/var/lib/redis-mail"
         - keydb:
             path: "/var/lib/keydb"
         - victoria-metrics:
@@ -80,8 +71,7 @@ nomad_configs:
     client:
       meta:
         mongo_node_id: "primary"
-        keydb_replica: "keydb-palmyra.service.consul"
+        keydb_replica: "keydb-heliopolis.service.consul"
         nats_index: 1
         mariadb_index: 1
         minio_node_id: 1
-        seaweedfs_index: 1

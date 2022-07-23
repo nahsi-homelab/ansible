@@ -1,0 +1,25 @@
+nomad_configs:
+  volumes:
+    client:
+      host_volume:
+        - postgres:
+            path: "/var/lib/postgres"
+        - mariadb:
+            path: "/var/lib/mariadb"
+        - minio:
+            path: "/var/lib/minio"
+        - mongo:
+            path: "/var/lib/mongo"
+        - nats:
+            path: "/var/lib/nats"
+        - keydb:
+            path: "/var/lib/keydb"
+
+  meta:
+    client:
+      meta:
+        keydb_replica: "keydb-antiochia.service.consul"
+        mariadb_index: 2
+        nats_index: 3
+        mongo_node_id: "secondary"
+        minio_node_id: 3

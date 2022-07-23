@@ -2,31 +2,13 @@ nomad_configs:
   volumes:
     client:
       host_volume:
-        - postgres:
-            path: "/var/lib/postgres"
-        - mariadb:
-            path: "/var/lib/mariadb"
         - minio:
             path: "/var/lib/minio"
         - nats:
             path: "/var/lib/nats"
-        - redis-mail:
-            path: "/var/lib/redis-mail"
-        - keydb:
-            path: "/var/lib/keydb"
-        - seaweedfs-master:
-            path: "/var/lib/seaweedfs-master"
-        - seaweedfs-index:
-            path: "/var/lib/seaweedfs-index"
-        - seaweedfs-ssd:
-            path: "/var/lib/seaweedfs-ssd"
 
   meta:
     client:
       meta:
-        keydb_replica: "keydb-antiochia.service.consul"
-        mariadb_index: 2
         nats_index: 2
         minio_node_id: 2
-        nats_node_id: 2
-        seaweedfs_id: 2

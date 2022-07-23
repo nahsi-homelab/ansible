@@ -7,7 +7,7 @@ nomad_config_hashistack:
       retry_join:
         - 10.1.10.10
         - 10.1.10.20
-        - 10.1.10.40
+        - 10.1.10.30
 
     default_scheduler_config:
       memory_oversubscription_enabled: true

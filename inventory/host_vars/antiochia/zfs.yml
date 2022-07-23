@@ -36,28 +36,6 @@ zfs_datasets:
     group: "root"
     mode: "0710"
 
-  - name: "main/nomad/dataset/v"
-    properties:
-      compression: "off"
-      relatime: "on"
-      acltype: "posix"
-      xattr: "sa"
-      dnodesize: "auto"
-      mountpoint: "none"
-      canmount: "off"
-      normalization: "formD"
-
-  - name: "main/nomad/dataset/s"
-    properties:
-      compression: "off"
-      relatime: "on"
-      acltype: "posix"
-      xattr: "sa"
-      dnodesize: "auto"
-      mountpoint: "none"
-      canmount: "off"
-      normalization: "formD"
-
   - name: "main/data/nomad"
     properties:
       compression: "zstd"
@@ -271,14 +249,6 @@ zfs_datasets:
     group: "1001"
     mode: "0750"
 
-  - name: "main/data/kafka"
-    properties:
-      atime: "off"
-      mountpoint: "/var/lib/kafka"
-    owner: "1001"
-    group: "1001"
-    mode: "0700"
-
   - name: "main/data/minio"
     properties:
       atime: "off"
@@ -343,14 +313,6 @@ zfs_datasets:
     group: "999"
     mode: "0700"
 
-  - name: "main/data/redis-mail"
-    properties:
-      atime: "off"
-      mountpoint: "/var/lib/redis-mail"
-      quota: "1G"
-    owner: "nobody"
-    group: "nobody"
-
   - name: "main/data/keydb"
     properties:
       atime: "off"
@@ -378,37 +340,6 @@ zfs_datasets:
       mountpoint: "/var/lib/nats"
       quota: "10G"
     mode: "0750"
-
-  - name: "main/data/seaweedfs-master"
-    properties:
-      atime: "off"
-      compression: "zstd"
-      mountpoint: "/var/lib/seaweedfs-master"
-      quota: "1G"
-    mode: "0700"
-    owner: "nobody"
-    group: "nobody"
-    absent: true
-
-  - name: "main/data/seaweedfs-index"
-    properties:
-      atime: "off"
-      compression: "zstd"
-      mountpoint: "/var/lib/seaweedfs-index"
-      quota: "10G"
-    mode: "0700"
-    owner: "nobody"
-    group: "nobody"
-
-  - name: "main/data/seaweedfs-ssd"
-    properties:
-      atime: "off"
-      compression: "zstd"
-      mountpoint: "/var/lib/seaweedfs-ssd"
-      quota: "200G"
-    mode: "0700"
-    owner: "nobody"
-    group: "nobody"
 
   - name: "main/data/unifi"
     properties:

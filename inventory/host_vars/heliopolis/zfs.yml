@@ -37,3 +37,66 @@ zfs_datasets:
     owner: "nahsi"
     group: "nahsi"
     mode: "0755"
+
+  - name: "main/data/minio"
+    properties:
+      atime: "off"
+      mountpoint: "/var/lib/minio"
+      quota: "100G"
+    owner: "nobody"
+    group: "nobody"
+    mode: "0700"
+
+  - name: "main/data/mongo"
+    properties:
+      atime: "off"
+      compression: "zstd"
+      logbias: "throughput"
+      primarycache: "metadata"
+      mountpoint: "/var/lib/mongo"
+      quota: "100G"
+    owner: "999"
+    group: "999"
+    mode: "0700"
+
+  - name: "main/data/nats"
+    properties:
+      atime: "off"
+      compression: "zstd"
+      mountpoint: "/var/lib/nats"
+      quota: "10G"
+    mode: "0750"
+
+  - name: "main/data/postgres"
+    properties:
+      atime: "off"
+      compression: "lz4"
+      logbias: "throughput"
+      primarycache: "metadata"
+      recordsize: "8k"
+      mountpoint: "/var/lib/postgres"
+    owner: "999"
+    group: "999"
+    mode: "0700"
+
+  - name: "main/data/mariadb"
+    properties:
+      atime: "off"
+      compression: "lz4"
+      logbias: "throughput"
+      primarycache: "metadata"
+      recordsize: "16k"
+      mountpoint: "/var/lib/mariadb"
+    owner: "999"
+    group: "999"
+    mode: "0700"
+
+  - name: "main/data/keydb"
+    properties:
+      atime: "off"
+      mountpoint: "/var/lib/keydb"
+      logbias: "throughput"
+      primarycache: "metadata"
+      quota: "10G"
+    owner: "nobody"
+    group: "nobody"

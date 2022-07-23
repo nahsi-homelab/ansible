@@ -8,6 +8,8 @@ nomad_configs:
   volumes:
     client:
       host_volume:
+        - calibre:
+            path: "/var/lib/calibre-web"
         - calibre-web:
             path: "/var/lib/calibre-web"
 

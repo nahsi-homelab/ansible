@@ -224,15 +224,6 @@ zfs_datasets:
     group: "nobody"
     mode: "0750"
 
-  - name: "main/data/filerun"
-    properties:
-      atime: "off"
-      compression: "zstd"
-      mountpoint: "/var/lib/filerun"
-    owner: "33"
-    group: "33"
-    mode: "0700"
-
   - name: "main/data/transmission-nahsi"
     properties:
       atime: "off"

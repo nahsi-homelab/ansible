@@ -46,8 +46,6 @@ nomad_configs:
             path: "/var/lib/nats"
         - mongo:
             path: "/var/lib/mongo"
-        - filerun:
-            path: "/var/lib/filerun"
         - filestash:
             path: "/var/lib/filestash"
         - postgres:

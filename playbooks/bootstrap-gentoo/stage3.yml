@@ -35,7 +35,7 @@
         path: "{{ install_prefix }}/var/tmp"
         fstype: "tmpfs"
         state: mounted
-      when: ansible_memory_mb.real.total > 15000
+      when: ansible_memory_mb.real.total > 20000
 
     - name: download stage3 tarball
       become: no

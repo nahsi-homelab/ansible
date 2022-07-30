@@ -148,6 +148,7 @@
 - name: enable services
   tags: system
   service:
+    use: openrc
   args: "{{ service }}"
   loop: "{{ base_services }}"
   loop_control:

@@ -1,7 +1,11 @@
+base_hosts: |
+  127.0.0.1 {{ inventory_hostname }} localhost
+  ::1       {{ inventory_hostname }} localhost
+
 base_filesystems:
   - path: "/tmp"
     src: "tmpfs"
-    opts: "rw,nosuid,noatime,nodev,size=2G,mode=1777"
+    opts: "rw,nosuid,noatime,nodev,size=4G,mode=1777"
     fstype: "tmpfs"
     state: "mounted"
 
@@ -17,13 +21,16 @@ base_dns: |
 base_dnsmasq_config: ""
 
 base_packages_miletos:
-  - app-laptop/mbpfan
   - sys-power/thermald
+  - app-laptop/tpacpi-bat
+  - app-laptop/laptop-mode-tools
   - x11-misc/autorandr
-  - app-emulation/virt-viewer
   - x11-misc/cbatticon
-  - app-misc/brillo
-  - x11-libs/libva-intel-driver
+  - x11-libs/libva-intel-media-driver
+  - x11-apps/igt-gpu-tools
+  - app-crypt/tpm2-tss
+  - sys-apps/rng-tools
+
 base_packages: >
   {{
     base_packages_gentoo +
@@ -32,12 +39,12 @@ base_packages: >
   }}
 
 base_services:
-  - name: "mbpfan"
+  - name: "thermald"
     runlevel: "default"
     enabled: true
     state: "started"
 
-  - name: "thermald"
+  - name: "rngd"
     runlevel: "default"
     enabled: true
     state: "started"
@@ -76,23 +83,20 @@ base_udev_rules:
   10_sata_autosuspend: |
     ACTION=="add", SUBSYSTEM=="scsi_host", KERNEL=="host*", ATTR{link_power_management_policy}="med_power_with_dipm"
 
-  20_vfio: |
-    SUBSYSTEM=="vfio", OWNER="root", GROUP="kvm", MODE="0660"
-
   30_autorandr: |
     ACTION=="change", SUBSYSTEM=="drm", RUN+="/usr/bin/autorandr --batch --change --default default"
 
 base_portage_makeconf_miletos:
-  COMMON_FLAGS: "-O2 -march=broadwell -pipe"
-  RUSTFLAGS: "-C target-cpu=broadwell"
-  CPU_FLAGS_X86: "aes avx avx2 f16c fma3 mmx mmxext pclmul popcnt sse sse2 sse3 sse4_1 sse4_2 ssse3 rdrand"
-  VIDEO_CARDS: "intel i965 iris"
+  COMMON_FLAGS: "-O2 -march=skylake -pipe"
+  RUSTFLAGS: "-C target-cpu=skylake"
+  CPU_FLAGS_X86: "aes avx avx2 f16c fma3 mmx mmxext pclmul popcnt rdrand sse sse2 sse3 sse4_1 sse4_2 ssse3"
+  VIDEO_CARDS: "intel"
   LUA_TARGETS: "luajit"
   LUA_SINGLE_TARGET: "luajit"
   LLVM_TARGETS: "X86"
-  DISTCC_HOSTS: "pergamon.node.consul/32"
+  DISTCC_HOSTS: "antiochia.node.consul/8 heliopolis.node.consul/8"
   FEATURES: "parallel-install distcc"
-  INPUT_DEVICES: "synaptics evdev"
+  INPUT_DEVICES: "synaptics libinput"
   ACCEPT_LICENSE: "* -@EULA google-chrome"
 base_portage_makeconf: >
   {{
@@ -100,23 +104,19 @@ base_portage_makeconf: >
     combine(base_portage_makeconf_miletos, recursive=true)
   }}
 
-base_portage_env:
-  notmpfs: |
-    PORTAGE_TMPDIR="/var/notmpfs"
+base_portage_use_miletos:
+  - nvme
+  - synaptics
+  - thunderbolt
+  - tpm
 
-base_portage_package_env:
-  notmpfs: |
-    www-client/chromium base-notmpfs.conf
-    dev-qt/qtwebengine base-notmpfs.conf
-
-base_portage_package_use_miletos:
-  system: |
-    media-libs/mesa -gles2
-    app-misc/brillo -ddcci
+base_portage_use: >
+  {{
+    base_portage_use_miletos + base_portage_use_workstation
+  }}
 
 base_portage_package_use: >
   {{
-    base_portage_package_use_miletos |
-    combine(base_portage_package_use_workstation, recursive=true) |
+    base_portage_package_use_workstation |
     combine(base_portage_package_use_gentoo, recursive=true)
   }}

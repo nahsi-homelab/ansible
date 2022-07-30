@@ -14,7 +14,7 @@ zfs_datasets:
     properties:
       canmount: "noauto"
       mountpoint: "/"
-      org.zfsbootmenu:commandline: "ro quiet loglevel=0 i915.enable_gvt=1 kvm.ignore_msrs=1 hid_apple.swap_fn_leftctrl=1 hid_apple.swap_opt_cmd=1"
+      org.zfsbootmenu:commandline: "ro quiet loglevel=0"
       org.zfsbootmenu:kernel: "5.10"
     owner: "root"
     group: "root"

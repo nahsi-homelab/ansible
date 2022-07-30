@@ -26,7 +26,7 @@ base_hosts: |
   127.0.0.1 {{ inventory_hostname }}.{{ dc }} {{ inventory_hostname }} localhost
   ::1       {{ inventory_hostname }}.{{ dc }} {{ inventory_hostname }} localhost
 
-  10.1.10.203 miletos
+  10.1.10.100 miletos
 
 base_iwd: |
   [General]

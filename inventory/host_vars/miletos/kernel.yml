@@ -1,4 +1,4 @@
-kernel_boot_device: "/dev/disk/by-uuid/67E3-17ED"
+kernel_boot_device: "/dev/disk/by-id/nvme-SAMSUNG_MZVLB512HAJQ-000L7_S3TNNX0K793752-part1"
 
 _kernel_cmd: >-
   ro quiet loglevel=0
@@ -15,19 +15,19 @@ kernel_refind_config: |
   use_nvram "false"
   screensaver "300"
   use_graphics_for "linux"
-  showtools shell apple_recovery hidden_tags reboot shutdown about
+  showtools shell hidden_tags reboot shutdown about
   hideui hints arrows
   scan_all_linux_kernels "true"
   fold_linux_kernels "true"
   include themes/refind-theme-regular/theme.conf
 
 kernel_firmware:
-  - brcm/brcmfmac43602-pcie.bin
+  - iwlwifi-8265-36.ucode
+  - intel/ibt-12-16.sfi
+  - intel/ibt-12-16.ddc
+  - i915/kbl_dmc_ver1_04.bin
 
 kernel_module_configs:
-  hid_apple: |
-    options hid_apple swap_fn_leftctrl=1 swap_opt_cmd=1
-
   audio: |
     options snd_hda_intel power_save=1
     options snd_hda_intel id=PCH index=0
@@ -38,67 +38,56 @@ kernel_module_configs:
 
 kernel_configs:
   01platform: |
-    CONFIG_MBROADWELL=y
+    CONFIG_MSKYLAKE=y
 
     CONFIG_HZ_300=y
     CONFIG_HZ=300
 
     CONFIG_INTEL_TURBO_MAX_3=y
-
-    CONFIG_SPI=y
-    CONFIG_SPI_PXA2XX=m
-
-    CONFIG_INPUT_MOUSE=y
-    CONFIG_MOUSE_BCM5974=m
-
-    CONFIG_INPUT_KEYBOARD=y
-    CONFIG_KEYBOARD_APPLESPI=m
-    CONFIG_HID_APPLE=m
-
-    CONFIG_MFD_INTEL_LPSS_PCI=m
+    CONFIG_THINKPAD_ACPI=y
+    CONFIG_BLK_DEV_NVME=y
+    CONFIG_BLK_DEV_THROTTLING=y
+    CONFIG_USB_XHCI_PCI_RENESAS=y
+    CONFIG_INTEL_WMI_THUNDERBOLT=y
+    CONFIG_WMI_BMOF=y
+    CONFIG_INTEL_ISH_HID=m
     CONFIG_LPC_ICH=m
-    CONFIG_I2C_I801=y
-    CONFIG_SENSORS_CORETEMP=y
-    CONFIG_INT340X_THERMAL=y
+
     CONFIG_INTEL_POWERCLAMP=y
     CONFIG_INTEL_RAPL=m
-    CONFIG_IDLE_INJECT=y
+
+    CONFIG_TCG_TPM=y
+    CONFIG_TCG_TIS=y
+
+    CONFIG_I2C_I801=y
+    CONFIG_INT340X_THERMAL=y
     CONFIG_INTEL_PCH_THERMAL=y
+    CONFIG_SENSORS_CORETEMP=y
     CONFIG_X86_PKG_TEMP_THERMAL=y
-    CONFIG_APPLE_PROPERTIES=y
-    CONFIG_BACKLIGHT_APPLE=y
-    CONFIG_SENSORS_APPLESMC=y
-    CONFIG_APPLE_GMUX=m
-    CONFIG_ACPI_ALS=y
-    CONFIG_INPUT_LEDS=y
-    CONFIG_MAC_EMUMOUSEBTN=y
-    CONFIG_USB4=m
+    CONFIG_ACPI_THERMAL_REL=y
 
-    CONFIG_DMADEVICES=y
-    CONFIG_DW_DMAC=y
-    CONFIG_DW_DMAC_PCI=y
-
-    CONFIG_FB_SYS_IMAGEBLIT=y
-    CONFIG_FB_SYS_FOPS=y
-    CONFIG_FB_SYS_COPYAREA=y
-    CONFIG_FB_SYS_FILLRECT=y
-
-    CONFIG_MMC=y
-    CONFIG_MMC_SDHCI=m
-    CONFIG_MMC_SDHCI_PCI=m
-    CONFIG_MMC_SDHCI_ACPI=m
-    CONFIG_SDIO_UART=m
-    CONFIG_USB_STORAGE_REALTEK=m
-
-    CONFIG_USB_BDC_PCI=m
-    CONFIG_USB_ROLE_SWITCH=y
+    CONFIG_USB_ROLES_SWITCH=y
     CONFIG_USB_ROLES_INTEL_XHCI=y
 
-    CONFIG_HOTPLUG_PCI=y
-    CONFIG_HOTPLUG_PCI_ACPI=y
+    CONFIG_RMI4_CORE=y
+    CONFIG_RMI4_SMB=y
+
+    CONFIG_TYPEC=y
+    CONFIG_TYPEC_UCSI=y
+    CONFIG_UCSI_ACPI=y
+    CONFIG_TYPEC_DP_ALTMODE=m
+
+    CONFIG_INPUT_KEYBOARD=y
+    CONFIG_INPUT_MOUSE=y
+    CONFIG_MOUSE_PS2_SYNAPTICS=y
+    CONFIG_MOUSE_PS2=y
+    CONFIG_HID_BATTERY_STRENGTH=y
+    CONFIG_HID_LENOVO=y
+    CONFIG_HID_MULTITOUCH=y
 
     CONFIG_INTEL_MEI=m
     CONFIG_INTEL_MEI_ME=m
+    CONFIG_INTEL_MEI_HDCP=m
 
   02bluetooth: |
     CONFIG_BT=y
@@ -118,37 +107,55 @@ kernel_configs:
     CONFIG_MAC80211=m
     CONFIG_RFKILL=y
     CONFIG_WLAN=y
-    CONFIG_WLAN_VENDOR_BROADCOM=y
-    CONFIG_BRCMFMAC=m
-    CONFIG_BRCMFMAC_PCIE=y
+    CONFIG_WLAN_VENDOR_INTEL=y
+    CONFIG_IWLWIFI=m
+    CONFIG_IWLMVM=m
+    CONFIG_IWLWIFI_LEDS=y
+    CONFIG_IWLWIFI_OPMODE_MODULAR=y
+
+    CONFIG_NET_VENDOR_INTEL=y
+    CONFIG_E1000E=m
 
   04video: |
     CONFIG_DRM=y
     CONFIG_DRM_KMS_HELPER=y
     CONFIG_DRM_I915=y
 
-    CONFIG_DRM_I915_GVT=y
-    CONFIG_DRM_I915_GVT_KVMGT=y
-    CONFIG_VFIO=y
-    CONFIG_VFIO_MDEV=y
-    CONFIG_VFIO_MDEV_DEVICE=y
+    CONFIG_MEDIA_SUPPORT=y
+    CONFIG_MEDIA_USB_SUPPORT=y
+    CONFIG_MEDIA_CAMERA_SUPPORT=y
+    CONFIG_VIDEO_V4L2_SUBDEV_API=y
+    CONFIG_VIDEOBUF2_V4L2=y
+    CONFIG_VIDEOBUF2_CORE=y
+    CONFIG_VIDEOBUF2_VMALLOC=y
+    CONFIG_VIDEOBUF2_MEMOPS=y
+
+    CONFIG_USB_VIDEO_CLASS=y
+    CONFIG_USB_GSPCA=N
+    CONFIG_USB_CONFIGFS_F_UVC=y
+    CONFIG_USB_G_WEBCAM=y
 
   05sound: |
     CONFIG_SND_HWDEP=m
     CONFIG_SND_HDA_GENERIC=m
-    CONFIG_SND_COMPRESS_OFFLOAD=m
     CONFIG_SND_DMAENGINE_PCM=m
-    CONFIG_SND_HDA_CODEC_CIRRUS=m
+    CONFIG_SND_HDA_CODEC_REALTEK=m
+    CONFIG_SND_HDA_CODEC_HDMI=m
 
   06usb_net: |
     CONFIG_USB_NET_DRIVERS=y
     CONFIG_USB_USBNET=y
     CONFIG_USB_NET_AX88179_178A=m
 
+  07_card_reader: |
+    CONFIG_MMC=y
+    CONFIG_MMC_SDHCI=m
+    CONFIG_MMC_SDHCI_PCI=m
+    CONFIG_MMC_SDHCI_ACPI=m
+    CONFIG_USB_STORAGE_REALTEK=m
+    CONFIG_MISC_RTSX_PCI=y
+    CONFIG_SDIO_UART=m
+
   99firmware: |
     CONFIG_EXTRA_FIRMWARE_DIR="/lib/firmware"
     CONFIG_EXTRA_FIRMWARE="{{ kernel_firmware | join(' ') }}"
-
-kernel_zfsbootmenu_dracut_configs:
-  xhci_teardown:
-    zfsbootmenu_teardown+=" /usr/share/examples/zfsbootmenu/xhci-teardown.sh "

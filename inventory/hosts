@@ -4,6 +4,7 @@ heliopolis
 palmyra
 byblos
 chalcedon ansible_host=chalcedon.nahsi.dev
+miletos
 
 [syria]
 antiochia
@@ -17,9 +18,7 @@ chalcedon
 
 [workstation]
 pergamon
-
-[routers]
-pergamon
+miletos
 
 [hashistack]
 antiochia
@@ -37,6 +36,7 @@ antiochia
 heliopolis
 palmyra
 byblos
+miletos
 
 [ubuntu]
 chalcedon

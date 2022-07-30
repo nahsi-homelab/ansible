@@ -42,10 +42,13 @@ base_packages_workstation:
   - dev-python/jmespath
 
   - x11-wm/awesome
+  - x11-apps/xinit
   - x11-libs/lain
   - media-video/pipewire
   - media-sound/pulsemixer
   - x11-apps/xrandr
+  - media-sound/alsa-utils
+  - x11-base/xorg-server
 
   - app-crypt/gnupg
   - app-crypt/pinentry
@@ -60,7 +63,7 @@ base_packages_workstation:
   - media-video/mediainfo
   - media-tv/jellyfin-mpv-shim
 
-  - app-emulation/virtualbox
+  # - app-emulation/virtualbox
   - sys-fs/fuse:0 # error loading libfuse.so.2
 
   - app-emulation/qemu
@@ -107,7 +110,6 @@ base_packages_workstation:
   - media-fonts/nerd-fonts
 
   - games-util/steam-launcher
-  - media-fonts/steamfonts
   - media-fonts/font-bitstream-100dpi
   - sys-apps/lsb-release
 
@@ -149,7 +151,7 @@ base_portage_package_use_workstation:
     media-libs/gd truetype fontconfig
 
     # pipewire
-    media-video/pipewire pipewire-alsa extra
+    media-video/pipewire pipewire-alsa extra sound-server
     net-im/zoom pulseaudio
     media-sound/pulseaudio -* glib
 
@@ -192,6 +194,9 @@ base_portage_package_use_workstation:
 
     # xdg-utils
     app-text/xmlto text
+
+    # slack
+    app-text/ghostscript-gpl cups
 
     # openmw
     games-engines/openmw devtools
@@ -244,7 +249,7 @@ base_portage_package_use: >
     combine(base_portage_package_use_all, recursive=true)
   }}
 
-base_portage_use:
+base_portage_use_workstation:
   - zstd
   - luajit
   - dist-kernel
@@ -276,3 +281,4 @@ base_portage_use:
   - png
   - webp
   - dts
+base_portage_use: "{{ base_portage_use_workstation }}"

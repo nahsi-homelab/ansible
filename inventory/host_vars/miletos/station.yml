@@ -1,39 +1,20 @@
 station_xorg_configs:
-  20_monitor: |
+  10_monitor: |
     Section "Monitor"
-      Identifier "HDMI-2"
-      Option "PreferredMode" "2560x1440"
-      Option "RightOf" "eDP-1"
+      Identifier  "<default monitor>"
+      DisplaySize 276 156
     EndSection
 
-    Section "Monitor"
-      Identifier "eDP-1"
-      Option "PreferredMode" "2560x1600"
-      Option "LeftOf" "HDMI-2"
-    EndSection
-
-  30_keyboard: |
+  20_touchpad: |
     Section "InputClass"
-      Identifier "keyboard-all"
-      Driver "evdev"
-      Option "XkbLayout" "us,ru"
-      Option "XkbOptions" "grp:alt_shift_toggle,compose:ralt"
-    EndSection
-
-  40_touchpad: |
-    Section "InputClass"
-      MatchIsTouchpad "on"
-      Identifier      "evdev touchpad catchall"
+      Identifier      "Synaptics Touchpad"
       Driver          "synaptics"
-      # 1 = left, 2 = right, 3 = middle
-      # Option          "TapButton1" "1"
-      # Option          "TapButton2" "3"
-      # Option          "TapButton3" "2"
-      # Palm detection
-      Option          "PalmDetect" "1"
-      # Horizontal scrolling
-      Option "HorizTwoFingerScroll" "1"
-
-      Option "VertScrollDelta" "-110"
-      Option "HorizScrollDelta" "-110"
+      MatchIsTouchpad "on"
+      Option          "VertEdgeScroll"        "on"
+      Option          "CircularScrolling"     "on"
+      Option          "VertTwoFingerScroll"   "on"
+      Option          "HorizTwoFingerScroll"  "on"
+      Option          "TapButton1"            "1"
+      Option          "TapButton2"            "3"
+      Option          "TapButton3"            "2"
     EndSection

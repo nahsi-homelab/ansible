@@ -95,8 +95,8 @@ base_packages_gentoo:
   - app-portage/flaggie
   - app-portage/cpuid2cpuflags
   - app-misc/resolve-march-native
-  # - app-portage/repoman
   - app-portage/genlop
+  - dev-util/pkgdev
 
   - sys-apps/usbutils
   - sys-apps/lshw

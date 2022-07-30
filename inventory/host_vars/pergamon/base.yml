@@ -89,7 +89,7 @@ base_portage_makeconf_pergamon:
   LUA_SINGLE_TARGET: "luajit"
   LLVM_TARGETS: "AMDGPU X86"
   FEATURES: "parallel-install"
-  ACCEPT_LICENSE: "* -@EULA google-chrome"
+  ACCEPT_LICENSE: "*"
 base_portage_makeconf: >
   {{
     base_portage_makeconf_gentoo |

@@ -1,6 +1,6 @@
 base_hosts: |
-  127.0.0.1 {{ inventory_hostname }} localhost
-  ::1       {{ inventory_hostname }} localhost
+  127.0.0.1 {{ inventory_hostname }} {{ inventory_hostname }}.local localhost
+  ::1       {{ inventory_hostname }} {{ inventory_hostname }}.local
 
 base_filesystems:
   - path: "/tmp"

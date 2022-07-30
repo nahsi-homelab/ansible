@@ -3,7 +3,9 @@
   portage:
     package: net-dns/dnsmasq
     state: present
-  when: ansible_distribution == "Gentoo"
+  when:
+    - ansible_distribution == "Gentoo"
+    - base_dnsmasq_config | length
 
 - name: install dnsmasq
   tags: dns
@@ -12,7 +14,9 @@
       - "dnsmasq"
     install_recommends: false
     state: present
-  when: ansible_distribution == "Ubuntu"
+  when:
+    - ansible_distribution == "Ubuntu"
+    - base_dnsmasq_config | length
 
 - name: copy dnsmasq config
   tags: dns
@@ -21,7 +25,9 @@
     dest: "/etc/dnsmasq.conf"
     mode: 0660
   notify: restart dnsmasq
-  when: ansible_distribution == "Ubuntu"
+  when:
+    - ansible_distribution == "Ubuntu"
+    - base_dnsmasq_config | length
 
 - name: copy dnsmasq config
   tags: dns
@@ -31,8 +37,10 @@
     owner: dnsmasq
     group: dnsmasq
     mode: 0660
-  # notify: restart dnsmasq
-  when: ansible_distribution == "Gentoo"
+  notify: restart dnsmasq
+  when:
+    - ansible_distribution == "Gentoo"
+    - base_dnsmasq_config | length
 
 - name: copy dnsmasq openrc config
   tags: dns
@@ -43,7 +51,9 @@
     group: root
     mode: 0660
   notify: restart dnsmasq
-  when: ansible_distribution == "Gentoo"
+  when:
+    - ansible_distribution == "Gentoo"
+    - base_dnsmasq_config | length
 
 - name: enable dnsmasq
   tags: dns
@@ -51,14 +61,18 @@
     name: dnsmasq
     enabled: true
     use: openrc
-  when: ansible_distribution == "Gentoo"
+  when:
+    - ansible_distribution == "Gentoo"
+    - base_dnsmasq_config | length
 
 - name: enable dnsmasq
   tags: dns
   service:
     name: dnsmasq
     enabled: true
-  when: ansible_distribution == "Ubuntu"
+  when:
+    - ansible_distribution == "Ubuntu"
+    - base_dnsmasq_config | length
 
 - name: install openresolv
   tags: dns
@@ -71,7 +85,7 @@
   tags: dns
   apt:
     name:
-      - "dnsmasq"
+      - "openresolv"
     install_recommends: false
     state: present
   when: ansible_distribution == "Ubuntu"

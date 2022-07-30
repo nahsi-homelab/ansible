@@ -67,4 +67,3 @@
 - name: Configure dns
   tags: dns
   include_tasks: 09-dns.yml
-  when: base_dnsmasq_config | length

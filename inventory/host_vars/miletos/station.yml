@@ -1,7 +1,7 @@
 station_xorg_configs:
   10_monitor: |
     Section "Monitor"
-      Identifier  "<default monitor>"
+      Identifier  "eDP-0"
       DisplaySize 276 156
     EndSection
 
@@ -17,4 +17,12 @@ station_xorg_configs:
       Option          "TapButton1"            "1"
       Option          "TapButton2"            "3"
       Option          "TapButton3"            "2"
+    EndSection
+
+  30_keyboard: |
+    Section "InputClass"
+      Identifier "keyboard defaults"
+      MatchIsKeyboard "on"
+      Option "XkbLayout" "us,ru"
+      Option "XkbOptions" "grp:alt_shift_toggle,compose:ralt"
     EndSection

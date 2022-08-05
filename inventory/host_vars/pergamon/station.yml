@@ -4,7 +4,7 @@ station_xorg_configs:
       Identifier "keyboard defaults"
       MatchIsKeyboard "on"
       Driver "evdev"
-      Option "XkbLayout" "us,ru"
+      Option "XkbLayout" "us,gr,ru"
       Option "XkbOptions" "grp:alt_shift_toggle,compose:ralt"
     EndSection
 

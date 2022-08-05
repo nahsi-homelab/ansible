@@ -23,6 +23,6 @@ station_xorg_configs:
     Section "InputClass"
       Identifier "keyboard defaults"
       MatchIsKeyboard "on"
-      Option "XkbLayout" "us,ru"
+      Option "XkbLayout" "us,gr,ru"
       Option "XkbOptions" "grp:alt_shift_toggle,compose:ralt"
     EndSection

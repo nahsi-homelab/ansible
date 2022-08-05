@@ -63,7 +63,7 @@ base_packages_workstation:
   - media-video/mediainfo
   - media-tv/jellyfin-mpv-shim
 
-  # - app-emulation/virtualbox
+  - app-emulation/virtualbox
   - sys-fs/fuse:0 # error loading libfuse.so.2
 
   - app-emulation/qemu

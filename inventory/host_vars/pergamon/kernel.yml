@@ -1,4 +1,4 @@
-kernel_boot_device: "/dev/disk/by-uuid/50C7-C33B"
+kernel_boot_device: "/dev/disk/by-id/nvme-m.2_Smartbuy_PS5013-2280T_128GB_7B77071B104400013720-part1"
 
 _kernel_cmd: >-
   ro quiet loglevel=0

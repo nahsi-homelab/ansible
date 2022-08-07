@@ -80,6 +80,7 @@ base_packages_workstation:
   - app-portage/pfl
   - net-irc/tiny
   - app-benchmarks/hyperfine
+  - dev-util/act
 
   - x11-misc/redshift
   - x11-misc/unclutter

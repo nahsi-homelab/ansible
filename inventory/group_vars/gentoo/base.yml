@@ -70,6 +70,7 @@ base_packages_gentoo:
   - app-misc/ca-certificates
   - net-proxy/shadowsocks-libev
   - net-misc/httpie
+  - sys-apps/pv
 
   # zfsbootmenu ssh
   - net-misc/dhcp

@@ -29,7 +29,7 @@ base_filesystems:
 
 base_dns: |
   resolv_conf="/etc/resolv.conf"
-  search_domains="node.consul service.consul"
+  search_domains="node.consul service.consul fluence.dev"
 
 base_dnsmasq_config: ""
 

@@ -99,6 +99,8 @@ base_udev_rules:
   30_autorandr: |
     ACTION=="change", SUBSYSTEM=="drm", RUN+="/usr/bin/autorandr --batch --change --default default"
 
+base_portage_jobs: 8
+
 base_portage_makeconf_miletos:
   COMMON_FLAGS: "-O2 -march=skylake -pipe"
   RUSTFLAGS: "-C target-cpu=skylake"

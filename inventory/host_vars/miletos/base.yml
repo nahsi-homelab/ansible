@@ -2,6 +2,19 @@ base_hosts: |
   127.0.0.1 {{ inventory_hostname }} {{ inventory_hostname }}.local localhost
   ::1       {{ inventory_hostname }} {{ inventory_hostname }}.local
 
+base_docker_config:
+  default-runtime: "runc"
+  runtimes:
+    crun:
+      path: "/usr/bin/crun"
+  storage-driver: "zfs"
+  storage-opts:
+    - zfs.fsname=main/containers
+  log-driver: "json-file"
+  log-opts:
+    max-size: "32m"
+    max-file: "2"
+
 base_filesystems:
   - path: "/tmp"
     src: "tmpfs"

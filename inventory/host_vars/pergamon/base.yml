@@ -77,6 +77,11 @@ base_services:
     enabled: true
     state: "started"
 
+  - name: "bluetooth"
+    runlevel: "default"
+    enabled: true
+    state: "started"
+
 base_udev_rules:
   10_streamdeck: |
     SUBSYSTEM=="usb", ATTRS{idVendor}=="0fd9", ATTRS{idProduct}=="0080", MODE:="660", GROUP="usb", SYMLINK+="streamdeck"

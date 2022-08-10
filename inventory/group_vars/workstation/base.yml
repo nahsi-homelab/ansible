@@ -17,6 +17,7 @@ base_users:
 
 base_packages_workstation:
   - media-gfx/graphviz
+  - net-wireless/bluez
 
   # openmw
   - games-engines/openmw

@@ -72,6 +72,11 @@ base_services:
     enabled: true
     state: "started"
 
+  - name: "bluetooth"
+    runlevel: "default"
+    enabled: true
+    state: "started"
+
 base_iwd: |
   [General]
   EnableNetworkConfiguration=true
@@ -80,9 +85,6 @@ base_iwd: |
   NameResolvingService=resolvconf
 
 base_udev_rules:
-  10_disable_bluetooth: |
-    SUBSYSTEM=="rfkill", ATTR{type}=="bluetooth", ATTR{state}="0"
-
   10_wifi_powersave: |
     ACTION=="add", SUBSYSTEM=="net", KERNEL=="wl*", RUN+="/usr/bin/iwctl dev $name set power_save on"
 

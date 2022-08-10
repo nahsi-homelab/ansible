@@ -1,3 +1,20 @@
+base_users:
+  - name: nahsi
+    shell: /bin/bash
+    groups:
+      - wheel
+      - portage
+      - docker
+      - uucp
+      - audio
+      - video
+      - kvm
+      - usb
+      - vboxusers
+      - pcap
+    append: true
+    ssh: https://github.com/nahsi.keys
+
 base_packages_workstation:
   - media-gfx/graphviz
 

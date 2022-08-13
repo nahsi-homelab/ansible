@@ -153,7 +153,7 @@ base_packages_workstation:
 
 base_portage_package_use_workstation:
   desktop: |
-    media-video/ffmpeg chromium libdrm x264 x265 webp vpx vorbis theora fdk
+    media-video/ffmpeg chromium libdrm x264 x265 webp vpx vorbis theora fdk mp3 xvid
     media-video/handbrake fdk x265 gtk
     media-video/mkvtoolnix dvd gui
     media-gfx/imagemagick -X tiff
@@ -162,6 +162,10 @@ base_portage_package_use_workstation:
     sys-apps/util-linux caps # for pfl
     app-text/hunspell l10n_en l10n_ru
     media-video/wireplumber lua_single_target_lua5-4
+
+    # shotcut
+    media-libs/mlt frei0r ffmpeg xml qt5 sdl jack
+    media-libs/opencv contribdnn contrib qt5
 
     media-fonts/noto cjk
     media-fonts/nerd-fonts firacode

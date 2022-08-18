@@ -7,6 +7,13 @@ nomad_configs:
         - nats:
             path: "/var/lib/nats"
 
+        - ceph-mon:
+            path: "/var/lib/ceph/mon"
+        - ceph-mgr:
+            path: "/var/lib/ceph/mgr"
+        - ceph-osd-1:
+            path: "/var/lib/ceph/osd-1"
+
   meta:
     client:
       meta:

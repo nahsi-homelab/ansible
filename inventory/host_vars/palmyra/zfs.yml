@@ -53,3 +53,24 @@ zfs_datasets:
       mountpoint: "/var/lib/nats"
       quota: "10G"
     mode: "0750"
+
+  - name: "main/data/ceph/mon"
+    properties:
+      atime: "off"
+      mountpoint: "/var/lib/ceph/mon"
+      quota: "10G"
+    mode: "0700"
+
+  - name: "main/data/ceph/mgr"
+    properties:
+      atime: "off"
+      mountpoint: "/var/lib/ceph/mgr"
+      quota: "10G"
+    mode: "0700"
+
+  - name: "main/data/ceph/osd-1"
+    properties:
+      atime: "off"
+      mountpoint: "/var/lib/ceph/osd-1"
+      quota: "10G"
+    mode: "0700"

@@ -15,6 +15,15 @@ nomad_configs:
         - keydb:
             path: "/var/lib/keydb"
 
+        - ceph-mon:
+            path: "/var/lib/ceph/mon"
+        - ceph-mgr:
+            path: "/var/lib/ceph/mgr"
+        - ceph-mds:
+            path: "/var/lib/ceph/mds"
+        - ceph-osd-2:
+            path: "/var/lib/ceph/osd-2"
+
   meta:
     client:
       meta:

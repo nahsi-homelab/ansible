@@ -65,6 +65,15 @@ nomad_configs:
         - snipeit:
             path: "/var/lib/snipeit"
 
+        - ceph-mon:
+            path: "/var/lib/ceph/mon"
+        - ceph-mgr:
+            path: "/var/lib/ceph/mgr"
+        - ceph-mds:
+            path: "/var/lib/ceph/mds"
+        - ceph-osd-0:
+            path: "/var/lib/ceph/osd-0"
+
   meta:
     client:
       meta:

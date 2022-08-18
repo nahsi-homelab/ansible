@@ -366,3 +366,31 @@ zfs_datasets:
       atime: "off"
       mountpoint: "/var/lib/snipeit"
       quota: "10G"
+
+  - name: "main/data/ceph/mon"
+    properties:
+      atime: "off"
+      mountpoint: "/var/lib/ceph/mon"
+      quota: "10G"
+    mode: "0700"
+
+  - name: "main/data/ceph/mgr"
+    properties:
+      atime: "off"
+      mountpoint: "/var/lib/ceph/mgr"
+      quota: "10G"
+    mode: "0700"
+
+  - name: "main/data/ceph/mds"
+    properties:
+      atime: "off"
+      mountpoint: "/var/lib/ceph/mds"
+      quota: "10G"
+    mode: "0700"
+
+  - name: "main/data/ceph/osd-0"
+    properties:
+      atime: "off"
+      mountpoint: "/var/lib/ceph/osd-0"
+      quota: "10G"
+    mode: "0700"

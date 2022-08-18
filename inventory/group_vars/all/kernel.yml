@@ -1,4 +1,4 @@
-kernel_version: "5.10.129"
+kernel_version: "5.10.136"
 
 # https://rodsbooks.com/refind/configfile.html
 kernel_refind_config: |

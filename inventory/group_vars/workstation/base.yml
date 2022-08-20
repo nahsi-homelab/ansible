@@ -67,6 +67,7 @@ base_packages_workstation:
   - x11-apps/xrandr
   - media-sound/alsa-utils
   - x11-base/xorg-server
+  - x11-apps/setxkbmap
 
   - app-crypt/gnupg
   - app-crypt/pinentry

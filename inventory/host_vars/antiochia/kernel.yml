@@ -1,4 +1,4 @@
-kernel_boot_device: "/dev/disk/by-partlabel/EFI"
+kernel_boot_device: "/dev/disk/by-id/ata-FORESEE_128GB_SSD_K27693J009302-part1"
 
 _kernel_cmd: >-
   ro quiet loglevel=0

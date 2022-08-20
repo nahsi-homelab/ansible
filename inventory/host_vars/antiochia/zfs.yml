@@ -332,15 +332,6 @@ zfs_datasets:
       quota: "10G"
     mode: "0750"
 
-  - name: "main/data/unifi"
-    properties:
-      atime: "off"
-      mountpoint: "/var/lib/unifi"
-      compression: "lz4"
-    owner: "1000"
-    group: "1000"
-    mode: "0750"
-
   - name: "storage/data/dendrite-media"
     properties:
       atime: "off"

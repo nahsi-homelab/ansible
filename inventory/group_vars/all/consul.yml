@@ -1,4 +1,4 @@
-consul_version: "1.12.3"
+consul_version: "1.13.1"
 consul_servers:
   - 10.1.10.10
   - 10.1.10.20
@@ -36,7 +36,6 @@ consul_config_all:
     enabled: true
 
   telemetry:
-    disable_compat_1.9: true
     disable_hostname: true
     prometheus_retention_time: "30s"
 

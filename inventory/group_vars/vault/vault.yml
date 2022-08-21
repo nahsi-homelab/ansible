@@ -1,4 +1,4 @@
-vault_version: "1.10.4"
+vault_version: "1.11.2"
 vault_config:
   ui: true
   log_level: "info"
@@ -6,12 +6,14 @@ vault_config:
   disable_mlock: true
 
   api_addr: "http://{{ gotmpl_private_address }}:8200"
+  cluster_addr: "http://{{ gotmpl_private_address }}:8201"
   cluster_name: "oikumene"
 
   listener:
     tcp:
       tls_disable: true
       address: "{{ gotmpl_private_address }}:8200"
+      cluster_address: "{{ gotmpl_private_address }}:8201"
 
   telemetry:
     disable_hostname: true

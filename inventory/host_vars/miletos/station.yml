@@ -14,9 +14,7 @@ station_xorg_configs:
       Option          "CircularScrolling"     "on"
       Option          "VertTwoFingerScroll"   "on"
       Option          "HorizTwoFingerScroll"  "on"
-      Option          "TapButton1"            "1"
-      Option          "TapButton2"            "3"
-      Option          "TapButton3"            "2"
+      Option          "PalmDetect"            "1"
     EndSection
 
   30_keyboard: |

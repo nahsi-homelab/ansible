@@ -164,6 +164,11 @@ base_portage_package_use_workstation:
     app-text/hunspell l10n_en l10n_ru
     media-video/wireplumber lua_single_target_lua5-4
 
+    # ceph
+    sys-cluster/ceph lua_single_target_lua5-4
+    dev-libs/boost context python
+    dev-python/numpy lapack
+
     # shotcut
     media-libs/mlt frei0r ffmpeg xml qt5 sdl jack
     media-libs/opencv contribdnn contrib qt5

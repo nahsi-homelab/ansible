@@ -64,8 +64,6 @@ nomad_config_all:
           - "task_name"
           - "namespace"
           - "node_name"
-        allow_runtimes:
-          - "crun"
         volumes:
           enabled: true
         allow_caps:

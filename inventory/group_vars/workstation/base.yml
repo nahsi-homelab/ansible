@@ -18,6 +18,7 @@ base_users:
 base_packages_workstation:
   - media-gfx/graphviz
   - net-wireless/bluez
+  - app-crypt/swtpm
 
   - ">sys-cluster/ceph-17.2"
 
@@ -165,6 +166,7 @@ base_portage_package_use_workstation:
     sys-apps/util-linux caps # for pfl
     app-text/hunspell l10n_en l10n_ru
     media-video/wireplumber lua_single_target_lua5-4
+    net-libs/gnutls tools pkcs11
 
     # ceph
     sys-cluster/ceph lua_single_target_lua5-4

@@ -91,6 +91,10 @@ base_udev_rules:
   10_pci_pm: |
     SUBSYSTEM=="pci", ATTR{power/control}="auto"
 
+  20_windows_permissions: |
+    KERNEL=="zd*" SUBSYSTEM=="block" ACTION=="add|change" PROGRAM="/lib/udev/zvol_id /dev/%k"
+    RESULT=="main/vm/windows11" OWNER="nahsi" GROUP="nahsi" MODE="0750"
+
   # 10_usb_autosuspend: |
   #   ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="2717", ATTR{idProduct}=="5001", GOTO="power_usb_rules_end"
   #   ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="auto" LABEL="power_usb_rules_end"

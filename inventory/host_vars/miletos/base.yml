@@ -1,3 +1,5 @@
+base_timezone: "Europe/Athens"
+
 base_hosts: |
   127.0.0.1 {{ inventory_hostname }} {{ inventory_hostname }}.local localhost
   ::1       {{ inventory_hostname }} {{ inventory_hostname }}.local

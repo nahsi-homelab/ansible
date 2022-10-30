@@ -18,7 +18,6 @@ base_users:
 base_packages_workstation:
   - media-gfx/graphviz
   - net-wireless/bluez
-  - app-crypt/swtpm
 
   - ">sys-cluster/ceph-17.2"
 
@@ -89,6 +88,7 @@ base_packages_workstation:
   - sys-fs/fuse:0 # error loading libfuse.so.2
 
   - app-emulation/qemu
+  - app-emulation/virt-viewer
   - app-cdr/cdrtools
   - app-containers/docker-compose
 
@@ -194,7 +194,7 @@ base_portage_package_use_workstation:
 
     # emulation
     app-emulation/virtualbox -* headless python_single_target_python3_9
-    app-emulation/qemu spice gtk
+    app-emulation/qemu spice gtk usb
     app-emulation/virt-viewer -libvirt -vnc
     net-misc/spice-gtk gtk3 lz4
 

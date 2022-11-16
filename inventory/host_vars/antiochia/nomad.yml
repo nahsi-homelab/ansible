@@ -62,6 +62,10 @@ nomad_configs:
             path: "/var/lib/vaultwarden"
         - snipeit:
             path: "/var/lib/snipeit"
+        - photoprism-originals:
+            path: "/var/lib/photoprism/originals"
+        - photoprism-storage:
+            path: "/var/lib/photoprism/storage"
 
   meta:
     client:

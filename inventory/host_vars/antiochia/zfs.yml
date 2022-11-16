@@ -385,3 +385,19 @@ zfs_datasets:
       mountpoint: "/var/lib/ceph/osd-0"
       quota: "10G"
     mode: "0700"
+
+  - name: "main/data/photoprism/storage"
+    properties:
+      atime: "off"
+      mountpoint: "/var/lib/photoprism/storage"
+      quota: "10G"
+    owner: "1200"
+    group: "1200"
+
+  - name: "storage/data/photoprism/originals"
+    properties:
+      atime: "off"
+      mountpoint: "/var/lib/photoprism/originals"
+      quota: "1T"
+    owner: "1200"
+    group: "1200"

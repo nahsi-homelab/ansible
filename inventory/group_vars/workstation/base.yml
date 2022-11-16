@@ -157,6 +157,7 @@ base_packages_workstation:
 
 base_portage_package_use_workstation:
   desktop: |
+    media-libs/libva abi_x86_32
     media-video/ffmpeg chromium libdrm x264 x265 webp vpx vorbis theora fdk mp3 xvid
     media-video/handbrake fdk x265 gtk
     media-video/mkvtoolnix dvd gui

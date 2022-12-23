@@ -20,3 +20,4 @@ roles:
 collections:
   - community.general
   - ansible.posix
+  - community.hashi_vault

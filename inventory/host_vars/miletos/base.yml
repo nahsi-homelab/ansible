@@ -45,6 +45,7 @@ base_packages_miletos:
   - x11-apps/igt-gpu-tools
   - app-crypt/tpm2-tss
   - sys-apps/rng-tools
+  - app-text/calibre
 
 base_packages: >
   {{
@@ -138,8 +139,18 @@ base_portage_use: >
     base_portage_use_miletos + base_portage_use_workstation
   }}
 
+base_portage_package_use_miletos:
+  miletos: |
+    # calibre
+    app-text/poppler qt5
+    app-accessibility/speech-dispatcher python
+    app-text/podofo lua_single_target_lua5-4
+    app-text/calibre -udisks
+    dev-python/pillow truetype
+
 base_portage_package_use: >
   {{
-    base_portage_package_use_workstation |
+    base_portage_package_use_miletos |
+    combine(base_portage_package_use_workstation, recursive=true) |
     combine(base_portage_package_use_gentoo, recursive=true)
   }}

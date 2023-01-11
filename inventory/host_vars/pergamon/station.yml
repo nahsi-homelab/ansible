@@ -20,5 +20,5 @@ station_xorg_configs:
   10_monitor: |
     Section "Monitor"
       Identifier "DisplayPort-0"
-      Modeline "3840x2160"
+      Option "PreferredMode" "3840x2160"
     EndSection

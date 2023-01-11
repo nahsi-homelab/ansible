@@ -1,4 +1,4 @@
-pergamon
+pergamon ansible_host=10.2.10.10
 antiochia
 heliopolis
 palmyra
@@ -11,6 +11,8 @@ antiochia
 heliopolis
 palmyra
 byblos
+
+[asia]
 pergamon
 
 [pontus]

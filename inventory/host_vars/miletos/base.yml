@@ -118,7 +118,7 @@ base_portage_makeconf_miletos:
   LUA_TARGETS: "luajit"
   LUA_SINGLE_TARGET: "luajit"
   LLVM_TARGETS: "X86"
-  DISTCC_HOSTS: "antiochia.node.consul/8 heliopolis.node.consul/8"
+  DISTCC_HOSTS: "pergamon.node.consul/16"
   FEATURES: "parallel-install distcc"
   INPUT_DEVICES: "synaptics libinput"
   ACCEPT_LICENSE: "* -@EULA google-chrome"

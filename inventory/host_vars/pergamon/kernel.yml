@@ -2,7 +2,7 @@ kernel_boot_device: "/dev/disk/by-id/nvme-m.2_Smartbuy_PS5013-2280T_128GB_7B7707
 
 _kernel_cmd: >-
   ro quiet loglevel=0
-  rd.vconsole.font=ter-i24b
+  rd.vconsole.font=ter-i32b
   zbm.set_hostid=0
 
 kernel_refind_menu: |
@@ -10,8 +10,8 @@ kernel_refind_menu: |
   "Boot to menu" "{{ _kernel_cmd }} zbm.show"
 
 kernel_refind_config: |
-  timeout "5"
-  resolution 2560 1440
+  timeout "10"
+  resolution 3840 2160
   shutdown_after_timeout "false"
   use_nvram "false"
   screensaver "300"
@@ -21,12 +21,6 @@ kernel_refind_config: |
   scan_all_linux_kernels "true"
   fold_linux_kernels "true"
   include themes/refind-theme-regular/theme.conf
-
-  menuentry "Windows 10" {
-    icon /EFI/refind/themes/refind-theme-regular/icons/256-96/os_windows.png
-    volume "e4050232-01"
-    loader \EFI\Microsoft\Boot\bootmgfw.efi
-  }
 
 kernel_firmware:
   - amdgpu/polaris11_ce.bin

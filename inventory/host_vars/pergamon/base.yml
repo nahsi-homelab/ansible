@@ -1,3 +1,9 @@
+# /usr/share/zoneinfo
+base_timezone: "Europe/Athens"
+
+# /usr/share/consolefonts
+base_consolefont: "ter-i32b"
+
 base_filesystems:
   - path: "/var/tmp"
     src: "tmpfs"
@@ -26,12 +32,12 @@ base_hosts: |
   127.0.0.1 {{ inventory_hostname }}.{{ dc }} {{ inventory_hostname }} localhost
   ::1       {{ inventory_hostname }}.{{ dc }} {{ inventory_hostname }} localhost
 
-  10.1.10.100 miletos
+  10.2.10.100 miletos
 
 base_dns: |
   resolv_conf="/etc/resolv.conf"
   search_domains="node.consul service.consul fluence.dev"
-  name_servers="127.0.0.1"
+  name_servers="1.1.1.1"
 
 base_iwd: |
   [General]

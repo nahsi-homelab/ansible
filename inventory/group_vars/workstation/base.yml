@@ -19,7 +19,7 @@ base_packages_workstation:
   - media-gfx/graphviz
   - net-wireless/bluez
 
-  - ">sys-cluster/ceph-17.2"
+  # - ">sys-cluster/ceph-17.2"
 
   # openmw
   - games-engines/openmw

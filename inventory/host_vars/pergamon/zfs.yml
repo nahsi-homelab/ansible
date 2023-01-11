@@ -14,7 +14,7 @@ zfs_datasets:
     properties:
       canmount: "noauto"
       mountpoint: "/"
-      org.zfsbootmenu:commandline: "ro quiet loglevel=0 amdgpu.dc=0"
+      org.zfsbootmenu:commandline: "ro quiet loglevel=0"
       org.zfsbootmenu:kernel: "5.10"
     owner: "root"
     group: "root"

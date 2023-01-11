@@ -1,9 +1,9 @@
 arch: "amd64"
 bios: "uefi"
 
-private_ip: "10.1.10.60"
+private_ip: "10.2.10.10"
 
 distccd_config: |
   DISTCCD_OPTS="--port=3632 --log-level=info --listen={{ private_ip }}"
-  DISTCCD_OPTS="${DISTCCD_OPTS} --allow 10.1.10.0/24"
+  DISTCCD_OPTS="${DISTCCD_OPTS} --allow 10.2.10.0/24"
   DISTCCD_EXEC="/usr/bin/distccd"

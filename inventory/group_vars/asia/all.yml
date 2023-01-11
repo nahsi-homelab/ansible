@@ -1,0 +1,5 @@
+dc: "asia"
+nameserver: "1.1.1.1"
+
+gotmpl_private_address: !unsafe '{{ GetPrivateInterfaces | include "network" "10.2.10.0/24" | attr "address" }}'
+gotmpl_private_interface: !unsafe '{{ GetPrivateInterfaces | include "network" "10.2.10.0/24" | attr "name" }}'

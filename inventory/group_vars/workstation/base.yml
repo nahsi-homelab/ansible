@@ -19,7 +19,7 @@ base_packages_workstation:
   - media-gfx/graphviz
   - net-wireless/bluez
 
-  # - ">sys-cluster/ceph-17.2"
+  - ">sys-cluster/ceph-17.2"
 
   # openmw
   - games-engines/openmw
@@ -173,6 +173,7 @@ base_portage_package_use_workstation:
     sys-cluster/ceph lua_single_target_lua5-4
     dev-libs/boost context python
     dev-python/numpy lapack
+    sys-fs/lvm2 lvm
 
     # shotcut
     media-libs/mlt frei0r ffmpeg xml qt5 sdl jack
@@ -237,6 +238,7 @@ base_portage_package_use_workstation:
     media-libs/libsdl2 sound
     sci-physics/bullet double-precision
     app-arch/p7zip rar
+    media-libs/libsdl sound
 
     # japanease input
     app-i18n/mozc renderer fcitx4

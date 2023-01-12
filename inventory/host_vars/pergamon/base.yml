@@ -95,6 +95,7 @@ base_udev_rules:
     SUBSYSTEM=="usb", ATTR{idVendor}=="3297", ATTR{idProduct}=="1969", GROUP="plugdev"
 
 base_portage_distcc_cores: 0
+base_portage_jobs: 8
 base_portage_makeconf_pergamon:
   COMMON_FLAGS: "-O2 -march=znver3"
   RUSTFLAGS: "-C target-cpu=znver3"
@@ -142,6 +143,7 @@ base_portage_package_use_pergamon:
     app-accessibility/speech-dispatcher python
     app-text/podofo lua_single_target_lua5-4
     app-text/calibre -udisks
+    dev-python/pillow truetype
 
 base_portage_package_use: >
   {{

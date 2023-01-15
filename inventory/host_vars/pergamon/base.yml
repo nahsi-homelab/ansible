@@ -49,7 +49,7 @@ base_iwd: |
 base_packages_pergamon:
   - net-misc/r8125
   - net-dialup/ppp
-  - media-plugins/hyperion
+  # - media-plugins/hyperion
   - media-sound/beets
   - media-tv/v4l-utils
   - media-video/v4l2loopback
@@ -100,11 +100,11 @@ base_portage_makeconf_pergamon:
   COMMON_FLAGS: "-O2 -march=znver3"
   RUSTFLAGS: "-C target-cpu=znver3"
   CPU_FLAGS_X86: "aes avx avx2 f16c fma3 mmx mmxext pclmul popcnt rdrand sha sse sse2 sse3 sse4_1 sse4_2 sse4a ssse3"
-  VIDEO_CARDS: "amdgpu radeonsi"
+  VIDEO_CARDS: "nvidia d3d12"
   INPUT_DEVICES: "evdev"
   LUA_TARGETS: "luajit"
   LUA_SINGLE_TARGET: "luajit"
-  LLVM_TARGETS: "AMDGPU X86"
+  LLVM_TARGETS: "X86"
   FEATURES: "parallel-install"
   ACCEPT_LICENSE: "*"
 base_portage_makeconf: >
@@ -120,6 +120,8 @@ base_portage_package_use_pergamon:
   pergamon: |
     media-plugins/hyperion -v4l -qt-grabber -zeroconf
 
+    dev-util/directx-headers abi_x86_32
+
     media-tv/v4l-utils qt5 -bpf
     media-video/obs-studio truetype v4l
 
@@ -131,9 +133,6 @@ base_portage_package_use_pergamon:
     media-sound/easyeffects -doc calf mda-lv2 zamaudio
     media-libs/rubberband ladspa
     media-plugins/calf lv2
-
-    # xorg-server
-    x11-libs/libdrm video_cards_radeon
 
     # messengers
     app-text/ghostscript-gpl cups
@@ -151,18 +150,3 @@ base_portage_package_use: >
     combine(base_portage_package_use_workstation, recursive=true) |
     combine(base_portage_package_use_gentoo, recursive=true)
   }}
-
-base_portage_env:
-  less-jobs: |
-    EMERGE_DEFAULT_OPTS="--jobs=8 --load-average={{ base_portage_la }} --quiet-build"
-    MAKEOPTS="--jobs=8 --load-average={{ base_portage_la }}"
-
-base_portage_package_env:
-  less-jobs: |
-    www-client/chromium base-less-jobs.conf
-    dev-qt/qtwebengine base-less-jobs.conf
-    net-im/telegram-desktop base-less-jobs.conf
-    media-gfx/inkscape base-less-jobs.conf
-    dev-lang/rust base-less-jobs.conf
-    sys-devel/clang base-less-jobs.conf
-    sys-cluster/ceph base-less-jobs.conf

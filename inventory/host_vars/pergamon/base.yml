@@ -4,6 +4,16 @@ base_timezone: "Europe/Athens"
 # /usr/share/consolefonts
 base_consolefont: "ter-i32b"
 
+base_hwclock: |
+  # Is your hardware clock set to local or to UTC?
+  # If you dualboot with Windows set to "local"
+  clock_local="local"
+  # Set the hardware clock to the current systemtime during shutdown
+  clock_systohc="YES"
+  # Set systemtime to current hardware clock durning boot
+  clock_hctosys="YES"
+  clock_args=""
+
 base_filesystems:
   - path: "/var/tmp"
     src: "tmpfs"

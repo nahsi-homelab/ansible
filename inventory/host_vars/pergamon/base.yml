@@ -47,7 +47,6 @@ base_hosts: |
 base_dns: |
   resolv_conf="/etc/resolv.conf"
   search_domains="node.consul service.consul fluence.dev"
-  name_servers="1.1.1.1"
 
 base_iwd: |
   [General]

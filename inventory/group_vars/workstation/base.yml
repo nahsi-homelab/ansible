@@ -136,8 +136,7 @@ base_packages_workstation:
   - media-fonts/font-bitstream-100dpi
   - sys-apps/lsb-release
 
-  - app-text/zathura-pdf-mupdf
-  - app-text/zathura-djvu
+  - app-text/zathura-meta
 
   - dev-util/cargo-ebuild
   - dev-util/cargo-license
@@ -168,6 +167,8 @@ base_portage_package_use_workstation:
     app-text/hunspell l10n_en l10n_ru
     media-video/wireplumber lua_single_target_lua5-4
     net-libs/gnutls tools pkcs11
+    app-text/zathura-meta pdf djvu
+    app-misc/nnn gitstatus nerdfonts
 
     # ceph
     sys-cluster/ceph lua_single_target_lua5-4

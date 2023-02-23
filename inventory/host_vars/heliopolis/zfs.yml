@@ -128,3 +128,11 @@ zfs_datasets:
       mountpoint: "/var/lib/ceph/osd-2"
       quota: "10G"
     mode: "0700"
+
+  - name: "main/data/vikunja"
+    properties:
+      atime: "off"
+      compression: "zstd"
+      mountpoint: "/var/lib/vikunja"
+      quota: "10G"
+    mode: "0750"

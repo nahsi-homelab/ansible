@@ -91,6 +91,7 @@ base_packages_workstation:
   - app-emulation/virt-viewer
   - app-cdr/cdrtools
   - app-containers/docker-compose
+  - app-containers/docker-buildx
 
   - app-admin/chezmoi
   - x11-terms/kitty

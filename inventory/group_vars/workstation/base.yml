@@ -19,8 +19,6 @@ base_packages_workstation:
   - media-gfx/graphviz
   - net-wireless/bluez
 
-  - ">sys-cluster/ceph-17.2"
-
   # openmw
   - games-engines/openmw
   - sys-apps/bubblewrap
@@ -29,7 +27,7 @@ base_packages_workstation:
 
   - www-client/qutebrowser
   - dev-python/tldextract
-  - www-client/chromium-bin
+  - www-client/google-chrome
 
   - net-analyzer/wireshark
 
@@ -170,12 +168,6 @@ base_portage_package_use_workstation:
     net-libs/gnutls tools pkcs11
     app-text/zathura-meta pdf djvu
     app-misc/nnn gitstatus nerdfonts
-
-    # ceph
-    sys-cluster/ceph lua_single_target_lua5-4
-    dev-libs/boost context python
-    dev-python/numpy lapack
-    sys-fs/lvm2 lvm
 
     # shotcut
     media-libs/mlt frei0r ffmpeg xml qt5 sdl jack

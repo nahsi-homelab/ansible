@@ -6,7 +6,7 @@
 
 - name: rebuild kernel
   portage:
-    package: "sys-kernel/nahsi-kernel"
+    package: "sys-kernel/gentoo-kernel"
     noreplace: false
     state: emerged
 
@@ -17,4 +17,4 @@
     state: emerged
 
 - name: generate zbm
-  command: "generate-zbm --kver {{ kernel_version }}"
+  command: "generate-zbm --kver {{ kernel_version }}-gentoo-dist"

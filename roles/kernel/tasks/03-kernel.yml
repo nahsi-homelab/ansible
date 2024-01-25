@@ -81,12 +81,8 @@
   tags: kernel
   copy:
     content: |
-      >sys-kernel/nahsi-kernel-{{ kernel_version }}
       >virtual/dist-kernel-{{ kernel_version }}
-      virtual/dist-kernel::gentoo
-      sys-kernel/gentoo-kernel
-      sys-kernel/gentoo-kernel-bin
-      sys-kernel/vanilla-kernel
+      >sys-kernel/gentoo-kernel-{{ kernel_version }}
     dest: /etc/portage/package.mask/kernel.mask
     owner: root
     group: root
@@ -95,24 +91,21 @@
     - rebuild kernel
     - rebuild modules
 
-- name: Sync nahsi-overlay repo
-  command: "emaint sync -r nahsi-overlay"
-
-- name: install nahsi-kernel
+- name: install gentoo-kernel
   portage:
-    package: "=sys-kernel/nahsi-kernel-{{ kernel_version }}"
+    package: "=sys-kernel/gentoo-kernel-{{ kernel_version }}"
     state: present
   notify:
     - rebuild modules
     - generate zbm
 
-- name: remove old nahsi-kernel
+- name: remove old gentoo-kernel
   portage:
-    package: "<sys-kernel/nahsi-kernel-{{ kernel_version }}"
+    package: "<sys-kernel/gentoo-kernel-{{ kernel_version }}"
     state: absent
 
 - name: set kernel version with eselect
   tags: kernel
   eselect:
     module: "kernel"
-    target: "linux-{{ kernel_version }}"
+    target: "linux-{{ kernel_version }}-gentoo-dist"

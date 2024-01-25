@@ -1,3 +1,5 @@
+kernel_version: "6.6.13"
+
 kernel_boot_device: "/dev/disk/by-id/nvme-m.2_Smartbuy_PS5013-2280T_128GB_7B77071B104400013720-part1"
 
 _kernel_cmd: >-
@@ -81,10 +83,6 @@ kernel_configs:
     CONFIG_SND_USB=y
     CONFIG_SND_USB_AUDIO=y
 
-  04ambilight: |
-    CONFIG_USB_SERIAL=y
-    CONFIG_USB_SERIAL_CH341=y
-
   05network: |
     CONFIG_WIRELESS=y
     CONFIG_CFG80211=m
@@ -122,10 +120,6 @@ kernel_configs:
   08usb: |
     CONFIG_INPUT_MISC=y
     CONFIG_INPUT_UINPUT=y
-
-  09ppoe: |
-    CONFIG_PPP=y
-    CONFIG_PPPOE=y
 
   99firmware: |
     CONFIG_EXTRA_FIRMWARE_DIR="/lib/firmware"
